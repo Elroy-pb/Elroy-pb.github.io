@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google</title>
+    <url>/2021/07/19/google-aab/</url>
+    <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
+<blockquote>
+<p>App 动态化框架，动态化概念指的是 Play Dynamic Delivery </p>
+<blockquote>
+<p><strong>上线要求</strong>:从 2021 年 8 月起，新应用需要使用 Android App Bundle 才能在 Google Play 中发布。  </p>
+</blockquote>
+</blockquote>
+<h2 id="About-Android-App-Bundles"><a href="#About-Android-App-Bundles" class="headerlink" title="About Android App Bundles"></a>About Android App Bundles</h2><blockquote>
+<p>Android App Bundle 是一种包含编译后代码和资源文件的新的上传格式（.aab） </p>
+</blockquote>
+<p>补充:<strong>Android Application Bundle</strong> != <strong>Apk</strong><br>App Bundle 纯粹是为了上传设计的文件，用户无法直接安装和使用它。<br>虽然AAB和Apk本质上都是压缩包,但是内部的目录结构完全不同，以下是一个Abb正常的aab文件结构</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">–BundleConfig.pb ： 打包bundle的时候，自动生成</span><br><span class="line">–base : base目录</span><br><span class="line">——assets: 对应apk的assets目录</span><br><span class="line">——dex: 原apk中classes.dex,classes2.dex…都放这里</span><br><span class="line">——lib: 原apk中lib目录都放这里</span><br><span class="line">——manifest: 原apk的AndroidManifest.xml放这里，需要是编译后的AndroidManifest.xml</span><br><span class="line">——res：apk中的资源放这里，需要是编译后的资源</span><br><span class="line">——root: apk中相对于根目录的其他资源文件</span><br><span class="line">——resources.pb：编译资源的时候会生成的</span><br><span class="line">——assets.pb:编译bundle的时候会生成的</span><br><span class="line">——native.pb: 编译bundle的时候会生成的</span><br></pre></td></tr></table></figure>
+
+<h2 id="Google-Play-Dynamic-Delivery"><a href="#Google-Play-Dynamic-Delivery" class="headerlink" title="Google Play Dynamic Delivery"></a>Google Play Dynamic Delivery</h2><blockquote>
+<p>简介:Google Play 推出新 app 交付模式，叫做动态交付 (Dynamic Delivery)，它根据每个用户的设备信息，使用开发者上传的 app bundle 来生成对应的 apk 文件。</p>
+<blockquote>
+<p><img src="https://conorlee.top/images/blogimages/2019/640.gif" alt="AAB">  </p>
+</blockquote>
+</blockquote>
+<h2 id="Play-Asset-Delivery"><a href="#Play-Asset-Delivery" class="headerlink" title="Play Asset Delivery"></a>Play Asset Delivery</h2><blockquote>
+<p>Play Asset Delivery (PAD)可以让依靠 Google Play 来托管和提供你的资产包，PAD提供灵活的分发模式，本质上减少包的体积，让用户更佳的体验,目前分发模式有3种，分别为<br><strong>1.install-time 2.fast-follow 3.on-demand</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">分发模式</th>
+<th align="center">大小限制</th>
+<th align="left">简介</th>
+<th align="left">详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">install-time  =&gt; 安装时分发</td>
+<td align="center">总下载大小上限为1GB</td>
+<td align="left">资源包在用户安装应用时进行分发，”预先”资源包</td>
+<td align="left">在应用启动是使用，用户无法修改或删除这些资源包</td>
+</tr>
+<tr>
+<td align="left">fast-follow =&gt; 快速跟进式分发</td>
+<td align="center">下载大小上限为512MB</td>
+<td align="left">资源包在用户安装应用后立即自动下载</td>
+<td align="left">用户无需打开应用即可开始 fast-follow 下载。此类下载不会阻止用户访问应用。</td>
+</tr>
+<tr>
+<td align="left">on-demand =&gt; 按需分发</td>
+<td align="center">下载大小上限为512MB</td>
+<td align="left">资源包会在应用运行时进行下载</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><strong>注意 ！！！</strong>：如果为资源包选择 <strong>install-time 分发类型</strong>，就无需在游戏中使用 <strong>Play Asset Delivery API</strong>。这些资源包与主应用 APK同时安装。<br>目前公司项目使用就是分发模式就是 <strong>install-time</strong></p>
+<p>由于google规定需要apk&lt;150m，等于aab中的base目录&lt;150m，如果超出限制，需要把多出的资源迁移到install-time，让google去动态下发资源</p>
+<h1 id="软件使用说明"><a href="#软件使用说明" class="headerlink" title="软件使用说明"></a>软件使用说明</h1><h3 id="需要提前安装的环境"><a href="#需要提前安装的环境" class="headerlink" title="需要提前安装的环境"></a>需要提前安装的环境</h3><ul>
+<li>需要自己额外再安装的路径  <ol>
+<li>python3</li>
+<li>aapt  </li>
+<li>gradle </li>
+<li>as-pro  ==&gt; 模板工程 </li>
+</ol>
+</li>
+<li>该工具内置了反编译的环境 请勿随意修改路径  <ol>
+<li>apktool  </li>
+<li>dex2jar  </li>
+<li>smali  </li>
+</ol>
+</li>
+</ul>
+<p>2 需要在该工具路径下/tool/apktool/signature/config/apk.ini文件配置以下路径</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#配置项 后续看项目的需求支持可增加参数</span><br><span class="line">[config]</span><br><span class="line"># 注意所有配置项需要顶行写，&quot;=&quot; 号两边和行首尾不能有空格</span><br><span class="line"># AS 路径 </span><br><span class="line">as_path=/Users/zhupengbo/Desktop/S3/S3_Hw</span><br><span class="line"># AAB 生成的路径 必填</span><br><span class="line">abb_path=/Users/zhupengbo/tool/apktool/apk/abb</span><br><span class="line"># 版本号和版本名</span><br><span class="line">versionCode=1</span><br><span class="line">versionName=1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>3.该项目增加了pad配置表<br>3.1 <strong>aab_pad.xls</strong> 配置表路径在 <strong>/apktool/signature/config</strong> 的路径下<br>3.2 配置的方法<br>支持配置<strong>文件路径</strong>和<strong>文件夹</strong><br>S3项目以resource路径下进行配表，该路径包含了游戏内的资源  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">配置形式为:resource/路径</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>aab_pad.xls 格式如下-示例</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">resource/model</td>
+</tr>
+<tr>
+<td align="left">resource/Video</td>
+</tr>
+<tr>
+<td align="left">resource/allRes.json</td>
+</tr>
+<tr>
+<td align="left">resource/ui</td>
+</tr>
+</tbody></table>
+<p>4 该工具支持下终端下执行，调用示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/Users/zhupengbo/tool/apktool/android_pack.sh /Users/zhupengbo/tool/apktool/apk/apk/AAA.apk</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Google</category>
+      </categories>
+      <tags>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>
