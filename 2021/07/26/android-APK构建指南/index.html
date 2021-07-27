@@ -27,13 +27,14 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="Android-插件化的基础">
 <meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/%E8%B5%84%E6%BA%90id.png">
 <meta property="article:published_time" content="2021-07-26T08:41:46.562Z">
-<meta property="article:modified_time" content="2021-07-27T03:41:37.493Z">
+<meta property="article:modified_time" content="2021-07-27T09:13:32.299Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/%E8%B5%84%E6%BA%90id.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png">
 
 <link rel="canonical" href="http://example.com/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/">
 
@@ -135,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">6</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">7</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -223,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-27 11:41:37" itemprop="dateModified" datetime="2021-07-27T11:41:37+08:00">2021-07-27</time>
+                <time title="Modified: 2021-07-27 17:13:32" itemprop="dateModified" datetime="2021-07-27T17:13:32+08:00">2021-07-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,7 +241,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.8k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -260,15 +261,18 @@
 
       
         <h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
-<li>通过<strong>aapt-Android Asset Packing Tool</strong> 打包res资源文件，生成R.java、resources.arsc和res文件（二进制 &amp; 非二进制如res/raw和pic保持原样）<br>(R.java相关知识)  </li>
-<li>处理.aidl文件，生成对应的Java接口文件</li>
-<li>通过Java Compiler编译R.java、Java接口文件、Java源文件，生成.class文件 (编译期超出64k?)</li>
-<li>通过dex命令，将.class文件和第三方库中的.class文件处理生成classes.dex</li>
-<li>通过<strong>Japkbuilder</strong>J工具，将aapt生成的resources.arsc和res文件、assets文件和classes.dex一起打包生成apk</li>
-<li>通过<strong>Jarsigner</strong>工具，对上面的apk进行debug或release签名<br>通过zipalign工具，将签名后的apk进行对齐处理<br>(引申出问题，为什么需要签名，签名的方式有几种，有什么区别？)</li>
-<li>通过<strong>zipalign</strong>工具，将签名后的apk进行对齐处理<br>(引申一个问题，为什么需要对齐？)  </li>
-<li>混淆proguard：proguard主要的目的是混淆代码，保护应用源代码。次要的功能还有移除无用类等，优化字节码，缩小包体积。  </li>
+<li>通过<strong>aapt-Android Asset Packing Tool</strong> 打包res资源文件，生成R.java、resources.arsc和res文件（二进制 &amp; 非二进制如res/raw和pic保持原样）  </li>
 </ol>
+<blockquote>
+<p>这一过程主要是aapt对res和asset文件夹，AndroidManifest.xml，android库(aar,jar)等的资源文件进行处理。  </p>
+<ul>
+<li>先检查<strong>AndroidManifest.xml</strong>的合法性  </li>
+<li>然后编译res与asserts目录下的资源并生成resource.arsc文件  </li>
+<li>再生成R文件。</li>
+</ul>
+</blockquote>
+<p>除了assets和res/raw资源被原封不动地打包进APK之外，其它的资源都会被编译或者处理，<em>大部分文本格式的XML资源文件会被编译成二进制格式的XML资源文件</em>。<br>除了assets资源之外，其他的资源都会在R文件中被赋予一个资源ID。也就是说，R文件中只会存在id，真正的资源存在于resource.arsc中，resource.arsc相当于一个资源索引表，资源id是key，value是资源路径。我们使用drawable-xdpi或者drawable-xxdpi这些不同分辨率的图片的时候，就是依靠resource.arsc根据设备的分辨率选择不同的图片</p>
+<p><img src="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png" alt="R.java"><br> (R.java相关知识)<br>2. 处理.aidl文件，生成对应的Java接口文件<br>3. 通过Java Compiler编译R.java、Java接口文件、Java源文件，生成.class文件 (编译期超出64k?)<br>4. 通过dex命令，将.class文件和第三方库中的.class文件处理生成classes.dex<br>5. 通过<strong>Japkbuilder</strong>J工具，将aapt生成的resources.arsc和res文件、assets文件和classes.dex一起打包生成apk<br>6. 通过<strong>Jarsigner</strong>工具，对上面的apk进行debug或release签名<br>通过zipalign工具，将签名后的apk进行对齐处理<br>(引申出问题，为什么需要签名，签名的方式有几种，有什么区别？)<br>7. 通过<strong>zipalign</strong>工具，将签名后的apk进行对齐处理<br>(引申一个问题，为什么需要对齐？)<br>8. 混淆proguard：proguard主要的目的是混淆代码，保护应用源代码。次要的功能还有移除无用类等，优化字节码，缩小包体积。  </p>
 <h1 id="APK扩展性问题"><a href="#APK扩展性问题" class="headerlink" title="APK扩展性问题:"></a>APK扩展性问题:</h1><h2 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h2><h3 id="1-R-java是什么-R-java构成"><a href="#1-R-java是什么-R-java构成" class="headerlink" title="1. R.java是什么(R.java构成)"></a>1. <em>R.java是什么(R.java构成)</em></h3><blockquote>
 <p>R.java由ADT(aapt)编译生成，<br>记录应用apk-res路径所有资源，并根据这些资源建立对应的ID(生成唯一的标识符)<br>编译期间，同一个资源在普通的apk中只会属于一个<strong>package</strong>，一个<strong>type</strong>，只拥有一个<strong>entry次序</strong>。<br>以0x01开头的就是系统已经内置的资源id，以0x7f开头的是咱们自己添加的app资源id </p>
 </blockquote>
@@ -289,18 +293,22 @@
 <h3 id="为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？"><a href="#为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？" class="headerlink" title="为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？"></a>为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？</h3><blockquote>
 <p><em>比较早的aapt的版本生成的非主模块的资源id确实都是final修饰的，这样会带来一个问题，这些资源id全部内联到代码中，一旦新增或者删除，修改了资源，资源id就会有变化，所有的代码都需要重新编译，造成严重的编译耗时</em>。  </p>
 </blockquote>
-<p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。   </p>
+<p>后来改为主模块final常量方式内联，非主模块引用方式，这样等按照从下到上编译到App模块的时候，所有的资源id都已经确定了，底层模块的资源只需要通过引用就能拿到自己对应的id，而修改(新增，删除，修改)了资源之后，也只需要重新生成R文件就好了。编译耗时大大减少。</p>
+<p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。  </p>
 <p>开发时，在其他module代码引用资源文件时,使用以下代码进行索引  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier for the given resource name.  A fully</span><br><span class="line"> * qualified resource name is of the form &quot;package:type/entry&quot;.  The first</span><br><span class="line"> * two components (package and type) are optional if defType and</span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use of this function is discouraged.  It is much more</span><br><span class="line"> * efficient to retrieve resources by identifier than by name.</span><br><span class="line"> * </span><br><span class="line"> * @param name The name of the desired resource.</span><br><span class="line"> * @param defType Optional default resource type to find, if &quot;type/&quot; is</span><br><span class="line"> *                not included in the name.  Can be null to require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package to find, if &quot;package:&quot; is</span><br><span class="line"> *                   not included in the name.  Can be null to require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @return int The associated resource identifier.  Returns 0 if no such</span><br><span class="line"> *         resource was found.  (0 is not a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String name, String defType, String defPackage) &#123;</span><br><span class="line">    return mResourcesImpl.getIdentifier(name, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>后来改为主模块final常量方式内联，非主模块引用方式，这样等按照从下到上编译到App模块的时候，所有的资源id都已经确定了，底层模块的资源只需要通过引用就能拿到自己对应的id，而修改(新增，删除，修改)了资源之后，也只需要重新生成R文件就好了。编译耗时大大减少。</p>
+
 <h3 id="为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？"><a href="#为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？" class="headerlink" title="为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？"></a>为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</h3><p>因为资源id只是表示资源的次序，而不是别的跟资源本身绑定的属性。当到了不同的模块以后，参与编译的资源变多了，那次序肯定会改变。资源id也就改变了。并且子模块的资源id只是引用形式存在于代码中，id具体是什么值并不是很care。</p>
-<h3 id="2-apk或者aab，为什么需要对齐？"><a href="#2-apk或者aab，为什么需要对齐？" class="headerlink" title="2. apk或者aab，为什么需要对齐？"></a>2. <em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
+<h3 id="apk或者aab，为什么需要对齐？"><a href="#apk或者aab，为什么需要对齐？" class="headerlink" title="apk或者aab，为什么需要对齐？"></a><em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
 <p>zipalign的主要工作是将apk包进行对齐处理，使apk包中的所有资源文件举例文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快。<br>为什么快呢？如果每个资源的开始位置上都是一个资源之后的4n字节，那么访问下一个资源就不用遍历，直接跳到4字节之后即可 </p>
 </blockquote>
-<h3 id="3-apk或者aab混淆的方式有哪些"><a href="#3-apk或者aab混淆的方式有哪些" class="headerlink" title="3. apk或者aab混淆的方式有哪些()"></a>3. <em>apk或者aab</em>混淆的方式有哪些()</h3><blockquote>
+<h3 id="apk或者aab混淆的方式有哪些"><a href="#apk或者aab混淆的方式有哪些" class="headerlink" title="apk或者aab混淆的方式有哪些()"></a><em>apk或者aab</em>混淆的方式有哪些()</h3><blockquote>
 </blockquote>
-<p>压缩(Shrink)：检测并移除代码中无用的类、字段、方法和特性<br>优化(Optimize)：字节码进行优化，移除无用的指令。<br>混淆(Obfuscate)：使用a、b、c、d这样简短而无意义的名称，对垒、字段和方法进行重命名。<br>预检测(Preveirfy)：在Java平台对处理后的代码进行预检测，确保加载class文件是可执行的  </p>
+<p>压缩(Shrink)：检测并移除代码中无用的类、字段、方法和特性<br>优化(Optimize)：字节码进行优化，移除无用的指令。<br>混淆(Obfuscate)：使用a、b、c、d这样简短而无意义的名称，对垒、字段和方法进行重命名。<br>预检测(Preveirfy)：在Java平台对处理后的代码进行预检测，确保加载class文件是可执行的 </p>
+<h3 id="“Android”-64k报错"><a href="#“Android”-64k报错" class="headerlink" title="“Android” 64k报错"></a>“Android” 64k报错</h3><p>应用及第三方库包含的方法数(method)总和超过65536，在开发的时候，会遇到一个构建的错误。<br>指明您的应用达到Android构建规定的应用的限制：</p>
+<h4 id="构建错误的原因"><a href="#构建错误的原因" class="headerlink" title="构建错误的原因:"></a>构建错误的原因:</h4><h5 id="dex文件格式的限制"><a href="#dex文件格式的限制" class="headerlink" title="dex文件格式的限制"></a>dex文件格式的限制</h5><p>Android 应用 (APK) 文件包含 Dalvik Executable (DEX) 二进制文件形式的可执行字节码文件，这些文件包含用来运行应用的已编译代码。<br>Dalvik Executable 规范将可在单个 DEX 文件内引用的方法总数限制为 65536 (其中包括 Android 框架方法、库方法以及您自己的代码中的方法)</p>
+<h5 id="其他限制"><a href="#其他限制" class="headerlink" title="其他限制"></a>其他限制</h5><p>系统对dex文件进行优化操作时分配的缓冲区大小的限制 ，方法如果超出缓存区，同样也是会报错的。</p>
 
     </div>
 
@@ -319,10 +327,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/" rel="prev" title="Android-Handle-消息分发机制">
-      <i class="fa fa-chevron-left"></i> Android-Handle-消息分发机制
+    <a href="/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/" rel="prev" title="Android-Handle---消息分发机制">
+      <i class="fa fa-chevron-left"></i> Android-Handle---消息分发机制
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/" rel="next" title="Android-外挂篇">
+      Android-外挂篇 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -381,7 +392,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">Apk构建流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">Apk是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E6%9E%84%E6%88%90%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">Apk构成的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E7%BC%96%E8%AF%91%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Apk编译的流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E6%89%A9%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">APK扩展性问题:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-R-java%E6%98%AF%E4%BB%80%E4%B9%88-R-java%E6%9E%84%E6%88%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. R.java是什么(R.java构成)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E8%B5%84%E6%BA%90%E7%9A%84%E5%90%88%E5%B9%B6"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Android资源的合并</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%BB%E6%A8%A1%E5%9D%97-application-module-%E8%B5%84%E6%BA%90%E6%9C%89final%E4%BF%AE%E9%A5%B0%EF%BC%8C%E9%9D%9E%E4%B8%BB%E6%A8%A1%E5%9D%97-library-module-%E9%83%BD%E4%B8%8D%E6%98%AFfinal%E7%9A%84%EF%BC%9F"><span class="nav-number">2.1.2.</span> <span class="nav-text">为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8C%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90%EF%BC%8C%E4%B8%8D%E5%90%8C%E6%A8%A1%E5%9D%97%E4%BA%A7%E7%94%9F%E7%9A%84R-java%E4%B8%AD%E7%9A%84%E8%B5%84%E6%BA%90id%E5%80%BC%E6%98%AF%E4%B8%8D%E7%BB%9F%E4%B8%80%E7%9A%84%EF%BC%9F"><span class="nav-number">2.1.3.</span> <span class="nav-text">为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-apk%E6%88%96%E8%80%85aab%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%AF%B9%E9%BD%90%EF%BC%9F"><span class="nav-number">2.1.4.</span> <span class="nav-text">2. apk或者aab，为什么需要对齐？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-apk%E6%88%96%E8%80%85aab%E6%B7%B7%E6%B7%86%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">2.1.5.</span> <span class="nav-text">3. apk或者aab混淆的方式有哪些()</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">Apk构建流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">Apk是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E6%9E%84%E6%88%90%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">Apk构成的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apk%E7%BC%96%E8%AF%91%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Apk编译的流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E6%89%A9%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">APK扩展性问题:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-R-java%E6%98%AF%E4%BB%80%E4%B9%88-R-java%E6%9E%84%E6%88%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. R.java是什么(R.java构成)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E8%B5%84%E6%BA%90%E7%9A%84%E5%90%88%E5%B9%B6"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Android资源的合并</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%BB%E6%A8%A1%E5%9D%97-application-module-%E8%B5%84%E6%BA%90%E6%9C%89final%E4%BF%AE%E9%A5%B0%EF%BC%8C%E9%9D%9E%E4%B8%BB%E6%A8%A1%E5%9D%97-library-module-%E9%83%BD%E4%B8%8D%E6%98%AFfinal%E7%9A%84%EF%BC%9F"><span class="nav-number">2.1.2.</span> <span class="nav-text">为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8C%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90%EF%BC%8C%E4%B8%8D%E5%90%8C%E6%A8%A1%E5%9D%97%E4%BA%A7%E7%94%9F%E7%9A%84R-java%E4%B8%AD%E7%9A%84%E8%B5%84%E6%BA%90id%E5%80%BC%E6%98%AF%E4%B8%8D%E7%BB%9F%E4%B8%80%E7%9A%84%EF%BC%9F"><span class="nav-number">2.1.3.</span> <span class="nav-text">为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apk%E6%88%96%E8%80%85aab%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%AF%B9%E9%BD%90%EF%BC%9F"><span class="nav-number">2.1.4.</span> <span class="nav-text">apk或者aab，为什么需要对齐？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apk%E6%88%96%E8%80%85aab%E6%B7%B7%E6%B7%86%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">2.1.5.</span> <span class="nav-text">apk或者aab混淆的方式有哪些()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9CAndroid%E2%80%9D-64k%E6%8A%A5%E9%94%99"><span class="nav-number">2.1.6.</span> <span class="nav-text">“Android” 64k报错</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%94%99%E8%AF%AF%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">构建错误的原因:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#dex%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">2.1.6.1.1.</span> <span class="nav-text">dex文件格式的限制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%99%90%E5%88%B6"><span class="nav-number">2.1.6.1.2.</span> <span class="nav-text">其他限制</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -397,7 +408,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -455,12 +466,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">8k</span>
+    <span title="Symbols count total">9k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">7 mins.</span>
+    <span title="Reading time total">8 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
