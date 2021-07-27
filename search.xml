@@ -1,57 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Android-Handle---消息分发机制</title>
-    <url>/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/</url>
-    <content><![CDATA[<table>
-<thead>
-<tr>
-<th align="left">Class</th>
-<th align="center">Name</th>
-<th align="left">DES</th>
-<th align="left">MORE</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Message</td>
-<td align="center">消息</td>
-<td align="left">使用了享元设计模式 链表的数据结构</td>
-<td align="left">详情</td>
-</tr>
-<tr>
-<td align="left">MessageQuene</td>
-<td align="center">消息队列</td>
-<td align="left">单链表的数据结构</td>
-<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
-</tr>
-<tr>
-<td align="left">Handler</td>
-<td align="center">message的处理者</td>
-<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">ThreadLocal</td>
-<td align="center">数据结构是键值对</td>
-<td align="left">只有在指定的线程可以获取到存储的数据</td>
-<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
-</tr>
-<tr>
-<td align="left">Looper</td>
-<td align="center">循环器</td>
-<td align="left">在Looper中，有一个prepare的函数，在其中对Looper进行了初始化，Looper对象保存在sThreadLocal中</td>
-<td align="left">先保证了Looper和Threadlocal  1对1的唯一关系</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android-APK构建流程</title>
     <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
@@ -112,6 +61,65 @@
       </tags>
   </entry>
   <entry>
+    <title>Android-Handle---消息分发机制</title>
+    <url>/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th align="left">Class</th>
+<th align="center">Name</th>
+<th align="left">DES</th>
+<th align="left">MORE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Message</td>
+<td align="center">消息</td>
+<td align="left">使用了享元设计模式 链表的数据结构</td>
+<td align="left">详情</td>
+</tr>
+<tr>
+<td align="left">MessageQuene</td>
+<td align="center">消息队列</td>
+<td align="left">单链表的数据结构</td>
+<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
+</tr>
+<tr>
+<td align="left">Handler</td>
+<td align="center">message的处理者</td>
+<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ThreadLocal</td>
+<td align="center">数据结构是键值对</td>
+<td align="left">只有在指定的线程可以获取到存储的数据</td>
+<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
+</tr>
+<tr>
+<td align="left">Looper</td>
+<td align="center">循环器</td>
+<td align="left"><img src="code_looper_1.jpg" alt="code_looper"></td>
+<td align="left">类Looper的prepare的函数,即是对Looper进行了初始化，将Looper对象引用保存在sThreadLocal中，先保证了Looper和Threadlocal-1V1关系,由于sThreadLocal获取的值是通过获取当前线程获取线程唯一的变量,这样就保证了一个线程只有一个looper</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>android-Handler机制-2</title>
+    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-崩溃优化</title>
     <url>/2021/07/23/android-native/</url>
     <content><![CDATA[<h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
@@ -149,6 +157,17 @@
 <p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
 <p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
 ]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-外挂篇</title>
+    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -302,17 +321,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-外挂篇</title>
-    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
 </search>

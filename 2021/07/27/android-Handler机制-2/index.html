@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="崩溃优化对应处理的机制">
+  <meta name="description" content="Android-handler机制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android-崩溃优化">
-<meta property="og:url" content="http://example.com/2021/07/23/android-native/index.html">
+<meta property="og:title" content="android-Handler机制-2">
+<meta property="og:url" content="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="崩溃优化对应处理的机制">
+<meta property="og:description" content="Android-handler机制">
 <meta property="og:locale">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2718191-cf676fb7776e121b.png">
-<meta property="article:published_time" content="2021-07-23T02:56:32.153Z">
-<meta property="article:modified_time" content="2021-07-23T08:44:22.792Z">
+<meta property="article:published_time" content="2021-07-27T09:57:51.000Z">
+<meta property="article:modified_time" content="2021-07-27T10:35:15.730Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2718191-cf676fb7776e121b.png">
 
-<link rel="canonical" href="http://example.com/2021/07/23/android-native/">
+<link rel="canonical" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
 
 
 <script id="page-configurations">
@@ -50,7 +48,7 @@
 
   <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
 <script type="text/javascript" src="/js/src/custom.js"></script><script src="/lib/fireworks.js"></script>
-  <title>Android-崩溃优化 | Elroy-Pb</title>
+  <title>android-Handler机制-2 | Elroy-Pb</title>
   
 
 
@@ -193,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/23/android-native/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -206,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Android-崩溃优化
+          android-Handler机制-2
         </h1>
 
         <div class="post-meta">
@@ -217,16 +215,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-07-23 10:56:32 / Modified: 16:44:22" itemprop="dateCreated datePublished" datetime="2021-07-23T10:56:32+08:00">2021-07-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
+              <time title="Created: 2021-07-27 17:57:51 / Modified: 18:35:15" itemprop="dateCreated datePublished" datetime="2021-07-27T17:57:51+08:00">2021-07-27</time>
             </span>
 
           
@@ -234,15 +223,15 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.4k</span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>2 mins.</span>
+              <span>1 mins.</span>
             </span>
-            <div class="post-description">崩溃优化对应处理的机制</div>
+            <div class="post-description">Android-handler机制</div>
 
         </div>
       </header>
@@ -253,41 +242,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
-<h3 id="Native-崩溃"><a href="#Native-崩溃" class="headerlink" title="Native 崩溃"></a>Native 崩溃</h3><blockquote>
-<ol>
-<li>在 Unix-like 系统中，所有的崩溃都是编程错误或者硬件错误相关的，系统遇到不可恢复的错误时会触发崩溃机制让程序退出，如除零、段地址错误等。</li>
-<li>异常发生时，CPU 通过异常中断的方式，触发异常处理流程。不同的处理器，有不同的异常中断类型和中断处理方式。</li>
-<li>linux 把这些中断处理，统一为信号量，可以注册信号量向量进行处理。</li>
-<li>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号。  </li>
-</ol>
-</blockquote>
-<h4 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h4><p><img src="https://upload-images.jianshu.io/upload_images/2718191-cf676fb7776e121b.png" alt="信号机制"> </p>
-<h5 id="1-信号的接收"><a href="#1-信号的接收" class="headerlink" title="(1) 信号的接收"></a>(1) 信号的接收</h5><p>接收信号的任务是由内核代理的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入<strong>内核态</strong> 。<br>！！！注意，此时信号还只是在队列中，对进程来说暂时是不知道有信号到来的。</p>
-<h5 id="2-信号的检测"><a href="#2-信号的检测" class="headerlink" title="(2) 信号的检测"></a>(2) 信号的检测</h5><p>进程陷入内核态后，有两种场景会对信号进行检测：</p>
-<p>1.进程从内核态返回到用户态前进行信号检测</p>
-<p>2.进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</p>
-<p>当发现有新信号时，便会进入下一步，信号的处理。</p>
-<h5 id="3-信号的处理"><a href="#3-信号的处理" class="headerlink" title="(3) 信号的处理"></a>(3) 信号的处理</h5><p>信号处理函数是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。</p>
-<p>接下来进程返回到用户态中，执行相应的信号处理函数。</p>
-<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。</p>
-<p>至此，一个完整的信号处理流程便结束了，如果同时有多个信号到达，上面的处理流程会在第2步和第3步骤间重复进行。</p>
-<p>四、捕捉native crash<br>1.注册信号处理函数<br>第一步就是要用信号处理函数捕获到native crash(SIGSEGV, SIGBUS等)。在posix系统，可以用sigaction()：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int sigaction(int signum,const struct sigaction *act,struct sigaction *oldact));</span><br></pre></td></tr></table></figure>
-<p>signum：代表信号编码，可以是除SIGKILL及SIGSTOP外的任何一个特定有效的信号，如果为这两个信号定义自己的处理函数，将导致信号安装错误。</p>
-<p>act：指向结构体sigaction的一个实例的指针，该实例指定了对特定信号的处理，如果设置为空，进程会执行默认处理。</p>
-<p>oldact：和参数act类似，只不过保存的是原来对相应信号的处理，也可设置为NULL。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction sa_old;  </span><br><span class="line">memset(&amp;sa, 0, sizeof(sa));  </span><br><span class="line">sigemptyset(&amp;sa.sa_mask);  </span><br><span class="line">sa.sa_sigaction = my_handler;  </span><br><span class="line">sa.sa_flags = SA_SIGINFO;</span><br><span class="line">if (sigaction(sig, &amp;sa, &amp;sa_old) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.设置额外栈空间</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">int sigaltstack(const stack_t *ss, stack_t *oss);</span><br></pre></td></tr></table></figure>
-<p>SIGSEGV很有可能是栈溢出引起的，如果在默认的栈上运行很有可能会破坏程序运行的现场，无法获取到正确的上下文。而且当栈满了（太多次递归，栈上太多对象），系统会在同一个已经满了的栈上调用SIGSEGV的信号处理函数，又再一次引起同样的信号。</p>
-<p>我们应该开辟一块新的空间作为运行信号处理函数的栈。可以使用sigaltstack在任意线程注册一个可选的栈，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">stack_t stack;  </span><br><span class="line">memset(&amp;stack, 0, sizeof(stack));  </span><br><span class="line">/* Reserver the system default stack size. We don&#x27;t need that much by the way. */  </span><br><span class="line">stack.ss_size = SIGSTKSZ;  </span><br><span class="line">stack.ss_sp = malloc(stack.ss_size);  </span><br><span class="line">stack.ss_flags = 0;  </span><br><span class="line">/* Install alternate stack size. Be sure the memory region is valid until you revert it. */  </span><br><span class="line">if (stack.ss_sp != NULL &amp;&amp; sigaltstack(&amp;stack, NULL) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.兼容其他signal处理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static void my_handler(const int code, siginfo_t *const si, void *const sc) &#123;</span><br><span class="line">...  </span><br><span class="line">  /* Call previous handler. */  </span><br><span class="line">  old_handler.sa_sigaction(code, si, sc);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
-<p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
-
+        
     </div>
 
     
@@ -305,13 +260,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/19/google-aab/" rel="prev" title="Google">
-      <i class="fa fa-chevron-left"></i> Google
+    <a href="/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/" rel="prev" title="Android-外挂篇">
+      <i class="fa fa-chevron-left"></i> Android-外挂篇
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/" rel="next" title="Android-Handle---消息分发机制">
-      Android-Handle---消息分发机制 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -370,7 +322,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B4%A9%E6%BA%83%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">崩溃优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-%E5%B4%A9%E6%BA%83%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">Android 崩溃分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Native-%E5%B4%A9%E6%BA%83"><span class="nav-number">1.1.1.</span> <span class="nav-text">Native 崩溃</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">信号机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%8E%A5%E6%94%B6"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">(1) 信号的接收</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">(2) 信号的检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">(3) 信号的处理</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
