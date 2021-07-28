@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android-Handler机制-2</title>
-    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
-    <content><![CDATA[]]></content>
+    <title>Android-APK构建流程</title>
+    <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
+<li>通过<strong>aapt-Android Asset Packing Tool</strong> 打包res资源文件，生成R.java、resources.arsc和res文件（二进制 &amp; 非二进制如res/raw和pic保持原样）  </li>
+</ol>
+<blockquote>
+<p>这一过程主要是aapt对res和asset文件夹，AndroidManifest.xml，android库(aar,jar)等的资源文件进行处理。  </p>
+<ul>
+<li>先检查<strong>AndroidManifest.xml</strong>的合法性  </li>
+<li>然后编译res与asserts目录下的资源并生成resource.arsc文件  </li>
+<li>再生成R文件。</li>
+</ul>
+</blockquote>
+<p>除了assets和res/raw资源被原封不动地打包进APK之外，其它的资源都会被编译或者处理，<em>大部分文本格式的XML资源文件会被编译成二进制格式的XML资源文件</em>。<br>除了assets资源之外，其他的资源都会在R文件中被赋予一个资源ID。也就是说，R文件中只会存在id，真正的资源存在于resource.arsc中，resource.arsc相当于一个资源索引表，资源id是key，value是资源路径。我们使用drawable-xdpi或者drawable-xxdpi这些不同分辨率的图片的时候，就是依靠resource.arsc根据设备的分辨率选择不同的图片</p>
+<p><img src="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png" alt="R.java"><br> (R.java相关知识)<br>2. 处理.aidl文件，生成对应的Java接口文件<br>3. 通过Java Compiler编译R.java、Java接口文件、Java源文件，生成.class文件 (编译期超出64k?)<br>4. 通过dex命令，将.class文件和第三方库中的.class文件处理生成classes.dex<br>5. 通过<strong>Japkbuilder</strong>J工具，将aapt生成的resources.arsc和res文件、assets文件和classes.dex一起打包生成apk<br>6. 通过<strong>Jarsigner</strong>工具，对上面的apk进行debug或release签名<br>通过zipalign工具，将签名后的apk进行对齐处理<br>(引申出问题，为什么需要签名，签名的方式有几种，有什么区别？)<br>7. 通过<strong>zipalign</strong>工具，将签名后的apk进行对齐处理<br>(引申一个问题，为什么需要对齐？)<br>8. 混淆proguard：proguard主要的目的是混淆代码，保护应用源代码。次要的功能还有移除无用类等，优化字节码，缩小包体积。  </p>
+<h1 id="APK扩展性问题"><a href="#APK扩展性问题" class="headerlink" title="APK扩展性问题:"></a>APK扩展性问题:</h1><h2 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h2><h3 id="1-R-java是什么-R-java构成"><a href="#1-R-java是什么-R-java构成" class="headerlink" title="1. R.java是什么(R.java构成)"></a>1. <em>R.java是什么(R.java构成)</em></h3><blockquote>
+<p>R.java由ADT(aapt)编译生成，<br>记录应用apk-res路径所有资源，并根据这些资源建立对应的ID(生成唯一的标识符)<br>编译期间，同一个资源在普通的apk中只会属于一个<strong>package</strong>，一个<strong>type</strong>，只拥有一个<strong>entry次序</strong>。<br>以0x01开头的就是系统已经内置的资源id，以0x7f开头的是咱们自己添加的app资源id </p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/%E8%B5%84%E6%BA%90id.png" alt="R.java"> </p>
+<blockquote>
+<p>由于项目开发是多模块的开发 - 编译期相关的知识</p>
+<ul>
+<li>主模块中的R.java中的字段以final修饰，以常量形式存在。  </li>
+<li>库模块中的R.java中的字段不以final修饰，以变量形式被项目中的代码所引用。  </li>
+</ul>
+</blockquote>
+<h4 id="Android资源的合并"><a href="#Android资源的合并" class="headerlink" title="Android资源的合并"></a>Android资源的合并</h4><blockquote>
+<p>覆盖的优先级如下：<br>build variant &gt; build type &gt; product flavor &gt; main source set &gt; library dependences</p>
+</blockquote>
+<blockquote>
+<p>这种依赖关系不同于gradle里面的implementation依赖传递，implementation是跨级不能传递，但是R文件的生成是跨级可以传递的。<br>module的R文件数 = 依赖的module/aar数量 + 1(自身的R文件)<br>R.文件的生成是底层到上层 </p>
+</blockquote>
+<h3 id="为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？"><a href="#为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？" class="headerlink" title="为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？"></a>为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？</h3><blockquote>
+<p><em>比较早的aapt的版本生成的非主模块的资源id确实都是final修饰的，这样会带来一个问题，这些资源id全部内联到代码中，一旦新增或者删除，修改了资源，资源id就会有变化，所有的代码都需要重新编译，造成严重的编译耗时</em>。  </p>
+</blockquote>
+<p>后来改为主模块final常量方式内联，非主模块引用方式，这样等按照从下到上编译到App模块的时候，所有的资源id都已经确定了，底层模块的资源只需要通过引用就能拿到自己对应的id，而修改(新增，删除，修改)了资源之后，也只需要重新生成R文件就好了。编译耗时大大减少。</p>
+<p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。  </p>
+<p>开发时，在其他module代码引用资源文件时,使用以下代码进行索引  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier for the given resource name.  A fully</span><br><span class="line"> * qualified resource name is of the form &quot;package:type/entry&quot;.  The first</span><br><span class="line"> * two components (package and type) are optional if defType and</span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use of this function is discouraged.  It is much more</span><br><span class="line"> * efficient to retrieve resources by identifier than by name.</span><br><span class="line"> * </span><br><span class="line"> * @param name The name of the desired resource.</span><br><span class="line"> * @param defType Optional default resource type to find, if &quot;type/&quot; is</span><br><span class="line"> *                not included in the name.  Can be null to require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package to find, if &quot;package:&quot; is</span><br><span class="line"> *                   not included in the name.  Can be null to require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @return int The associated resource identifier.  Returns 0 if no such</span><br><span class="line"> *         resource was found.  (0 is not a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String name, String defType, String defPackage) &#123;</span><br><span class="line">    return mResourcesImpl.getIdentifier(name, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？"><a href="#为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？" class="headerlink" title="为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？"></a>为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</h3><p>因为资源id只是表示资源的次序，而不是别的跟资源本身绑定的属性。当到了不同的模块以后，参与编译的资源变多了，那次序肯定会改变。资源id也就改变了。并且子模块的资源id只是引用形式存在于代码中，id具体是什么值并不是很care。</p>
+<h3 id="apk或者aab，为什么需要对齐？"><a href="#apk或者aab，为什么需要对齐？" class="headerlink" title="apk或者aab，为什么需要对齐？"></a><em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
+<p>zipalign的主要工作是将apk包进行对齐处理，使apk包中的所有资源文件举例文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快。<br>为什么快呢？如果每个资源的开始位置上都是一个资源之后的4n字节，那么访问下一个资源就不用遍历，直接跳到4字节之后即可 </p>
+</blockquote>
+<h3 id="apk或者aab混淆的方式有哪些"><a href="#apk或者aab混淆的方式有哪些" class="headerlink" title="apk或者aab混淆的方式有哪些()"></a><em>apk或者aab</em>混淆的方式有哪些()</h3><blockquote>
+</blockquote>
+<p>压缩(Shrink)：检测并移除代码中无用的类、字段、方法和特性<br>优化(Optimize)：字节码进行优化，移除无用的指令。<br>混淆(Obfuscate)：使用a、b、c、d这样简短而无意义的名称，对垒、字段和方法进行重命名。<br>预检测(Preveirfy)：在Java平台对处理后的代码进行预检测，确保加载class文件是可执行的 </p>
+<h3 id="“Android”-64k报错"><a href="#“Android”-64k报错" class="headerlink" title="“Android” 64k报错"></a>“Android” 64k报错</h3><p>应用及第三方库包含的方法数(method)总和超过65536，在开发的时候，会遇到一个构建的错误。<br>指明您的应用达到Android构建规定的应用的限制：</p>
+<h4 id="构建错误的原因"><a href="#构建错误的原因" class="headerlink" title="构建错误的原因:"></a>构建错误的原因:</h4><h5 id="dex文件格式的限制"><a href="#dex文件格式的限制" class="headerlink" title="dex文件格式的限制"></a>dex文件格式的限制</h5><p>Android 应用 (APK) 文件包含 Dalvik Executable (DEX) 二进制文件形式的可执行字节码文件，这些文件包含用来运行应用的已编译代码。<br>Dalvik Executable 规范将可在单个 DEX 文件内引用的方法总数限制为 65536 (其中包括 Android 框架方法、库方法以及您自己的代码中的方法)</p>
+<h5 id="其他限制"><a href="#其他限制" class="headerlink" title="其他限制"></a>其他限制</h5><p>系统对dex文件进行优化操作时分配的缓冲区大小的限制 ，方法如果超出缓存区，同样也是会报错的。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
       <tags>
         <tag>Android</tag>
       </tags>
@@ -60,58 +112,62 @@
       </tags>
   </entry>
   <entry>
-    <title>Android-APK构建流程</title>
-    <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
-<li>通过<strong>aapt-Android Asset Packing Tool</strong> 打包res资源文件，生成R.java、resources.arsc和res文件（二进制 &amp; 非二进制如res/raw和pic保持原样）  </li>
+    <title>android-Handler机制-2</title>
+    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-崩溃优化</title>
+    <url>/2021/07/23/android-native/</url>
+    <content><![CDATA[<h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
+<h3 id="Native-崩溃"><a href="#Native-崩溃" class="headerlink" title="Native 崩溃"></a>Native 崩溃</h3><blockquote>
+<ol>
+<li>在 Unix-like 系统中，所有的崩溃都是编程错误或者硬件错误相关的，系统遇到不可恢复的错误时会触发崩溃机制让程序退出，如除零、段地址错误等。</li>
+<li>异常发生时，CPU 通过异常中断的方式，触发异常处理流程。不同的处理器，有不同的异常中断类型和中断处理方式。</li>
+<li>linux 把这些中断处理，统一为信号量，可以注册信号量向量进行处理。</li>
+<li>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号。  </li>
 </ol>
-<blockquote>
-<p>这一过程主要是aapt对res和asset文件夹，AndroidManifest.xml，android库(aar,jar)等的资源文件进行处理。  </p>
-<ul>
-<li>先检查<strong>AndroidManifest.xml</strong>的合法性  </li>
-<li>然后编译res与asserts目录下的资源并生成resource.arsc文件  </li>
-<li>再生成R文件。</li>
-</ul>
 </blockquote>
-<p>除了assets和res/raw资源被原封不动地打包进APK之外，其它的资源都会被编译或者处理，<em>大部分文本格式的XML资源文件会被编译成二进制格式的XML资源文件</em>。<br>除了assets资源之外，其他的资源都会在R文件中被赋予一个资源ID。也就是说，R文件中只会存在id，真正的资源存在于resource.arsc中，resource.arsc相当于一个资源索引表，资源id是key，value是资源路径。我们使用drawable-xdpi或者drawable-xxdpi这些不同分辨率的图片的时候，就是依靠resource.arsc根据设备的分辨率选择不同的图片</p>
-<p><img src="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png" alt="R.java"><br> (R.java相关知识)<br>2. 处理.aidl文件，生成对应的Java接口文件<br>3. 通过Java Compiler编译R.java、Java接口文件、Java源文件，生成.class文件 (编译期超出64k?)<br>4. 通过dex命令，将.class文件和第三方库中的.class文件处理生成classes.dex<br>5. 通过<strong>Japkbuilder</strong>J工具，将aapt生成的resources.arsc和res文件、assets文件和classes.dex一起打包生成apk<br>6. 通过<strong>Jarsigner</strong>工具，对上面的apk进行debug或release签名<br>通过zipalign工具，将签名后的apk进行对齐处理<br>(引申出问题，为什么需要签名，签名的方式有几种，有什么区别？)<br>7. 通过<strong>zipalign</strong>工具，将签名后的apk进行对齐处理<br>(引申一个问题，为什么需要对齐？)<br>8. 混淆proguard：proguard主要的目的是混淆代码，保护应用源代码。次要的功能还有移除无用类等，优化字节码，缩小包体积。  </p>
-<h1 id="APK扩展性问题"><a href="#APK扩展性问题" class="headerlink" title="APK扩展性问题:"></a>APK扩展性问题:</h1><h2 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h2><h3 id="1-R-java是什么-R-java构成"><a href="#1-R-java是什么-R-java构成" class="headerlink" title="1. R.java是什么(R.java构成)"></a>1. <em>R.java是什么(R.java构成)</em></h3><blockquote>
-<p>R.java由ADT(aapt)编译生成，<br>记录应用apk-res路径所有资源，并根据这些资源建立对应的ID(生成唯一的标识符)<br>编译期间，同一个资源在普通的apk中只会属于一个<strong>package</strong>，一个<strong>type</strong>，只拥有一个<strong>entry次序</strong>。<br>以0x01开头的就是系统已经内置的资源id，以0x7f开头的是咱们自己添加的app资源id </p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/%E8%B5%84%E6%BA%90id.png" alt="R.java"> </p>
-<blockquote>
-<p>由于项目开发是多模块的开发 - 编译期相关的知识</p>
-<ul>
-<li>主模块中的R.java中的字段以final修饰，以常量形式存在。  </li>
-<li>库模块中的R.java中的字段不以final修饰，以变量形式被项目中的代码所引用。  </li>
-</ul>
-</blockquote>
-<h4 id="Android资源的合并"><a href="#Android资源的合并" class="headerlink" title="Android资源的合并"></a>Android资源的合并</h4><blockquote>
-<p>覆盖的优先级如下：<br>build variant &gt; build type &gt; product flavor &gt; main source set &gt; library dependences</p>
-</blockquote>
-<blockquote>
-<p>这种依赖关系不同于gradle里面的implementation依赖传递，implementation是跨级不能传递，但是R文件的生成是跨级可以传递的。<br>module的R文件数 = 依赖的module/aar数量 + 1(自身的R文件)<br>R.文件的生成是底层到上层 </p>
-</blockquote>
-<h3 id="为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？"><a href="#为什么主模块-application-module-资源有final修饰，非主模块-library-module-都不是final的？" class="headerlink" title="为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？"></a>为什么主模块(application module)资源有final修饰，非主模块(library module)都不是final的？</h3><blockquote>
-<p><em>比较早的aapt的版本生成的非主模块的资源id确实都是final修饰的，这样会带来一个问题，这些资源id全部内联到代码中，一旦新增或者删除，修改了资源，资源id就会有变化，所有的代码都需要重新编译，造成严重的编译耗时</em>。  </p>
-</blockquote>
-<p>后来改为主模块final常量方式内联，非主模块引用方式，这样等按照从下到上编译到App模块的时候，所有的资源id都已经确定了，底层模块的资源只需要通过引用就能拿到自己对应的id，而修改(新增，删除，修改)了资源之后，也只需要重新生成R文件就好了。编译耗时大大减少。</p>
-<p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。  </p>
-<p>开发时，在其他module代码引用资源文件时,使用以下代码进行索引  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier for the given resource name.  A fully</span><br><span class="line"> * qualified resource name is of the form &quot;package:type/entry&quot;.  The first</span><br><span class="line"> * two components (package and type) are optional if defType and</span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use of this function is discouraged.  It is much more</span><br><span class="line"> * efficient to retrieve resources by identifier than by name.</span><br><span class="line"> * </span><br><span class="line"> * @param name The name of the desired resource.</span><br><span class="line"> * @param defType Optional default resource type to find, if &quot;type/&quot; is</span><br><span class="line"> *                not included in the name.  Can be null to require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package to find, if &quot;package:&quot; is</span><br><span class="line"> *                   not included in the name.  Can be null to require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @return int The associated resource identifier.  Returns 0 if no such</span><br><span class="line"> *         resource was found.  (0 is not a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String name, String defType, String defPackage) &#123;</span><br><span class="line">    return mResourcesImpl.getIdentifier(name, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？"><a href="#为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？" class="headerlink" title="为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？"></a>为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</h3><p>因为资源id只是表示资源的次序，而不是别的跟资源本身绑定的属性。当到了不同的模块以后，参与编译的资源变多了，那次序肯定会改变。资源id也就改变了。并且子模块的资源id只是引用形式存在于代码中，id具体是什么值并不是很care。</p>
-<h3 id="apk或者aab，为什么需要对齐？"><a href="#apk或者aab，为什么需要对齐？" class="headerlink" title="apk或者aab，为什么需要对齐？"></a><em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
-<p>zipalign的主要工作是将apk包进行对齐处理，使apk包中的所有资源文件举例文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快。<br>为什么快呢？如果每个资源的开始位置上都是一个资源之后的4n字节，那么访问下一个资源就不用遍历，直接跳到4字节之后即可 </p>
-</blockquote>
-<h3 id="apk或者aab混淆的方式有哪些"><a href="#apk或者aab混淆的方式有哪些" class="headerlink" title="apk或者aab混淆的方式有哪些()"></a><em>apk或者aab</em>混淆的方式有哪些()</h3><blockquote>
-</blockquote>
-<p>压缩(Shrink)：检测并移除代码中无用的类、字段、方法和特性<br>优化(Optimize)：字节码进行优化，移除无用的指令。<br>混淆(Obfuscate)：使用a、b、c、d这样简短而无意义的名称，对垒、字段和方法进行重命名。<br>预检测(Preveirfy)：在Java平台对处理后的代码进行预检测，确保加载class文件是可执行的 </p>
-<h3 id="“Android”-64k报错"><a href="#“Android”-64k报错" class="headerlink" title="“Android” 64k报错"></a>“Android” 64k报错</h3><p>应用及第三方库包含的方法数(method)总和超过65536，在开发的时候，会遇到一个构建的错误。<br>指明您的应用达到Android构建规定的应用的限制：</p>
-<h4 id="构建错误的原因"><a href="#构建错误的原因" class="headerlink" title="构建错误的原因:"></a>构建错误的原因:</h4><h5 id="dex文件格式的限制"><a href="#dex文件格式的限制" class="headerlink" title="dex文件格式的限制"></a>dex文件格式的限制</h5><p>Android 应用 (APK) 文件包含 Dalvik Executable (DEX) 二进制文件形式的可执行字节码文件，这些文件包含用来运行应用的已编译代码。<br>Dalvik Executable 规范将可在单个 DEX 文件内引用的方法总数限制为 65536 (其中包括 Android 框架方法、库方法以及您自己的代码中的方法)</p>
-<h5 id="其他限制"><a href="#其他限制" class="headerlink" title="其他限制"></a>其他限制</h5><p>系统对dex文件进行优化操作时分配的缓冲区大小的限制 ，方法如果超出缓存区，同样也是会报错的。</p>
+<h4 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h4><p><img src="https://upload-images.jianshu.io/upload_images/2718191-cf676fb7776e121b.png" alt="信号机制"> </p>
+<h5 id="1-信号的接收"><a href="#1-信号的接收" class="headerlink" title="(1) 信号的接收"></a>(1) 信号的接收</h5><p>接收信号的任务是由内核代理的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入<strong>内核态</strong> 。<br>！！！注意，此时信号还只是在队列中，对进程来说暂时是不知道有信号到来的。</p>
+<h5 id="2-信号的检测"><a href="#2-信号的检测" class="headerlink" title="(2) 信号的检测"></a>(2) 信号的检测</h5><p>进程陷入内核态后，有两种场景会对信号进行检测：</p>
+<p>1.进程从内核态返回到用户态前进行信号检测</p>
+<p>2.进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</p>
+<p>当发现有新信号时，便会进入下一步，信号的处理。</p>
+<h5 id="3-信号的处理"><a href="#3-信号的处理" class="headerlink" title="(3) 信号的处理"></a>(3) 信号的处理</h5><p>信号处理函数是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。</p>
+<p>接下来进程返回到用户态中，执行相应的信号处理函数。</p>
+<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。</p>
+<p>至此，一个完整的信号处理流程便结束了，如果同时有多个信号到达，上面的处理流程会在第2步和第3步骤间重复进行。</p>
+<p>四、捕捉native crash<br>1.注册信号处理函数<br>第一步就是要用信号处理函数捕获到native crash(SIGSEGV, SIGBUS等)。在posix系统，可以用sigaction()：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int sigaction(int signum,const struct sigaction *act,struct sigaction *oldact));</span><br></pre></td></tr></table></figure>
+<p>signum：代表信号编码，可以是除SIGKILL及SIGSTOP外的任何一个特定有效的信号，如果为这两个信号定义自己的处理函数，将导致信号安装错误。</p>
+<p>act：指向结构体sigaction的一个实例的指针，该实例指定了对特定信号的处理，如果设置为空，进程会执行默认处理。</p>
+<p>oldact：和参数act类似，只不过保存的是原来对相应信号的处理，也可设置为NULL。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">struct sigaction sa_old;  </span><br><span class="line">memset(&amp;sa, 0, sizeof(sa));  </span><br><span class="line">sigemptyset(&amp;sa.sa_mask);  </span><br><span class="line">sa.sa_sigaction = my_handler;  </span><br><span class="line">sa.sa_flags = SA_SIGINFO;</span><br><span class="line">if (sigaction(sig, &amp;sa, &amp;sa_old) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.设置额外栈空间</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">int sigaltstack(const stack_t *ss, stack_t *oss);</span><br></pre></td></tr></table></figure>
+<p>SIGSEGV很有可能是栈溢出引起的，如果在默认的栈上运行很有可能会破坏程序运行的现场，无法获取到正确的上下文。而且当栈满了（太多次递归，栈上太多对象），系统会在同一个已经满了的栈上调用SIGSEGV的信号处理函数，又再一次引起同样的信号。</p>
+<p>我们应该开辟一块新的空间作为运行信号处理函数的栈。可以使用sigaltstack在任意线程注册一个可选的栈，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stack_t stack;  </span><br><span class="line">memset(&amp;stack, 0, sizeof(stack));  </span><br><span class="line">/* Reserver the system default stack size. We don&#x27;t need that much by the way. */  </span><br><span class="line">stack.ss_size = SIGSTKSZ;  </span><br><span class="line">stack.ss_sp = malloc(stack.ss_size);  </span><br><span class="line">stack.ss_flags = 0;  </span><br><span class="line">/* Install alternate stack size. Be sure the memory region is valid until you revert it. */  </span><br><span class="line">if (stack.ss_sp != NULL &amp;&amp; sigaltstack(&amp;stack, NULL) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.兼容其他signal处理</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">static void my_handler(const int code, siginfo_t *const si, void *const sc) &#123;</span><br><span class="line">...  </span><br><span class="line">  /* Call previous handler. */  </span><br><span class="line">  old_handler.sa_sigaction(code, si, sc);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
+<p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
 ]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-外挂篇</title>
+    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -254,62 +310,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-崩溃优化</title>
-    <url>/2021/07/23/android-native/</url>
-    <content><![CDATA[<h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
-<h3 id="Native-崩溃"><a href="#Native-崩溃" class="headerlink" title="Native 崩溃"></a>Native 崩溃</h3><blockquote>
-<ol>
-<li>在 Unix-like 系统中，所有的崩溃都是编程错误或者硬件错误相关的，系统遇到不可恢复的错误时会触发崩溃机制让程序退出，如除零、段地址错误等。</li>
-<li>异常发生时，CPU 通过异常中断的方式，触发异常处理流程。不同的处理器，有不同的异常中断类型和中断处理方式。</li>
-<li>linux 把这些中断处理，统一为信号量，可以注册信号量向量进行处理。</li>
-<li>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号。  </li>
-</ol>
-</blockquote>
-<h4 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h4><p><img src="https://upload-images.jianshu.io/upload_images/2718191-cf676fb7776e121b.png" alt="信号机制"> </p>
-<h5 id="1-信号的接收"><a href="#1-信号的接收" class="headerlink" title="(1) 信号的接收"></a>(1) 信号的接收</h5><p>接收信号的任务是由内核代理的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入<strong>内核态</strong> 。<br>！！！注意，此时信号还只是在队列中，对进程来说暂时是不知道有信号到来的。</p>
-<h5 id="2-信号的检测"><a href="#2-信号的检测" class="headerlink" title="(2) 信号的检测"></a>(2) 信号的检测</h5><p>进程陷入内核态后，有两种场景会对信号进行检测：</p>
-<p>1.进程从内核态返回到用户态前进行信号检测</p>
-<p>2.进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</p>
-<p>当发现有新信号时，便会进入下一步，信号的处理。</p>
-<h5 id="3-信号的处理"><a href="#3-信号的处理" class="headerlink" title="(3) 信号的处理"></a>(3) 信号的处理</h5><p>信号处理函数是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。</p>
-<p>接下来进程返回到用户态中，执行相应的信号处理函数。</p>
-<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。</p>
-<p>至此，一个完整的信号处理流程便结束了，如果同时有多个信号到达，上面的处理流程会在第2步和第3步骤间重复进行。</p>
-<p>四、捕捉native crash<br>1.注册信号处理函数<br>第一步就是要用信号处理函数捕获到native crash(SIGSEGV, SIGBUS等)。在posix系统，可以用sigaction()：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;signal.h&gt; </span><br><span class="line">int sigaction(int signum,const struct sigaction *act,struct sigaction *oldact));</span><br></pre></td></tr></table></figure>
-<p>signum：代表信号编码，可以是除SIGKILL及SIGSTOP外的任何一个特定有效的信号，如果为这两个信号定义自己的处理函数，将导致信号安装错误。</p>
-<p>act：指向结构体sigaction的一个实例的指针，该实例指定了对特定信号的处理，如果设置为空，进程会执行默认处理。</p>
-<p>oldact：和参数act类似，只不过保存的是原来对相应信号的处理，也可设置为NULL。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">struct sigaction sa_old;  </span><br><span class="line">memset(&amp;sa, 0, sizeof(sa));  </span><br><span class="line">sigemptyset(&amp;sa.sa_mask);  </span><br><span class="line">sa.sa_sigaction = my_handler;  </span><br><span class="line">sa.sa_flags = SA_SIGINFO;</span><br><span class="line">if (sigaction(sig, &amp;sa, &amp;sa_old) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.设置额外栈空间</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">int sigaltstack(const stack_t *ss, stack_t *oss);</span><br></pre></td></tr></table></figure>
-<p>SIGSEGV很有可能是栈溢出引起的，如果在默认的栈上运行很有可能会破坏程序运行的现场，无法获取到正确的上下文。而且当栈满了（太多次递归，栈上太多对象），系统会在同一个已经满了的栈上调用SIGSEGV的信号处理函数，又再一次引起同样的信号。</p>
-<p>我们应该开辟一块新的空间作为运行信号处理函数的栈。可以使用sigaltstack在任意线程注册一个可选的栈，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stack_t stack;  </span><br><span class="line">memset(&amp;stack, 0, sizeof(stack));  </span><br><span class="line">/* Reserver the system default stack size. We don&#x27;t need that much by the way. */  </span><br><span class="line">stack.ss_size = SIGSTKSZ;  </span><br><span class="line">stack.ss_sp = malloc(stack.ss_size);  </span><br><span class="line">stack.ss_flags = 0;  </span><br><span class="line">/* Install alternate stack size. Be sure the memory region is valid until you revert it. */  </span><br><span class="line">if (stack.ss_sp != NULL &amp;&amp; sigaltstack(&amp;stack, NULL) == 0) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.兼容其他signal处理</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">static void my_handler(const int code, siginfo_t *const si, void *const sc) &#123;</span><br><span class="line">...  </span><br><span class="line">  /* Call previous handler. */  </span><br><span class="line">  old_handler.sa_sigaction(code, si, sc);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
-<p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-外挂篇</title>
-    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
