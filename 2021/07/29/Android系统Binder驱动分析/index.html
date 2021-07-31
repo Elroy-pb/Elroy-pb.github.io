@@ -29,7 +29,7 @@
 <meta property="og:description" content="Android系统Binder驱动分析(1)">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-07-29T03:34:23.000Z">
-<meta property="article:modified_time" content="2021-07-31T07:46:00.790Z">
+<meta property="article:modified_time" content="2021-07-31T09:41:12.816Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">10</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-31 15:46:00" itemprop="dateModified" datetime="2021-07-31T15:46:00+08:00">2021-07-31</time>
+                <time title="Modified: 2021-07-31 17:41:12" itemprop="dateModified" datetime="2021-07-31T17:41:12+08:00">2021-07-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,7 +239,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
       
         <h1 id="提前掌握Binder的基础知识-预习"><a href="#提前掌握Binder的基础知识-预习" class="headerlink" title="提前掌握Binder的基础知识(预习)"></a>提前掌握Binder的基础知识(预习)</h1><p>Android系统架构的底层就是linux,本篇文章如有不懂的地方，建议参考<a target="_blank" rel="noopener" href="http://www.linfo.org/">原文文档</a>,以便更好帮助自己学习。<br>希望能跟大家多多交流 !!!  </p>
 <h2 id="Linux的基础知识"><a href="#Linux的基础知识" class="headerlink" title="Linux的基础知识"></a>Linux的基础知识</h2><p>Binder究竟是什么<br>什么是linux的系统内存<br>内核空间是什么<br>进程隔离<br>用户空间是什么</p>
-<h2 id="Binder究竟是什么"><a href="#Binder究竟是什么" class="headerlink" title="Binder究竟是什么"></a>Binder究竟是什么</h2><p>Binder是Android系统中负责每个<strong>用户进程</strong>与<strong>内核</strong>通信的驱动模块。  </p>
+<h2 id="Binder究竟是什么"><a href="#Binder究竟是什么" class="headerlink" title="Binder究竟是什么"></a>Binder究竟是什么</h2><p>Binder是Android系统中负责每个<strong>用户进程</strong>与<strong>内核</strong>通信的机制(驱动)</p>
 <h2 id="内核空间是什么"><a href="#内核空间是什么" class="headerlink" title="内核空间是什么"></a>内核空间是什么</h2><p><a target="_blank" rel="noopener" href="http://www.linfo.org/kernel_space.html">内核空间</a></p>
 <blockquote>
 <p>System memory in Linux can be divided into two distinct regions: kernel space and user space. Kernel space is where the kernel (i.e., the core of the operating system) executes (i.e., runs) and provides its services.<br>系统内存在的Linux可以分为两个不同的区域：<strong>内核空间</strong>和<strong>用户空间</strong>。内核空间是内核（即操作系统的核心）执行（即运行）并提供其服务的地方。</p>
@@ -286,15 +286,15 @@
 <p>Kernel space can be accessed by user processes only through the use of system calls<br>用户空间访问内核空间的唯一方式就是系统调用</p>
 </blockquote>
 <p><strong>内核态</strong> : 当一个任务（进程）执行系统调用而陷入内核代码中执行时，我们就称进程处于内核运行态（或简称为内核态）此时处理器处于特权级最高的（0级）内核代码中执行<br><strong>用户态</strong> : 当进程在执行用户自己的代码时，则称其处于用户运行态（用户态）。即此时处理器在特权级最低的（3级）用户代码中运行。<br>处理器在特权等级高的时候才能执行那些特权CPU指令。 </p>
-<h2 id="扩展概念"><a href="#扩展概念" class="headerlink" title="扩展概念"></a>扩展概念</h2><blockquote>
-<p>IPC : Inter-Process Communication (进程间的通信)<br>RPC : Remote Procedure Call (远程过程调用)<br>RPC是IPC的基础上进行了封装</p>
+<h2 id="扩展概念"><a href="#扩展概念" class="headerlink" title="扩展概念"></a>扩展概念</h2><h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>系统调用是 <strong>类 Unix</strong> 操作系统中活动进程对内核执行的服务的请求，例如输入/输出(I/O) 或进程创建。活动进程是当前在 CPU 中进行的进程，与在 CPU 中等待其下一次运行的进程相反。I/O 是将数据传入或传出 CPU 以及传入或传出外围设备（如磁盘驱动器、键盘、鼠标和打印机）的任何程序、操作或设备。<br>系统调用主要通过如下两个函数来实现:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">copy_from_user() // 将数据从用户空间拷贝到内核空间</span><br><span class="line">copy_to_user() // 将数据从内核空间拷贝到用户空间</span><br></pre></td></tr></table></figure>
+<h3 id="Linux-使用两级保护机制："><a href="#Linux-使用两级保护机制：" class="headerlink" title="Linux 使用两级保护机制："></a>Linux 使用两级保护机制：</h3><p>Linux 使用两级保护机制：0 级供系统内核使用，3 级供用户程序使用。</p>
+<h3 id="Linux-内存映射"><a href="#Linux-内存映射" class="headerlink" title="Linux 内存映射"></a>Linux 内存映射</h3><p>Binder IPC 机制中涉及到的内存映射通过 mmap() 来实现，mmap() 是操作系统中一种内存映射的方法。内存映射简单的讲就是将用户空间的一块内存区域映射到内核空间。映射关系建立后，用户对这块内存区域的修改可以直接反应到内核空间；反之内核空间对这段区域的修改也能直接反应到用户空间。</p>
+<p>内存映射能减少数据拷贝次数，实现用户空间和内核空间的高效互动。两个空间各自的修改能直接反映在映射的内存区域，从而被对方空间及时感知。也正因为如此，内存映射能够提供对进程间通信的支持。</p>
+<h3 id="动态内核可加载模块"><a href="#动态内核可加载模块" class="headerlink" title="动态内核可加载模块"></a>动态内核可加载模块</h3><p>正如前面所说，跨进程通信是需要内核空间做支持的。传统的 IPC 机制如管道、Socket 都是内核的一部分，因此通过内核支持来实现进程间通信自然是没问题的。但是 Binder 并不是 Linux 系统内核的一部分，那怎么办呢？这就得益于 Linux 的动态内核可加载模块（Loadable Kernel Module，LKM）的机制；模块是具有独立功能的程序，它可以被单独编译，但是不能独立运行。<br>它在运行时被链接到内核作为内核的一部分运行。这样，Android 系统就可以通过动态添加一个内核模块运行在内核空间，用户进程之间通过这个内核模块作为桥梁来实现通信。</p>
+<blockquote>
+<p>在 Android 系统中，这个运行在内核空间，负责各个用户进程通过 Binder 实现通信的内核模块就叫 Binder 驱动（Binder Dirver）。</p>
 </blockquote>
-<p>A -&gt; B </p>
-<p>A(①封装数据 ②发送给B) ===&gt;(IPC) B(①取出数据 @调用数据) </p>
-<p>再简单的分析下要素 (led是例子)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源 : A   </span><br><span class="line">目的 B 先向 ServerManger注册led服务  </span><br><span class="line">    A 向 ServerManger 查询led服务,得到一个Handler  </span><br><span class="line">数据：char_Buff   --&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>系统调用是 <strong>类 Unix</strong> 操作系统中活动进程对内核执行的服务的请求，例如输入/输出(I/O) 或进程创建。活动进程是当前在 CPU 中进行的进程，与在 CPU 中等待其下一次运行的进程相反。I/O 是将数据传入或传出 CPU 以及传入或传出外围设备（如磁盘驱动器、键盘、鼠标和打印机）的任何程序、操作或设备。</p>
 
     </div>
 
@@ -378,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E6%8E%8C%E6%8F%A1Binder%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E9%A2%84%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">提前掌握Binder的基础知识(预习)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">Linux的基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">Binder究竟是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">内核空间是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">内核的作用是什么:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%9A%94%E7%A6%BB"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">进程隔离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AF%E5%8C%BA"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">内核空间的误区</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.</span> <span class="nav-text">用户空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E8%B7%9F%E7%94%A8%E6%88%B7%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.1.</span> <span class="nav-text">用户空间跟用户进程的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E5%86%85%E6%A0%B8%E6%80%81-%E7%94%A8%E6%88%B7%E6%80%81"><span class="nav-number">1.5.</span> <span class="nav-text">系统调用&#x2F;内核态&#x2F;用户态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%A6%82%E5%BF%B5"><span class="nav-number">1.6.</span> <span class="nav-text">扩展概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">系统调用</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E6%8E%8C%E6%8F%A1Binder%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E9%A2%84%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">提前掌握Binder的基础知识(预习)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">Linux的基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">Binder究竟是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">内核空间是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">内核的作用是什么:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%9A%94%E7%A6%BB"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">进程隔离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AF%AF%E5%8C%BA"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">内核空间的误区</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.</span> <span class="nav-text">用户空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E8%B7%9F%E7%94%A8%E6%88%B7%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.1.</span> <span class="nav-text">用户空间跟用户进程的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E5%86%85%E6%A0%B8%E6%80%81-%E7%94%A8%E6%88%B7%E6%80%81"><span class="nav-number">1.5.</span> <span class="nav-text">系统调用&#x2F;内核态&#x2F;用户态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%A6%82%E5%BF%B5"><span class="nav-number">1.6.</span> <span class="nav-text">扩展概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E4%BD%BF%E7%94%A8%E4%B8%A4%E7%BA%A7%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6%EF%BC%9A"><span class="nav-number">1.6.2.</span> <span class="nav-text">Linux 使用两级保护机制：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-number">1.6.3.</span> <span class="nav-text">Linux 内存映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E6%A0%B8%E5%8F%AF%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97"><span class="nav-number">1.6.4.</span> <span class="nav-text">动态内核可加载模块</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -394,7 +394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -452,12 +452,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">11k</span>
+    <span title="Symbols count total">13k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">10 mins.</span>
+    <span title="Reading time total">12 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
