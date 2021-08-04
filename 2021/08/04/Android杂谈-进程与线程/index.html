@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="进程和线程那点事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android杂谈-进程与线程">
+<meta property="og:url" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Elroy-Pb">
+<meta property="og:description" content="进程和线程那点事">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E5%87%BD%E6%95%B0%E4%BF%A1%E6%81%AF.jpeg">
+<meta property="og:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%A0%88%E5%8C%BA.jpeg">
+<meta property="og:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB.jpeg">
+<meta property="og:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/jvm.jpeg">
+<meta property="og:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/jdk-1.8.0.png">
+<meta property="article:published_time" content="2021-08-04T02:13:30.000Z">
+<meta property="article:modified_time" content="2021-08-04T09:44:37.540Z">
+<meta property="article:author" content="Elroy-Pb">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E5%87%BD%E6%95%B0%E4%BF%A1%E6%81%AF.jpeg">
+
+<link rel="canonical" href="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+<script type="text/javascript" src="/js/src/custom.js"></script><script src="/lib/fireworks.js"></script>
+  <title>Android杂谈-进程与线程 | Elroy-Pb</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Elroy-Pb</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Notes</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">12</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android杂谈-进程与线程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-04 10:13:30 / Modified: 17:44:37" itemprop="dateCreated datePublished" datetime="2021-08-04T10:13:30+08:00">2021-08-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 mins.</span>
+            </span>
+            <div class="post-description">进程和线程那点事</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>进程和线程又分别是什么? 进程和线程区别到底是什么?<br>带着简单的疑问，我们慢慢往下看看，本文不会过多章节去分析代码，而是比较多去谈自己的理解！</p>
+<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>进程是<strong>操作系统</strong>分配资源的单位,线程是调度的基本单位,线程之间共享进程资源。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>其实就这么简单的一句话，就可以引申出很多概念。<br>逆向思维(反推)，从已有的结果出发挖掘更多的可能性.  </p>
+<blockquote>
+<p>到底线程之间共享了哪些进程资源？<br>共享资源意味着什么？<br>共享资源这种机制是如何实现的？<br>线程有哪些是线程私有的  </p>
+</blockquote>
+<h3 id="计算机扩展概念"><a href="#计算机扩展概念" class="headerlink" title="计算机扩展概念"></a>计算机扩展概念</h3><p>其实无论是谈生意也好，还是谈工作也好，首先必须要解决一个问题，就是明确主题和双方信息差的问题！<br>为了更好的理解，我们需要了解一些基础的计算机知识(linux)。具体文献请参考原文</p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a><a target="_blank" rel="noopener" href="http://www.linfo.org/cpu.html">CPU</a></h3><blockquote>
+<p>A CPU contains three main sections: (1) <strong>an arithmetic/logic unit</strong>, (2) <strong>a control unit</strong> and (3) <strong><a target="_blank" rel="noopener" href="http://www.linfo.org/register.html">registers</a></strong>. The arithmetic/logic unit contains circuitry that performs data manipulation. The control unit consists of circuitry for coordinating the machine’s activities. The registers are high speed memory cells that are used for holding instructions for data that is currently being processed.<br>CPU 包含三个主要部分：(1)<strong>算术/逻辑单元</strong>，(2)<strong>控制单元</strong>和 (3)<strong>寄存器</strong>。<br>算术/逻辑单元包含执行数据操作的电路。<br>控制单元由用于协调机器活动的电路组成。<br>寄存器是<em>高速存储</em>单元，用于保存当前正在处理的数据的指令。</p>
+</blockquote>
+<h3 id="Register-Definition-—-寄存器"><a href="#Register-Definition-—-寄存器" class="headerlink" title="Register Definition — 寄存器"></a><a target="_blank" rel="noopener" href="http://www.linfo.org/register.html">Register Definition</a> — 寄存器</h3><blockquote>
+<p>A register is a very small amount of very fast memory that is built into the CPU (central processing unit) in order to speed up its operations by providing quick access to commonly used values.<br>寄存器是非常快又微型的存储器内置于Cpu，是通过访问快速提供的值,已加快Cpu(中央处理单元)的操作</p>
+</blockquote>
+<p>作用:寄存器是<em>高速存储</em>单元，用于保存当前正在处理的数据的指令。</p>
+<p>专用寄存器存储内部 CPU 数据，例如程序计数器（也称为指令指针）、堆栈指针和状态寄存器。</p>
+<h4 id="寄存器概念扩展"><a href="#寄存器概念扩展" class="headerlink" title="寄存器概念扩展"></a>寄存器概念扩展</h4><p>寄存器是存储器层次结构的顶部，是系统操作数据的最快方式。<br>在它们下面是几个级别的高速缓存，至少其中一些也内置在 CPU 中，而其中一些可能在其他专用芯片上。高速缓存比寄存器慢，但要丰富得多。在不同级别的高速缓存之下是主存储器，它更慢但更丰富（例如，与只有 32 个寄存器相比，数百兆字节）。但反过来，它仍然比存储设备和媒体（例如，硬盘驱动器和 CDROM）快得多，容量也小得多。</p>
+<h4 id="其他作用"><a href="#其他作用" class="headerlink" title="其他作用"></a>其他作用</h4><p><strong>程序计数器</strong>包含要执行的下一条指令的地址。<br><strong>指令寄存器</strong>保存CPU正在执行的指令。<br><strong>地址寄存器</strong>保存内存地址，用于访问内存。<br><strong>数据寄存器</strong>用于存储整数。  </p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><blockquote>
+<p>线程运行的本质就是函数。<br>函数的执行总会有一个源头，这个源头就是所谓的入口函数，相当于java的main的函数，<em>CPU</em> 从入口函数开始执行从而形成一个执行流，只不过我们人为的给执行流起一个名字，这个名字就叫线程。  </p>
+</blockquote>
+<h3 id="线程私有"><a href="#线程私有" class="headerlink" title="线程私有"></a>线程私有</h3><p>凡事从本质出发，我们就要去分析函数包含了些哪些信息。线程之间既然共享了进程资源，那就会对应不共享的资源，也就是线程私有资源<br>函数运行时的信息包含了栈帧中，栈帧中保存了函数的返回值，调用其他函数的参数，局部变量，该函数的寄存器初始值。  </p>
+<p><img src="%E5%87%BD%E6%95%B0%E4%BF%A1%E6%81%AF.jpeg" alt="函数信息"></p>
+<p>这里延伸出一个问题，因为线程是可以被操作系统随时暂停运行的和恢复运行的，那是怎么做到的？<br>可以通过保存以及恢复程序计数器的值就可以知道线程的从哪里运行又从哪里开始。</p>
+<p>由于每个线程的本质都是函数的运行，函数运行时的信息是保存在栈中的，因此<strong>每个线程都有对应自己独立，私有的栈区</strong></p>
+<p><img src="%E7%BA%BF%E7%A8%8B%E6%A0%88%E5%8C%BA.jpeg" alt="线程私有"></p>
+<p>同时像函数的局部变量也是存放到寄存器之中，运行完就释放掉，回收内存。</p>
+<p>所属线程的栈区，程序计数器，栈指针以及函数运行使用的寄存器都是线程私有的。</p>
+<h3 id="线程间的共享"><a href="#线程间的共享" class="headerlink" title="线程间的共享"></a>线程间的共享</h3><h4 id="代码区"><a href="#代码区" class="headerlink" title="代码区"></a>代码区</h4><p>编译后的可执行机器指令,从可执行文件中加载到内存的，可执行程序中的代码区就是用来初始化进程地址空间中的代码区的。</p>
+<h4 id="数据区"><a href="#数据区" class="headerlink" title="数据区"></a>数据区</h4><p>进程地址空间中的数据区，这里存放的就是所谓的全局变量。<br>全局变量简单的理解，一般不会被系统回收的变量，即使函数执行完后该变量依然存在，对于其他线程也是可见的 </p>
+<h4 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h4><p>对象存放的地址空间，可被GC。<br>变量的地址，也就是指针。<br>任何一个线程都可以访问指针指向的数据，因此堆区也是线程共享的属于进程的资源。</p>
+<h4 id="栈区"><a href="#栈区" class="headerlink" title="栈区"></a>栈区</h4><p>因为线程不像进程，进程是互相隔离，且独立。<br>如果一个线程能拿到来自另一个线程栈帧上的指针，那么该线程就可以改变另一个线程的栈区，也就是说这些线程可以任意修改本属于另一个线程栈区中的变量。<br>一个线程的栈区对其它线程是可以见的，也就是说我们可以修改属于任何一个线程的栈区  </p>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>如果程序在运行过程中打开了一些文件，那么进程地址空间中还保存有打开的文件信息，进程打开的文件也可以被所有的线程使用，这也属于线程间的共享资源。</p>
+<p>如图<br><img src="%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB.jpeg" alt="线程共享"><br>线程共享的地址，除了线程上下文的信息  </p>
+<p>对于这个地方，我们引入java虚拟机<br>如图<br><img src="jvm.jpeg" alt="线程共享">  </p>
+<p>这里再扩展一下,jdk.1.8.0其实以及取消了方法区,与之对于的是元空间</p>
+<ul>
+<li>以下jdk1.8 的标准（）<ul>
+<li> 移除了永久代（PermGen），替换为元空间（Metaspace）；</li>
+<li> 永久代中的 class metadata 转移到了 native memory（本地内存，而不是虚拟机）；</li>
+<li> 永久代中的 interned Strings 和 class static variables 转移到了 Java heap；<br>永久代参数 （PermSize MaxPermSize） -&gt; 元空间参数（MetaspaceSize MaxMetaspaceSize） </li>
+</ul>
+</li>
+</ul>
+<p><img src="jdk-1.8.0.png" alt="jdk-1.8.0.png">  </p>
+<p>其实以下的概念我们都在上文讲过:</p>
+<h3 id="java线程私有："><a href="#java线程私有：" class="headerlink" title="java线程私有："></a>java线程私有：</h3><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>• 程序计数器：<br>    1. 每一个线程都需要有独立的计数器，各个线程互不干扰，独立存储<br>    2. 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制<br>    3. 在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。<br>注意：程序计数器是唯一一个不会出现 OutOfMemoryError 的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡 </p>
+<h4 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h4><p>• Java虚拟机栈：<br>• 描述的是 Java 方法执行的内存模型，每次方法调用的数据都是通过栈传递的。<br>• 栈内存(Stack),其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。<br>• Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。  </p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>• 本地方法栈<br>• 虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。  </p>
+<ul>
+<li>线程共享:<br>• 堆<br>• 方法区<br>• 直接内存(非运行时数据区）<br>直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致 OutOfMemoryError 异常出现。<br>本机直接内存的分配不会收到 Java 堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。    </li>
+</ul>
+<h3 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h3><h4 id="Android中的context"><a href="#Android中的context" class="headerlink" title="Android中的context"></a>Android中的context</h4><p>很多人面试包括开发，最常遇到的一个名词就是Context，就是android的上下文，但是很多开发者其实不知道Context代表了什么意思，这里我的理解是 (格外提一点 寄存器是多个，不是一个)</p>
+<blockquote>
+<p>线程的栈区 + 程序计数器 + 栈指针 + 函数运行使用的寄存器 = 上下文</p>
+</blockquote>
+<p>Android操作系统可以随时中断并且回复正常，依靠的就是线程上下文。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/" rel="prev" title="Android系统Binder驱动分析(2)">
+      <i class="fa fa-chevron-left"></i> Android系统Binder驱动分析(2)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%89%A9%E5%B1%95%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">计算机扩展概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">2.1.2.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Definition-%E2%80%94-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">Register Definition — 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E6%A6%82%E5%BF%B5%E6%89%A9%E5%B1%95"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">寄存器概念扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">其他作用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">线程私有</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="nav-number">2.2.2.</span> <span class="nav-text">线程间的共享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%8C%BA"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">代码区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%8C%BA"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">堆区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E5%8C%BA"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">栈区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.2.5.</span> <span class="nav-text">文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%EF%BC%9A"><span class="nav-number">2.2.3.</span> <span class="nav-text">java线程私有：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.2.4.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E4%B8%AD%E7%9A%84context"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">Android中的context</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Elroy-Pb"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Elroy-Pb</p>
+  <div class="site-description" itemprop="description">凌晨四点钟，看海棠花未眠。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Elroy-pb" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Elroy-pb" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/15815337432@163.com" title="E-Mail → 15815337432@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3268290704" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3268290704" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Elroy-Pb</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">16k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">15 mins.</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
