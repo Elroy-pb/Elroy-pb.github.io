@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Android-handler机制">
+  <meta name="description" content="Android-Activity开发记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="android-Handler机制-2">
-<meta property="og:url" content="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/index.html">
+<meta property="og:title" content="Android-Activity">
+<meta property="og:url" content="http://example.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="Android-handler机制">
+<meta property="og:description" content="Android-Activity开发记录">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-07-27T09:57:51.000Z">
-<meta property="article:modified_time" content="2021-07-27T10:35:15.730Z">
+<meta property="article:published_time" content="2021-08-11T09:22:20.000Z">
+<meta property="article:modified_time" content="2021-08-11T11:40:56.183Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
+<link rel="canonical" href="http://example.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/">
 
 
 <script id="page-configurations">
@@ -49,7 +49,7 @@
 
   <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
 <script type="text/javascript" src="/js/src/custom.js"></script><script src="/lib/fireworks.js"></script>
-  <title>android-Handler机制-2 | Elroy-Pb</title>
+  <title>Android-Activity | Elroy-Pb</title>
   
 
 
@@ -192,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          android-Handler机制-2
+          Android-Activity
         </h1>
 
         <div class="post-meta">
@@ -216,7 +216,16 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-07-27 17:57:51 / Modified: 18:35:15" itemprop="dateCreated datePublished" datetime="2021-07-27T17:57:51+08:00">2021-07-27</time>
+              <time title="Created: 2021-08-11 17:22:20 / Modified: 19:40:56" itemprop="dateCreated datePublished" datetime="2021-08-11T17:22:20+08:00">2021-08-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
             </span>
 
           
@@ -224,15 +233,15 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>0</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
-            <div class="post-description">Android-handler机制</div>
+            <div class="post-description">Android-Activity开发记录</div>
 
         </div>
       </header>
@@ -243,7 +252,67 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>在最近的任务栈里面看见的task未必还活着。<br>在最近的任务栈里面看不见的task未必就死了。</p>
+<h2 id="android-launchMode"><a href="#android-launchMode" class="headerlink" title="android-launchMode"></a>android-launchMode</h2><p>在这里我推荐大家去看扔物线的课程: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CA41177Se">Android 面试黑洞</a></p>
+<p>Activity有4种启动模式，分别是：Standard、SingleTop、SingleTask和SingleInstance，它们控制了被启动Activity的启动行为。<br>Activity任务栈（Task）是一个标准的栈结构<br>用于在ActivityManagerService侧管理所有的Activity（AMS通过TaskRecord标识一个任务栈，通过ActivityRecord标识一个Activity）。</p>
+<table>
+<thead>
+<tr>
+<th align="left">launchMode</th>
+<th align="center">Name</th>
+<th align="left">DES</th>
+<th align="left">MORE【知识扩展】</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Standard</td>
+<td align="center">标准模式</td>
+<td align="left">标准模式，也是系统的默认模式。该模式下，每次启动Activity，都会创建一个新实例，并且将其加入到启动该Activity的那个Activity所在的任务栈中，所以目标Activity的多个实例可以位于不同的任务栈。</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">SingleTop</td>
+<td align="center">栈顶复用模式</td>
+<td align="left">该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">SingleTask</td>
+<td align="center">栈内复用模式</td>
+<td align="left">clearTop的作用，整个任务栈只能有一个activity的实例。</td>
+<td align="left">如果此时任务栈内已经存在 Activity C 的实例且未位于栈顶，当启动 Activity C 时，会将 Activity C 上方的实例全部出栈让其位于任务栈顶并 Activity C 中的 onNewIntent() 方法会被调用</td>
+</tr>
+<tr>
+<td align="left">SingleInstance</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h2 id="MORE【知识扩展】"><a href="#MORE【知识扩展】" class="headerlink" title="MORE【知识扩展】"></a>MORE【知识扩展】</h2><h3 id="Standard"><a href="#Standard" class="headerlink" title="Standard"></a>Standard</h3><p>当我们使用Application的Context来启动一个Activity的时候，会报AndroidRuntimeException，因为standard模式下启动的Activity，会默认进入启动它的Activity的任务栈中，而非Activity类型的context却并没有所谓的任务栈，所以就会出现问题，解决这个问题的方法是需要为要启动的Activity指定标记位：FLAG_ACTIVITY_NEW_TASK，这个标记的作用是为启动的Activity创建一个新的任务栈。</p>
+<h3 id="SingleTop"><a href="#SingleTop" class="headerlink" title="SingleTop"></a>SingleTop</h3><p>该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</p>
+<p>若目标Activity的实例已经存在，且位于栈顶，那么就不会创建新的实例，而是复用已有实例，并依次调用目标Activity的onPause -&gt; onNewIntent -&gt; onResume方法。<br>知识扩展！！！</p>
+<p>singleTop模式的activity特点就是除了外部可以启动它显示信息外，它也可以用同样的方式启动自己更新显示信息，这样就减少了冗余代码，降低了维护成本。</p>
+<p>他的onCreate、onStart方法不会被调用，避免多次初始化，应用宝用的就是这套方案。</p>
+<h3 id="SingleTask-A和B都是不同的2个应用"><a href="#SingleTask-A和B都是不同的2个应用" class="headerlink" title="SingleTask A和B都是不同的2个应用"></a>SingleTask A和B都是不同的2个应用</h3><p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>B_Activity的Activity被启动时，不会进入启动A的Task里,而是创建属于B自己的Task里，置于B-Task栈顶,然后把整个B-Task 压到 A-Task上面,这种方式打开的方式是入场动画是应用间的切换。</p>
+<p>如果这时按下返回键，这里回退的顺序是 B-Task 来回退，而不是返回原来的A_Activity[Standard]。原来的A要在前台显示，必须是B-Task的栈的Activity完全关闭才可以，这里场景动画也是场景间的切换。  </p>
+<p>这里要明确一个概念：不止应用的Activity内部可以叠成栈，不同应用之间的Task也可以叠成栈。</p>
+<p>Task的叠加只适用于前台的Task。</p>
+<p>SingleTask是保证了一个栈内有且只有被该属性修饰Activity的实例对象，全局单例</p>
+<h3 id="SingleInstance"><a href="#SingleInstance" class="headerlink" title="SingleInstance"></a>SingleInstance</h3><h2 id="Android-taskAffinity属性"><a href="#Android-taskAffinity属性" class="headerlink" title="Android:taskAffinity属性"></a>Android:taskAffinity属性</h2><p>android:taskAffinity是Activity的一个属性，表示该Activity期望的任务栈的名称。<br>默认情况下，一个应用程序中所有Activity的taskAffinity都是相同的，即应用程序的包名。当然，我们可以在配置文件中为每个Activity指定不同的taskAffinity（只有和已有包名不同，才有意义）。<br>一般情况下，该属性主要和SingleTask启动模式或者android:allowTaskReparenting属性结合使用（下面会详细介绍），在其他情况下没有意义。</p>
+<h3 id="Task-Reparenting"><a href="#Task-Reparenting" class="headerlink" title="Task - Reparenting"></a>Task - Reparenting</h3><p>B AndroidManifest属性 设置为android:allowTaskReparenting = True</p>
+<p>场景具体化:A 短信应用 打开 B 邮箱应用</p>
+<p>B还是会进入到A的Task里,但稍后用户从桌面点击B应用的时候，原先放在A-Task里面的B-Activity会被挪到B应用的Task的栈顶,这个时候你在切回短信Task，你会发现原先的B-Activity已经不见了。<br>(有争议… Android 8,9是有问题的，10以上正常)</p>
+<h3 id="前台Task"><a href="#前台Task" class="headerlink" title="前台Task"></a>前台Task</h3><p>前台叠加的多个Task进入后台第一时间就会拆开</p>
+<blockquote>
+<p>1.按Home键回到桌面<br>2.按最近任务键 查看最近的任务  </p>
+<ul>
+<li>前台Task 在最近列表显示出来的时候就已经进入到了后台，而不是切到其他任务之后。</li>
+</ul>
+</blockquote>
+<p>但是光知道理论还是不够的，由于我们开发的时候大部分的情况都是多变的，我们在前面的章节可以了解到不同的应用的Activity是启动Task内叠加的。</p>
+<p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>我们再把场景具体化，A 短信应用 打开 B 邮箱应用，这个时间我们没有按下返回键，而是按最近任务键，再重新回去原来的Task，这个时候看起来没有变化，但是实际上A的Task已经被去除掉了，只留下B的Task，这个时候我们再按下返回键，把B的Task内的Activity全部关闭，这个时候返回的系统的桌面而不是短信的APP。</p>
+
     </div>
 
     
@@ -261,13 +330,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/" rel="prev" title="Android-外挂篇">
-      <i class="fa fa-chevron-left"></i> Android-外挂篇
+    <a href="/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" rel="prev" title="Android杂谈-进程与线程">
+      <i class="fa fa-chevron-left"></i> Android杂谈-进程与线程
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/29/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90/" rel="next" title="Android系统Binder驱动分析(1)">
-      Android系统Binder驱动分析(1) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -326,6 +392,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android-launchMode"><span class="nav-number">2.</span> <span class="nav-text">android-launchMode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MORE%E3%80%90%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95%E3%80%91"><span class="nav-number">3.</span> <span class="nav-text">MORE【知识扩展】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard"><span class="nav-number">3.1.</span> <span class="nav-text">Standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTop"><span class="nav-number">3.2.</span> <span class="nav-text">SingleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTask-A%E5%92%8CB%E9%83%BD%E6%98%AF%E4%B8%8D%E5%90%8C%E7%9A%842%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">SingleTask A和B都是不同的2个应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleInstance"><span class="nav-number">3.4.</span> <span class="nav-text">SingleInstance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-taskAffinity%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">Android:taskAffinity属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task-Reparenting"><span class="nav-number">4.1.</span> <span class="nav-text">Task - Reparenting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0Task"><span class="nav-number">4.2.</span> <span class="nav-text">前台Task</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
