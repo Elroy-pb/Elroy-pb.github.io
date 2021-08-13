@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/taskAffinity%E6%9C%80%E8%BF%91%E5%88%97%E8%A1%A8.png">
 <meta property="og:image" content="http://example.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/taskAffinity%E5%BC%80%E5%8F%91%E6%8E%A8%E8%8D%90.png">
 <meta property="article:published_time" content="2021-08-11T09:22:20.000Z">
-<meta property="article:modified_time" content="2021-08-12T09:31:27.160Z">
+<meta property="article:modified_time" content="2021-08-13T11:33:03.693Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -138,7 +138,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">13</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">14</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-12 17:31:27" itemprop="dateModified" datetime="2021-08-12T17:31:27+08:00">2021-08-12</time>
+                <time title="Modified: 2021-08-13 19:33:03" itemprop="dateModified" datetime="2021-08-13T19:33:03+08:00">2021-08-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,13 +243,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.6k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>3 mins.</span>
+              <span>5 mins.</span>
             </span>
             <div class="post-description">Android-Activity开发记录</div>
 
@@ -335,7 +335,12 @@
 </blockquote>
 <p>但是光知道理论还是不够的，由于我们开发的时候大部分的情况都是多变的，我们在前面的章节可以了解到不同的应用的Activity是启动Task内叠加的。</p>
 <p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>我们再把场景具体化，A 短信应用 打开 B 邮箱应用，这个时间我们没有按下返回键，而是按最近任务键，再重新回去原来的Task，这个时候看起来没有变化，但是实际上A的Task已经被去除掉了，只留下B的Task，这个时候我们再按下返回键，把B的Task内的Activity全部关闭，这个时候返回的系统的桌面而不是短信的APP。</p>
+<h2 id="Android十万个为什么系列"><a href="#Android十万个为什么系列" class="headerlink" title="Android十万个为什么系列"></a>Android十万个为什么系列</h2><h3 id="当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？"><a href="#当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？" class="headerlink" title="当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？"></a>当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？</h3><p>我现在还记得这个问题，那年我毕业，投了心仪公司的简历，过了Hr的面试，来到了技术环节，和蔼的面试官问了:我们日常开发比较多组件的是Activity，假设 App 正在前台运行，不在栈顶的Activity有可能会被回收吗?<br>那时年少，我感觉我天灵盖被人开了，当场差点直接自闭，懵逼，接下来回答支支吾吾，面试结果是显而易见的。。。  <strong>(ಥ_ಥ)</strong><br>回去的路上越想越不对劲，到家之后立马查源码，好家伙找到了！平时不看源码，关键时刻被别人搞得一愣一愣！</p>
+<p>凡事先说结论: 会 ！！！<br>这里看的源码是API30,在网上也看到一些相关答案答案，这里我们提炼一下要点，重点我们日常开发对场景预测，比方说游戏A-APP开启了一个B-App应用的界面，这个时候B-App开启了一个比较消耗耗内存的线程，如果这个内存不断地增大，最后游戏A-App的生命周期onDestroy()就会被调用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">private void attach(boolean system, long startSeq) &#123;</span><br><span class="line">        sCurrentActivityThread = this;</span><br><span class="line">        mSystemThread = system;</span><br><span class="line">        if (!system) &#123;</span><br><span class="line">            android.ddm.DdmHandleAppName.setAppName(&quot;&lt;pre-initialized&gt;&quot;,</span><br><span class="line">                                                    UserHandle.myUserId());</span><br><span class="line">            RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">            final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">            try &#123;</span><br><span class="line">               //ApplicationThread是ActivityThread和AMS沟通的桥梁</span><br><span class="line">                mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">            &#125; catch (RemoteException ex) &#123;</span><br><span class="line">                throw ex.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">            // Watch for getting close to heap limit.</span><br><span class="line">            BinderInternal.addGcWatcher(new Runnable() &#123;</span><br><span class="line">                @Override public void run() &#123;</span><br><span class="line">                    if (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                    Runtime runtime = Runtime.getRuntime();</span><br><span class="line">                    long dalvikMax = runtime.maxMemory();</span><br><span class="line">                    long dalvikUsed = runtime.totalMemory() - runtime.freeMemory();</span><br><span class="line">                    if (dalvikUsed &gt; ((3*dalvikMax)/4)) &#123;</span><br><span class="line">                        if (DEBUG_MEMORY_TRIM) Slog.d(TAG, &quot;Dalvik max=&quot; + (dalvikMax/1024)</span><br><span class="line">                                + &quot; total=&quot; + (runtime.totalMemory()/1024)</span><br><span class="line">                                + &quot; used=&quot; + (dalvikUsed/1024));</span><br><span class="line">                        mSomeActivitiesChanged = false;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                        &#125; catch (RemoteException e) &#123;</span><br><span class="line">                            throw e.rethrowFromSystemServer();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
+
+<h3 id="当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？"><a href="#当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？" class="headerlink" title="当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？"></a>当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？</h3><h3 id="当-app-处于后台运行，app-的进程会被杀死吗？"><a href="#当-app-处于后台运行，app-的进程会被杀死吗？" class="headerlink" title="当 app 处于后台运行，app 的进程会被杀死吗？"></a>当 app 处于后台运行，app 的进程会被杀死吗？</h3>
     </div>
 
     
@@ -356,7 +361,10 @@
     <a href="/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" rel="prev" title="Android杂谈-进程与线程">
       <i class="fa fa-chevron-left"></i> Android杂谈-进程与线程
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/" rel="next" title="Java-并发篇-1">
+      Java-并发篇-1 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -415,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android-launchMode"><span class="nav-number">2.</span> <span class="nav-text">android-launchMode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MORE%E3%80%90%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95%E3%80%91"><span class="nav-number">3.</span> <span class="nav-text">MORE【知识扩展】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard"><span class="nav-number">3.1.</span> <span class="nav-text">Standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTop"><span class="nav-number">3.2.</span> <span class="nav-text">SingleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTask-A%E5%92%8CB%E9%83%BD%E6%98%AF%E4%B8%8D%E5%90%8C%E7%9A%842%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">SingleTask A和B都是不同的2个应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleInstance"><span class="nav-number">3.4.</span> <span class="nav-text">SingleInstance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-taskAffinity%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">Android:taskAffinity属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task-Reparenting"><span class="nav-number">4.1.</span> <span class="nav-text">Task - Reparenting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0Task"><span class="nav-number">4.2.</span> <span class="nav-text">前台Task</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android-launchMode"><span class="nav-number">2.</span> <span class="nav-text">android-launchMode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MORE%E3%80%90%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95%E3%80%91"><span class="nav-number">3.</span> <span class="nav-text">MORE【知识扩展】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard"><span class="nav-number">3.1.</span> <span class="nav-text">Standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTop"><span class="nav-number">3.2.</span> <span class="nav-text">SingleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTask-A%E5%92%8CB%E9%83%BD%E6%98%AF%E4%B8%8D%E5%90%8C%E7%9A%842%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">SingleTask A和B都是不同的2个应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleInstance"><span class="nav-number">3.4.</span> <span class="nav-text">SingleInstance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-taskAffinity%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">Android:taskAffinity属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task-Reparenting"><span class="nav-number">4.1.</span> <span class="nav-text">Task - Reparenting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0Task"><span class="nav-number">4.2.</span> <span class="nav-text">前台Task</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88%E7%B3%BB%E5%88%97"><span class="nav-number">5.</span> <span class="nav-text">Android十万个为什么系列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E5%89%8D-app-%E6%AD%A3%E5%9C%A8%E5%89%8D%E5%8F%B0%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8D%E5%9C%A8%E6%A0%88%E9%A1%B6%E7%9A%84-Activity-%E6%9C%89%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%9B%A0%E4%B8%BA%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%EF%BC%8C%E4%BE%8B%E5%A6%82%E5%86%85%E5%AD%98%E7%AD%89%E4%B8%8D%E8%B6%B3%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F"><span class="nav-number">5.1.</span> <span class="nav-text">当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93-app-%E5%A4%84%E4%BA%8E%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%EF%BC%8Capp-%E8%BF%9B%E7%A8%8B%E6%9C%AA%E8%A2%AB%E6%9D%80%E6%AD%BB%EF%BC%8C%E5%85%B6%E5%86%85%E9%83%A8%E7%9A%84-Activity-%E4%BC%9A%E8%A2%AB%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F"><span class="nav-number">5.2.</span> <span class="nav-text">当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93-app-%E5%A4%84%E4%BA%8E%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%EF%BC%8Capp-%E7%9A%84%E8%BF%9B%E7%A8%8B%E4%BC%9A%E8%A2%AB%E6%9D%80%E6%AD%BB%E5%90%97%EF%BC%9F"><span class="nav-number">5.3.</span> <span class="nav-text">当 app 处于后台运行，app 的进程会被杀死吗？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -431,7 +439,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -442,7 +450,7 @@
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -489,12 +497,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">20k</span>
+    <span title="Symbols count total">22k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">18 mins.</span>
+    <span title="Reading time total">20 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
