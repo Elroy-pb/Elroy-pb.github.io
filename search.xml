@@ -88,7 +88,6 @@
 <p>凡事先说结论: 会 ！！！<br>这里看的源码是API30,在网上也看到一些相关答案答案，这里我们提炼一下要点，重点我们日常开发对场景预测，比方说游戏A-APP开启了一个B-App应用的界面，这个时候B-App开启了一个比较消耗耗内存的线程，如果这个内存不断地增大，最后游戏A-App的生命周期onDestroy()就会被调用。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">private void attach(boolean system, long startSeq) &#123;</span><br><span class="line">        sCurrentActivityThread = this;</span><br><span class="line">        mSystemThread = system;</span><br><span class="line">        if (!system) &#123;</span><br><span class="line">            android.ddm.DdmHandleAppName.setAppName(&quot;&lt;pre-initialized&gt;&quot;,</span><br><span class="line">                                                    UserHandle.myUserId());</span><br><span class="line">            RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">            final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">            try &#123;</span><br><span class="line">               //ApplicationThread是ActivityThread和AMS沟通的桥梁</span><br><span class="line">                mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">            &#125; catch (RemoteException ex) &#123;</span><br><span class="line">                throw ex.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">            // Watch for getting close to heap limit.</span><br><span class="line">            BinderInternal.addGcWatcher(new Runnable() &#123;</span><br><span class="line">                @Override public void run() &#123;</span><br><span class="line">                    if (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                    Runtime runtime = Runtime.getRuntime();</span><br><span class="line">                    long dalvikMax = runtime.maxMemory();</span><br><span class="line">                    long dalvikUsed = runtime.totalMemory() - runtime.freeMemory();</span><br><span class="line">                    if (dalvikUsed &gt; ((3*dalvikMax)/4)) &#123;</span><br><span class="line">                        if (DEBUG_MEMORY_TRIM) Slog.d(TAG, &quot;Dalvik max=&quot; + (dalvikMax/1024)</span><br><span class="line">                                + &quot; total=&quot; + (runtime.totalMemory()/1024)</span><br><span class="line">                                + &quot; used=&quot; + (dalvikUsed/1024));</span><br><span class="line">                        mSomeActivitiesChanged = false;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                        &#125; catch (RemoteException e) &#123;</span><br><span class="line">                            throw e.rethrowFromSystemServer();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
-
 <h3 id="当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？"><a href="#当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？" class="headerlink" title="当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？"></a>当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？</h3><h3 id="当-app-处于后台运行，app-的进程会被杀死吗？"><a href="#当-app-处于后台运行，app-的进程会被杀死吗？" class="headerlink" title="当 app 处于后台运行，app 的进程会被杀死吗？"></a>当 app 处于后台运行，app 的进程会被杀死吗？</h3>]]></content>
       <categories>
         <category>Android</category>
@@ -468,41 +467,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -611,6 +575,41 @@
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
