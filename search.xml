@@ -113,7 +113,7 @@
 <h3 id="Register-Definition-—-寄存器"><a href="#Register-Definition-—-寄存器" class="headerlink" title="Register Definition — 寄存器"></a><a href="http://www.linfo.org/register.html">Register Definition</a> — 寄存器</h3><blockquote>
 <p>A register is a very small amount of very fast memory that is built into the CPU (central processing unit) in order to speed up its operations by providing quick access to commonly used values.<br>寄存器是非常快又微型的存储器内置于Cpu，是通过访问快速提供的值,已加快Cpu(中央处理单元)的操作</p>
 </blockquote>
-<p>作用:寄存器是<em>高速存储</em>单元，用于保存当前正在处理的数据的指令。</p>
+<p>作用:寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
 <p>专用寄存器存储内部 CPU 数据，例如程序计数器（也称为指令指针）、堆栈指针和状态寄存器。</p>
 <h4 id="寄存器概念扩展"><a href="#寄存器概念扩展" class="headerlink" title="寄存器概念扩展"></a>寄存器概念扩展</h4><p>寄存器是存储器层次结构的顶部，是系统操作数据的最快方式。<br>在它们下面是几个级别的高速缓存，至少其中一些也内置在 CPU 中，而其中一些可能在其他专用芯片上。高速缓存比寄存器慢，但要丰富得多。在不同级别的高速缓存之下是主存储器，它更慢但更丰富（例如，与只有 32 个寄存器相比，数百兆字节）。但反过来，它仍然比存储设备和媒体（例如，硬盘驱动器和 CDROM）快得多，容量也小得多。</p>
 <h4 id="其他作用"><a href="#其他作用" class="headerlink" title="其他作用"></a>其他作用</h4><p><strong>指令寄存器</strong>保存CPU正在执行的指令。<br><strong>地址寄存器</strong>保存内存地址，用于访问内存。<br><strong>数据寄存器</strong>用于存储整数。  </p>
@@ -578,17 +578,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/07/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -605,6 +594,17 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
