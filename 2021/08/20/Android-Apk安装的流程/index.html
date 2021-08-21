@@ -21,22 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Android系统Binder驱动分析(2)">
+  <meta name="description" content="Android-插件化的基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android系统Binder驱动分析(2)">
-<meta property="og:url" content="http://example.com/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/index.html">
+<meta property="og:title" content="Android-Apk安装的流程">
+<meta property="og:url" content="http://example.com/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="Android系统Binder驱动分析(2)">
+<meta property="og:description" content="Android-插件化的基础">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/%E4%BC%A0%E7%BB%9FIPC.jpg">
-<meta property="article:published_time" content="2021-07-31T08:02:30.000Z">
-<meta property="article:modified_time" content="2021-07-31T09:59:07.763Z">
+<meta property="article:published_time" content="2021-08-20T06:52:53.000Z">
+<meta property="article:modified_time" content="2021-08-20T07:06:51.149Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/%E4%BC%A0%E7%BB%9FIPC.jpg">
 
-<link rel="canonical" href="http://example.com/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/">
+<link rel="canonical" href="http://example.com/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -49,7 +47,7 @@
   };
 </script>
 <script src="/lib/fireworks.js"></script>
-  <title>Android系统Binder驱动分析(2) | Elroy-Pb</title>
+  <title>Android-Apk安装的流程 | Elroy-Pb</title>
   
 
 
@@ -198,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/31/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90-2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -211,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Android系统Binder驱动分析(2)
+          Android-Apk安装的流程
         </h1>
 
         <div class="post-meta">
@@ -222,7 +220,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-07-31 16:02:30 / Modified: 17:59:07" itemprop="dateCreated datePublished" datetime="2021-07-31T16:02:30+08:00">2021-07-31</time>
+              <time title="Created: 2021-08-20 14:52:53 / Modified: 15:06:51" itemprop="dateCreated datePublished" datetime="2021-08-20T14:52:53+08:00">2021-08-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,7 +238,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.1k</span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -249,7 +247,7 @@
                 <span class="post-meta-item-text">Reading time &asymp;</span>
               <span>1 mins.</span>
             </span>
-            <div class="post-description">Android系统Binder驱动分析(2)</div>
+            <div class="post-description">Android-插件化的基础</div>
 
         </div>
       </header>
@@ -260,58 +258,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>我的文章比较多是对自己知识的梳理，有些概念没讲得那么清楚，但会贴出参考的链接，请大家自便</p>
-<h1 id="Binder-概述"><a href="#Binder-概述" class="headerlink" title="Binder 概述"></a>Binder 概述</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
-<p>IPC : Inter-Process Communication (进程间的通信)<br>RPC : Remote Procedure Call (远程过程调用)<br>RPC是IPC的基础上进行了封装</p>
-</blockquote>
-<h3 id="简单例子-大致有个概念"><a href="#简单例子-大致有个概念" class="headerlink" title="简单例子: 大致有个概念"></a>简单例子: 大致有个概念</h3><p>再简单的分析下要素 (led是例子)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A(①封装数据 ②发送给B) ===&gt;(IPC) B(①取出数据 @调用数据) </span><br><span class="line">源 : A   </span><br><span class="line">目的 B 先向 ServerManger注册led服务  </span><br><span class="line">    A 向 ServerManger 查询led服务,得到一个Handler  </span><br><span class="line">数据：char_Buff   --&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="Binder究竟是什么"><a href="#Binder究竟是什么" class="headerlink" title="Binder究竟是什么"></a>Binder究竟是什么</h2><p>Binder是Android系统中负责每个<strong>用户进程</strong>与<strong>内核</strong>通信的驱动模块。 </p>
-<h3 id="Binder的优势"><a href="#Binder的优势" class="headerlink" title="Binder的优势"></a>Binder的优势</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/universus/article/details/6211589">推荐文章</a><br>主要是基于性能、稳定性和安全性几方面的原因。</p>
-<h4 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h4><table>
-<thead>
-<tr>
-<th align="left">IPC</th>
-<th align="center">数据拷贝次数</th>
-<th align="left">MORE</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">共享内存</td>
-<td align="center">0</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">Binder</td>
-<td align="center">1</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">Socket</td>
-<td align="center">2</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">管道</td>
-<td align="center">2</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">消息队列</td>
-<td align="center">2</td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-<h4 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h4><p>Binder 基于 C/S 架构，架构清晰、职责明确又相互独立</p>
-<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>传统的 IPC 没有任何安全措施，完全依赖上层协议来确保。<br>首先传统的 IPC 接收方无法获得对方可靠的进程用户ID/进程ID（UID/PID），从而无法鉴别对方身份。<br>Android 为每个安装好的 APP 分配了自己的 UID，故而进程的 UID 是鉴别进程身份的重要标志。</p>
-<!-- (App UID 可 **packagename** 包名来区分)  -->
-<p>传统的 IPC 只能由用户在数据包中填入 UID/PID，但这样不可靠，容易被恶意程序利用。<br>可靠的身份标识只有由 IPC 机制在内核中添加。其次传统的 IPC 访问接入点是开放的，只要知道这些接入点的程序都可以和对端建立连接，不管怎样都无法阻止恶意程序通过猜测接收方地址获得连接。同时 Binder 既支持实名 Binder，又支持匿名 Binder，安全性高。</p>
-<h2 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h2><p>以下对比 Binder IPC 对比 传统IPC 的区别</p>
-<h3 id="Linux-下的传统-IPC-通信原理"><a href="#Linux-下的传统-IPC-通信原理" class="headerlink" title="Linux 下的传统 IPC 通信原理"></a>Linux 下的传统 IPC <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35519585">通信原理</a></h3><p><img src="%E4%BC%A0%E7%BB%9FIPC.jpg" alt="Linux传统 IPC"></p>
-<p>这种传统的 IPC 通信方式有两个问题：</p>
-<p>性能低下，一次数据传递需要经历：内存缓存区 –&gt; 内核缓存区 –&gt; 内存缓存区，需要 2 次数据拷贝；<br>接收数据的缓存区由数据接收进程提供，但是接收进程并不知道需要多大的空间来存放将要传递过来的数据，因此只能开辟尽可能大的内存空间或者先调用 API 接收消息头来获取消息体的大小，这两种做法不是浪费空间就是浪费时间。  </p>
-<h2 id="专栏-Android十万个为什么"><a href="#专栏-Android十万个为什么" class="headerlink" title="专栏:Android十万个为什么"></a>专栏:Android十万个为什么</h2><h3 id="什么是实名Binder"><a href="#什么是实名Binder" class="headerlink" title="什么是实名Binder?"></a>什么是实名Binder?</h3><h3 id="什么是匿名Binder？"><a href="#什么是匿名Binder？" class="headerlink" title="什么是匿名Binder？"></a>什么是匿名Binder？</h3><h3 id="“内核缓存区”-和-“数据接收缓存区”-存在的意义"><a href="#“内核缓存区”-和-“数据接收缓存区”-存在的意义" class="headerlink" title="“内核缓存区” 和 “数据接收缓存区” 存在的意义"></a>“内核缓存区” 和 “数据接收缓存区” 存在的意义</h3><p>Linux是使用的虚拟内存寻址方式，虚拟内存需要映射一块真的的物理内存，<br>内核缓存区和数据接收区的映射就是指向了同一块物理内存。接收方下次也可能是发送方，如果共用一块缓存那么岂不是发送方，内核，接收方都指向了同一块物理内存，违反了进程隔离的设计原则。</p>
-
+        
     </div>
 
     
@@ -329,13 +276,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/29/Android-%E5%A5%94%E6%BA%83%E4%BC%98%E5%8C%96/" rel="prev" title="Android-崩溃优化">
-      <i class="fa fa-chevron-left"></i> Android-崩溃优化
+    <a href="/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/" rel="prev" title="Java-并发篇-1">
+      <i class="fa fa-chevron-left"></i> Java-并发篇-1
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/04/Android%E6%9D%82%E8%B0%88-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" rel="next" title="Android杂谈-进程与线程">
-      Android杂谈-进程与线程 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -394,7 +338,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Binder-%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">Binder 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90-%E5%A4%A7%E8%87%B4%E6%9C%89%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">简单例子: 大致有个概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.2.</span> <span class="nav-text">Binder究竟是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.1.</span> <span class="nav-text">Binder的优势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">稳定性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">安全性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC"><span class="nav-number">2.3.</span> <span class="nav-text">IPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E4%B8%8B%E7%9A%84%E4%BC%A0%E7%BB%9F-IPC-%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="nav-number">2.3.1.</span> <span class="nav-text">Linux 下的传统 IPC 通信原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%93%E6%A0%8F-Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.4.</span> <span class="nav-text">专栏:Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%9E%E5%90%8DBinder"><span class="nav-number">2.4.1.</span> <span class="nav-text">什么是实名Binder?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%BF%E5%90%8DBinder%EF%BC%9F"><span class="nav-number">2.4.2.</span> <span class="nav-text">什么是匿名Binder？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C%E5%86%85%E6%A0%B8%E7%BC%93%E5%AD%98%E5%8C%BA%E2%80%9D-%E5%92%8C-%E2%80%9C%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%E7%BC%93%E5%AD%98%E5%8C%BA%E2%80%9D-%E5%AD%98%E5%9C%A8%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">2.4.3.</span> <span class="nav-text">“内核缓存区” 和 “数据接收缓存区” 存在的意义</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

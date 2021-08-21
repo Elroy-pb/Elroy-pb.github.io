@@ -12,13 +12,13 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|ZCOOL KuaiLe:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Android-插件化的基础">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/20190915004258.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/oubindo/ImageBed/master/img/%E8%B5%84%E6%BA%90id.png">
 <meta property="article:published_time" content="2021-07-26T08:41:46.562Z">
-<meta property="article:modified_time" content="2021-08-19T09:41:49.835Z">
+<meta property="article:modified_time" content="2021-08-20T07:04:58.815Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -49,9 +49,7 @@
     lang   : 'zh-Hans'
   };
 </script>
-
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script><script src="/lib/fireworks.js"></script>
+<script src="/lib/fireworks.js"></script>
   <title>Android-APK构建流程 | Elroy-Pb</title>
   
 
@@ -84,6 +82,7 @@
 </noscript>
 
 </head>
+
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
@@ -98,7 +97,12 @@
     </div>
   </div>
 
-  <div class="site-meta">
+  <div class="site-meta custom-logo">
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/avatar.jpg" alt="Elroy-Pb">
+        </a>
+      </div>
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
@@ -137,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">14</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">15</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -198,7 +202,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Elroy-Pb">
       <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
     </span>
@@ -225,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-19 17:41:49" itemprop="dateModified" datetime="2021-08-19T17:41:49+08:00">2021-08-19</time>
+                <time title="Modified: 2021-08-20 15:04:58" itemprop="dateModified" datetime="2021-08-20T15:04:58+08:00">2021-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,17 +241,19 @@
                 </span>
             </span>
 
-          
+          <br>
             <span class="post-meta-item" title="Symbols count in article">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
               <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
               <span>3 mins.</span>
             </span>
             <div class="post-description">Android-插件化的基础</div>
@@ -298,7 +304,6 @@
 <p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。  </p>
 <p>开发时，在其他module代码引用资源文件时,使用以下代码进行索引  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier for the given resource name.  A fully</span><br><span class="line"> * qualified resource name is of the form &quot;package:type/entry&quot;.  The first</span><br><span class="line"> * two components (package and type) are optional if defType and</span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use of this function is discouraged.  It is much more</span><br><span class="line"> * efficient to retrieve resources by identifier than by name.</span><br><span class="line"> * </span><br><span class="line"> * @param name The name of the desired resource.</span><br><span class="line"> * @param defType Optional default resource type to find, if &quot;type/&quot; is</span><br><span class="line"> *                not included in the name.  Can be null to require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package to find, if &quot;package:&quot; is</span><br><span class="line"> *                   not included in the name.  Can be null to require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @return int The associated resource identifier.  Returns 0 if no such</span><br><span class="line"> *         resource was found.  (0 is not a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String name, String defType, String defPackage) &#123;</span><br><span class="line">    return mResourcesImpl.getIdentifier(name, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
 <h3 id="为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？"><a href="#为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？" class="headerlink" title="为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？"></a>为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</h3><p>因为资源id只是表示资源的次序，而不是别的跟资源本身绑定的属性。当到了不同的模块以后，参与编译的资源变多了，那次序肯定会改变。资源id也就改变了。并且子模块的资源id只是引用形式存在于代码中，id具体是什么值并不是很care。</p>
 <h3 id="apk或者aab，为什么需要对齐？"><a href="#apk或者aab，为什么需要对齐？" class="headerlink" title="apk或者aab，为什么需要对齐？"></a><em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
@@ -400,7 +405,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Elroy-Pb"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Elroy-Pb</p>
   <div class="site-description" itemprop="description">凌晨四点钟，看海棠花未眠。</div>
 </div>
@@ -409,7 +414,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -431,9 +436,6 @@
       </span>
       <span class="links-of-author-item">
         <a href="/15815337432@163.com" title="E-Mail → 15815337432@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://weibo.com/u/3268290704" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3268290704" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
       </span>
   </div>
 
@@ -474,7 +476,7 @@
     </span>
     <span title="Reading time total">20 mins.</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -502,12 +504,14 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
 
 
   
