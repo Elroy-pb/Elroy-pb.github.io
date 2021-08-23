@@ -12,13 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Android Application Bundle 简介">
@@ -184,6 +183,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -277,7 +277,7 @@
 <p>Android App Bundle 是一种包含编译后代码和资源文件的新的上传格式（.aab） </p>
 </blockquote>
 <p>补充:<strong>Android Application Bundle</strong> != <strong>Apk</strong><br>App Bundle 纯粹是为了上传设计的文件，用户无法直接安装和使用它。<br>虽然AAB和Apk本质上都是压缩包,但是内部的目录结构完全不同，以下是一个Abb正常的aab文件结构</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">–BundleConfig.pb ： 打包bundle的时候，自动生成</span><br><span class="line">–base : base目录</span><br><span class="line">——assets: 对应apk的assets目录</span><br><span class="line">——dex: 原apk中classes.dex,classes2.dex…都放这里</span><br><span class="line">——lib: 原apk中lib目录都放这里</span><br><span class="line">——manifest: 原apk的AndroidManifest.xml放这里，需要是编译后的AndroidManifest.xml</span><br><span class="line">——res：apk中的资源放这里，需要是编译后的资源</span><br><span class="line">——root: apk中相对于根目录的其他资源文件</span><br><span class="line">——resources.pb：编译资源的时候会生成的</span><br><span class="line">——assets.pb:编译bundle的时候会生成的</span><br><span class="line">——native.pb: 编译bundle的时候会生成的</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">–BundleConfig.pb ： 打包bundle的时候，自动生成</span><br><span class="line">–base : base目录</span><br><span class="line"><span class="section">——assets: 对应apk的assets目录</span></span><br><span class="line"><span class="section">——dex: 原apk中classes.dex,classes2.dex…都放这里</span></span><br><span class="line"><span class="section">——lib: 原apk中lib目录都放这里</span></span><br><span class="line"><span class="section">——manifest: 原apk的AndroidManifest.xml放这里，需要是编译后的AndroidManifest.xml</span></span><br><span class="line">——res：apk中的资源放这里，需要是编译后的资源</span><br><span class="line"><span class="section">——root: apk中相对于根目录的其他资源文件</span></span><br><span class="line">——resources.pb：编译资源的时候会生成的</span><br><span class="line"><span class="section">——assets.pb:编译bundle的时候会生成的</span></span><br><span class="line"><span class="section">——native.pb: 编译bundle的时候会生成的</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Google-Play-Dynamic-Delivery"><a href="#Google-Play-Dynamic-Delivery" class="headerlink" title="Google Play Dynamic Delivery"></a>Google Play Dynamic Delivery</h2><blockquote>
 <p>简介:Google Play 推出新 app 交付模式，叫做动态交付 (Dynamic Delivery)，它根据每个用户的设备信息，使用开发者上传的 app bundle 来生成对应的 apk 文件。</p>
@@ -334,10 +334,10 @@
 </li>
 </ul>
 <p>2 需要在该工具路径下/tool/apktool/signature/config/apk.ini文件配置以下路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#配置项 后续看项目的需求支持可增加参数</span><br><span class="line">[config]</span><br><span class="line"># 注意所有配置项需要顶行写，&quot;=&quot; 号两边和行首尾不能有空格</span><br><span class="line"># AS 路径 </span><br><span class="line">as_path=/Users/zhupengbo/Desktop/S3/S3_Hw</span><br><span class="line"># AAB 生成的路径 必填</span><br><span class="line">abb_path=/Users/zhupengbo/tool/apktool/apk/abb</span><br><span class="line"># 版本号和版本名</span><br><span class="line">versionCode=1</span><br><span class="line">versionName=1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置项 后续看项目的需求支持可增加参数</span></span><br><span class="line">[config]</span><br><span class="line"><span class="comment"># 注意所有配置项需要顶行写，&quot;=&quot; 号两边和行首尾不能有空格</span></span><br><span class="line"><span class="comment"># AS 路径 </span></span><br><span class="line">as_path=<span class="regexp">/Users/</span>zhupengbo<span class="regexp">/Desktop/</span>S3/S3_Hw</span><br><span class="line"><span class="comment"># AAB 生成的路径 必填</span></span><br><span class="line">abb_path=<span class="regexp">/Users/</span>zhupengbo<span class="regexp">/tool/</span>apktool<span class="regexp">/apk/</span>abb</span><br><span class="line"><span class="comment"># 版本号和版本名</span></span><br><span class="line">versionCode=<span class="number">1</span></span><br><span class="line">versionName=<span class="number">1.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>3.该项目增加了pad配置表<br>3.1 <strong>aab_pad.xls</strong> 配置表路径在 <strong>/apktool/signature/config</strong> 的路径下<br>3.2 配置的方法<br>支持配置<strong>文件路径</strong>和<strong>文件夹</strong><br>S3项目以resource路径下进行配表，该路径包含了游戏内的资源  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">配置形式为:resource/路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">配置形式为<span class="symbol">:resource/</span>路径</span><br></pre></td></tr></table></figure>
 
 <p><strong>aab_pad.xls 格式如下-示例</strong></p>
 <table>
@@ -360,7 +360,7 @@
 </tr>
 </tbody></table>
 <p>4 该工具支持下终端下执行，调用示例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/zhupengbo/tool/apktool/android_pack.sh /Users/zhupengbo/tool/apktool/apk/apk/AAA.apk</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/Users/</span>zhupengbo<span class="regexp">/tool/</span>apktool<span class="regexp">/android_pack.sh /</span>Users<span class="regexp">/zhupengbo/</span>tool<span class="regexp">/apktool/</span>apk<span class="regexp">/apk/</span>AAA.apk</span><br></pre></td></tr></table></figure>
 
 
 
@@ -383,13 +383,10 @@
 
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/07/19/hexo/" rel="prev" title="Hexo CMD">
-      <i class="fa fa-chevron-left"></i> Hexo CMD
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/" rel="next" title="Android-Handle---消息分发机制">
-      Android-Handle---消息分发机制 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/07/19/hexo/" rel="next" title="Hexo CMD">
+      Hexo CMD <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -545,8 +542,6 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
