@@ -3,7 +3,8 @@
   <entry>
     <title>Android-Apk安装的流程</title>
     <url>/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，没必要去记那么多API的调用链，意义不大，重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。</p>
+<h1 id="APK安装"><a href="#APK安装" class="headerlink" title="APK安装"></a>APK安装</h1><h1 id="安装的方式"><a href="#安装的方式" class="headerlink" title="安装的方式"></a>安装的方式</h1><h1 id="安装的流程"><a href="#安装的流程" class="headerlink" title="安装的流程"></a>安装的流程</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -369,7 +370,23 @@
   <entry>
     <title>Android-APK构建流程</title>
     <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
+    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><pre><code>META-INF目录：包含两个签名文件（CERT.SF和CERT.RSA），以及一个manifest文件（MANIFEST.MF）
+                  
+assets目录：包含工程中的asset目录下的文件，可以使用AssetManager获取
+                  
+res目录：包含那些没有被编译到resources.arsc的资源
+                
+lib目录：包含适用于不同处理器的第三方依赖库，这里边可以有多个子目录，比如armeabi, armeabi-v7a, arm64-v8a, x86, x86_64, 以及mips
+              
+resources.arsc文件：存储编译好的资源，包括项目工程中的res/values目录里的xml文件，它们都被编译成二进制格式，也包括一些路径，指向那些没有被编译的资源，比如layout文件和图片
+              
+classes.dex文件：项目中的java类都被编译到该dex文件，这个文件可以被Android的Dalvik/ART虚拟机解析。
+            
+AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须的。
+        
+这些文件是Android系统运行一个应用程序时会用到的数据和代码，下面介绍系统如何安装一个APK包。
+</code></pre>
+<h2 id="Apk编译的流程"><a href="#Apk编译的流程" class="headerlink" title="Apk编译的流程"></a>Apk编译的流程</h2><ol>
 <li>通过<strong>aapt-Android Asset Packing Tool</strong> 打包res资源文件，生成R.java、resources.arsc和res文件（二进制 &amp; 非二进制如res/raw和pic保持原样）  </li>
 </ol>
 <blockquote>
@@ -474,6 +491,30 @@
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -585,30 +626,6 @@
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
