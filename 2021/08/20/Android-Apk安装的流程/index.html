@@ -28,7 +28,7 @@
 <meta property="og:description" content="Android-插件化的基础">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-08-20T06:52:53.000Z">
-<meta property="article:modified_time" content="2021-08-27T06:43:27.750Z">
+<meta property="article:modified_time" content="2021-08-31T12:29:25.526Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-27 14:43:27" itemprop="dateModified" datetime="2021-08-27T14:43:27+08:00">2021-08-27</time>
+                <time title="Modified: 2021-08-31 20:29:25" itemprop="dateModified" datetime="2021-08-31T20:29:25+08:00">2021-08-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>164</span>
+              <span>845</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -264,8 +264,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，没必要去记那么多API的调用链，意义不大，重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。</p>
-<h1 id="APK安装"><a href="#APK安装" class="headerlink" title="APK安装"></a>APK安装</h1><h1 id="安装的方式"><a href="#安装的方式" class="headerlink" title="安装的方式"></a>安装的方式</h1><h1 id="安装的流程"><a href="#安装的流程" class="headerlink" title="安装的流程"></a>安装的流程</h1>
+        <h1 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，那么多API的调用链根本记不完，不能一窥全貌，就只能迷失在森林之中，其实重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。<br>思维上的提高才是本质上的进步！！！</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>APK安装的方式其实有很多种，网上也有很多好的文章，不过学会才是最重要的，做出我们自己的总结。<br>从2021 年 8 月起 新应用需要使用 Android App Bundle 才能在 Google Play 中发布(<a target="_blank" rel="noopener" href="https://developer.android.com/guide/app-bundle">Android ABB</a>)，在加上国内华为也支持了该ABB形式文件上架应用，后面也兴会成为主流。</p>
+<p>关于相关的 Android App Bundle的知识可以看<a target="_blank" rel="noopener" href="https://developer.android.com/guide/app-bundle">🏷</a>)</p>
+<h1 id="APK安装的方式"><a href="#APK安装的方式" class="headerlink" title="APK安装的方式"></a>APK安装的方式</h1><ul>
+<li>安装方式</li>
+</ul>
+<ul>
+<li>1.系统应用和预制应用的安装</li>
+<li>2.通过商店</li>
+<li>3.Adb</li>
+<li>4.通过SD卡</li>
+</ul>
+<h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>简单来说分为四步：</p>
+<p>1)将APK的信息通过IO流的形式写入到PackageInstaller.Session中。</p>
+<p>2)调用PackageInstaller.Session的commit方法，将APK的信息交由PKMS处理。</p>
+<p>3)拷贝APK</p>
+<p>4)最后进行安装</p>
+<h1 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h1><h2 id="什么是覆盖安装-？"><a href="#什么是覆盖安装-？" class="headerlink" title="什么是覆盖安装 ？"></a>什么是覆盖安装 ？</h2><p>无论在国内还是出海国外上架海外游戏App，我们在每次上架新版本的时候，都是需要<strong>versionCode</strong>+1,用户再通过商店渠道再把 versioncode+1的apk覆盖掉原先的apk,这个过程就是覆盖安装，。<br>不过还是有前置条件：<br>    1.包名跟旧的一致<br>    2.签名跟原来的一致<br>    3.组件不冲突</p>
+<p>更详细的内容看这张表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">正常安装</th>
+<th align="center">覆盖安装</th>
+<th align="left">DES</th>
+<th align="left">MORE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">删除旧版本APK之后重新进行安装</td>
+<td align="center">（不删除之前的旧版本包，直接安装）</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">SQLite的数据也会被删除</td>
+<td align="center">SQLite的数据不会丢失</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">shared_prefs中的数据会被删除</td>
+<td align="center">shared_prefs中的数据不会丢失</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">4.4之前的版本不会比较apk的Version_code</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+
     </div>
 
     
@@ -345,7 +397,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">APK安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">安装的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">安装的流程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E6%82%9F"><span class="nav-number">1.</span> <span class="nav-text">感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E5%AE%89%E8%A3%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">APK安装的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">Apk安装的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">5.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A6%86%E7%9B%96%E5%AE%89%E8%A3%85-%EF%BC%9F"><span class="nav-number">5.1.</span> <span class="nav-text">什么是覆盖安装 ？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -416,12 +468,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">22k</span>
+    <span title="Symbols count total">23k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">20 mins.</span>
+    <span title="Reading time total">21 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

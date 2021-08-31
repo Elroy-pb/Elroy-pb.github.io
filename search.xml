@@ -3,8 +3,60 @@
   <entry>
     <title>Android-Apk安装的流程</title>
     <url>/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，没必要去记那么多API的调用链，意义不大，重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。</p>
-<h1 id="APK安装"><a href="#APK安装" class="headerlink" title="APK安装"></a>APK安装</h1><h1 id="安装的方式"><a href="#安装的方式" class="headerlink" title="安装的方式"></a>安装的方式</h1><h1 id="安装的流程"><a href="#安装的流程" class="headerlink" title="安装的流程"></a>安装的流程</h1>]]></content>
+    <content><![CDATA[<h1 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，那么多API的调用链根本记不完，不能一窥全貌，就只能迷失在森林之中，其实重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。<br>思维上的提高才是本质上的进步！！！</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>APK安装的方式其实有很多种，网上也有很多好的文章，不过学会才是最重要的，做出我们自己的总结。<br>从2021 年 8 月起 新应用需要使用 Android App Bundle 才能在 Google Play 中发布(<a href="https://developer.android.com/guide/app-bundle">Android ABB</a>)，在加上国内华为也支持了该ABB形式文件上架应用，后面也兴会成为主流。</p>
+<p>关于相关的 Android App Bundle的知识可以看<a href="https://developer.android.com/guide/app-bundle">🏷</a>)</p>
+<h1 id="APK安装的方式"><a href="#APK安装的方式" class="headerlink" title="APK安装的方式"></a>APK安装的方式</h1><ul>
+<li>安装方式</li>
+</ul>
+<ul>
+<li>1.系统应用和预制应用的安装</li>
+<li>2.通过商店</li>
+<li>3.Adb</li>
+<li>4.通过SD卡</li>
+</ul>
+<h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>简单来说分为四步：</p>
+<p>1)将APK的信息通过IO流的形式写入到PackageInstaller.Session中。</p>
+<p>2)调用PackageInstaller.Session的commit方法，将APK的信息交由PKMS处理。</p>
+<p>3)拷贝APK</p>
+<p>4)最后进行安装</p>
+<h1 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h1><h2 id="什么是覆盖安装-？"><a href="#什么是覆盖安装-？" class="headerlink" title="什么是覆盖安装 ？"></a>什么是覆盖安装 ？</h2><p>无论在国内还是出海国外上架海外游戏App，我们在每次上架新版本的时候，都是需要<strong>versionCode</strong>+1,用户再通过商店渠道再把 versioncode+1的apk覆盖掉原先的apk,这个过程就是覆盖安装，。<br>不过还是有前置条件：<br>    1.包名跟旧的一致<br>    2.签名跟原来的一致<br>    3.组件不冲突</p>
+<p>更详细的内容看这张表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">正常安装</th>
+<th align="center">覆盖安装</th>
+<th align="left">DES</th>
+<th align="left">MORE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">删除旧版本APK之后重新进行安装</td>
+<td align="center">（不删除之前的旧版本包，直接安装）</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">SQLite的数据也会被删除</td>
+<td align="center">SQLite的数据不会丢失</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">shared_prefs中的数据会被删除</td>
+<td align="center">shared_prefs中的数据不会丢失</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">4.4之前的版本不会比较apk的Version_code</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -370,7 +422,13 @@
   <entry>
     <title>Android-APK构建流程</title>
     <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><pre><code>META-INF目录：包含两个签名文件（CERT.SF和CERT.RSA），以及一个manifest文件（MANIFEST.MF）
+    <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><p>维基百科，自由的百科全书<br>跳到导航跳到搜索<br>APK<br>APK format icon (2014-2019).png<br>扩展名    .apk、.xapk、.apks、.apkm<br>互联网媒体类型    application/vnd.android.package-archive<br>格式类型    包管理器 存档文件<br>专门属    软件包<br>延伸自    JAR 和 ZIP</p>
+<p>APK 文件基于 ZIP 文件格式，它与JAR文件的构造方式相似。它的互联网媒体类型是：application/vnd.android.package-archive[5]。</p>
+<p>扩展资料:<br>    Android5.0引入了Split APK机制，这是为了解决65536上限以及APK安装包越来越大等问题。Split APK机制可以将一个APK，拆分成多个独立APK。<br>    在引入了Split APK机制后，APK有两种分类：</p>
+<pre><code>Single APK：安装文件为一个完整的APK，即base APK。Android称其为Monolithic。
+Mutiple APK：安装文件在一个文件目录中，其内部有多个被拆分的APK，这些APK由一个 base APK和一个或多个split APK组成。Android称其为Cluster。
+</code></pre>
+<h2 id="Apk构成的属性"><a href="#Apk构成的属性" class="headerlink" title="Apk构成的属性"></a>Apk构成的属性</h2><pre><code>META-INF目录：包含两个签名文件（CERT.SF和CERT.RSA），以及一个manifest文件（MANIFEST.MF）
                   
 assets目录：包含工程中的asset目录下的文件，可以使用AssetManager获取
                   
@@ -494,30 +552,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -572,22 +606,20 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 </tbody></table>
 <p><strong>注意 ！！！</strong>：如果为资源包选择 <strong>install-time 分发类型</strong>，就无需在游戏中使用 <strong>Play Asset Delivery API</strong>。这些资源包与主应用 APK同时安装。<br>目前公司项目使用就是分发模式就是 <strong>install-time</strong></p>
 <p>由于google规定需要apk&lt;150m，等于aab中的base目录&lt;150m，如果超出限制，需要把多出的资源迁移到install-time，让google去动态下发资源</p>
-<h1 id="软件使用说明"><a href="#软件使用说明" class="headerlink" title="软件使用说明"></a>软件使用说明</h1><h3 id="需要提前安装的环境"><a href="#需要提前安装的环境" class="headerlink" title="需要提前安装的环境"></a>需要提前安装的环境</h3><ul>
-<li>需要自己额外再安装的路径  <ol>
-<li>python3</li>
-<li>aapt  </li>
-<li>gradle </li>
-<li>as-pro  ==&gt; 模板工程 </li>
-</ol>
-</li>
-<li>该工具内置了反编译的环境 请勿随意修改路径  <ol>
-<li>apktool  </li>
-<li>dex2jar  </li>
-<li>smali  </li>
-</ol>
-</li>
-</ul>
-<p>2 需要在该工具路径下/tool/apktool/signature/config/apk.ini文件配置以下路径</p>
+<!-- # 软件使用说明
+### 需要提前安装的环境   
+* 需要自己额外再安装的路径  
+    1. python3
+    2. aapt  
+    3. gradle 
+    4. as-pro  ==> 模板工程 
+* 该工具内置了反编译的环境 请勿随意修改路径  
+    1. apktool  
+    2. dex2jar  
+    3. smali  
+
+2 需要在该工具路径下/tool/apktool/signature/config/apk.ini文件配置以下路径
+
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment">#配置项 后续看项目的需求支持可增加参数</span></span><br><span class="line">[config]</span><br><span class="line"><span class="comment"># 注意所有配置项需要顶行写，&quot;=&quot; 号两边和行首尾不能有空格</span></span><br><span class="line"><span class="comment"># AS 路径 </span></span><br><span class="line">as_path=<span class="regexp">/Users/</span>zhupengbo<span class="regexp">/Desktop/</span>S3/S3_Hw</span><br><span class="line"><span class="comment"># AAB 生成的路径 必填</span></span><br><span class="line">abb_path=<span class="regexp">/Users/</span>zhupengbo<span class="regexp">/tool/</span>apktool<span class="regexp">/apk/</span>abb</span><br><span class="line"><span class="comment"># 版本号和版本名</span></span><br><span class="line">versionCode=<span class="number">1</span></span><br><span class="line">versionName=<span class="number">1.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>3.该项目增加了pad配置表<br>3.1 <strong>aab_pad.xls</strong> 配置表路径在 <strong>/apktool/signature/config</strong> 的路径下<br>3.2 配置的方法<br>支持配置<strong>文件路径</strong>和<strong>文件夹</strong><br>S3项目以resource路径下进行配表，该路径包含了游戏内的资源  </p>
@@ -614,18 +646,43 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 </tr>
 </tbody></table>
 <p>4 该工具支持下终端下执行，调用示例</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/Users/</span>zhupengbo<span class="regexp">/tool/</span>apktool<span class="regexp">/android_pack.sh /</span>Users<span class="regexp">/zhupengbo/</span>tool<span class="regexp">/apktool/</span>apk<span class="regexp">/apk/</span>AAA.apk</span><br></pre></td></tr></table></figure>
+<pre><code>/Users/zhupengbo/tool/apktool/android_pack.sh /Users/zhupengbo/tool/apktool/apk/apk/AAA.apk
+``` --&gt;
 
 
 
 
-
+</code></pre>
 ]]></content>
       <categories>
         <category>Google</category>
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
