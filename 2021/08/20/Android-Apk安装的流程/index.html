@@ -28,7 +28,7 @@
 <meta property="og:description" content="Android-插件化的基础">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-08-20T06:52:53.000Z">
-<meta property="article:modified_time" content="2021-09-02T02:24:36.225Z">
+<meta property="article:modified_time" content="2021-09-02T08:53:34.471Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-02 10:24:36" itemprop="dateModified" datetime="2021-09-02T10:24:36+08:00">2021-09-02</time>
+                <time title="Modified: 2021-09-02 16:53:34" itemprop="dateModified" datetime="2021-09-02T16:53:34+08:00">2021-09-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -385,7 +385,7 @@
 <p>在/data/data/包名目录下，每个app都有自己的目录，目录名就是应用程序在AndroidManifest.xml文件中定义的包。每个应用程序的代码，对自己的目录是有绝对的控制权限的。在每个目录下，一般有如下几个子目录（结合上面的表格）：</p>
 <p>databases : 存放数据库<br>cache : 存放缓存数据<br>files : 存放应用程序自己控制的文件<br>lib : 存放使用的包</p>
 <h2 id="Linux科普"><a href="#Linux科普" class="headerlink" title="Linux科普"></a>Linux科普</h2><p>为什么这里需要了解Linux的知识点，<br>Linux进程有两个ID，一个就是用户ID，为每个用户的唯一标识符；<br>另一个是组ID，为用户组的唯一标识符</p>
-<p>当你在手机点击一个APK之后,APK中的AndroidManifest.xml会被解析,在手机root之后，或者用模拟器打开根目录 **/data/system/**，我们获得超级权限之后，可以在查看目前手机在系统已经注册的app，解析的内容会被存储到 <strong>/data/system/packages.xml</strong> 和 <strong>/data/system/packages.list</strong> 中。我们打开packages.list和packages.xml，我们已Apk的包名为索引，可以看到对应的内容。</p>
+<p>当你在手机点击一个APK之后,APK中的AndroidManifest.xml会被解析,在手机root之后，或者用模拟器打开根目录 <strong>/data/system/</strong> ，我们获得超级权限之后，可以在查看目前手机在系统已经注册的app，解析的内容会被存储到 <strong>/data/system/packages.xml</strong> 和 <strong>/data/system/packages.list</strong> 中。我们打开packages.list和packages.xml，我们已Apk的包名为索引，可以看到对应的内容。</p>
 <p>packages.list</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">com</span>.game.dalan<span class="number">2</span>.s<span class="number">3</span> <span class="number">10130</span> <span class="number">1</span> /data/user/<span class="number">0</span>/com.game.dalan<span class="number">2</span>.s<span class="number">3</span> default <span class="number">3003</span></span><br></pre></td></tr></table></figure>
 
@@ -395,7 +395,7 @@
 <p>packages.list中指名了该应用默认存储的位置<br>packages.xml中包含了该应用申请的权限、签名和代码所在位置等信息，并且两者都有一个userId为10060。  </p>
 <p>之所以每个应用都有一个userId，是因为Android在系统设计上把每个应用当作Linux系统上的一个用户对待，这样就可以利用已有的Linux上用户管理机制来设计Android应用，比如应用目录，应用权限，应用进程管理等。</p>
 <p>这个解析的过程也可以理解为在APK在系统的注册。</p>
-<h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>简单来说分为四步：</p>
+<h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>这里大致只讲流程，详细的代码我们后面再一一罗列出来:<br>简单来说分为四步：</p>
 <p>1)将APK的信息通过IO流的形式写入到PackageInstaller.Session中。</p>
 <p>2)调用PackageInstaller.Session的commit方法，将APK的信息交由PKMS处理。</p>
 <p>3)拷贝APK</p>
@@ -436,7 +436,7 @@
 <td align="left"></td>
 </tr>
 </tbody></table>
-<h2 id="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"><a href="#部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？" class="headerlink" title="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"></a>部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</h2><p>首先要清除对应的安装包，就得知道安装包的目录是在哪，计算机的世界有入口就有出口。<br>我们这里在做一些知识的扩展：<br>现在部分手机的App是具有分析Apk的功能，也就是传输本机上的apk，比如说QQ，还有一些第三方的软件具备了分享的功能。手机安装app时，会在根目录和外存储器合生成文件夹。反过来说，你删除app的时候，这些对应生成文件夹也会被系统删除。根目录会放置app的安装包，而且统一命名为base.apk，还有一些重要的app用户数据。(你想查看，前提是开启root)<br>外存储器就是你能看到的文件夹，里面放置可操作的文件，例如保存的图片，视频。所以即使你安装app后删除安装包，也是删除了外存储器的安装包，QQ传输app安装包就是传输<strong>根目录</strong>的安装包。</p>
+<h2 id="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"><a href="#部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？" class="headerlink" title="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"></a>部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</h2><p>首先要清除对应的安装包，就得知道安装包的目录是在哪，计算机的世界有入口就有出口。<br>我们这里在做一些知识的扩展：<br>现在部分手机的App是具有分享Apk的功能，也就是传输本机上的apk，比如说QQ，还有一些第三方的软件具备之类的功能。手机安装app时，会在根目录和外存储器合生成文件夹。反过来说，你删除app的时候，这些对应生成文件夹也会被系统删除。根目录会放置app的安装包，而且统一命名为base.apk，还有一些重要的app用户数据。(你想查看，前提是开启root)<br>外存储器就是你能看到的文件夹，里面放置可操作的文件，例如保存的图片，视频。所以即使你安装app后删除安装包，也是删除了外存储器的安装包，QQ传输app安装包就是传输<strong>根目录</strong>的安装包。</p>
 <!-- 根目录具有极高的权限 -->
 
 <!-- 
