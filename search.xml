@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Android-Apk安装的流程</title>
+    <title>Android-Apk安装的流程(前章)</title>
     <url>/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，那么多API的调用链根本记不完，不能一窥全貌，就只能迷失在森林之中，其实重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。<br>思维上的提高才是本质上的进步！！！</p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>APK安装的方式其实有很多种，网上也有很多好的文章，不过学会才是最重要的，做出我们自己的总结。<br>从2021 年 8 月起 新应用需要使用 Android App Bundle 才能在 Google Play 中发布(<a href="https://developer.android.com/guide/app-bundle">Android ABB</a>)，在加上国内华为也支持了该ABB形式文件上架应用，后面也兴会成为主流。</p>
-<p>关于相关的 Android App Bundle的知识可以看<a href="https://developer.android.com/guide/app-bundle">🏷</a>)</p>
-<h1 id="APK安装的方式"><a href="#APK安装的方式" class="headerlink" title="APK安装的方式"></a>APK安装的方式</h1><ul>
+<p>关于相关的 Android App Bundle的知识可以点击这里<a href="https://zhupengbo.com/2021/07/19/google-aab/">🏷</a>)</p>
+<h1 id="APK安装的方式"><a href="#APK安装的方式" class="headerlink" title="APK安装的方式"></a>APK安装的方式</h1><p>本章节只讲大致流程，代码流程我们后面再慢慢梳理</p>
+<ul>
 <li>安装方式</li>
 </ul>
 <ul>
@@ -15,6 +16,124 @@
 <li>3.Adb</li>
 <li>4.通过SD卡</li>
 </ul>
+<h1 id="🏷-科普"><a href="#🏷-科普" class="headerlink" title="🏷 科普"></a>🏷 科普</h1><h2 id="Android科普"><a href="#Android科普" class="headerlink" title="Android科普"></a>Android科普</h2><p><a href="https://blog.csdn.net/qq_28193019/article/details/102880179">安装目录的基本知识</a></p>
+<p>既然是APK安装,有输入点就有输出点，所以就会有对应的目录，每个不同的目录存放这对应的文件。  </p>
+<!-- | Class |     Name  | 
+|:------------- |:---------------:|  -->
+
+<table>
+<thead>
+<tr>
+<th align="left">目录</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/system/app</td>
+<td align="center">系统自带的应用程序,获得 root 权限才能删除</td>
+</tr>
+<tr>
+<td align="left">/data/app</td>
+<td align="center">第三方应用apk文件.安装时把apk文件复制到此目录</td>
+</tr>
+<tr>
+<td align="left">/data/anr</td>
+<td align="center">存放anr信息（/data/anr/traces.txt用于存放app ANR信息）</td>
+</tr>
+<tr>
+<td align="left">/data/data</td>
+<td align="center">应用程序数据</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}</td>
+<td align="center">特定应用程序数据目录</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}/cache</td>
+<td align="center">临时文件，系统会自动清理</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}/databases</td>
+<td align="center">数据库</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}/files</td>
+<td align="center">一般文件</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}/shared_pres</td>
+<td align="center">SharedPreference</td>
+</tr>
+<tr>
+<td align="left">/data/data/${package_name}/lib</td>
+<td align="center">so文件</td>
+</tr>
+<tr>
+<td align="left">/data/dalvik-cache</td>
+<td align="center">存放odex文件.将apk中的dex文件安装到dalvik-cache目录下(dex文件是dalvik虚拟机的可执行文件,ART模式的可执行文件格式为.aot,启动ART时,系统会执行dex文件转换至aot文件)</td>
+</tr>
+<tr>
+<td align="left">/data/system/packages.list</td>
+<td align="center">类似于Window的注册表,该文件是解析apk时由writeLP()创建的。记录了系统的permissons,以及解析apk的AndroidManifest获取的应用name,codePath,flag,ts,version,userid等信息。解析完apk后将更新信息写入这个文件并保存到flash,下次开机的时候直接从里面读取相关信息并添加到内存相关列表中.当有apk升级,安装或删除时会更新这个文件。</td>
+</tr>
+<tr>
+<td align="left">/data/system/packages.xml</td>
+<td align="center">指定应用的默认存储位置/data/data/com.xx.xx/package.xml中包含了该应用申请的权限,签名和代码所在的位置等信息系,并且两者都有同一个userld.</td>
+</tr>
+<tr>
+<td align="left">/data/user/0</td>
+<td align="center">软链接，指向/data/data</td>
+</tr>
+<tr>
+<td align="left">/data/user_de/0/${package_name}</td>
+<td align="center">设备存储保护区，在快速启动模式可以访问这个文件夹</td>
+</tr>
+<tr>
+<td align="left">/proc/cpuinfo</td>
+<td align="center">cpu信息</td>
+</tr>
+<tr>
+<td align="left">/proc/smaps</td>
+<td align="center">内存占用信息</td>
+</tr>
+<tr>
+<td align="left">/sdcard</td>
+<td align="center">软链接，最终指向/storage/emulated/0【跟Android版本和ROM版本有关】</td>
+</tr>
+<tr>
+<td align="left">/storage/emulated/0</td>
+<td align="center">外部存储的根目录</td>
+</tr>
+<tr>
+<td align="left">/storage/emulated/0/Android/data/${package_name}</td>
+<td align="center">应用的额外数据</td>
+</tr>
+<tr>
+<td align="left">/system/app</td>
+<td align="center">系统应用apk文件</td>
+</tr>
+<tr>
+<td align="left">/system/lib</td>
+<td align="center">系统应用so库</td>
+</tr>
+<tr>
+<td align="left">————————————————</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>在/data/data/包名目录下，每个app都有自己的目录，目录名就是应用程序在AndroidManifest.xml文件中定义的包。每个应用程序的代码，对自己的目录是有绝对的控制权限的。在每个目录下，一般有如下几个子目录（结合上面的表格）：</p>
+<p>databases : 存放数据库<br>cache : 存放缓存数据<br>files : 存放应用程序自己控制的文件<br>lib : 存放使用的包</p>
+<h2 id="Linux科普"><a href="#Linux科普" class="headerlink" title="Linux科普"></a>Linux科普</h2><p>为什么这里需要了解Linux的知识点，<br>Linux进程有两个ID，一个就是用户ID，为每个用户的唯一标识符；<br>另一个是组ID，为用户组的唯一标识符</p>
+<p>当你在手机点击一个APK之后,APK中的AndroidManifest.xml会被解析,在手机root之后，或者用模拟器打开根目录 **/data/system/**，我们获得超级权限之后，可以在查看目前手机在系统已经注册的app，解析的内容会被存储到 <strong>/data/system/packages.xml</strong> 和 <strong>/data/system/packages.list</strong> 中。我们打开packages.list和packages.xml，我们已Apk的包名为索引，可以看到对应的内容。</p>
+<p>packages.list</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">com</span>.game.dalan<span class="number">2</span>.s<span class="number">3</span> <span class="number">10130</span> <span class="number">1</span> /data/user/<span class="number">0</span>/com.game.dalan<span class="number">2</span>.s<span class="number">3</span> default <span class="number">3003</span></span><br></pre></td></tr></table></figure>
+
+<p>packages.xml</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">&lt;package <span class="built_in">name</span>=<span class="string">&quot;com.game.dalan2.s3&quot;</span> codePath=<span class="string">&quot;/data/app/com.game.dalan2.s3-1&quot;</span> nativeLibraryPath=<span class="string">&quot;/data/app/com.game.dalan2.s3-1/lib&quot;</span> primaryCpuAbi=<span class="string">&quot;x86&quot;</span> publicFlags=<span class="string">&quot;940097350&quot;</span> privateFlags=<span class="string">&quot;0&quot;</span> ft=<span class="string">&quot;17b8267bd90&quot;</span> <span class="keyword">it</span>=<span class="string">&quot;17b586694ad&quot;</span> ut=<span class="string">&quot;17b8267cb67&quot;</span> <span class="built_in">version</span>=<span class="string">&quot;1&quot;</span> userId=<span class="string">&quot;10130&quot;</span>&gt;</span><br><span class="line">     &lt;sigs <span class="built_in">count</span>=<span class="string">&quot;1&quot;</span>&gt;</span><br><span class="line">         &lt;cert index=<span class="string">&quot;9&quot;</span> key=<span class="string">&quot;忽略&quot;</span> /&gt;</span><br><span class="line">     &lt;/sigs&gt;</span><br><span class="line">     &lt;perms&gt;</span><br><span class="line">         &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">&quot;android.permission.MODIFY_AUDIO_SETTINGS&quot;</span> granted=<span class="string">&quot;true&quot;</span> flags=<span class="string">&quot;0&quot;</span> /&gt;</span><br><span class="line">         &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">&quot;android.permission.CHANGE_NETWORK_STATE&quot;</span> granted=<span class="string">&quot;true&quot;</span> flags=<span class="string">&quot;0&quot;</span> /&gt;</span><br><span class="line">         &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">&quot;android.permission.INTERNET&quot;</span> granted=<span class="string">&quot;true&quot;</span> flags=<span class="string">&quot;0&quot;</span> /&gt;</span><br><span class="line">         &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">&quot;android.permission.ACCESS_NETWORK_STATE&quot;</span> granted=<span class="string">&quot;true&quot;</span> flags=<span class="string">&quot;0&quot;</span> /&gt;</span><br><span class="line">         &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">&quot;android.permission.ACCESS_WIFI_STATE&quot;</span> granted=<span class="string">&quot;true&quot;</span> flags=<span class="string">&quot;0&quot;</span> /&gt;</span><br><span class="line">     &lt;/perms&gt;</span><br><span class="line">     &lt;proper-signing-keyset identifier=<span class="string">&quot;147&quot;</span> /&gt;</span><br><span class="line"> &lt;/package&gt;</span><br></pre></td></tr></table></figure>
+
+<p>packages.list中指名了该应用默认存储的位置<br>packages.xml中包含了该应用申请的权限、签名和代码所在位置等信息，并且两者都有一个userId为10060。  </p>
+<p>之所以每个应用都有一个userId，是因为Android在系统设计上把每个应用当作Linux系统上的一个用户对待，这样就可以利用已有的Linux上用户管理机制来设计Android应用，比如应用目录，应用权限，应用进程管理等。</p>
+<p>这个解析的过程也可以理解为在APK在系统的注册。</p>
 <h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>简单来说分为四步：</p>
 <p>1)将APK的信息通过IO流的形式写入到PackageInstaller.Session中。</p>
 <p>2)调用PackageInstaller.Session的commit方法，将APK的信息交由PKMS处理。</p>
@@ -56,7 +175,14 @@
 <td align="left"></td>
 </tr>
 </tbody></table>
-]]></content>
+<h2 id="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"><a href="#部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？" class="headerlink" title="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"></a>部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</h2><p>首先要清除对应的安装包，就得知道安装包的目录是在哪，计算机的世界有入口就有出口。<br>我们这里在做一些知识的扩展：<br>现在部分手机的App是具有分析Apk的功能，也就是传输本机上的apk，比如说QQ，还有一些第三方的软件具备了分享的功能。手机安装app时，会在根目录和外存储器合生成文件夹。反过来说，你删除app的时候，这些对应生成文件夹也会被系统删除。根目录会放置app的安装包，而且统一命名为base.apk，还有一些重要的app用户数据。(你想查看，前提是开启root)<br>外存储器就是你能看到的文件夹，里面放置可操作的文件，例如保存的图片，视频。所以即使你安装app后删除安装包，也是删除了外存储器的安装包，QQ传输app安装包就是传输<strong>根目录</strong>的安装包。</p>
+<!-- 根目录具有极高的权限 -->
+
+<!-- 
+作者：optohighness
+链接：https://www.zhihu.com/question/359549927/answer/1242311029
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -552,6 +678,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -659,30 +809,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
