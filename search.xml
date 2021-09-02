@@ -134,6 +134,7 @@
 <p>packages.list中指名了该应用默认存储的位置<br>packages.xml中包含了该应用申请的权限、签名和代码所在位置等信息，并且两者都有一个userId为10060。  </p>
 <p>之所以每个应用都有一个userId，是因为Android在系统设计上把每个应用当作Linux系统上的一个用户对待，这样就可以利用已有的Linux上用户管理机制来设计Android应用，比如应用目录，应用权限，应用进程管理等。</p>
 <p>这个解析的过程也可以理解为在APK在系统的注册。</p>
+<p>相关知识点可以查看这里 <a href="https://stackoverflow.com/questions/12442979/android-understanding-the-apk-installation-process">Stack Overflow</a></p>
 <h1 id="Apk安装的流程"><a href="#Apk安装的流程" class="headerlink" title="Apk安装的流程"></a>Apk安装的流程</h1><p>这里大致只讲流程，详细的代码我们后面再一一罗列出来:<br>简单来说分为四步：</p>
 <p>1)将APK的信息通过IO流的形式写入到PackageInstaller.Session中。</p>
 <p>2)调用PackageInstaller.Session的commit方法，将APK的信息交由PKMS处理。</p>
