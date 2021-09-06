@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Android-handler机制">
+  <meta name="description" content="Android10(Q)---分区存储">
 <meta property="og:type" content="article">
-<meta property="og:title" content="android-Handler机制-2">
-<meta property="og:url" content="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/index.html">
+<meta property="og:title" content="Android存储路径更新(前章)">
+<meta property="og:url" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="Android-handler机制">
+<meta property="og:description" content="Android10(Q)---分区存储">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-07-27T09:57:51.000Z">
-<meta property="article:modified_time" content="2021-07-27T10:35:15.730Z">
+<meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
+<meta property="article:published_time" content="2021-09-06T03:32:17.000Z">
+<meta property="article:modified_time" content="2021-09-06T09:39:21.291Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
 
-<link rel="canonical" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
+<link rel="canonical" href="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 <script src="/lib/fireworks.js"></script>
-  <title>android-Handler机制-2 | Elroy-Pb</title>
+  <title>Android存储路径更新(前章) | Elroy-Pb</title>
   
 
 
@@ -196,7 +198,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -209,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          android-Handler机制-2
+          Android存储路径更新(前章)
         </h1>
 
         <div class="post-meta">
@@ -220,7 +222,16 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-07-27 17:57:51 / Modified: 18:35:15" itemprop="dateCreated datePublished" datetime="2021-07-27T17:57:51+08:00">2021-07-27</time>
+              <time title="Created: 2021-09-06 11:32:17 / Modified: 17:39:21" itemprop="dateCreated datePublished" datetime="2021-09-06T11:32:17+08:00">2021-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
             </span>
 
           <br>
@@ -229,16 +240,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>0</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
-            <div class="post-description">Android-handler机制</div>
+            <div class="post-description">Android10(Q)---分区存储</div>
 
         </div>
       </header>
@@ -249,7 +260,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是处于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
+<h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
+<li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
+</ul>
+<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
+<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
+<p>外部存储：</p>
+<p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
+<h3 id="分区存储概览"><a href="#分区存储概览" class="headerlink" title="分区存储概览"></a>分区存储概览</h3><p>这里我们先看一张图，先大概有个概念</p>
+<p><img src="%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp" alt="分区存储"></p>
+<p>Android10分区存储对<strong>外部存储</strong>重新进行了设计</p>
+<ul>
+<li>私有存储 (Private Storage) : 每个应用在都拥有自己的私有目录，其它应用看不到，彼此也无法访问到该目录：内部存储私有目录 (/data/data/packageName) ；外部存储私有目录 (/sdcard/Android/data/packageName)，</li>
+<li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
+</ul>
+<p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
+<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
+
     </div>
 
     
@@ -267,13 +299,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/" rel="prev" title="Android-外挂篇">
-      <i class="fa fa-chevron-left"></i> Android-外挂篇
+    <a href="/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/" rel="prev" title="Android-Apk安装的流程(前章)">
+      <i class="fa fa-chevron-left"></i> Android-Apk安装的流程(前章)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/29/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90/" rel="next" title="Android系统Binder驱动分析(1)">
-      Android系统Binder驱动分析(1) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -332,6 +361,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">1.1.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">1.2.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">1.2.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

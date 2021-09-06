@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android存储路径更新(前章)</title>
+    <url>/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是处于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
+<h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
+<li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
+</ul>
+<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
+<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
+<p>外部存储：</p>
+<p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
+<h3 id="分区存储概览"><a href="#分区存储概览" class="headerlink" title="分区存储概览"></a>分区存储概览</h3><p>这里我们先看一张图，先大概有个概念</p>
+<p><img src="%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp" alt="分区存储"></p>
+<p>Android10分区存储对<strong>外部存储</strong>重新进行了设计</p>
+<ul>
+<li>私有存储 (Private Storage) : 每个应用在都拥有自己的私有目录，其它应用看不到，彼此也无法访问到该目录：内部存储私有目录 (/data/data/packageName) ；外部存储私有目录 (/sdcard/Android/data/packageName)，</li>
+<li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
+</ul>
+<p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
+<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-Apk安装的流程(前章)</title>
     <url>/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，那么多API的调用链根本记不完，不能一窥全貌，就只能迷失在森林之中，其实重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。<br>思维上的提高才是本质上的进步！！！</p>
@@ -677,30 +709,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -808,6 +816,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
