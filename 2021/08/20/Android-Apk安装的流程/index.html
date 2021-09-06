@@ -28,7 +28,7 @@
 <meta property="og:description" content="Android-插件化的基础">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-08-20T06:52:53.000Z">
-<meta property="article:modified_time" content="2021-09-02T12:34:34.644Z">
+<meta property="article:modified_time" content="2021-09-06T03:22:39.370Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-02 20:34:34" itemprop="dateModified" datetime="2021-09-02T20:34:34+08:00">2021-09-02</time>
+                <time title="Modified: 2021-09-06 11:22:39" itemprop="dateModified" datetime="2021-09-06T11:22:39+08:00">2021-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.4k</span>
+              <span>4.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -438,13 +438,11 @@
 </tr>
 </tbody></table>
 <h2 id="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"><a href="#部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？" class="headerlink" title="部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？"></a>部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</h2><p>首先要清除对应的安装包，就得知道安装包的目录是在哪，计算机的世界有入口就有出口。<br>我们这里在做一些知识的扩展：<br>现在部分手机的App是具有分享Apk的功能，也就是传输本机上的apk，比如说QQ，还有一些第三方的软件具备之类的功能。手机安装app时，会在根目录和外存储器合生成文件夹。反过来说，你删除app的时候，这些对应生成文件夹也会被系统删除。根目录会放置app的安装包，而且统一命名为base.apk，还有一些重要的app用户数据。(你想查看，前提是开启root)<br>外存储器就是你能看到的文件夹，里面放置可操作的文件，例如保存的图片，视频。所以即使你安装app后删除安装包，也是删除了外存储器的安装包，QQ传输app安装包就是传输<strong>根目录</strong>的安装包。</p>
-<!-- 根目录具有极高的权限 -->
+<h2 id="Android目录扫盲"><a href="#Android目录扫盲" class="headerlink" title="Android目录扫盲"></a>Android目录扫盲</h2><p>关于存储的目录，我们后面额外再开一张新的文章，android对于目录和权限其实做了不少的修改。<br>接下来这段是很多Code的误区</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>get<span class="constructor">ExternalStorageDirectory()</span></span><br></pre></td></tr></table></figure>
+<p>实际上是获取的手机自带的sd卡，这个自带的sd卡你在手机的文件管理应用里看，显示的中文名是“内部存储”，这个“内部存储”实际上就是手机自带的sd卡，也就是ExternalStorage
+    </p>
 
-<!-- 
-作者：optohighness
-链接：https://www.zhihu.com/question/359549927/answer/1242311029
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->
     </div>
 
     
@@ -524,7 +522,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E6%82%9F"><span class="nav-number">1.</span> <span class="nav-text">感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E5%AE%89%E8%A3%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">APK安装的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8F%B7-%E7%A7%91%E6%99%AE"><span class="nav-number">4.</span> <span class="nav-text">🏷 科普</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E7%A7%91%E6%99%AE"><span class="nav-number">4.1.</span> <span class="nav-text">Android科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%A7%91%E6%99%AE"><span class="nav-number">4.2.</span> <span class="nav-text">Linux科普</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">Apk安装的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A6%86%E7%9B%96%E5%AE%89%E8%A3%85-%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">什么是覆盖安装 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E6%89%8B%E6%9C%BA%E5%9C%A8APK%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E5%90%8E%E6%8F%90%E7%A4%BA%E6%B8%85%E9%99%A4%E5%AE%89%E8%A3%85%E5%8C%85%EF%BC%8C%E8%A6%81%E6%B8%85%E9%99%A4%E5%AE%89%E8%A3%85%E5%8C%85%E7%9A%84%E6%98%AF%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="nav-number">6.2.</span> <span class="nav-text">部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E6%82%9F"><span class="nav-number">1.</span> <span class="nav-text">感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E5%AE%89%E8%A3%85%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">APK安装的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8F%B7-%E7%A7%91%E6%99%AE"><span class="nav-number">4.</span> <span class="nav-text">🏷 科普</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E7%A7%91%E6%99%AE"><span class="nav-number">4.1.</span> <span class="nav-text">Android科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%A7%91%E6%99%AE"><span class="nav-number">4.2.</span> <span class="nav-text">Linux科普</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">Apk安装的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text">Android十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A6%86%E7%9B%96%E5%AE%89%E8%A3%85-%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">什么是覆盖安装 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E6%89%8B%E6%9C%BA%E5%9C%A8APK%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E5%90%8E%E6%8F%90%E7%A4%BA%E6%B8%85%E9%99%A4%E5%AE%89%E8%A3%85%E5%8C%85%EF%BC%8C%E8%A6%81%E6%B8%85%E9%99%A4%E5%AE%89%E8%A3%85%E5%8C%85%E7%9A%84%E6%98%AF%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="nav-number">6.2.</span> <span class="nav-text">部分手机在APK安装成功后提示清除安装包，要清除安装包的是在哪里？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E7%9B%AE%E5%BD%95%E6%89%AB%E7%9B%B2"><span class="nav-number">6.3.</span> <span class="nav-text">Android目录扫盲</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -595,7 +593,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">26k</span>
+    <span title="Symbols count total">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
