@@ -1,22 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android-CMD集合</title>
+    <url>/2021/09/07/Android-CMD%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h2 id="ADB"><a href="#ADB" class="headerlink" title="ADB"></a>ADB</h2><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">重启adb </span><br><span class="line">adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</span><br><span class="line">查看当前的进程</span><br><span class="line">adb shell ps | grep <span class="keyword">package</span>-name </span><br><span class="line">过滤日志</span><br><span class="line">adb logcat </span><br><span class="line">查看链接cpu架构信息</span><br><span class="line">adb shell </span><br><span class="line">cat/<span class="keyword">proc</span>/cpuinfo </span><br><span class="line">查看已经连接的设备<span class="title"></span></span><br><span class="line"><span class="title">adb</span> devices</span><br><span class="line">指定设备安装apk<span class="title"></span></span><br><span class="line"><span class="title">adb</span> -s<span class="title"> xxx</span> install<span class="title"> xxx.apk</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">keytool</span> -list -v -keystore<span class="title">  xxx.keystore</span></span><br><span class="line">查看签名秘钥</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="ADB-进阶CMD"><a href="#ADB-进阶CMD" class="headerlink" title="ADB 进阶CMD"></a>ADB 进阶CMD</h2><p>描述：每隔 1s 输出一次APP CPU信息，命令如下</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$adb</span> shell</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">$adb</span> top -d 1 | grep com.packagename.xxx</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">Gradle</span><br><span class="line">查看主要的任务</span><br><span class="line"><span class="string">./gradlew</span> tasks </span><br><span class="line">查看所有任务，包括缓存任务</span><br><span class="line"><span class="string">./gradlew</span> tasks <span class="params">--all</span></span><br><span class="line">调试模式构建并打印堆栈日志</span><br><span class="line"><span class="string">./gradlew</span> build <span class="params">--info</span> <span class="params">--debug</span> <span class="params">--stacktrace</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bundletool"><a href="#bundletool" class="headerlink" title="bundletool"></a>bundletool</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux-Android"><a href="#Linux-Android" class="headerlink" title="Linux - Android"></a>Linux - Android</h2><p>1、查看 CPU 详细信息</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cat <span class="regexp">/proc/</span>cpuinfo</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>CMD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android卡顿优化-前章</title>
+    <url>/2021/09/07/Android%E5%8D%A1%E9%A1%BF%E4%BC%98%E5%8C%96-%E5%89%8D%E7%AB%A0/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Android存储路径更新(前章)</title>
     <url>/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是处于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
 <figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
 </ul>
 <p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
-<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻</p>
+<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
 <p>外部存储：</p>
 <p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
+<p>这里提供一下获取方式:</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="center">路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_ALARMS)</td>
+<td align="center">/storage/sdcard0/Alarms</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM)</td>
+<td align="center">/storage/sdcard0/DCIM</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)</td>
+<td align="center">/storage/sdcard0/Download</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MOVIES)</td>
+<td align="center">/storage/sdcard0/Movies</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)</td>
+<td align="center">/storage/sdcard0/Music</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_NOTIFICATIONS)</td>
+<td align="center">/storage/sdcard0/Notifications</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)</td>
+<td align="center">/storage/sdcard0/Pictures</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PODCASTS)</td>
+<td align="center">/storage/sdcard0/Podcasts</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_RINGTONES)</td>
+<td align="center">/storage/sdcard0/Ringtones</td>
+</tr>
+</tbody></table>
 <h3 id="分区存储概览"><a href="#分区存储概览" class="headerlink" title="分区存储概览"></a>分区存储概览</h3><p>这里我们先看一张图，先大概有个概念</p>
 <p><img src="%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp" alt="分区存储"></p>
+<p>Android存储的改变基本上遵循了3个原则:<br>更好的从属性: 系统知道哪些文件属于哪些应用，这可以让用户更方便地管理他们的文件。当应用被卸载后，除非用户需要，否则应用之前所创建的文件也不应该保留在设备上；<br>保护应用数据: 当一个应用将 它所属的文件 写入外部存储时，这些文件是不应该被其他应用所访问的；<br>保护用户数据: 当用户下载了一些文件，比如带有敏感信息的邮件附件，这些文件应该对其他应用不可见。  </p>
 <p>Android10分区存储对<strong>外部存储</strong>重新进行了设计</p>
 <ul>
 <li>私有存储 (Private Storage) : 每个应用在都拥有自己的私有目录，其它应用看不到，彼此也无法访问到该目录：内部存储私有目录 (/data/data/packageName) ；外部存储私有目录 (/sdcard/Android/data/packageName)，</li>
@@ -819,6 +892,17 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;博客名称&quot;</span>  =&gt; hexo <span class="keyword">new</span> <span class="string">&quot;博客名称&quot;</span>   <span class="meta">#这两个都是创建新文章，前者是简写模式</span></span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  <span class="meta">#生成</span></span><br><span class="line">hexo s  =&gt; hexo <span class="keyword">server</span>  <span class="meta">#启动服务预览</span></span><br><span class="line">hexo d  =&gt; hexo deploy  <span class="meta">#部署  </span></span><br><span class="line"></span><br><span class="line">hexo <span class="keyword">server</span>   <span class="meta">#Hexo 会监视文件变动并自动更新，无须重启服务器。</span></span><br><span class="line">hexo <span class="keyword">server</span> -s   <span class="meta">#静态模式</span></span><br><span class="line">hexo <span class="keyword">server</span> -p <span class="number">5000</span>   <span class="meta">#更改端口</span></span><br><span class="line">hexo <span class="keyword">server</span> -i <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>   <span class="meta">#自定义IP</span></span><br><span class="line">hexo clean   <span class="meta">#清除缓存，网页正常情况下可以忽略此条命令</span></span><br><span class="line">hexo g   <span class="meta">#生成静态网页</span></span><br><span class="line">hexo d   <span class="meta">#开始部署</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/07/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -835,17 +919,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;博客名称&quot;</span>  =&gt; hexo <span class="keyword">new</span> <span class="string">&quot;博客名称&quot;</span>   <span class="meta">#这两个都是创建新文章，前者是简写模式</span></span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  <span class="meta">#生成</span></span><br><span class="line">hexo s  =&gt; hexo <span class="keyword">server</span>  <span class="meta">#启动服务预览</span></span><br><span class="line">hexo d  =&gt; hexo deploy  <span class="meta">#部署  </span></span><br><span class="line"></span><br><span class="line">hexo <span class="keyword">server</span>   <span class="meta">#Hexo 会监视文件变动并自动更新，无须重启服务器。</span></span><br><span class="line">hexo <span class="keyword">server</span> -s   <span class="meta">#静态模式</span></span><br><span class="line">hexo <span class="keyword">server</span> -p <span class="number">5000</span>   <span class="meta">#更改端口</span></span><br><span class="line">hexo <span class="keyword">server</span> -i <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>   <span class="meta">#自定义IP</span></span><br><span class="line">hexo clean   <span class="meta">#清除缓存，网页正常情况下可以忽略此条命令</span></span><br><span class="line">hexo g   <span class="meta">#生成静态网页</span></span><br><span class="line">hexo d   <span class="meta">#开始部署</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
