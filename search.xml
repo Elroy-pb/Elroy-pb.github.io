@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机English词汇普及更正</title>
+    <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-CMD集合</title>
     <url>/2021/09/07/Android-CMD%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[<h2 id="ADB"><a href="#ADB" class="headerlink" title="ADB"></a>ADB</h2><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">重启adb </span><br><span class="line">adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</span><br><span class="line">查看当前的进程</span><br><span class="line">adb shell ps | grep <span class="keyword">package</span>-name </span><br><span class="line">过滤日志</span><br><span class="line">adb logcat </span><br><span class="line">查看链接cpu架构信息</span><br><span class="line">adb shell </span><br><span class="line">cat/<span class="keyword">proc</span>/cpuinfo </span><br><span class="line">查看已经连接的设备<span class="title"></span></span><br><span class="line"><span class="title">adb</span> devices</span><br><span class="line">指定设备安装apk<span class="title"></span></span><br><span class="line"><span class="title">adb</span> -s<span class="title"> xxx</span> install<span class="title"> xxx.apk</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">keytool</span> -list -v -keystore<span class="title">  xxx.keystore</span></span><br><span class="line">查看签名秘钥</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -297,7 +308,8 @@
   <entry>
     <title>Java-并发篇-1</title>
     <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
+]]></content>
       <tags>
         <tag>Java</tag>
       </tags>
@@ -777,7 +789,7 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Android-Handle---消息分发机制</title>
+    <title>Android-Handle---消息分发机制(ThreadLocal)</title>
     <url>/2021/07/26/android-Handler%E6%9C%BA%E5%88%B6-1/</url>
     <content><![CDATA[<table>
 <thead>
@@ -852,51 +864,23 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 <figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="literal">void</span> <span class="built_in">set</span>(T value) &#123;</span><br><span class="line">    <span class="keyword">Thread</span> t = <span class="keyword">Thread</span>.currentThread();</span><br><span class="line">    ThreadLocalMap <span class="built_in">map</span> = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">map</span> != <span class="built_in">null</span>)</span><br><span class="line">        <span class="built_in">map</span>.<span class="built_in">set</span>(this, value);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ThreadLocalMap getMap(<span class="keyword">Thread</span> t) &#123;</span><br><span class="line">    <span class="keyword">return</span> t.threadLocals;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="literal">void</span> createMap(<span class="keyword">Thread</span> t, T firstValue) &#123;</span><br><span class="line">    t.threadLocals = <span class="literal">new</span> ThreadLocalMap(this, firstValue);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">第一步会去获取调用当前方法的线程<span class="keyword">Thread</span>。</span><br><span class="line">然后顺其自然的拿到当前线程内部的ThreadLocalMap容器。</span><br><span class="line">最后就把变量副本给丢进去。</span><br><span class="line">ThreadLocal（就认为是个维护线程内部变量的工具！）只是在<span class="built_in">Set</span>的时候去操作了<span class="keyword">Thread</span>内部的·ThreadLocalMap将变量拷贝到了<span class="keyword">Thread</span>内部的<span class="built_in">Map</span>容器中，Key就是当前的ThreadLocal,Value就是变量的副本</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the value in the current thread&#x27;s copy of this</span></span><br><span class="line"><span class="comment"> * thread-local variable.  If the variable has no value for the</span></span><br><span class="line"><span class="comment"> * current thread, it is first initialized to the value returned</span></span><br><span class="line"><span class="comment"> * by an invocation of the &#123;<span class="doctag">@link</span> #initialValue&#125; method.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the current thread&#x27;s value of this thread-local</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> T <span class="keyword">get</span>() &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="literal">null</span>)</span><br><span class="line">            <span class="keyword">return</span> (T)e.value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ThreadLocalMap getMap(Thread t) &#123;</span><br><span class="line">    <span class="keyword">return</span> t.threadLocals;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> T setInitialValue() &#123;</span><br><span class="line">    T value = initialValue();</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>)</span><br><span class="line">        map.<span class="keyword">set</span>(<span class="keyword">this</span>, value);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> T initialValue() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line">获取当前线程的ThreadLocalMap对象</span><br><span class="line">从map中根据<span class="keyword">this</span>（当前的threadlocal对象）获取线程存储的Entry节点。</span><br><span class="line">从Entry节点获取存储的对应Value副本值返回。</span><br><span class="line">map为空的话返回初始值<span class="literal">null</span>，即线程变量副本为<span class="literal">null</span>。</span><br></pre></td></tr></table></figure>
 
 
 
 
+<h1 id="Android十万个为什么"><a href="#Android十万个为什么" class="headerlink" title="Android十万个为什么"></a>Android十万个为什么</h1><h2 id="Key的弱引用问题"><a href="#Key的弱引用问题" class="headerlink" title="Key的弱引用问题"></a>Key的弱引用问题</h2><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">To help deal <span class="keyword">with</span> very large <span class="keyword">and</span> <span class="keyword">long</span>-lived usages, <span class="keyword">the</span> hash table entries use WeakReferences <span class="keyword">for</span> <span class="built_in">keys</span>.</span><br></pre></td></tr></table></figure>
+<p>为了处理非常大和生命周期非常长的线程(<strong>usages</strong>)，哈希表使用弱引用作为 key。</p>
+<p>ThreadLocal在没有外部对象强引用时如Thread，发生GC时弱引用Key会被回收，而Value是强引用不会回收，如果创建ThreadLocal的线程一直持续运行如线程池中的线程，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。</p>
+<p>key 如果使用强引用：引用的ThreadLocal的对象被回收了，但是ThreadLocalMap还持有ThreadLocal的强引用，如果没有手动删除，ThreadLocal不会被回收，导致Entry内存泄漏。<br>key 使用弱引用：引用的ThreadLocal的对象被回收了，由于ThreadLocalMap持有ThreadLocal的弱引用，即使没有手动删除，ThreadLocal也会被回收。value在下一次ThreadLocalMap调用set,get，remove的时候会被清除。</p>
+<p>通常ThreadLocalMap的生命周期跟Thread（注意线程池中的Thread）一样长，如果没有手动删除对应key（线程使用结束归还给线程池了，其中的KV不再被使用但又不会GC回收，可认为是内存泄漏），一定会导致内存泄漏，但是使用弱引用可以多一层保障：弱引用ThreadLocal会被GC回收，不会内存泄漏，对应的value在下一次ThreadLocalMap调用set,get,remove的时候会被清除，Java8已经做了上面的代码优化。</p>
+<p>总结<br>每个ThreadLocal只能保存一个变量副本，如果想要一个线程能够保存多个副本以上，就需要创建多个ThreadLocal。<br>ThreadLocal内部的ThreadLocalMap键为弱引用，会有内存泄漏的风险。<br>每次使用完ThreadLocal，都调用它的remove()方法，清除数据。</p>
 ]]></content>
       <categories>
         <category>Android</category>
       </categories>
       <tags>
         <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;博客名称&quot;</span>  =&gt; hexo <span class="keyword">new</span> <span class="string">&quot;博客名称&quot;</span>   <span class="meta">#这两个都是创建新文章，前者是简写模式</span></span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  <span class="meta">#生成</span></span><br><span class="line">hexo s  =&gt; hexo <span class="keyword">server</span>  <span class="meta">#启动服务预览</span></span><br><span class="line">hexo d  =&gt; hexo deploy  <span class="meta">#部署  </span></span><br><span class="line"></span><br><span class="line">hexo <span class="keyword">server</span>   <span class="meta">#Hexo 会监视文件变动并自动更新，无须重启服务器。</span></span><br><span class="line">hexo <span class="keyword">server</span> -s   <span class="meta">#静态模式</span></span><br><span class="line">hexo <span class="keyword">server</span> -p <span class="number">5000</span>   <span class="meta">#更改端口</span></span><br><span class="line">hexo <span class="keyword">server</span> -i <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>   <span class="meta">#自定义IP</span></span><br><span class="line">hexo clean   <span class="meta">#清除缓存，网页正常情况下可以忽略此条命令</span></span><br><span class="line">hexo g   <span class="meta">#生成静态网页</span></span><br><span class="line">hexo d   <span class="meta">#开始部署</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1007,6 +991,41 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight axapta"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;博客名称&quot;</span>  =&gt; hexo <span class="keyword">new</span> <span class="string">&quot;博客名称&quot;</span>   <span class="meta">#这两个都是创建新文章，前者是简写模式</span></span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  <span class="meta">#生成</span></span><br><span class="line">hexo s  =&gt; hexo <span class="keyword">server</span>  <span class="meta">#启动服务预览</span></span><br><span class="line">hexo d  =&gt; hexo deploy  <span class="meta">#部署  </span></span><br><span class="line"></span><br><span class="line">hexo <span class="keyword">server</span>   <span class="meta">#Hexo 会监视文件变动并自动更新，无须重启服务器。</span></span><br><span class="line">hexo <span class="keyword">server</span> -s   <span class="meta">#静态模式</span></span><br><span class="line">hexo <span class="keyword">server</span> -p <span class="number">5000</span>   <span class="meta">#更改端口</span></span><br><span class="line">hexo <span class="keyword">server</span> -i <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>   <span class="meta">#自定义IP</span></span><br><span class="line">hexo clean   <span class="meta">#清除缓存，网页正常情况下可以忽略此条命令</span></span><br><span class="line">hexo g   <span class="meta">#生成静态网页</span></span><br><span class="line">hexo d   <span class="meta">#开始部署</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
