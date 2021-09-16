@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android插件化-开篇</title>
+    <url>/2021/09/15/Android%E6%8F%92%E4%BB%B6%E5%8C%96-%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<h1 id="Android插件化-开篇"><a href="#Android插件化-开篇" class="headerlink" title="Android插件化-开篇"></a>Android插件化-开篇</h1><p>插件化的分类</p>
+<h2 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h2><p>···</p>
+<h3 id="Java-ClassLoader"><a href="#Java-ClassLoader" class="headerlink" title="Java - ClassLoader"></a>Java - ClassLoader</h3><ul>
+<li>Java中默认有三种ClassLoader。分别是:<ul>
+<li>BootStrap ClassLoader：启动类加载器，最顶层的加载器。主要负责加载JDK中的核心类。在JVM启动后也随着启动，并构造Ext ClassLoader和App ClassLoader。</li>
+</ul>
+<ul>
+<li>Extension ClassLoader：扩展类加载器，负责加载Java的扩展类库。</li>
+<li>App ClassLoader：系统类加载器，负责加载应用程序的所有jar和class文件。</li>
+<li>自定义ClassLoader：需要继承自ClassLoader类。 </li>
+</ul>
+</li>
+</ul>
+<h4 id="ClassLoader职能"><a href="#ClassLoader职能" class="headerlink" title="ClassLoader职能"></a>ClassLoader职能</h4><p>ClassLoader默认使用双亲委托模型来搜索类。<br>每个ClassLoader都有一个父类的引用。当ClassLoader需要加载某个类时，先判断是否加载过，如果加载过就返回Class对象。否则交给他的父类去加载，继续判断是否加载过。这样 层层判断，就到了最顶层的BootStrap ClassLoader来试图加载。如果连最顶层的Bootstrap ClassLoader都没加载过，那就加载。如果加载失败，就转交给子ClassLoader，层层加载，直到最底层。如果还不能加载的话那就只能抛出异常了。  </p>
+<ul>
+<li>通过这种双亲委托模型，好处是：<ul>
+<li>更高效，父类加载一次就可以避免了子类多次重复加载</li>
+<li>更安全，避免了外界伪造java核心类。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Android-ClassLoader"><a href="#Android-ClassLoader" class="headerlink" title="Android - ClassLoader"></a>Android - ClassLoader</h3><p>android从5.0开始使用art虚拟机，这种虚拟机在程序运行时也需要ClassLoader将类加载到内存中，但是与java不同的是，java虚拟机通过读取class字节码来加载，但是art则是通过dex字节码来加载。<br>这是一种优化，可以合并多个class文件为一个classes.dex文件。</p>
+<ul>
+<li>android一共有三种类加载器:  <ul>
+<li>BootClassLoader：父类构造器  </li>
+<li>PathClassLoader：一般是加载指定路径/data/app中的apk，也就是安装到手机中的apk。所以一般作为默认的加载器。</li>
+<li>DexClassLoader：从包含classes.dex的jar或者apk中，加载类的加载器，可用于动态加载。<br>看PathClassLoader和DexClassLoader源码，都是继承自BaseDexClassLoader。  <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">public <span class="type">DexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">String</span> optimizedDirectory,</span><br><span class="line">      <span class="type">String</span> librarySearchPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">    <span class="keyword">super</span>(dexPath, <span class="keyword">new</span> <span class="type">File</span>(optimizedDirectory), librarySearchPath, parent);</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PathClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</span><br><span class="line">public <span class="type">PathClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(dexPath, <span class="literal">null</span>, <span class="literal">null</span>, parent);  <span class="comment">//见下文</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BaseDexClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">DexPathList</span> pathList;</span><br><span class="line">public <span class="type">BaseDexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">File</span> optimizedDirectory,</span><br><span class="line">        <span class="type">String</span> libraryPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(parent);  <span class="comment">//见下文</span></span><br><span class="line">        <span class="comment">//收集dex文件和Native动态库【见小节3.2】</span></span><br><span class="line">        <span class="keyword">this</span>.pathList = <span class="keyword">new</span> <span class="type">DexPathList</span>(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+我们可以看到PathClassLoader的两个参数都为null，表明只能接受固定的dex文件，而这个文件是只能在安装后出现的。而DexClassLoader中optimizedDirectory，和librarySearchPath都是可以自己定义的，说明我们可以传入一个jar或者apk包，保证解压缩后是一个dex文件就可以操作了。因此，我们通常使用DexClassLoader来进行插件化和热修复。<br>可以看到，BaseDexClassLoader有一个相当重要的过程就是初始化DexPathList。初始化DexPathList的过程主要是收集dexElements和nativeLibraryPathElements。一个Classloader可以包含多个dex文件，每个dex文件被封装到一个Element对象。这element对象在初始化和热修复逻辑中是相当重要的。当查找某个类时，会遍历dexElements，如果找到就返回，否则继续遍历。所以当多个dex中有相同的类，只会加载前面的dex中的类。下面是这段逻辑的具体实现<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="built_in">public</span> <span class="keyword">Class</span> findClass(String <span class="type">name</span>, List&lt;Throwable&gt; suppressed) &#123;</span><br><span class="line">    <span class="keyword">for</span> (Element element : dexElements) &#123;</span><br><span class="line">        DexFile dex = element.dexFile;</span><br><span class="line">        <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</span><br><span class="line">            //找到目标类，则直接返回</span><br><span class="line">            <span class="keyword">Class</span> clazz = dex.loadClassBinaryName(<span class="type">name</span>, definingContext, suppressed);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> clazz;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+总结<br>我们先是讲解了Java中类加载的双亲委托机制，然后介绍了Android中的几种ClassLoader，从源码角度介绍了两种ClassLoader加载机制的不同。以后的插件化实践中，我们会经常用到DexClassLoader。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机English词汇普及更正</title>
     <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
     <content><![CDATA[]]></content>
