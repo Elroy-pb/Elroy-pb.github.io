@@ -632,7 +632,8 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
   <entry>
     <title>Android 与 Unity 的交互</title>
     <url>/2021/07/29/Android%E4%B8%8EUnity%E7%9A%84%E4%BA%A4%E4%BA%92/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><img src="Unity%E7%9B%AE%E5%BD%95.jpg" alt="路径示例"></p>
+]]></content>
       <categories>
         <category>Unity</category>
         <category>Android</category>
