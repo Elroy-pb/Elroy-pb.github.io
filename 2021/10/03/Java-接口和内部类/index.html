@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Java并发关键字 -volatile -synchronized">
+  <meta name="description" content="Java- 接口和内部类 简介">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java-并发篇-1">
-<meta property="og:url" content="http://example.com/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/index.html">
+<meta property="og:title" content="Java-接口和内部类">
+<meta property="og:url" content="http://example.com/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="Java并发关键字 -volatile -synchronized">
+<meta property="og:description" content="Java- 接口和内部类 简介">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-08-13T07:58:18.000Z">
-<meta property="article:modified_time" content="2021-09-09T09:58:44.300Z">
+<meta property="article:published_time" content="2021-10-03T08:14:58.000Z">
+<meta property="article:modified_time" content="2021-10-06T15:01:01.177Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/">
+<link rel="canonical" href="http://example.com/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 <script src="/lib/fireworks.js"></script>
-  <title>Java-并发篇-1 | Elroy-Pb</title>
+  <title>Java-接口和内部类 | Elroy-Pb</title>
   
 
 
@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java-并发篇-1
+          Java-接口和内部类
         </h1>
 
         <div class="post-meta">
@@ -220,15 +220,24 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-08-13 15:58:18" itemprop="dateCreated datePublished" datetime="2021-08-13T15:58:18+08:00">2021-08-13</time>
+              <time title="Created: 2021-10-03 16:14:58" itemprop="dateCreated datePublished" datetime="2021-10-03T16:14:58+08:00">2021-10-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-09 17:58:44" itemprop="dateModified" datetime="2021-09-09T17:58:44+08:00">2021-09-09</time>
+                <time title="Modified: 2021-10-06 23:01:01" itemprop="dateModified" datetime="2021-10-06T23:01:01+08:00">2021-10-06</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -236,7 +245,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>39</span>
+              <span>665</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -245,7 +254,7 @@
                 <span class="post-meta-item-text">Reading time &asymp;</span>
               <span>1 mins.</span>
             </span>
-            <div class="post-description">Java并发关键字 -volatile -synchronized</div>
+            <div class="post-description">Java- 接口和内部类 简介</div>
 
         </div>
       </header>
@@ -256,7 +265,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
+        <!-- 接口和内部类 -->
+<h1 id="接口-—-Interface"><a href="#接口-—-Interface" class="headerlink" title="接口 — Interface"></a>接口 — Interface</h1><p>定义：<br>接口是对类一组需求的描述，实现接口的类要遵从接口的描述的定义。<br>接口中的所有方法自动地属于public，所有声明方法不必提供关键字<br>不过在实现接口的时候，必须将方法声明为public，否则编译器会给出试图提供更弱的访问权限信息</p>
+<pre><code>通常类实现一个接口，通常需要2个步骤
+1.让类声明为实现给定的接口
+2.对接口中的方法进行定义
+</code></pre>
+<h1 id="内部类-—-inner-class"><a href="#内部类-—-inner-class" class="headerlink" title="内部类 — inner class"></a>内部类 — inner class</h1><p>内部类（inner class）是定义在另一个类中的类</p>
+<pre><code>内部类的方法可以访问该类定义所在的作用域中的数据，包括私有数据。  
+内部类可以对同一个包中的其他类隐藏起来。  
+当想定义一个回调函数并且不想编写大量的代码的时候，可以使用匿名类内部类对比。
+</code></pre>
+<h2 id="课外补习"><a href="#课外补习" class="headerlink" title="课外补习"></a>课外补习</h2><p>嵌套是一种类与类之间的关系，而不是对象之间的关系。<br>嵌套类有2个好处：<strong>命名控制</strong>和<strong>访问控制</strong></p>
+<h3 id="java-十万个为什么"><a href="#java-十万个为什么" class="headerlink" title="java 十万个为什么"></a>java 十万个为什么</h3><h4 id="为什么java内部类可以访问外部对象"><a href="#为什么java内部类可以访问外部对象" class="headerlink" title="为什么java内部类可以访问外部对象"></a>为什么java内部类可以访问外部对象</h4><p>java的内部类对象有一个隐式引用，实例化该内部类对象的外部对象，通过这个指针，可以访问到外部类的全部状态。<br>内部类的对象总有一个隐式的引用，它指向它的外部类对象。</p>
+<h4 id="总共有多少种内部类"><a href="#总共有多少种内部类" class="headerlink" title="总共有多少种内部类"></a>总共有多少种内部类</h4><ul>
+<li>4种内部类</li>
+</ul>
+<ul>
+<li>成员内部类</li>
+<li>局部内部类</li>
+<li>静态内部类</li>
+<li>匿名内部类<h4 id="内部类的共性"><a href="#内部类的共性" class="headerlink" title="内部类的共性"></a>内部类的共性</h4></li>
+</ul>
+<p>1.内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号。<br>内部类不能用普通的方式访问。内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。  </p>
 
     </div>
 
@@ -275,13 +306,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/" rel="prev" title="Android-Activity">
-      <i class="fa fa-chevron-left"></i> Android-Activity
+    <a href="/2021/09/15/Android%E6%8F%92%E4%BB%B6%E5%8C%96-%E5%BC%80%E7%AF%87/" rel="prev" title="Android插件化-开篇">
+      <i class="fa fa-chevron-left"></i> Android插件化-开篇
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/" rel="next" title="Android-Apk安装的流程(前章)">
-      Android-Apk安装的流程(前章) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -340,6 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3-%E2%80%94-Interface"><span class="nav-number">1.</span> <span class="nav-text">接口 — Interface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB-%E2%80%94-inner-class"><span class="nav-number">2.</span> <span class="nav-text">内部类 — inner class</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E5%A4%96%E8%A1%A5%E4%B9%A0"><span class="nav-number">2.1.</span> <span class="nav-text">课外补习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.1.</span> <span class="nav-text">java 十万个为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88java%E5%86%85%E9%83%A8%E7%B1%BB%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%E5%A4%96%E9%83%A8%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">为什么java内部类可以访问外部对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E5%85%B1%E6%9C%89%E5%A4%9A%E5%B0%91%E7%A7%8D%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">总共有多少种内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E5%85%B1%E6%80%A7"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">内部类的共性</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
