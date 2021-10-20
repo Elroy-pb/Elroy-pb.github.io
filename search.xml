@@ -1,6 +1,322 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AndroidSdk-模块化</title>
+    <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
+<h1 id="SDK分类"><a href="#SDK分类" class="headerlink" title="SDK分类"></a>SDK分类</h1><p>SDK划分主要是以我们打包环境来区别。<br>打包环境有2种，正式环境对应正式sdk,测试环境对应测试sdk。  </p>
+<ul>
+<li><strong>正式环境</strong><br>正式包，用于线上，一般是接了渠道的sdk，具备了登录，充值，实名等功能。  </li>
+<li><strong>测试环境</strong><br>测试包，内部测试，不包含渠道的sdk，不具备渠道sdk的功能，主要供于游戏内部测试。  </li>
+</ul>
+<h1 id="SDK的结构"><a href="#SDK的结构" class="headerlink" title="SDK的结构"></a>SDK的结构</h1><p>为了方便理解SDK划分和结构，我们拿S1项目举个例子，可以先看下这张图</p>
+<p><img src="%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="SDK结构图">  </p>
+<p>无论是测试SDK或者正式SDK都划分为2个模块,一个为common模块，一个channel模块。</p>
+<p>这里我们以S1正式SDK举例.</p>
+<p>正式SDK包含2个模块，也就是是s1-common-sdk,s1-channel-dalan。</p>
+<h2 id="common库结构图"><a href="#common库结构图" class="headerlink" title="common库结构图"></a>common库结构图</h2><p><img src="s1-common-sdk.png" alt="s1-common-sdk结构图"><br>!!!切记common编译库包含跟unity的的游戏库一致，否则游戏会出现奇怪的问题。</p>
+<hr>
+<h2 id="channel结构图"><a href="#channel结构图" class="headerlink" title="channel结构图"></a>channel结构图</h2><p><img src="s1-channel-dalan.png" alt="s1-common-channel结构图">  </p>
+<hr>
+<p>我们把2个目录整合一下，其实正式包channel.jar的目录只是把原本的sdks下的GameSDK和HyGameApplication取出，然后单纯作为一个jar。而其他代码是作为sdk的公共库(一般情况下不变)。</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">–com</span><br><span class="line">——hoye</span><br><span class="line">——-game</span><br><span class="line">——<span class="comment">--sdks</span></span><br><span class="line">——<span class="comment">---GameSDK(channel)   </span></span><br><span class="line">——<span class="comment">---GameSDKConstants</span></span><br><span class="line">——<span class="comment">---GameSDKinferface</span></span><br><span class="line"><span class="comment">-----GameSDKManager(channel)</span></span><br><span class="line"><span class="comment">-----HyGameApplication   </span></span><br><span class="line"><span class="comment">----BosController</span></span><br><span class="line"><span class="comment">----GameActivity</span></span><br><span class="line"><span class="comment">----GameApplication</span></span><br><span class="line"><span class="comment">----GameConfig</span></span><br><span class="line"><span class="comment">----HaoyueUtils</span></span><br><span class="line"><span class="comment">----JsonParse</span></span><br><span class="line"><span class="comment">----ResUtils</span></span><br><span class="line"><span class="comment">----TakePhotoActivity</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><p>目前工作环境正常下的版本，后续可能会随着as版本升级而发生变动，以下版本不作为唯一。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">AndroidStudio</span>-version-<span class="number">4</span>.<span class="number">1</span>.<span class="number">1</span>  </span><br><span class="line"><span class="attribute">gradle</span>-version-<span class="number">6</span>.<span class="number">1</span>.<span class="number">1</span>  </span><br><span class="line"><span class="attribute">gradle</span>-tool-<span class="number">3</span>.<span class="number">5</span>.<span class="number">0</span>  </span><br></pre></td></tr></table></figure>
+
+
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>之所以用模块化开发，是为了后续几点考虑</p>
+<ul>
+<li>多团队并行开发测试；</li>
+<li>模块间解耦、重用；</li>
+<li>可单独编译打包某一模块，提升开发效率 </li>
+</ul>
+<p>而我们的项目刚好是要打包某一模块，提升开发的效率。</p>
+<h2 id="as项目的配置-—-生成as模块"><a href="#as项目的配置-—-生成as模块" class="headerlink" title="as项目的配置 — 生成as模块"></a>as项目的配置 — 生成as模块</h2><p><img src="as.png" alt="as模块">  </p>
+<p>我们需要在左侧红色方框的2个配置文件内配置好<br><strong>apply.properties</strong></p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">s1_channel_dalan</span> = com.android.library</span><br></pre></td></tr></table></figure>
+<p><strong>setting.gradle</strong></p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">include</span><span class="params">(<span class="string">&#x27;s1_channel_dalan&#x27;</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上2个配置之后，点击Sync Project with Gradle Files<br>会在右侧生成gradle模块(以模块的名称来命名)。如as模块右侧截图。在这里的项目都是生成好了，有需要的话按照以上方式添加新的模块即可。</p>
+<p>读取的代码在主目录的build.gradle，这里不做展示。</p>
+<h2 id="decompile转换工具库说明"><a href="#decompile转换工具库说明" class="headerlink" title="decompile转换工具库说明"></a>decompile转换工具库说明</h2><p>as截图内左上角的编译的目录是 <strong>decomplie</strong>,是转化文件格式的工具类，主要是用于 .jar文件,smali文件,.dex文件3者的转换。</p>
+<p>as项目内已编写好gradle脚本(在根目录的gradle)，通过gradle调用decompile的python的脚本(smali.py)，然后<strong>smali.py</strong>调用相关的命令,生成jar包。</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">–decompile ： 打包<span class="keyword">bundle的时候，自动生成</span></span><br><span class="line"><span class="keyword"></span>——lib: 工具<span class="keyword">jar存放的目录</span></span><br><span class="line"><span class="keyword"></span>——-<span class="keyword">baksmali.jar </span><span class="keyword">jar转化dex</span></span><br><span class="line"><span class="keyword"></span>——-<span class="keyword">baksmali-2.2.2.jar</span></span><br><span class="line"><span class="keyword"></span>——-smali.<span class="keyword">jar </span>   dex转smali</span><br><span class="line">——-smali<span class="number">-2</span>.<span class="number">2</span>.<span class="number">2</span>.ajr</span><br><span class="line">—gradle.<span class="keyword">sh </span>编译检查的命令</span><br><span class="line">-smali.py 调用python脚本</span><br></pre></td></tr></table></figure>
+
+<h1 id="工程流程-—-如何打包生成jar"><a href="#工程流程-—-如何打包生成jar" class="headerlink" title="工程流程 — 如何打包生成jar"></a>工程流程 — 如何打包生成jar</h1><p>as项目内的android模块通过<strong>decompile转换库</strong>调用python命令,把java目录下的代码打成.jar包，这里打的jar包是不包含lib，也就是只包含java目录下的代码，然后替换到打包工具的对应的目录，然后打包工具生成apk。</p>
+<p>我们这里举例说明一下，假设我们需要生成s1-common-sdk的jar包。</p>
+<p><img src="generate-jar.png" alt="generate_jar"> </p>
+<p>1.右侧Gradle模块，是根据左侧模块文件夹的文件名生成的，然后我们点击<strong>a_makeJarLib_smali</strong>即可在文件下生成对应模块的jar。</p>
+<p><img src="generated-jar.png" alt="generate_jar"> </p>
+<p>2.生成jar后只要提交到145远程机的打包工具对应的目录即可。</p>
+<p>3.然后使用打包工具生成apk，对apk进行测试</p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>1.在生成jar的时候，一定分清楚对应的处理的模块，打成jar之后可以通过第三方工具，查看对应的层级代码，避免在提交打包工具的时候提交错jar，减少低成本的问题。</p>
+<p>2.as模块common库的编译时要提前检查，左侧as模块的Lib目录下的unity版本是不是跟打包工具的unity版本库一致。</p>
+<p>如：S1-PIUS使用的unity库是2018.jar,那么common库的模块下的unity版本也要是2018的才行，不然提交后打包工具后，会因为编译后的字节码不一致而导致黑屏或者是卡顿等其他奇怪的问题。</p>
+<p>3.在项目编译时，该工具的会先提前对模块内的代码进行检查，检查通过后才可编译，在一定程度减少容错率，无法编译时，先提前检查代码。</p>
+<h1 id="局限性及可扩展性"><a href="#局限性及可扩展性" class="headerlink" title="局限性及可扩展性"></a>局限性及可扩展性</h1><p>扩展性：在此项目上我在满足基本项目打包的要求上，新增了a_makeJarChannel_smali的命令:</p>
+<p>可以把包含Lib的依赖和gardle远程依赖统一分成合成jar.<br>同时对生成好的jar拆分为smali，dex，改功能针对发行要求，在mac环境上已测试通过。</p>
+<p>后续可继续增加扩展smali分包的功能</p>
+<!-- # 文章总结
+* 利弊分析
+* 局限性及可扩展性
+* 注意事项
+* 未来发展
+* 规律分析
+* 横向对比
+* 技术结论
+* 思想指导
+* 集思广益
+# 参考文档
+
+[掘金-写作技巧](https://juejin.cn/post/6844904168600109069#heading-6)  
+作者：子弈  
+链接：https://juejin.cn/post/6844904168600109069  
+来源：稀土掘金  
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
+  </entry>
+  <entry>
+    <title>Java-接口和内部类</title>
+    <url>/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/</url>
+    <content><![CDATA[<!-- 接口和内部类 -->
+<h1 id="接口-—-Interface"><a href="#接口-—-Interface" class="headerlink" title="接口 — Interface"></a>接口 — Interface</h1><p>定义：<br>接口是对类一组需求的描述，实现接口的类要遵从接口的描述的定义。<br>接口中的所有方法自动地属于public，所有声明方法不必提供关键字<br>不过在实现接口的时候，必须将方法声明为public，否则编译器会给出试图提供更弱的访问权限信息</p>
+<pre><code>通常类实现一个接口，通常需要2个步骤
+1.让类声明为实现给定的接口
+2.对接口中的方法进行定义
+</code></pre>
+<h1 id="内部类-—-inner-class"><a href="#内部类-—-inner-class" class="headerlink" title="内部类 — inner class"></a>内部类 — inner class</h1><p>内部类（inner class）是定义在另一个类中的类</p>
+<pre><code>内部类的方法可以访问该类定义所在的作用域中的数据，包括私有数据。  
+内部类可以对同一个包中的其他类隐藏起来。  
+当想定义一个回调函数并且不想编写大量的代码的时候，可以使用匿名类内部类对比。
+</code></pre>
+<h2 id="课外补习"><a href="#课外补习" class="headerlink" title="课外补习"></a>课外补习</h2><p>嵌套是一种类与类之间的关系，而不是对象之间的关系。<br>嵌套类有2个好处：<strong>命名控制</strong>和<strong>访问控制</strong></p>
+<h3 id="java-十万个为什么"><a href="#java-十万个为什么" class="headerlink" title="java 十万个为什么"></a>java 十万个为什么</h3><h4 id="为什么java内部类可以访问外部对象"><a href="#为什么java内部类可以访问外部对象" class="headerlink" title="为什么java内部类可以访问外部对象"></a>为什么java内部类可以访问外部对象</h4><p>java的内部类对象有一个隐式引用，实例化该内部类对象的外部对象，通过这个指针，可以访问到外部类的全部状态。<br>内部类的对象总有一个隐式的引用，它指向它的外部类对象。</p>
+<h4 id="总共有多少种内部类"><a href="#总共有多少种内部类" class="headerlink" title="总共有多少种内部类"></a>总共有多少种内部类</h4><ul>
+<li>4种内部类</li>
+</ul>
+<ul>
+<li>成员内部类</li>
+<li>局部内部类</li>
+<li>静态内部类</li>
+<li>匿名内部类<h4 id="内部类的共性"><a href="#内部类的共性" class="headerlink" title="内部类的共性"></a>内部类的共性</h4></li>
+</ul>
+<p>1.内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号。<br>内部类不能用普通的方式访问。内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。  </p>
+<h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><p>1.局部类不能用public和private访问说明符进行声明。<br>2.他的作用域被限定在这声明这个局部类的块中。<br>3.局部内部类中不可定义静态变量，可以访问外部类的局部变量(即方法内的变量)，但是变量必须是final的。</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Outer2</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> s = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> out_i = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> s = <span class="number">200</span>;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> j = <span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Inner</span>&#123;</span> <span class="comment">//定义在方法内部</span></span><br><span class="line"><span class="keyword">int</span> s = <span class="number">300</span>;<span class="comment">//可以定义与外部类同名的变量</span></span><br><span class="line"><span class="comment">//static int m = 20;//不可以定义静态变量</span></span><br><span class="line"><span class="built_in">Inner</span>(<span class="keyword">int</span> k)&#123;</span><br><span class="line"><span class="built_in">inner_f</span>(k);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> inner_i = <span class="number">100</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inner_f</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(out_i);<span class="comment">//如果内部类没有与外部类同名的变量，在内部类中可以直接访问外部类的实例变量</span></span><br><span class="line">System.out.<span class="built_in">println</span>(k);<span class="comment">//可以访问外部类的局部变量(即方法内的变量)，但是变量必须是final的</span></span><br><span class="line"><span class="comment">// System.out.println(i);</span></span><br><span class="line">System.out.<span class="built_in">println</span>(s);<span class="comment">//如果内部类中有与外部类同名的变量，直接用变量名访问的是内部类的变量</span></span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="keyword">this</span>.s);<span class="comment">//用&quot;this.变量名&quot; 访问的也是内部类变量</span></span><br><span class="line">System.out.<span class="built_in">println</span>(Outer2.<span class="keyword">this</span>.s);<span class="comment">//用外部&quot;外部类类名.this.变量名&quot; 访问的是外部类变量</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Inner</span>(k);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">String</span>[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//访问局部内部类必须先有外部类对象</span></span><br><span class="line">Outer2 out = <span class="keyword">new</span> <span class="built_in">Outer2</span>();</span><br><span class="line">out.<span class="built_in">f</span>(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Outer3</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> j = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">outer_f1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outer_f2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态内部类可以用public，protect，private修饰</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span> &#123;</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> inner_i = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> inner_j = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inner_f1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="string">&quot;Outer.i &quot;</span> + i);<span class="comment">//静态内部类只能访问外部类的静态成员</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inner_f2</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">// System.out.println(&quot;Outer.i&quot;+j);//静态内部类不能访问外部类的非静态成员</span></span><br><span class="line"><span class="comment">// outer_f2();//包括非静态变量和非静态方法</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outer_f3</span><span class="params">()</span></span>&#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(Inner.inner_i);</span><br><span class="line">Inner.<span class="built_in">inner_f1</span>();</span><br><span class="line"><span class="comment">// 外部类访问内部类的非静态成员:实例化内部类即可</span></span><br><span class="line">Inner inner = <span class="keyword">new</span> <span class="built_in">Inner</span>();</span><br><span class="line">inner.<span class="built_in">inner_f2</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">String</span>[] args)</span> </span>&#123;</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Outer</span>().<span class="built_in">outer_f3</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：<em><strong><strong><strong>生成（new）一个静态内部类不需要外部类成员：这是静态内部类和成员内部类的区别。静态内部类的对象可以直接生成：<br>Outer.Inner in=new Outer.Inner()；<br>而不需要通过生成外部类对象来生成。这样实际上使静态内部类成为了一个顶级类。静态内部类不可用private来进行定义。</strong></strong></strong></em></p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerClassTest</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">String</span>[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span>[] d = <span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">20</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i= <span class="number">0</span>;i&lt;d.length;i++)</span><br><span class="line">d[i] = <span class="number">100</span> * Math.<span class="built_in">random</span>();</span><br><span class="line">ArrayAlg.Pair p = ArrayAlg.<span class="built_in">minmax</span>(d);</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="string">&quot;min = &quot;</span> + p.<span class="built_in">getFirst</span>());</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="string">&quot;min = &quot;</span> + p.<span class="built_in">getSecond</span>());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayAlg</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span> first;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span> second;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(<span class="keyword">double</span> first, <span class="keyword">double</span> second)</span> </span>&#123;</span><br><span class="line"><span class="keyword">this</span>.first = first;</span><br><span class="line"><span class="keyword">this</span>.second = second;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getFirst</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">return</span> first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getSecond</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">return</span> second;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Pair <span class="title">minmax</span><span class="params">(<span class="keyword">double</span>[] values)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> min = Double.MAX_VALUE;</span><br><span class="line"><span class="keyword">double</span> max = Double.MIN_VALUE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">double</span> v : values)&#123;</span><br><span class="line"><span class="keyword">if</span> (min &gt; v);</span><br><span class="line"><span class="keyword">if</span> (max &lt; v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Pair</span>(min,max);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>先提出问题?</p>
+<p>匿名内部类的使用、匿名内部类要注意的事项、如何初始化匿名内部类、匿名内部类使用的形参为何要为final</p>
+<figure class="highlight haxe"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="type"></span>父类构造器（参数列表）|实现接口（）    </span><br><span class="line">    &#123;    </span><br><span class="line">     <span class="comment">//匿名内部类的类体部分    </span></span><br><span class="line">    &#125; </span><br></pre></td></tr></table></figure>
+<p>我们看到使用匿名内部类我们必须继承一个父类或者是实现一个接口，仅能继承一个父类或者是一个接口。<br>没有class的关键字，这是因为匿名类是直接使用new来生成一个对象的引用。当然是隐式的。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Bird</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">String</span> name;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">String</span> <span class="function"><span class="title">getName</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">        <span class="keyword">return</span> name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="function"><span class="title">setName</span>(<span class="params"><span class="built_in">String</span> name</span>)</span> &#123;  </span><br><span class="line">        <span class="built_in">this</span>.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> int fly();  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="function"><span class="title">test</span>(<span class="params">Bird bird</span>)</span>&#123;  </span><br><span class="line">        System.out.println(bird.getName() + <span class="string">&quot;能够飞 &quot;</span> + bird.fly() + <span class="string">&quot;米&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> <span class="function"><span class="title">main</span>(<span class="params"><span class="built_in">String</span>[] args</span>)</span> &#123;  </span><br><span class="line">        Test test = <span class="keyword">new</span> Test();  </span><br><span class="line">        test.test(<span class="keyword">new</span> <span class="function"><span class="title">Bird</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">              </span><br><span class="line">            <span class="keyword">public</span> int <span class="function"><span class="title">fly</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="number">10000</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">String</span> <span class="function"><span class="title">getName</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;大雁&quot;</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<hr>
+<p>Output：<br>大雁能够飞 10000米  </p>
+<p>对于这段匿名内部类代码其实是可以拆分为如下形式：</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">WildGoose</span> <span class="keyword">extends</span> <span class="title">Bird</span></span>&#123;  </span><br><span class="line">    public int fly() &#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="number">10000</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public <span class="type">String</span> getName() &#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;大雁&quot;</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="type">WildGoose</span> wildGoose = <span class="keyword">new</span> <span class="type">WildGoose</span>();  </span><br><span class="line">test.test(wildGoose);  </span><br></pre></td></tr></table></figure>
+<p>在这里系统会创建一个继承自Bird类的匿名类的对象，该对象转型为对Bird类型的引用。<br>对于匿名内部类的使用它是存在一个缺陷的，就是它仅能被使用一次，创建匿名内部类时它会立即创建一个该类的实例，该类的定义会立即消失，所以匿名内部类是不能够被重复使用。对于上面的实例，如果我们需要对test()方法里面内部类进行多次使用，建议重新定义类，而不是使用匿名内部类。</p>
+<p>使用匿名内部类时，我们必须是继承一个类或者是实现一个接口，但是两者不可兼得，同时也只能继承一个类或者实现一个接口。<br>匿名类是不能定义构造函数的。<br>匿名内部类中不能存在任何静态成员变量和静态方法<br>匿名内部类为局部内部类，所以局部内部类的所有限制对匿名类产生有效<br>匿名类不能是抽象，因为他必须实现继承的类或者是实现接口的所有抽象方法</p>
+<p>使用的形参为何要final？</p>
+<p>我们给匿名内部类传递参数的时候，若该形参在内部类中需要被使用，那么该形参必须要为final<br>    当所在的方法的形参需要被内部类里面使用时，该形参必须为final。</p>
+<p>案例</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span> &#123;</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">(<span class="keyword">final</span> <span class="keyword">String</span> name,<span class="keyword">String</span> age)</span></span>&#123;  </span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span>&#123;</span>  </span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;  </span><br><span class="line">                System.out.<span class="built_in">println</span>(name);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>从上面代码中看好像name参数应该是被内部类直接调用？<br>其实不然，在java编译之后实际的操作如下：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span>$<span class="title">InnerClass</span> &#123;</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InnerClass</span><span class="params">(<span class="keyword">String</span> name,<span class="keyword">String</span> age)</span></span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.InnerClass$name = name;  </span><br><span class="line">        <span class="keyword">this</span>.InnerClass$age = age;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.<span class="built_in">println</span>(<span class="keyword">this</span>.InnerClass$name + <span class="string">&quot;----&quot;</span> + <span class="keyword">this</span>.InnerClass$age );  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">所以从上面代码来看，内部类并不是直接调用方法传递的参数，而是利用自身的构造器对传入的参数进行备份，自己内部方法调用的实际上时自己的属性而不是外部方法传递进来的参数。</span><br><span class="line">直到这里还没有解释为什么是<span class="keyword">final</span>？在内部类中的属性和外部方法的参数两者从外表上看是同一个东西，但实际上却不是，所以他们两者是可以任意变化的，也就是说在内部类中我对属性的改变并不会影响到外部的形参，而然这从程序员的角度来看这是不可行的，毕竟站在程序的角度来看这两个根本就是同一个，如果内部类该变了，而外部方法的形参却没有改变这是难以理解和不可接受的，所以为了保持参数的一致性，就规定使用<span class="keyword">final</span>来避免形参的不改变。</span><br><span class="line"></span><br><span class="line">简单理解就是，拷贝引用，为了避免引用值发生改变，例如被外部类的方法修改等，而导致内部类得到的值不一致，于是用<span class="keyword">final</span>来让该引用不可改变。</span><br><span class="line">故如果定义了一个匿名内部类，并且希望它使用一个其外部定义的参数，那么编译器会要求该参数引用是<span class="keyword">final</span>的。</span><br><span class="line"></span><br><span class="line">### 匿名内部类初始化</span><br><span class="line">    我们一般都是利用构造器来完成某个实例的初始化工作的，但是匿名内部类是没有构造器的！那怎么来初始化匿名内部类呢？使用构造代码块！利用构造代码块能够达到为匿名内部类创建一个构造器的效果。</span><br></pre></td></tr></table></figure>
+<p>public class OutClass {<br>    public InnerClass getInnerClass(final int age,final String name){<br>        return new InnerClass() {<br>            int age_ ;<br>            String name_;<br>            //构造代码块完成初始化工作<br>            {<br>                if(0 &lt; age &amp;&amp; age &lt; 200){<br>                    age_ = age;<br>                    name_ = name;<br>                }<br>            }<br>            public String getName() {<br>                return name_;<br>            }  </p>
+<pre><code>        public int getAge() &#123;  
+            return age_;  
+        &#125;  
+    &#125;;  
+&#125;  
+  
+public static void main(String[] args) &#123;  
+    OutClass out = new OutClass();  
+      
+    InnerClass inner_1 = out.getInnerClass(201, &quot;chenssy&quot;);  
+    System.out.println(inner_1.getName());  
+      
+    InnerClass inner_2 = out.getInnerClass(23, &quot;chenssy&quot;);  
+    System.out.println(inner_2.getName());  
+&#125;  
+</code></pre>
+<p>}</p>
+<pre><code>
+</code></pre>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android插件化-开篇</title>
+    <url>/2021/09/15/Android%E6%8F%92%E4%BB%B6%E5%8C%96-%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<h1 id="Android插件化-开篇"><a href="#Android插件化-开篇" class="headerlink" title="Android插件化-开篇"></a>Android插件化-开篇</h1><p>插件化的分类</p>
+<h2 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h2><p>···</p>
+<h3 id="Java-ClassLoader"><a href="#Java-ClassLoader" class="headerlink" title="Java - ClassLoader"></a>Java - ClassLoader</h3><ul>
+<li>Java中默认有三种ClassLoader。分别是:<ul>
+<li>BootStrap ClassLoader：启动类加载器，最顶层的加载器。主要负责加载JDK中的核心类。在JVM启动后也随着启动，并构造Ext ClassLoader和App ClassLoader。</li>
+</ul>
+<ul>
+<li>Extension ClassLoader：扩展类加载器，负责加载Java的扩展类库。</li>
+<li>App ClassLoader：系统类加载器，负责加载应用程序的所有jar和class文件。</li>
+<li>自定义ClassLoader：需要继承自ClassLoader类。 </li>
+</ul>
+</li>
+</ul>
+<h4 id="ClassLoader职能"><a href="#ClassLoader职能" class="headerlink" title="ClassLoader职能"></a>ClassLoader职能</h4><p>ClassLoader默认使用双亲委托模型来搜索类。<br>每个ClassLoader都有一个父类的引用。当ClassLoader需要加载某个类时，先判断是否加载过，如果加载过就返回Class对象。否则交给他的父类去加载，继续判断是否加载过。这样 层层判断，就到了最顶层的BootStrap ClassLoader来试图加载。如果连最顶层的Bootstrap ClassLoader都没加载过，那就加载。如果加载失败，就转交给子ClassLoader，层层加载，直到最底层。如果还不能加载的话那就只能抛出异常了。  </p>
+<ul>
+<li>通过这种双亲委托模型，好处是：<ul>
+<li>更高效，父类加载一次就可以避免了子类多次重复加载</li>
+<li>更安全，避免了外界伪造java核心类。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Android-ClassLoader"><a href="#Android-ClassLoader" class="headerlink" title="Android - ClassLoader"></a>Android - ClassLoader</h3><p>android从5.0开始使用art虚拟机，这种虚拟机在程序运行时也需要ClassLoader将类加载到内存中，但是与java不同的是，java虚拟机通过读取class字节码来加载，但是art则是通过dex字节码来加载。<br>这是一种优化，可以合并多个class文件为一个classes.dex文件。</p>
+<ul>
+<li>android一共有三种类加载器:  <ul>
+<li>BootClassLoader：父类构造器  </li>
+<li>PathClassLoader：一般是加载指定路径/data/app中的apk，也就是安装到手机中的apk。所以一般作为默认的加载器。</li>
+<li>DexClassLoader：从包含classes.dex的jar或者apk中，加载类的加载器，可用于动态加载。<br>看PathClassLoader和DexClassLoader源码，都是继承自BaseDexClassLoader。  <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">public <span class="type">DexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">String</span> optimizedDirectory,</span><br><span class="line">      <span class="type">String</span> librarySearchPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">    <span class="keyword">super</span>(dexPath, <span class="keyword">new</span> <span class="type">File</span>(optimizedDirectory), librarySearchPath, parent);</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PathClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</span><br><span class="line">public <span class="type">PathClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(dexPath, <span class="literal">null</span>, <span class="literal">null</span>, parent);  <span class="comment">//见下文</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BaseDexClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">DexPathList</span> pathList;</span><br><span class="line">public <span class="type">BaseDexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">File</span> optimizedDirectory,</span><br><span class="line">        <span class="type">String</span> libraryPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(parent);  <span class="comment">//见下文</span></span><br><span class="line">        <span class="comment">//收集dex文件和Native动态库【见小节3.2】</span></span><br><span class="line">        <span class="keyword">this</span>.pathList = <span class="keyword">new</span> <span class="type">DexPathList</span>(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+我们可以看到PathClassLoader的两个参数都为null，表明只能接受固定的dex文件，而这个文件是只能在安装后出现的。而DexClassLoader中optimizedDirectory，和librarySearchPath都是可以自己定义的，说明我们可以传入一个jar或者apk包，保证解压缩后是一个dex文件就可以操作了。因此，我们通常使用DexClassLoader来进行插件化和热修复。  </li>
+</ul>
+</li>
+</ul>
+<p><img src="ClassLoader.png" alt="ClassLoader"></p>
+<p>可以看到，BaseDexClassLoader有一个相当重要的过程就是初始化DexPathList。初始化DexPathList的过程主要是收集dexElements和nativeLibraryPathElements。一个Classloader可以包含多个dex文件，每个dex文件被封装到一个Element对象。这element对象在初始化和热修复逻辑中是相当重要的。当查找某个类时，会遍历dexElements，如果找到就返回，否则继续遍历。所以当多个dex中有相同的类，只会加载前面的dex中的类。下面是这段逻辑的具体实现</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="built_in">public</span> <span class="keyword">Class</span> findClass(String <span class="type">name</span>, List&lt;Throwable&gt; suppressed) &#123;</span><br><span class="line">    <span class="keyword">for</span> (Element element : dexElements) &#123;</span><br><span class="line">        DexFile dex = element.dexFile;</span><br><span class="line">        <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</span><br><span class="line">            //找到目标类，则直接返回</span><br><span class="line">            <span class="keyword">Class</span> clazz = dex.loadClassBinaryName(<span class="type">name</span>, definingContext, suppressed);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> clazz;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结<br>我们先是讲解了Java中类加载的双亲委托机制，然后介绍了Android中的几种ClassLoader，从源码角度介绍了两种ClassLoader加载机制的不同。以后的插件化实践中，我们会经常用到DexClassLoader。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机English词汇普及更正</title>
+    <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
+    <content><![CDATA[<p>pertain 属于<br>pertaiing to 属于<br>Threadlocal values pertaining to this thread.<br>This map is maintained by the ThreadLocal class.  </p>
+<p>usages n 用途,用法</p>
+<p>To help deal with very large and long-lived usages, the hash table entries use WeakReferences for keys.<br>为了处理非常大和生命周期非常长的线程(<strong>usages</strong>)，哈希表使用弱引用作为 key。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-CMD集合</title>
+    <url>/2021/09/07/Android-CMD%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h2 id="ADB"><a href="#ADB" class="headerlink" title="ADB"></a>ADB</h2><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">重启adb </span><br><span class="line">adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</span><br><span class="line">查看当前的进程</span><br><span class="line">adb shell ps | grep <span class="keyword">package</span>-name </span><br><span class="line">过滤日志</span><br><span class="line">adb logcat </span><br><span class="line">查看链接cpu架构信息</span><br><span class="line">adb shell </span><br><span class="line">cat/<span class="keyword">proc</span>/cpuinfo </span><br><span class="line">查看已经连接的设备<span class="title"></span></span><br><span class="line"><span class="title">adb</span> devices</span><br><span class="line">指定设备安装apk<span class="title"></span></span><br><span class="line"><span class="title">adb</span> -s<span class="title"> xxx</span> install<span class="title"> xxx.apk</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">keytool</span> -list -v -keystore<span class="title">  xxx.keystore</span></span><br><span class="line">查看签名秘钥</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="ADB-进阶CMD"><a href="#ADB-进阶CMD" class="headerlink" title="ADB 进阶CMD"></a>ADB 进阶CMD</h2><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">de<span class="variable">v:</span>每隔 <span class="number">1</span>s 输出一次APP CPU信息，命令如下</span><br><span class="line">$adb <span class="keyword">shell</span></span><br><span class="line">$adb top -d <span class="number">1</span> | <span class="keyword">grep</span> <span class="keyword">com</span>.packagename.xxx</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span> 获取Apk安装的路径</span><br><span class="line">adb <span class="keyword">shell</span> pm path <span class="keyword">com</span>.packagename.xxx</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span> 导出apk文件</span><br><span class="line">adb pull /data/app/<span class="keyword">com</span>.packagename.xxx/base.apk</span><br><span class="line"></span><br><span class="line">adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package</span><br><span class="line">example:</span><br><span class="line">$ adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package tao</span><br><span class="line">package:<span class="keyword">com</span>.taobao.taobao</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span>结合 <span class="keyword">grep</span> 搜索包名</span><br><span class="line">$ adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package | <span class="keyword">grep</span> -i <span class="keyword">z</span></span><br><span class="line">package:<span class="keyword">ru</span>.zdevs.zarchiver</span><br></pre></td></tr></table></figure>
+
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">Gradle</span><br><span class="line">查看主要的任务</span><br><span class="line"><span class="string">./gradlew</span> tasks </span><br><span class="line">查看所有任务，包括缓存任务</span><br><span class="line"><span class="string">./gradlew</span> tasks <span class="params">--all</span></span><br><span class="line">调试模式构建并打印堆栈日志</span><br><span class="line"><span class="string">./gradlew</span> build <span class="params">--info</span> <span class="params">--debug</span> <span class="params">--stacktrace</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bundletool"><a href="#bundletool" class="headerlink" title="bundletool"></a>bundletool</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux-Android"><a href="#Linux-Android" class="headerlink" title="Linux - Android"></a>Linux - Android</h2><p>1、查看 CPU 详细信息</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cat <span class="regexp">/proc/</span>cpuinfo</span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <tags>
+        <tag>CMD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android卡顿优化-前章</title>
+    <url>/2021/09/07/Android%E5%8D%A1%E9%A1%BF%E4%BC%98%E5%8C%96-%E5%89%8D%E7%AB%A0/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Android存储路径更新(前章)</title>
+    <url>/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/</url>
+    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
+<h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
+<li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
+</ul>
+<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
+<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
+<p>外部存储：</p>
+<p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
+<p>这里提供一下获取方式:</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="center">路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_ALARMS)</td>
+<td align="center">/storage/sdcard0/Alarms</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM)</td>
+<td align="center">/storage/sdcard0/DCIM</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)</td>
+<td align="center">/storage/sdcard0/Download</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MOVIES)</td>
+<td align="center">/storage/sdcard0/Movies</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)</td>
+<td align="center">/storage/sdcard0/Music</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_NOTIFICATIONS)</td>
+<td align="center">/storage/sdcard0/Notifications</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)</td>
+<td align="center">/storage/sdcard0/Pictures</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PODCASTS)</td>
+<td align="center">/storage/sdcard0/Podcasts</td>
+</tr>
+<tr>
+<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_RINGTONES)</td>
+<td align="center">/storage/sdcard0/Ringtones</td>
+</tr>
+</tbody></table>
+<h3 id="分区存储概览"><a href="#分区存储概览" class="headerlink" title="分区存储概览"></a>分区存储概览</h3><p>这里我们先看一张图，先大概有个概念</p>
+<p><img src="%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp" alt="分区存储"></p>
+<p>Android存储的改变基本上遵循了3个原则:<br>更好的从属性: 系统知道哪些文件属于哪些应用，这可以让用户更方便地管理他们的文件。当应用被卸载后，除非用户需要，否则应用之前所创建的文件也不应该保留在设备上；<br>保护应用数据: 当一个应用将 它所属的文件 写入外部存储时，这些文件是不应该被其他应用所访问的；<br>保护用户数据: 当用户下载了一些文件，比如带有敏感信息的邮件附件，这些文件应该对其他应用不可见。  </p>
+<p>Android10分区存储对<strong>外部存储</strong>重新进行了设计</p>
+<ul>
+<li>私有存储 (Private Storage) : 每个应用在都拥有自己的私有目录，其它应用看不到，彼此也无法访问到该目录：内部存储私有目录 (/data/data/packageName) ；外部存储私有目录 (/sdcard/Android/data/packageName)，</li>
+<li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
+</ul>
+<p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
+<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-Apk安装的流程(前章)</title>
     <url>/2021/08/20/Android-Apk%E5%AE%89%E8%A3%85%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h1><p>最近自己又去阅读了Android源码，感觉以前有些困惑清晰了不少。<br>android源码庞大而复杂，一个源文件文件少则都是几千行代码。抓住核心很重要，那么多API的调用链根本记不完，不能一窥全貌，就只能迷失在森林之中，其实重要的是去梳理流程，搞清楚这个模块的设计初衷是为了什么，如果让你自己来你会怎么设计，如何写出高质量的代码。<br>思维上的提高才是本质上的进步！！！</p>
@@ -189,186 +505,95 @@
       </tags>
   </entry>
   <entry>
-    <title>Android-崩溃优化</title>
-    <url>/2021/07/29/Android-%E5%A5%94%E6%BA%83%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
-<h3 id="Native-崩溃"><a href="#Native-崩溃" class="headerlink" title="Native 崩溃"></a>Native 崩溃</h3><blockquote>
-<ol>
-<li>在 Unix-like 系统中，所有的崩溃都是编程错误或者硬件错误相关的，系统遇到不可恢复的错误时会触发崩溃机制让程序退出，如除零、段地址错误等。</li>
-<li>异常发生时，CPU 通过异常中断的方式，触发异常处理流程。不同的处理器，有不同的异常中断类型和中断处理方式。</li>
-<li>linux 把这些中断处理，统一为信号量，可以注册信号量向量进行处理。</li>
-<li>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号。  </li>
-</ol>
-</blockquote>
-<h4 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h4><p><img src="signal.png" alt="信号机制"> </p>
-<h5 id="1-信号的接收"><a href="#1-信号的接收" class="headerlink" title="(1) 信号的接收"></a>(1) 信号的接收</h5><p>接收信号的任务是由内核代理的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入<strong>内核态</strong> 。<br>！！！注意，此时信号还只是在队列中，对进程来说暂时是不知道有信号到来的。</p>
-<h5 id="2-信号的检测"><a href="#2-信号的检测" class="headerlink" title="(2) 信号的检测"></a>(2) 信号的检测</h5><p>进程陷入内核态后，有两种场景会对信号进行检测：</p>
-<p>1.进程从内核态返回到用户态前进行信号检测</p>
-<p>2.进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</p>
-<p>当发现有新信号时，便会进入下一步，信号的处理。</p>
-<h5 id="3-信号的处理"><a href="#3-信号的处理" class="headerlink" title="(3) 信号的处理"></a>(3) 信号的处理</h5><p>信号处理函数是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。</p>
-<p>接下来进程返回到用户态中，执行相应的信号处理函数。</p>
-<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。</p>
-<p>至此，一个完整的信号处理流程便结束了，如果同时有多个信号到达，上面的处理流程会在第2步和第3步骤间重复进行。</p>
-<p>四、捕捉native crash<br>1.注册信号处理函数<br>第一步就是要用信号处理函数捕获到native crash(SIGSEGV, SIGBUS等)。在posix系统，可以用sigaction()：</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt; </span></span></span><br><span class="line"><span class="keyword">int</span> sigaction(<span class="keyword">int</span> signum,<span class="keyword">const</span> <span class="keyword">struct</span> sigaction *act,<span class="keyword">struct</span> sigaction *oldact));</span><br></pre></td></tr></table></figure>
-<p>signum：代表信号编码，可以是除SIGKILL及SIGSTOP外的任何一个特定有效的信号，如果为这两个信号定义自己的处理函数，将导致信号安装错误。</p>
-<p>act：指向结构体sigaction的一个实例的指针，该实例指定了对特定信号的处理，如果设置为空，进程会执行默认处理。</p>
-<p>oldact：和参数act类似，只不过保存的是原来对相应信号的处理，也可设置为NULL。</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">struct sigaction s<span class="built_in">a_old</span><span class="comment">;  </span></span><br><span class="line">memset(&amp;sa, <span class="number">0</span>, sizeof(sa))<span class="comment">;  </span></span><br><span class="line">sigemptyset(&amp;sa.s<span class="built_in">a_mask</span>)<span class="comment">;  </span></span><br><span class="line">sa.s<span class="built_in">a_sigaction</span> = my_handler<span class="comment">;  </span></span><br><span class="line">sa.s<span class="built_in">a_flags</span> = S<span class="built_in">A_SIGINFO</span><span class="comment">;</span></span><br><span class="line">if (sigaction(sig, &amp;sa, &amp;s<span class="built_in">a_old</span>) == <span class="number">0</span>) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.设置额外栈空间</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigaltstack</span><span class="params">(<span class="keyword">const</span> <span class="keyword">stack_t</span> *ss, <span class="keyword">stack_t</span> *oss)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>SIGSEGV很有可能是栈溢出引起的，如果在默认的栈上运行很有可能会破坏程序运行的现场，无法获取到正确的上下文。而且当栈满了（太多次递归，栈上太多对象），系统会在同一个已经满了的栈上调用SIGSEGV的信号处理函数，又再一次引起同样的信号。</p>
-<p>我们应该开辟一块新的空间作为运行信号处理函数的栈。可以使用sigaltstack在任意线程注册一个可选的栈，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">stack_t</span> stack;  </span><br><span class="line"><span class="built_in">memset</span>(&amp;stack, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(stack));  </span><br><span class="line"><span class="comment">/* Reserver the system default stack size. We don&#x27;t need that much by the way. */</span>  </span><br><span class="line">stack.ss_size = SIGSTKSZ;  </span><br><span class="line">stack.ss_sp = <span class="built_in">malloc</span>(stack.ss_size);  </span><br><span class="line">stack.ss_flags = <span class="number">0</span>;  </span><br><span class="line"><span class="comment">/* Install alternate stack size. Be sure the memory region is valid until you revert it. */</span>  </span><br><span class="line"><span class="keyword">if</span> (stack.ss_sp != <span class="literal">NULL</span> &amp;&amp; <span class="built_in">sigaltstack</span>(&amp;stack, <span class="literal">NULL</span>) == <span class="number">0</span>) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.兼容其他signal处理</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">static void my<span class="constructor">_handler(<span class="params">const</span> <span class="params">int</span> <span class="params">code</span>, <span class="params">siginfo_t</span> <span class="operator">*</span><span class="params">const</span> <span class="params">si</span>, <span class="params">void</span> <span class="operator">*</span><span class="params">const</span> <span class="params">sc</span>)</span> &#123;<span class="operator"></span></span><br><span class="line"><span class="operator">...  </span></span><br><span class="line"><span class="operator">  </span><span class="comment">/* Call previous handler. */</span>  </span><br><span class="line">  old_handler.sa<span class="constructor">_sigaction(<span class="params">code</span>, <span class="params">si</span>, <span class="params">sc</span>)</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
-<p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
+    <title>Java-并发篇-1</title>
+    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
+    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
 ]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
       <tags>
-        <tag>Android</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
-    <title>Android 与 Unity 的交互</title>
-    <url>/2021/07/29/Android%E4%B8%8EUnity%E7%9A%84%E4%BA%A4%E4%BA%92/</url>
-    <content><![CDATA[<p><img src="Unity%E7%9B%AE%E5%BD%95.jpg" alt="路径示例"></p>
-]]></content>
-      <categories>
-        <category>Unity</category>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>Unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android卡顿优化-前章</title>
-    <url>/2021/09/07/Android%E5%8D%A1%E9%A1%BF%E4%BC%98%E5%8C%96-%E5%89%8D%E7%AB%A0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>Android存储路径更新(前章)</title>
-    <url>/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
-<h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
-<li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
-</ul>
-<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
-<p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
-<p>外部存储：</p>
-<p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
-<p>这里提供一下获取方式:</p>
+    <title>Android-Activity</title>
+    <url>/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>在最近的任务栈里面看见的task未必还活着。<br>在最近的任务栈里面看不见的task未必就死了。</p>
+<h2 id="android-launchMode"><a href="#android-launchMode" class="headerlink" title="android-launchMode"></a>android-launchMode</h2><p>在这里我推荐大家去看扔物线的课程: <a href="https://www.bilibili.com/video/BV1CA41177Se">Android 面试黑洞</a></p>
+<p>Activity有4种启动模式，分别是：Standard、SingleTop、SingleTask和SingleInstance，它们控制了被启动Activity的启动行为。<br>Activity任务栈（Task）是一个标准的栈结构<br>用于在ActivityManagerService侧管理所有的Activity（AMS通过TaskRecord标识一个任务栈，通过ActivityRecord标识一个Activity）。</p>
 <table>
 <thead>
 <tr>
-<th align="left">方法</th>
-<th align="center">路径</th>
+<th align="left">launchMode</th>
+<th align="center">Name</th>
+<th align="left">DES</th>
+<th align="left">MORE【知识扩展】</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_ALARMS)</td>
-<td align="center">/storage/sdcard0/Alarms</td>
+<td align="left">Standard</td>
+<td align="center">标准模式</td>
+<td align="left">标准模式，也是系统的默认模式。该模式下，每次启动Activity，都会创建一个新实例，并且将其加入到启动该Activity的那个Activity所在的任务栈中，所以目标Activity的多个实例可以位于不同的任务栈。</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM)</td>
-<td align="center">/storage/sdcard0/DCIM</td>
+<td align="left">SingleTop</td>
+<td align="center">栈顶复用模式</td>
+<td align="left">该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)</td>
-<td align="center">/storage/sdcard0/Download</td>
+<td align="left">SingleTask</td>
+<td align="center">栈内复用模式</td>
+<td align="left">clearTop的作用，整个任务栈只能有一个activity的实例。</td>
+<td align="left">如果此时任务栈内已经存在 Activity C 的实例且未位于栈顶，当启动 Activity C 时，会将 Activity C 上方的实例全部出栈让其位于任务栈顶并 Activity C 中的 onNewIntent() 方法会被调用</td>
 </tr>
 <tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MOVIES)</td>
-<td align="center">/storage/sdcard0/Movies</td>
-</tr>
-<tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)</td>
-<td align="center">/storage/sdcard0/Music</td>
-</tr>
-<tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_NOTIFICATIONS)</td>
-<td align="center">/storage/sdcard0/Notifications</td>
-</tr>
-<tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)</td>
-<td align="center">/storage/sdcard0/Pictures</td>
-</tr>
-<tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_PODCASTS)</td>
-<td align="center">/storage/sdcard0/Podcasts</td>
-</tr>
-<tr>
-<td align="left">Environment.getExternalStoragePublicDirectory(DIRECTORY_RINGTONES)</td>
-<td align="center">/storage/sdcard0/Ringtones</td>
+<td align="left">SingleInstance</td>
+<td align="center">单一实例</td>
+<td align="left">要求该Activity所在的Task只有有这么一个Activity，</td>
+<td align="left">下面没有旧，上面没有新</td>
 </tr>
 </tbody></table>
-<h3 id="分区存储概览"><a href="#分区存储概览" class="headerlink" title="分区存储概览"></a>分区存储概览</h3><p>这里我们先看一张图，先大概有个概念</p>
-<p><img src="%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp" alt="分区存储"></p>
-<p>Android存储的改变基本上遵循了3个原则:<br>更好的从属性: 系统知道哪些文件属于哪些应用，这可以让用户更方便地管理他们的文件。当应用被卸载后，除非用户需要，否则应用之前所创建的文件也不应该保留在设备上；<br>保护应用数据: 当一个应用将 它所属的文件 写入外部存储时，这些文件是不应该被其他应用所访问的；<br>保护用户数据: 当用户下载了一些文件，比如带有敏感信息的邮件附件，这些文件应该对其他应用不可见。  </p>
-<p>Android10分区存储对<strong>外部存储</strong>重新进行了设计</p>
+<h2 id="MORE【知识扩展】"><a href="#MORE【知识扩展】" class="headerlink" title="MORE【知识扩展】"></a>MORE【知识扩展】</h2><h3 id="Standard"><a href="#Standard" class="headerlink" title="Standard"></a>Standard</h3><p>当我们使用Application的Context来启动一个Activity的时候，会报AndroidRuntimeException，因为standard模式下启动的Activity，会默认进入启动它的Activity的任务栈中，而非Activity类型的context却并没有所谓的任务栈，所以就会出现问题，解决这个问题的方法是需要为要启动的Activity指定标记位：FLAG_ACTIVITY_NEW_TASK，这个标记的作用是为启动的Activity创建一个新的任务栈。</p>
+<h3 id="SingleTop"><a href="#SingleTop" class="headerlink" title="SingleTop"></a>SingleTop</h3><p>该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</p>
+<p>若目标Activity的实例已经存在，且位于栈顶，那么就不会创建新的实例，而是复用已有实例，并依次调用目标Activity的onPause -&gt; onNewIntent -&gt; onResume方法。<br>知识扩展！！！</p>
+<p>singleTop模式的activity特点就是除了外部可以启动它显示信息外，它也可以用同样的方式启动自己更新显示信息，这样就减少了冗余代码，降低了维护成本。</p>
+<p>他的onCreate、onStart方法不会被调用，避免多次初始化，应用宝用的就是这套方案。</p>
+<h3 id="SingleTask-A和B都是不同的2个应用"><a href="#SingleTask-A和B都是不同的2个应用" class="headerlink" title="SingleTask A和B都是不同的2个应用"></a>SingleTask A和B都是不同的2个应用</h3><p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>B_Activity的Activity被启动时，不会进入启动A的Task里,而是创建属于B自己的Task里，置于B-Task栈顶,然后把整个B-Task 压到 A-Task上面,这种方式打开的方式是入场动画是应用间的切换。</p>
+<p>如果这时按下返回键，这里回退的顺序是 B-Task 来回退，而不是返回原来的A_Activity[Standard]。原来的A要在前台显示，必须是B-Task的栈的Activity完全关闭才可以，这里场景动画也是场景间的切换。  </p>
+<p>这里要明确一个概念：不止应用的Activity内部可以叠成栈，不同应用之间的Task也可以叠成栈。</p>
+<p>Task的叠加只适用于前台的Task。</p>
+<p>SingleTask是保证了一个栈内有且只有被该属性修饰Activity的实例对象，全局单例</p>
+<h3 id="SingleInstance"><a href="#SingleInstance" class="headerlink" title="SingleInstance"></a>SingleInstance</h3><p>为了描述清晰，我们还是要举个例子:<br>A_Activity[Standard] ==&gt; B_Activity[SingleInstance]<br>还是 A 短信应用 打开 B 邮箱应用<br>邮件App不仅为了当前跳转的Activity创建对象，而且会创建一个单独的B-Task,然后把当前的打开应用的Activity的实例放到B-Task。<br>第二种情况是当前Activity已经被创建过了，则会回调当前应用的Activity生命周期的**onNewIntent()**方法</p>
+<p>这2种情况的变化，这个B-Task都会被拿过来压在A-Task上面，入场动画是切换Task的动画。</p>
+<p>假设用户这个时候点返回，上面的Task因为只有一个Activity，手机会直接回到短信App，入场动画是切换Task的动画。</p>
+<p>假设用户没有直接点返回，而是选择查看了最近的任务又返回到之B-Task，这个时候短信的A-Task已经被退到后台，所以用户再点返回的话，又因为当前的Task内只有一个B-Activity，所以是直接回退到桌面。</p>
+<p>假设用户又没有点返回，也没有选择查看任务，而是选择了在B-Task，又打开了一个C-App的Activity，由于SingleInstance的限制，所以C-task并不会叠在B-Task之上，而是另辟蹊径，而是装到另一个Task中，然后整个Task跌在B-Task上面。</p>
+<p>知识点: 我来解释一下另辟蹊径的意思，这个时候相对邮箱App此时有2个Task，一个是独栈的，也就是短信调用的那个，还有一个是后台的Task，C的Activity是被放到了后台的Task。</p>
+<blockquote>
+<p>在最近的任务栈里面看不见的task未必就死了。这句话也是在这里体现。<br>在延伸出一个属性:Android:taskAffinity，</p>
+</blockquote>
+<h2 id="Android-taskAffinity属性"><a href="#Android-taskAffinity属性" class="headerlink" title="Android:taskAffinity属性"></a>Android:taskAffinity属性</h2><blockquote>
+<p>在android里，一般情况下一个App默认只有一个Task，可以显示在最近的列表里面，但是用来甄别唯一性的不是App，而是<strong>taskAffinity</strong>，每一个Activity都有属于自己的Activity，相当于每个Activity的预先分组。<br><img src="taskAffinity%E9%BB%98%E8%AE%A4%E8%A7%84%E5%88%99.png" alt="taskAffinity"><br>android:taskAffinity是Activity的一个属性，表示该Activity期望的任务栈的名称。<br>默认情况下，一个应用程序中所有Activity的taskAffinity都是相同的，即应用程序的包名。当然，我们可以在配置文件中为每个Activity指定不同的taskAffinity（只有和已有包名不同，才有意义）。<br><img src="taskAffinity%E6%9C%80%E8%BF%91%E5%88%97%E8%A1%A8.png" alt="taskAffinity"><br>另外每一个Task也有taskAffinity，他的值取自栈底的Activity的taskAffinity值，这个栈底Activity也就是第一个启动应用的Activity。</p>
+</blockquote>
+<p>另外一点taskAffinity也可以在androidManifest被定制。<br><img src="taskAffinity%E5%BC%80%E5%8F%91%E6%8E%A8%E8%8D%90.png" alt="taskAffinity">  </p>
+<p>一般情况下，该属性主要和SingleTask启动模式或者android:allowTaskReparenting属性结合使用（下面会详细介绍），在其他情况下没有意义。</p>
+<h3 id="Task-Reparenting"><a href="#Task-Reparenting" class="headerlink" title="Task - Reparenting"></a>Task - Reparenting</h3><p>B AndroidManifest属性 设置为android:allowTaskReparenting = True</p>
+<p>场景具体化:A 短信应用 打开 B 邮箱应用</p>
+<p>B还是会进入到A的Task里,但稍后用户从桌面点击B应用的时候，原先放在A-Task里面的B-Activity会被挪到B应用的Task的栈顶,这个时候你在切回短信Task，你会发现原先的B-Activity已经不见了。<br>(有争议… Android 8,9是有问题的，10以上正常)</p>
+<h3 id="前台Task"><a href="#前台Task" class="headerlink" title="前台Task"></a>前台Task</h3><p>前台叠加的多个Task进入后台第一时间就会拆开</p>
+<blockquote>
+<p>1.按Home键回到桌面<br>2.按最近任务键 查看最近的任务  </p>
 <ul>
-<li>私有存储 (Private Storage) : 每个应用在都拥有自己的私有目录，其它应用看不到，彼此也无法访问到该目录：内部存储私有目录 (/data/data/packageName) ；外部存储私有目录 (/sdcard/Android/data/packageName)，</li>
-<li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
+<li>前台Task 在最近列表显示出来的时候就已经进入到了后台，而不是切到其他任务之后。</li>
 </ul>
-<p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
-<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android插件化-开篇</title>
-    <url>/2021/09/15/Android%E6%8F%92%E4%BB%B6%E5%8C%96-%E5%BC%80%E7%AF%87/</url>
-    <content><![CDATA[<h1 id="Android插件化-开篇"><a href="#Android插件化-开篇" class="headerlink" title="Android插件化-开篇"></a>Android插件化-开篇</h1><p>插件化的分类</p>
-<h2 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h2><p>···</p>
-<h3 id="Java-ClassLoader"><a href="#Java-ClassLoader" class="headerlink" title="Java - ClassLoader"></a>Java - ClassLoader</h3><ul>
-<li>Java中默认有三种ClassLoader。分别是:<ul>
-<li>BootStrap ClassLoader：启动类加载器，最顶层的加载器。主要负责加载JDK中的核心类。在JVM启动后也随着启动，并构造Ext ClassLoader和App ClassLoader。</li>
-</ul>
-<ul>
-<li>Extension ClassLoader：扩展类加载器，负责加载Java的扩展类库。</li>
-<li>App ClassLoader：系统类加载器，负责加载应用程序的所有jar和class文件。</li>
-<li>自定义ClassLoader：需要继承自ClassLoader类。 </li>
-</ul>
-</li>
-</ul>
-<h4 id="ClassLoader职能"><a href="#ClassLoader职能" class="headerlink" title="ClassLoader职能"></a>ClassLoader职能</h4><p>ClassLoader默认使用双亲委托模型来搜索类。<br>每个ClassLoader都有一个父类的引用。当ClassLoader需要加载某个类时，先判断是否加载过，如果加载过就返回Class对象。否则交给他的父类去加载，继续判断是否加载过。这样 层层判断，就到了最顶层的BootStrap ClassLoader来试图加载。如果连最顶层的Bootstrap ClassLoader都没加载过，那就加载。如果加载失败，就转交给子ClassLoader，层层加载，直到最底层。如果还不能加载的话那就只能抛出异常了。  </p>
-<ul>
-<li>通过这种双亲委托模型，好处是：<ul>
-<li>更高效，父类加载一次就可以避免了子类多次重复加载</li>
-<li>更安全，避免了外界伪造java核心类。</li>
-</ul>
-</li>
-</ul>
-<h3 id="Android-ClassLoader"><a href="#Android-ClassLoader" class="headerlink" title="Android - ClassLoader"></a>Android - ClassLoader</h3><p>android从5.0开始使用art虚拟机，这种虚拟机在程序运行时也需要ClassLoader将类加载到内存中，但是与java不同的是，java虚拟机通过读取class字节码来加载，但是art则是通过dex字节码来加载。<br>这是一种优化，可以合并多个class文件为一个classes.dex文件。</p>
-<ul>
-<li>android一共有三种类加载器:  <ul>
-<li>BootClassLoader：父类构造器  </li>
-<li>PathClassLoader：一般是加载指定路径/data/app中的apk，也就是安装到手机中的apk。所以一般作为默认的加载器。</li>
-<li>DexClassLoader：从包含classes.dex的jar或者apk中，加载类的加载器，可用于动态加载。<br>看PathClassLoader和DexClassLoader源码，都是继承自BaseDexClassLoader。  <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">public <span class="type">DexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">String</span> optimizedDirectory,</span><br><span class="line">      <span class="type">String</span> librarySearchPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">    <span class="keyword">super</span>(dexPath, <span class="keyword">new</span> <span class="type">File</span>(optimizedDirectory), librarySearchPath, parent);</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PathClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</span><br><span class="line">public <span class="type">PathClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(dexPath, <span class="literal">null</span>, <span class="literal">null</span>, parent);  <span class="comment">//见下文</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BaseDexClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">DexPathList</span> pathList;</span><br><span class="line">public <span class="type">BaseDexClassLoader</span>(<span class="type">String</span> dexPath, <span class="type">File</span> optimizedDirectory,</span><br><span class="line">        <span class="type">String</span> libraryPath, <span class="type">ClassLoader</span> parent) &#123;</span><br><span class="line">        <span class="keyword">super</span>(parent);  <span class="comment">//见下文</span></span><br><span class="line">        <span class="comment">//收集dex文件和Native动态库【见小节3.2】</span></span><br><span class="line">        <span class="keyword">this</span>.pathList = <span class="keyword">new</span> <span class="type">DexPathList</span>(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-我们可以看到PathClassLoader的两个参数都为null，表明只能接受固定的dex文件，而这个文件是只能在安装后出现的。而DexClassLoader中optimizedDirectory，和librarySearchPath都是可以自己定义的，说明我们可以传入一个jar或者apk包，保证解压缩后是一个dex文件就可以操作了。因此，我们通常使用DexClassLoader来进行插件化和热修复。  </li>
-</ul>
-</li>
-</ul>
-<p><img src="ClassLoader.png" alt="ClassLoader"></p>
-<p>可以看到，BaseDexClassLoader有一个相当重要的过程就是初始化DexPathList。初始化DexPathList的过程主要是收集dexElements和nativeLibraryPathElements。一个Classloader可以包含多个dex文件，每个dex文件被封装到一个Element对象。这element对象在初始化和热修复逻辑中是相当重要的。当查找某个类时，会遍历dexElements，如果找到就返回，否则继续遍历。所以当多个dex中有相同的类，只会加载前面的dex中的类。下面是这段逻辑的具体实现</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="built_in">public</span> <span class="keyword">Class</span> findClass(String <span class="type">name</span>, List&lt;Throwable&gt; suppressed) &#123;</span><br><span class="line">    <span class="keyword">for</span> (Element element : dexElements) &#123;</span><br><span class="line">        DexFile dex = element.dexFile;</span><br><span class="line">        <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</span><br><span class="line">            //找到目标类，则直接返回</span><br><span class="line">            <span class="keyword">Class</span> clazz = dex.loadClassBinaryName(<span class="type">name</span>, definingContext, suppressed);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> clazz;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>总结<br>我们先是讲解了Java中类加载的双亲委托机制，然后介绍了Android中的几种ClassLoader，从源码角度介绍了两种ClassLoader加载机制的不同。以后的插件化实践中，我们会经常用到DexClassLoader。</p>
-]]></content>
+</blockquote>
+<p>但是光知道理论还是不够的，由于我们开发的时候大部分的情况都是多变的，我们在前面的章节可以了解到不同的应用的Activity是启动Task内叠加的。</p>
+<p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>我们再把场景具体化，A 短信应用 打开 B 邮箱应用，这个时间我们没有按下返回键，而是按最近任务键，再重新回去原来的Task，这个时候看起来没有变化，但是实际上A的Task已经被去除掉了，只留下B的Task，这个时候我们再按下返回键，把B的Task内的Activity全部关闭，这个时候返回的系统的桌面而不是短信的APP。</p>
+<h2 id="Android十万个为什么系列"><a href="#Android十万个为什么系列" class="headerlink" title="Android十万个为什么系列"></a>Android十万个为什么系列</h2><h3 id="当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？"><a href="#当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？" class="headerlink" title="当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？"></a>当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？</h3><p>我现在还记得这个问题，那年我毕业，投了心仪公司的简历，过了Hr的面试，来到了技术环节，和蔼的面试官问了:我们日常开发比较多组件的是Activity，假设 App 正在前台运行，不在栈顶的Activity有可能会被回收吗?<br>那时年少，我感觉我天灵盖被人开了，当场差点直接自闭，懵逼，接下来回答支支吾吾，面试结果是显而易见的。。。  <strong>(ಥ_ಥ)</strong><br>回去的路上越想越不对劲，到家之后立马查源码，好家伙找到了！平时不看源码，关键时刻被别人搞得一愣一愣！</p>
+<p>凡事先说结论: 会 ！！！<br>这里看的源码是API30,在网上也看到一些相关答案答案，这里我们提炼一下要点，重点我们日常开发对场景预测，比方说游戏A-APP开启了一个B-App应用的界面，这个时候B-App开启了一个比较消耗耗内存的线程，如果这个内存不断地增大，最后游戏A-App的生命周期onDestroy()就会被调用。</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> attach(<span class="keyword">boolean</span> system, <span class="keyword">long</span> startSeq) &#123;</span><br><span class="line">        sCurrentActivityThread = <span class="keyword">this</span>;</span><br><span class="line">        mSystemThread = system;</span><br><span class="line">        <span class="keyword">if</span> (!system) &#123;</span><br><span class="line">            android.ddm.DdmHandleAppName.setAppName(<span class="string">&quot;&lt;pre-initialized&gt;&quot;</span>,</span><br><span class="line">                                                    UserHandle.myUserId());</span><br><span class="line">            RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">            <span class="keyword">final</span> IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="comment">//ApplicationThread是ActivityThread和AMS沟通的桥梁</span></span><br><span class="line">                mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">                <span class="keyword">throw</span> ex.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Watch for getting close to heap limit.</span></span><br><span class="line">            BinderInternal.addGcWatcher(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                @Override <span class="keyword">public</span> <span class="keyword">void</span> run() &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">Runtime</span> <span class="keyword">runtime</span> = <span class="keyword">Runtime</span>.getRuntime();</span><br><span class="line">                    <span class="keyword">long</span> dalvikMax = <span class="keyword">runtime</span>.maxMemory();</span><br><span class="line">                    <span class="keyword">long</span> dalvikUsed = <span class="keyword">runtime</span>.totalMemory() - <span class="keyword">runtime</span>.freeMemory();</span><br><span class="line">                    <span class="keyword">if</span> (dalvikUsed &gt; ((<span class="number">3</span>*dalvikMax)/<span class="number">4</span>)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (DEBUG_MEMORY_TRIM) Slog.d(TAG, <span class="string">&quot;Dalvik max=&quot;</span> + (dalvikMax/<span class="number">1024</span>)</span><br><span class="line">                                + <span class="string">&quot; total=&quot;</span> + (<span class="keyword">runtime</span>.totalMemory()/<span class="number">1024</span>)</span><br><span class="line">                                + <span class="string">&quot; used=&quot;</span> + (dalvikUsed/<span class="number">1024</span>));</span><br><span class="line">                        mSomeActivitiesChanged = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？"><a href="#当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？" class="headerlink" title="当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？"></a>当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？</h3><h3 id="当-app-处于后台运行，app-的进程会被杀死吗？"><a href="#当-app-处于后台运行，app-的进程会被杀死吗？" class="headerlink" title="当 app 处于后台运行，app 的进程会被杀死吗？"></a>当 app 处于后台运行，app 的进程会被杀死吗？</h3>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -514,6 +739,65 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
       </tags>
   </entry>
   <entry>
+    <title>Android-崩溃优化</title>
+    <url>/2021/07/29/Android-%E5%A5%94%E6%BA%83%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="崩溃优化"><a href="#崩溃优化" class="headerlink" title="崩溃优化"></a>崩溃优化</h1><h2 id="Android-崩溃分析"><a href="#Android-崩溃分析" class="headerlink" title="Android 崩溃分析"></a>Android 崩溃分析</h2><p>Android 崩溃基本分为 <strong>Java 崩溃</strong>和 <strong>Native 崩溃</strong><br>简单来说，Java 崩溃就是在 Java 代码中，出现了未捕获异常，导致程序异常退出。<br>那 Native 崩溃又是怎么产生的呢？一般都是因为在 Native 代码中访问非法地址，也可能是地址对齐出现了问题，或者发生了程序主动 abort，<br>这些都会产生相应的 <strong>signal 信号</strong>，导致程序异常退出。</p>
+<h3 id="Native-崩溃"><a href="#Native-崩溃" class="headerlink" title="Native 崩溃"></a>Native 崩溃</h3><blockquote>
+<ol>
+<li>在 Unix-like 系统中，所有的崩溃都是编程错误或者硬件错误相关的，系统遇到不可恢复的错误时会触发崩溃机制让程序退出，如除零、段地址错误等。</li>
+<li>异常发生时，CPU 通过异常中断的方式，触发异常处理流程。不同的处理器，有不同的异常中断类型和中断处理方式。</li>
+<li>linux 把这些中断处理，统一为信号量，可以注册信号量向量进行处理。</li>
+<li>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号。  </li>
+</ol>
+</blockquote>
+<h4 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h4><p><img src="signal.png" alt="信号机制"> </p>
+<h5 id="1-信号的接收"><a href="#1-信号的接收" class="headerlink" title="(1) 信号的接收"></a>(1) 信号的接收</h5><p>接收信号的任务是由内核代理的，当内核接收到信号后，会将其放到对应进程的信号队列中，同时向进程发送一个中断，使其陷入<strong>内核态</strong> 。<br>！！！注意，此时信号还只是在队列中，对进程来说暂时是不知道有信号到来的。</p>
+<h5 id="2-信号的检测"><a href="#2-信号的检测" class="headerlink" title="(2) 信号的检测"></a>(2) 信号的检测</h5><p>进程陷入内核态后，有两种场景会对信号进行检测：</p>
+<p>1.进程从内核态返回到用户态前进行信号检测</p>
+<p>2.进程在内核态中，从睡眠状态被唤醒的时候进行信号检测</p>
+<p>当发现有新信号时，便会进入下一步，信号的处理。</p>
+<h5 id="3-信号的处理"><a href="#3-信号的处理" class="headerlink" title="(3) 信号的处理"></a>(3) 信号的处理</h5><p>信号处理函数是运行在用户态的，调用处理函数前，内核会将当前内核栈的内容备份拷贝到用户栈上，并且修改指令寄存器（eip）将其指向信号处理函数。</p>
+<p>接下来进程返回到用户态中，执行相应的信号处理函数。</p>
+<p>信号处理函数执行完成后，还需要返回内核态，检查是否还有其它信号未处理。如果所有信号都处理完成，就会将内核栈恢复（从用户栈的备份拷贝回来），同时恢复指令寄存器（eip）将其指向中断前的运行位置，最后回到用户态继续执行进程。</p>
+<p>至此，一个完整的信号处理流程便结束了，如果同时有多个信号到达，上面的处理流程会在第2步和第3步骤间重复进行。</p>
+<p>四、捕捉native crash<br>1.注册信号处理函数<br>第一步就是要用信号处理函数捕获到native crash(SIGSEGV, SIGBUS等)。在posix系统，可以用sigaction()：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt; </span></span></span><br><span class="line"><span class="keyword">int</span> sigaction(<span class="keyword">int</span> signum,<span class="keyword">const</span> <span class="keyword">struct</span> sigaction *act,<span class="keyword">struct</span> sigaction *oldact));</span><br></pre></td></tr></table></figure>
+<p>signum：代表信号编码，可以是除SIGKILL及SIGSTOP外的任何一个特定有效的信号，如果为这两个信号定义自己的处理函数，将导致信号安装错误。</p>
+<p>act：指向结构体sigaction的一个实例的指针，该实例指定了对特定信号的处理，如果设置为空，进程会执行默认处理。</p>
+<p>oldact：和参数act类似，只不过保存的是原来对相应信号的处理，也可设置为NULL。</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">struct sigaction s<span class="built_in">a_old</span><span class="comment">;  </span></span><br><span class="line">memset(&amp;sa, <span class="number">0</span>, sizeof(sa))<span class="comment">;  </span></span><br><span class="line">sigemptyset(&amp;sa.s<span class="built_in">a_mask</span>)<span class="comment">;  </span></span><br><span class="line">sa.s<span class="built_in">a_sigaction</span> = my_handler<span class="comment">;  </span></span><br><span class="line">sa.s<span class="built_in">a_flags</span> = S<span class="built_in">A_SIGINFO</span><span class="comment">;</span></span><br><span class="line">if (sigaction(sig, &amp;sa, &amp;s<span class="built_in">a_old</span>) == <span class="number">0</span>) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.设置额外栈空间</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigaltstack</span><span class="params">(<span class="keyword">const</span> <span class="keyword">stack_t</span> *ss, <span class="keyword">stack_t</span> *oss)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>SIGSEGV很有可能是栈溢出引起的，如果在默认的栈上运行很有可能会破坏程序运行的现场，无法获取到正确的上下文。而且当栈满了（太多次递归，栈上太多对象），系统会在同一个已经满了的栈上调用SIGSEGV的信号处理函数，又再一次引起同样的信号。</p>
+<p>我们应该开辟一块新的空间作为运行信号处理函数的栈。可以使用sigaltstack在任意线程注册一个可选的栈，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">stack_t</span> stack;  </span><br><span class="line"><span class="built_in">memset</span>(&amp;stack, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(stack));  </span><br><span class="line"><span class="comment">/* Reserver the system default stack size. We don&#x27;t need that much by the way. */</span>  </span><br><span class="line">stack.ss_size = SIGSTKSZ;  </span><br><span class="line">stack.ss_sp = <span class="built_in">malloc</span>(stack.ss_size);  </span><br><span class="line">stack.ss_flags = <span class="number">0</span>;  </span><br><span class="line"><span class="comment">/* Install alternate stack size. Be sure the memory region is valid until you revert it. */</span>  </span><br><span class="line"><span class="keyword">if</span> (stack.ss_sp != <span class="literal">NULL</span> &amp;&amp; <span class="built_in">sigaltstack</span>(&amp;stack, <span class="literal">NULL</span>) == <span class="number">0</span>) &#123;  </span><br><span class="line">  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.兼容其他signal处理</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">static void my<span class="constructor">_handler(<span class="params">const</span> <span class="params">int</span> <span class="params">code</span>, <span class="params">siginfo_t</span> <span class="operator">*</span><span class="params">const</span> <span class="params">si</span>, <span class="params">void</span> <span class="operator">*</span><span class="params">const</span> <span class="params">sc</span>)</span> &#123;<span class="operator"></span></span><br><span class="line"><span class="operator">...  </span></span><br><span class="line"><span class="operator">  </span><span class="comment">/* Call previous handler. */</span>  </span><br><span class="line">  old_handler.sa<span class="constructor">_sigaction(<span class="params">code</span>, <span class="params">si</span>, <span class="params">sc</span>)</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>某些信号可能在之前已经被安装过信号处理函数，而sigaction一个信号量只能注册一个处理函数，这意味着我们的处理函数会覆盖其他人的处理信号</p>
+<p>保存旧的处理函数，在处理完我们的信号处理函数后，在重新运行老的处理函数就能完成兼容。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 与 Unity 的交互</title>
+    <url>/2021/07/29/Android%E4%B8%8EUnity%E7%9A%84%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[<p><img src="Unity%E7%9B%AE%E5%BD%95.jpg" alt="路径示例"></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android系统Binder驱动分析(1)</title>
     <url>/2021/07/29/Android%E7%B3%BB%E7%BB%9FBinder%E9%A9%B1%E5%8A%A8%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h1 id="提前掌握Binder的基础知识-预习"><a href="#提前掌握Binder的基础知识-预习" class="headerlink" title="提前掌握Binder的基础知识(预习)"></a>提前掌握Binder的基础知识(预习)</h1><p>Android系统架构的底层就是linux,本篇文章如有不懂的地方，建议参考<a href="http://www.linfo.org/">原文文档</a>,以便更好帮助自己学习。<br>希望能跟大家多多交流 !!!  </p>
@@ -562,150 +846,60 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
       </tags>
   </entry>
   <entry>
-    <title>Java-并发篇-1</title>
-    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
-    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
-]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-接口和内部类</title>
-    <url>/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/</url>
-    <content><![CDATA[<!-- 接口和内部类 -->
-<h1 id="接口-—-Interface"><a href="#接口-—-Interface" class="headerlink" title="接口 — Interface"></a>接口 — Interface</h1><p>定义：<br>接口是对类一组需求的描述，实现接口的类要遵从接口的描述的定义。<br>接口中的所有方法自动地属于public，所有声明方法不必提供关键字<br>不过在实现接口的时候，必须将方法声明为public，否则编译器会给出试图提供更弱的访问权限信息</p>
-<pre><code>通常类实现一个接口，通常需要2个步骤
-1.让类声明为实现给定的接口
-2.对接口中的方法进行定义
-</code></pre>
-<h1 id="内部类-—-inner-class"><a href="#内部类-—-inner-class" class="headerlink" title="内部类 — inner class"></a>内部类 — inner class</h1><p>内部类（inner class）是定义在另一个类中的类</p>
-<pre><code>内部类的方法可以访问该类定义所在的作用域中的数据，包括私有数据。  
-内部类可以对同一个包中的其他类隐藏起来。  
-当想定义一个回调函数并且不想编写大量的代码的时候，可以使用匿名类内部类对比。
-</code></pre>
-<h2 id="课外补习"><a href="#课外补习" class="headerlink" title="课外补习"></a>课外补习</h2><p>嵌套是一种类与类之间的关系，而不是对象之间的关系。<br>嵌套类有2个好处：<strong>命名控制</strong>和<strong>访问控制</strong></p>
-<h3 id="java-十万个为什么"><a href="#java-十万个为什么" class="headerlink" title="java 十万个为什么"></a>java 十万个为什么</h3><h4 id="为什么java内部类可以访问外部对象"><a href="#为什么java内部类可以访问外部对象" class="headerlink" title="为什么java内部类可以访问外部对象"></a>为什么java内部类可以访问外部对象</h4><p>java的内部类对象有一个隐式引用，实例化该内部类对象的外部对象，通过这个指针，可以访问到外部类的全部状态。<br>内部类的对象总有一个隐式的引用，它指向它的外部类对象。</p>
-<h4 id="总共有多少种内部类"><a href="#总共有多少种内部类" class="headerlink" title="总共有多少种内部类"></a>总共有多少种内部类</h4><ul>
-<li>4种内部类</li>
-</ul>
-<ul>
-<li>成员内部类</li>
-<li>局部内部类</li>
-<li>静态内部类</li>
-<li>匿名内部类<h4 id="内部类的共性"><a href="#内部类的共性" class="headerlink" title="内部类的共性"></a>内部类的共性</h4></li>
-</ul>
-<p>1.内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号。<br>内部类不能用普通的方式访问。内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。  </p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-CMD集合</title>
-    <url>/2021/09/07/Android-CMD%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h2 id="ADB"><a href="#ADB" class="headerlink" title="ADB"></a>ADB</h2><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">重启adb </span><br><span class="line">adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</span><br><span class="line">查看当前的进程</span><br><span class="line">adb shell ps | grep <span class="keyword">package</span>-name </span><br><span class="line">过滤日志</span><br><span class="line">adb logcat </span><br><span class="line">查看链接cpu架构信息</span><br><span class="line">adb shell </span><br><span class="line">cat/<span class="keyword">proc</span>/cpuinfo </span><br><span class="line">查看已经连接的设备<span class="title"></span></span><br><span class="line"><span class="title">adb</span> devices</span><br><span class="line">指定设备安装apk<span class="title"></span></span><br><span class="line"><span class="title">adb</span> -s<span class="title"> xxx</span> install<span class="title"> xxx.apk</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">keytool</span> -list -v -keystore<span class="title">  xxx.keystore</span></span><br><span class="line">查看签名秘钥</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="ADB-进阶CMD"><a href="#ADB-进阶CMD" class="headerlink" title="ADB 进阶CMD"></a>ADB 进阶CMD</h2><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">de<span class="variable">v:</span>每隔 <span class="number">1</span>s 输出一次APP CPU信息，命令如下</span><br><span class="line">$adb <span class="keyword">shell</span></span><br><span class="line">$adb top -d <span class="number">1</span> | <span class="keyword">grep</span> <span class="keyword">com</span>.packagename.xxx</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span> 获取Apk安装的路径</span><br><span class="line">adb <span class="keyword">shell</span> pm path <span class="keyword">com</span>.packagename.xxx</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span> 导出apk文件</span><br><span class="line">adb pull /data/app/<span class="keyword">com</span>.packagename.xxx/base.apk</span><br><span class="line"></span><br><span class="line">adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package</span><br><span class="line">example:</span><br><span class="line">$ adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package tao</span><br><span class="line">package:<span class="keyword">com</span>.taobao.taobao</span><br><span class="line"></span><br><span class="line">de<span class="variable">v:</span>结合 <span class="keyword">grep</span> 搜索包名</span><br><span class="line">$ adb <span class="keyword">shell</span> pm <span class="keyword">list</span> package | <span class="keyword">grep</span> -i <span class="keyword">z</span></span><br><span class="line">package:<span class="keyword">ru</span>.zdevs.zarchiver</span><br></pre></td></tr></table></figure>
-
-<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">Gradle</span><br><span class="line">查看主要的任务</span><br><span class="line"><span class="string">./gradlew</span> tasks </span><br><span class="line">查看所有任务，包括缓存任务</span><br><span class="line"><span class="string">./gradlew</span> tasks <span class="params">--all</span></span><br><span class="line">调试模式构建并打印堆栈日志</span><br><span class="line"><span class="string">./gradlew</span> build <span class="params">--info</span> <span class="params">--debug</span> <span class="params">--stacktrace</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="bundletool"><a href="#bundletool" class="headerlink" title="bundletool"></a>bundletool</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Linux-Android"><a href="#Linux-Android" class="headerlink" title="Linux - Android"></a>Linux - Android</h2><p>1、查看 CPU 详细信息</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cat <span class="regexp">/proc/</span>cpuinfo</span><br></pre></td></tr></table></figure>
-
-
-
-
-]]></content>
-      <tags>
-        <tag>CMD</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-Activity</title>
-    <url>/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/</url>
-    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>在最近的任务栈里面看见的task未必还活着。<br>在最近的任务栈里面看不见的task未必就死了。</p>
-<h2 id="android-launchMode"><a href="#android-launchMode" class="headerlink" title="android-launchMode"></a>android-launchMode</h2><p>在这里我推荐大家去看扔物线的课程: <a href="https://www.bilibili.com/video/BV1CA41177Se">Android 面试黑洞</a></p>
-<p>Activity有4种启动模式，分别是：Standard、SingleTop、SingleTask和SingleInstance，它们控制了被启动Activity的启动行为。<br>Activity任务栈（Task）是一个标准的栈结构<br>用于在ActivityManagerService侧管理所有的Activity（AMS通过TaskRecord标识一个任务栈，通过ActivityRecord标识一个Activity）。</p>
-<table>
+    <title>android-Handler机制-2</title>
+    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
+    <content><![CDATA[<table>
 <thead>
 <tr>
-<th align="left">launchMode</th>
+<th align="left">Class</th>
 <th align="center">Name</th>
 <th align="left">DES</th>
-<th align="left">MORE【知识扩展】</th>
+<th align="left">MORE</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Standard</td>
-<td align="center">标准模式</td>
-<td align="left">标准模式，也是系统的默认模式。该模式下，每次启动Activity，都会创建一个新实例，并且将其加入到启动该Activity的那个Activity所在的任务栈中，所以目标Activity的多个实例可以位于不同的任务栈。</td>
+<td align="left">Message</td>
+<td align="center">消息</td>
+<td align="left">使用了享元设计模式 链表的数据结构</td>
+<td align="left">详情</td>
+</tr>
+<tr>
+<td align="left">MessageQuene</td>
+<td align="center">消息队列</td>
+<td align="left">单链表的数据结构</td>
+<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
+</tr>
+<tr>
+<td align="left">Handler</td>
+<td align="center">message的处理者</td>
+<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left">SingleTop</td>
-<td align="center">栈顶复用模式</td>
-<td align="left">该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</td>
-<td align="left"></td>
+<td align="left">ThreadLocal</td>
+<td align="center">数据结构是键值对</td>
+<td align="left">只有在指定的线程可以获取到存储的数据</td>
+<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
 </tr>
 <tr>
-<td align="left">SingleTask</td>
-<td align="center">栈内复用模式</td>
-<td align="left">clearTop的作用，整个任务栈只能有一个activity的实例。</td>
-<td align="left">如果此时任务栈内已经存在 Activity C 的实例且未位于栈顶，当启动 Activity C 时，会将 Activity C 上方的实例全部出栈让其位于任务栈顶并 Activity C 中的 onNewIntent() 方法会被调用</td>
-</tr>
-<tr>
-<td align="left">SingleInstance</td>
-<td align="center">单一实例</td>
-<td align="left">要求该Activity所在的Task只有有这么一个Activity，</td>
-<td align="left">下面没有旧，上面没有新</td>
+<td align="left">Looper</td>
+<td align="center">循环器</td>
+<td align="left"><img src="code_looper_1.jpg" alt="code_looper"></td>
+<td align="left">类Looper的prepare的函数,即是对Looper进行了初始化，将Looper对象引用保存在sThreadLocal中，先保证了Looper和Threadlocal-1V1关系,由于sThreadLocal获取的值是通过获取当前线程获取线程唯一的变量,这样就保证了一个线程只有一个looper</td>
 </tr>
 </tbody></table>
-<h2 id="MORE【知识扩展】"><a href="#MORE【知识扩展】" class="headerlink" title="MORE【知识扩展】"></a>MORE【知识扩展】</h2><h3 id="Standard"><a href="#Standard" class="headerlink" title="Standard"></a>Standard</h3><p>当我们使用Application的Context来启动一个Activity的时候，会报AndroidRuntimeException，因为standard模式下启动的Activity，会默认进入启动它的Activity的任务栈中，而非Activity类型的context却并没有所谓的任务栈，所以就会出现问题，解决这个问题的方法是需要为要启动的Activity指定标记位：FLAG_ACTIVITY_NEW_TASK，这个标记的作用是为启动的Activity创建一个新的任务栈。</p>
-<h3 id="SingleTop"><a href="#SingleTop" class="headerlink" title="SingleTop"></a>SingleTop</h3><p>该模式下，若目标Activity的实例已经存在，但是没有位于栈顶，那么仍然会创建新的实例，并添加到任务栈；</p>
-<p>若目标Activity的实例已经存在，且位于栈顶，那么就不会创建新的实例，而是复用已有实例，并依次调用目标Activity的onPause -&gt; onNewIntent -&gt; onResume方法。<br>知识扩展！！！</p>
-<p>singleTop模式的activity特点就是除了外部可以启动它显示信息外，它也可以用同样的方式启动自己更新显示信息，这样就减少了冗余代码，降低了维护成本。</p>
-<p>他的onCreate、onStart方法不会被调用，避免多次初始化，应用宝用的就是这套方案。</p>
-<h3 id="SingleTask-A和B都是不同的2个应用"><a href="#SingleTask-A和B都是不同的2个应用" class="headerlink" title="SingleTask A和B都是不同的2个应用"></a>SingleTask A和B都是不同的2个应用</h3><p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>B_Activity的Activity被启动时，不会进入启动A的Task里,而是创建属于B自己的Task里，置于B-Task栈顶,然后把整个B-Task 压到 A-Task上面,这种方式打开的方式是入场动画是应用间的切换。</p>
-<p>如果这时按下返回键，这里回退的顺序是 B-Task 来回退，而不是返回原来的A_Activity[Standard]。原来的A要在前台显示，必须是B-Task的栈的Activity完全关闭才可以，这里场景动画也是场景间的切换。  </p>
-<p>这里要明确一个概念：不止应用的Activity内部可以叠成栈，不同应用之间的Task也可以叠成栈。</p>
-<p>Task的叠加只适用于前台的Task。</p>
-<p>SingleTask是保证了一个栈内有且只有被该属性修饰Activity的实例对象，全局单例</p>
-<h3 id="SingleInstance"><a href="#SingleInstance" class="headerlink" title="SingleInstance"></a>SingleInstance</h3><p>为了描述清晰，我们还是要举个例子:<br>A_Activity[Standard] ==&gt; B_Activity[SingleInstance]<br>还是 A 短信应用 打开 B 邮箱应用<br>邮件App不仅为了当前跳转的Activity创建对象，而且会创建一个单独的B-Task,然后把当前的打开应用的Activity的实例放到B-Task。<br>第二种情况是当前Activity已经被创建过了，则会回调当前应用的Activity生命周期的**onNewIntent()**方法</p>
-<p>这2种情况的变化，这个B-Task都会被拿过来压在A-Task上面，入场动画是切换Task的动画。</p>
-<p>假设用户这个时候点返回，上面的Task因为只有一个Activity，手机会直接回到短信App，入场动画是切换Task的动画。</p>
-<p>假设用户没有直接点返回，而是选择查看了最近的任务又返回到之B-Task，这个时候短信的A-Task已经被退到后台，所以用户再点返回的话，又因为当前的Task内只有一个B-Activity，所以是直接回退到桌面。</p>
-<p>假设用户又没有点返回，也没有选择查看任务，而是选择了在B-Task，又打开了一个C-App的Activity，由于SingleInstance的限制，所以C-task并不会叠在B-Task之上，而是另辟蹊径，而是装到另一个Task中，然后整个Task跌在B-Task上面。</p>
-<p>知识点: 我来解释一下另辟蹊径的意思，这个时候相对邮箱App此时有2个Task，一个是独栈的，也就是短信调用的那个，还有一个是后台的Task，C的Activity是被放到了后台的Task。</p>
-<blockquote>
-<p>在最近的任务栈里面看不见的task未必就死了。这句话也是在这里体现。<br>在延伸出一个属性:Android:taskAffinity，</p>
-</blockquote>
-<h2 id="Android-taskAffinity属性"><a href="#Android-taskAffinity属性" class="headerlink" title="Android:taskAffinity属性"></a>Android:taskAffinity属性</h2><blockquote>
-<p>在android里，一般情况下一个App默认只有一个Task，可以显示在最近的列表里面，但是用来甄别唯一性的不是App，而是<strong>taskAffinity</strong>，每一个Activity都有属于自己的Activity，相当于每个Activity的预先分组。<br><img src="taskAffinity%E9%BB%98%E8%AE%A4%E8%A7%84%E5%88%99.png" alt="taskAffinity"><br>android:taskAffinity是Activity的一个属性，表示该Activity期望的任务栈的名称。<br>默认情况下，一个应用程序中所有Activity的taskAffinity都是相同的，即应用程序的包名。当然，我们可以在配置文件中为每个Activity指定不同的taskAffinity（只有和已有包名不同，才有意义）。<br><img src="taskAffinity%E6%9C%80%E8%BF%91%E5%88%97%E8%A1%A8.png" alt="taskAffinity"><br>另外每一个Task也有taskAffinity，他的值取自栈底的Activity的taskAffinity值，这个栈底Activity也就是第一个启动应用的Activity。</p>
-</blockquote>
-<p>另外一点taskAffinity也可以在androidManifest被定制。<br><img src="taskAffinity%E5%BC%80%E5%8F%91%E6%8E%A8%E8%8D%90.png" alt="taskAffinity">  </p>
-<p>一般情况下，该属性主要和SingleTask启动模式或者android:allowTaskReparenting属性结合使用（下面会详细介绍），在其他情况下没有意义。</p>
-<h3 id="Task-Reparenting"><a href="#Task-Reparenting" class="headerlink" title="Task - Reparenting"></a>Task - Reparenting</h3><p>B AndroidManifest属性 设置为android:allowTaskReparenting = True</p>
-<p>场景具体化:A 短信应用 打开 B 邮箱应用</p>
-<p>B还是会进入到A的Task里,但稍后用户从桌面点击B应用的时候，原先放在A-Task里面的B-Activity会被挪到B应用的Task的栈顶,这个时候你在切回短信Task，你会发现原先的B-Activity已经不见了。<br>(有争议… Android 8,9是有问题的，10以上正常)</p>
-<h3 id="前台Task"><a href="#前台Task" class="headerlink" title="前台Task"></a>前台Task</h3><p>前台叠加的多个Task进入后台第一时间就会拆开</p>
-<blockquote>
-<p>1.按Home键回到桌面<br>2.按最近任务键 查看最近的任务  </p>
-<ul>
-<li>前台Task 在最近列表显示出来的时候就已经进入到了后台，而不是切到其他任务之后。</li>
-</ul>
-</blockquote>
-<p>但是光知道理论还是不够的，由于我们开发的时候大部分的情况都是多变的，我们在前面的章节可以了解到不同的应用的Activity是启动Task内叠加的。</p>
-<p>首先做个假设：A-Activity 启动 B_Activity,launchMode下文进行了标注<br>A_Activity[Standard] ==&gt; B_Activity[SingleTask]<br>我们再把场景具体化，A 短信应用 打开 B 邮箱应用，这个时间我们没有按下返回键，而是按最近任务键，再重新回去原来的Task，这个时候看起来没有变化，但是实际上A的Task已经被去除掉了，只留下B的Task，这个时候我们再按下返回键，把B的Task内的Activity全部关闭，这个时候返回的系统的桌面而不是短信的APP。</p>
-<h2 id="Android十万个为什么系列"><a href="#Android十万个为什么系列" class="headerlink" title="Android十万个为什么系列"></a>Android十万个为什么系列</h2><h3 id="当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？"><a href="#当前-app-正在前台运行，不在栈顶的-Activity-有可能会因为系统资源，例如内存等不足回收吗？" class="headerlink" title="当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？"></a>当前 app 正在前台运行，不在栈顶的 Activity 有可能会因为系统资源，例如内存等不足回收吗？</h3><p>我现在还记得这个问题，那年我毕业，投了心仪公司的简历，过了Hr的面试，来到了技术环节，和蔼的面试官问了:我们日常开发比较多组件的是Activity，假设 App 正在前台运行，不在栈顶的Activity有可能会被回收吗?<br>那时年少，我感觉我天灵盖被人开了，当场差点直接自闭，懵逼，接下来回答支支吾吾，面试结果是显而易见的。。。  <strong>(ಥ_ಥ)</strong><br>回去的路上越想越不对劲，到家之后立马查源码，好家伙找到了！平时不看源码，关键时刻被别人搞得一愣一愣！</p>
-<p>凡事先说结论: 会 ！！！<br>这里看的源码是API30,在网上也看到一些相关答案答案，这里我们提炼一下要点，重点我们日常开发对场景预测，比方说游戏A-APP开启了一个B-App应用的界面，这个时候B-App开启了一个比较消耗耗内存的线程，如果这个内存不断地增大，最后游戏A-App的生命周期onDestroy()就会被调用。</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> attach(<span class="keyword">boolean</span> system, <span class="keyword">long</span> startSeq) &#123;</span><br><span class="line">        sCurrentActivityThread = <span class="keyword">this</span>;</span><br><span class="line">        mSystemThread = system;</span><br><span class="line">        <span class="keyword">if</span> (!system) &#123;</span><br><span class="line">            android.ddm.DdmHandleAppName.setAppName(<span class="string">&quot;&lt;pre-initialized&gt;&quot;</span>,</span><br><span class="line">                                                    UserHandle.myUserId());</span><br><span class="line">            RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">            <span class="keyword">final</span> IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="comment">//ApplicationThread是ActivityThread和AMS沟通的桥梁</span></span><br><span class="line">                mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">                <span class="keyword">throw</span> ex.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Watch for getting close to heap limit.</span></span><br><span class="line">            BinderInternal.addGcWatcher(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                @Override <span class="keyword">public</span> <span class="keyword">void</span> run() &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">Runtime</span> <span class="keyword">runtime</span> = <span class="keyword">Runtime</span>.getRuntime();</span><br><span class="line">                    <span class="keyword">long</span> dalvikMax = <span class="keyword">runtime</span>.maxMemory();</span><br><span class="line">                    <span class="keyword">long</span> dalvikUsed = <span class="keyword">runtime</span>.totalMemory() - <span class="keyword">runtime</span>.freeMemory();</span><br><span class="line">                    <span class="keyword">if</span> (dalvikUsed &gt; ((<span class="number">3</span>*dalvikMax)/<span class="number">4</span>)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (DEBUG_MEMORY_TRIM) Slog.d(TAG, <span class="string">&quot;Dalvik max=&quot;</span> + (dalvikMax/<span class="number">1024</span>)</span><br><span class="line">                                + <span class="string">&quot; total=&quot;</span> + (<span class="keyword">runtime</span>.totalMemory()/<span class="number">1024</span>)</span><br><span class="line">                                + <span class="string">&quot; used=&quot;</span> + (dalvikUsed/<span class="number">1024</span>));</span><br><span class="line">                        mSomeActivitiesChanged = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？"><a href="#当-app-处于后台运行，app-进程未被杀死，其内部的-Activity-会被回收吗？" class="headerlink" title="当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？"></a>当 app 处于后台运行，app 进程未被杀死，其内部的 Activity 会被回收吗？</h3><h3 id="当-app-处于后台运行，app-的进程会被杀死吗？"><a href="#当-app-处于后台运行，app-的进程会被杀死吗？" class="headerlink" title="当 app 处于后台运行，app 的进程会被杀死吗？"></a>当 app 处于后台运行，app 的进程会被杀死吗？</h3>]]></content>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-APK的资源加载</title>
+    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
+    <content><![CDATA[<h1 id="APK的资源加载"><a href="#APK的资源加载" class="headerlink" title="APK的资源加载"></a>APK的资源加载</h1><h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -786,57 +980,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 <h3 id="“Android”-64k报错"><a href="#“Android”-64k报错" class="headerlink" title="“Android” 64k报错"></a>“Android” 64k报错</h3><p>应用及第三方库包含的方法数(method)总和超过65536，在开发的时候，会遇到一个构建的错误。<br>指明您的应用达到Android构建规定的应用的限制：</p>
 <h4 id="构建错误的原因"><a href="#构建错误的原因" class="headerlink" title="构建错误的原因:"></a>构建错误的原因:</h4><h5 id="dex文件格式的限制"><a href="#dex文件格式的限制" class="headerlink" title="dex文件格式的限制"></a>dex文件格式的限制</h5><p>Android 应用 (APK) 文件包含 Dalvik Executable (DEX) 二进制文件形式的可执行字节码文件，这些文件包含用来运行应用的已编译代码。<br>Dalvik Executable 规范将可在单个 DEX 文件内引用的方法总数限制为 65536 (其中包括 Android 框架方法、库方法以及您自己的代码中的方法)</p>
 <h5 id="其他限制"><a href="#其他限制" class="headerlink" title="其他限制"></a>其他限制</h5><p>系统对dex文件进行优化操作时分配的缓冲区大小的限制 ，方法如果超出缓存区，同样也是会报错的。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>android-Handler机制-2</title>
-    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
-    <content><![CDATA[<table>
-<thead>
-<tr>
-<th align="left">Class</th>
-<th align="center">Name</th>
-<th align="left">DES</th>
-<th align="left">MORE</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Message</td>
-<td align="center">消息</td>
-<td align="left">使用了享元设计模式 链表的数据结构</td>
-<td align="left">详情</td>
-</tr>
-<tr>
-<td align="left">MessageQuene</td>
-<td align="center">消息队列</td>
-<td align="left">单链表的数据结构</td>
-<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
-</tr>
-<tr>
-<td align="left">Handler</td>
-<td align="center">message的处理者</td>
-<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">ThreadLocal</td>
-<td align="center">数据结构是键值对</td>
-<td align="left">只有在指定的线程可以获取到存储的数据</td>
-<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
-</tr>
-<tr>
-<td align="left">Looper</td>
-<td align="center">循环器</td>
-<td align="left"><img src="code_looper_1.jpg" alt="code_looper"></td>
-<td align="left">类Looper的prepare的函数,即是对Looper进行了初始化，将Looper对象引用保存在sThreadLocal中，先保证了Looper和Threadlocal-1V1关系,由于sThreadLocal获取的值是通过获取当前线程获取线程唯一的变量,这样就保证了一个线程只有一个looper</td>
-</tr>
-</tbody></table>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -980,44 +1123,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机English词汇普及更正</title>
-    <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
-    <content><![CDATA[<p>pertain 属于<br>pertaiing to 属于<br>Threadlocal values pertaining to this thread.<br>This map is maintained by the ThreadLocal class.  </p>
-<p>usages n 用途,用法</p>
-<p>To help deal with very large and long-lived usages, the hash table entries use WeakReferences for keys.<br>为了处理非常大和生命周期非常长的线程(<strong>usages</strong>)，哈希表使用弱引用作为 key。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -1139,14 +1244,27 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Android-APK的资源加载</title>
-    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
-    <content><![CDATA[<h1 id="APK的资源加载"><a href="#APK的资源加载" class="headerlink" title="APK的资源加载"></a>APK的资源加载</h1><h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>]]></content>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
       <categories>
-        <category>Android</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>Android</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
