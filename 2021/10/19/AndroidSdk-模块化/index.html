@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言初衷s1和s3出包的项目是Eclipse，后更新为Android-Studio，使用Android模块化对项目进行统一的划分。 SDK分类SDK划分主要是以我们打包环境来区别。打包环境有2种，正式环境对应正式sdk,测试环境对应测试sdk。    正式环境正式包，用于线上，一般是接了渠道的sdk，具备了登录，充值，实名等功能。   测试环境测试包，内部测试，不包含渠道的sdk，不具备渠道sdk">
+  <meta name="description" content="Android-模块化指南">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AndroidSdk-模块化">
 <meta property="og:url" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="前言初衷s1和s3出包的项目是Eclipse，后更新为Android-Studio，使用Android模块化对项目进行统一的划分。 SDK分类SDK划分主要是以我们打包环境来区别。打包环境有2种，正式环境对应正式sdk,测试环境对应测试sdk。    正式环境正式包，用于线上，一般是接了渠道的sdk，具备了登录，充值，实名等功能。   测试环境测试包，内部测试，不包含渠道的sdk，不具备渠道sdk">
+<meta property="og:description" content="Android-模块化指南">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/%E7%BB%93%E6%9E%84%E5%9B%BE.png">
 <meta property="og:image" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/s1-common-sdk.png">
@@ -35,8 +35,9 @@
 <meta property="og:image" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/generate-jar.png">
 <meta property="og:image" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/generated-jar.png">
 <meta property="article:published_time" content="2021-10-19T02:55:59.000Z">
-<meta property="article:modified_time" content="2021-10-20T11:06:18.218Z">
+<meta property="article:modified_time" content="2021-10-21T06:49:38.866Z">
 <meta property="article:author" content="Elroy-Pb">
+<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/%E7%BB%93%E6%9E%84%E5%9B%BE.png">
 
@@ -139,12 +140,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -233,8 +234,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-20 19:06:18" itemprop="dateModified" datetime="2021-10-20T19:06:18+08:00">2021-10-20</time>
+                <time title="Modified: 2021-10-21 14:49:38" itemprop="dateModified" datetime="2021-10-21T14:49:38+08:00">2021-10-21</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -251,6 +261,7 @@
                 <span class="post-meta-item-text">Reading time &asymp;</span>
               <span>2 mins.</span>
             </span>
+            <div class="post-description">Android-模块化指南</div>
 
         </div>
       </header>
@@ -277,10 +288,10 @@
 <h2 id="channel结构图"><a href="#channel结构图" class="headerlink" title="channel结构图"></a>channel结构图</h2><p><img src="s1-channel-dalan.png" alt="s1-common-channel结构图">  </p>
 <hr>
 <p>我们把2个目录整合一下，其实正式包channel.jar的目录只是把原本的sdks下的GameSDK和HyGameApplication取出，然后单纯作为一个jar。而其他代码是作为sdk的公共库(一般情况下不变)。</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">–com</span><br><span class="line">——hoye</span><br><span class="line">——-game</span><br><span class="line">——<span class="comment">--sdks</span></span><br><span class="line">——<span class="comment">---GameSDK(channel)   </span></span><br><span class="line">——<span class="comment">---GameSDKConstants</span></span><br><span class="line">——<span class="comment">---GameSDKinferface</span></span><br><span class="line"><span class="comment">-----GameSDKManager(channel)</span></span><br><span class="line"><span class="comment">-----HyGameApplication   </span></span><br><span class="line"><span class="comment">----BosController</span></span><br><span class="line"><span class="comment">----GameActivity</span></span><br><span class="line"><span class="comment">----GameApplication</span></span><br><span class="line"><span class="comment">----GameConfig</span></span><br><span class="line"><span class="comment">----HaoyueUtils</span></span><br><span class="line"><span class="comment">----JsonParse</span></span><br><span class="line"><span class="comment">----ResUtils</span></span><br><span class="line"><span class="comment">----TakePhotoActivity</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">–com</span><br><span class="line">——hoye</span><br><span class="line">——-game</span><br><span class="line">——--sdks</span><br><span class="line">——---GameSDK(channel)   </span><br><span class="line">——---GameSDKConstants</span><br><span class="line">——---GameSDKinferface</span><br><span class="line">-----GameSDKManager(channel)</span><br><span class="line">-----HyGameApplication   </span><br><span class="line">----BosController</span><br><span class="line">----GameActivity</span><br><span class="line">----GameApplication</span><br><span class="line">----GameConfig</span><br><span class="line">----HaoyueUtils</span><br><span class="line">----JsonParse</span><br><span class="line">----ResUtils</span><br><span class="line">----TakePhotoActivity</span><br></pre></td></tr></table></figure>
 
 <h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><p>目前工作环境正常下的版本，后续可能会随着as版本升级而发生变动，以下版本不作为唯一。</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">AndroidStudio</span>-version-<span class="number">4</span>.<span class="number">1</span>.<span class="number">1</span>  </span><br><span class="line"><span class="attribute">gradle</span>-version-<span class="number">6</span>.<span class="number">1</span>.<span class="number">1</span>  </span><br><span class="line"><span class="attribute">gradle</span>-tool-<span class="number">3</span>.<span class="number">5</span>.<span class="number">0</span>  </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AndroidStudio-version-4.1.1  </span><br><span class="line">gradle-version-6.1.1  </span><br><span class="line">gradle-tool-3.5.0  </span><br></pre></td></tr></table></figure>
 
 
 <h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>之所以用模块化开发，是为了后续几点考虑</p>
@@ -292,14 +303,14 @@
 <p>而我们的项目刚好是要打包某一模块，提升开发的效率。</p>
 <h2 id="as项目的配置-—-生成as模块"><a href="#as项目的配置-—-生成as模块" class="headerlink" title="as项目的配置 — 生成as模块"></a>as项目的配置 — 生成as模块</h2><p><img src="as.png" alt="as模块">  </p>
 <p>我们需要在左侧红色方框的2个配置文件内配置好<br><strong>apply.properties</strong></p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">s1_channel_dalan</span> = com.android.library</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1_channel_dalan = com.android.library</span><br></pre></td></tr></table></figure>
 <p><strong>setting.gradle</strong></p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">include</span><span class="params">(<span class="string">&#x27;s1_channel_dalan&#x27;</span>)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include(&#x27;s1_channel_dalan&#x27;)</span><br></pre></td></tr></table></figure>
 <p>以上2个配置之后，点击Sync Project with Gradle Files<br>会在右侧生成gradle模块(以模块的名称来命名)。如as模块右侧截图。在这里的项目都是生成好了，有需要的话按照以上方式添加新的模块即可。</p>
 <p>读取的代码在主目录的build.gradle，这里不做展示。</p>
 <h2 id="decompile转换工具库说明"><a href="#decompile转换工具库说明" class="headerlink" title="decompile转换工具库说明"></a>decompile转换工具库说明</h2><p>as截图内左上角的编译的目录是 <strong>decomplie</strong>,是转化文件格式的工具类，主要是用于 .jar文件,smali文件,.dex文件3者的转换。</p>
 <p>as项目内已编写好gradle脚本(在根目录的gradle)，通过gradle调用decompile的python的脚本(smali.py)，然后<strong>smali.py</strong>调用相关的命令,生成jar包。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">–decompile ： 打包<span class="keyword">bundle的时候，自动生成</span></span><br><span class="line"><span class="keyword"></span>——lib: 工具<span class="keyword">jar存放的目录</span></span><br><span class="line"><span class="keyword"></span>——-<span class="keyword">baksmali.jar </span><span class="keyword">jar转化dex</span></span><br><span class="line"><span class="keyword"></span>——-<span class="keyword">baksmali-2.2.2.jar</span></span><br><span class="line"><span class="keyword"></span>——-smali.<span class="keyword">jar </span>   dex转smali</span><br><span class="line">——-smali<span class="number">-2</span>.<span class="number">2</span>.<span class="number">2</span>.ajr</span><br><span class="line">—gradle.<span class="keyword">sh </span>编译检查的命令</span><br><span class="line">-smali.py 调用python脚本</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">–decompile ： 打包bundle的时候，自动生成</span><br><span class="line">——lib: 工具jar存放的目录</span><br><span class="line">——-baksmali.jar jar转化dex</span><br><span class="line">——-baksmali-2.2.2.jar</span><br><span class="line">——-smali.jar    dex转smali</span><br><span class="line">——-smali-2.2.2.ajr</span><br><span class="line">—gradle.sh 编译检查的命令</span><br><span class="line">-smali.py 调用python脚本</span><br></pre></td></tr></table></figure>
 
 <h1 id="工程流程-—-如何打包生成jar"><a href="#工程流程-—-如何打包生成jar" class="headerlink" title="工程流程 — 如何打包生成jar"></a>工程流程 — 如何打包生成jar</h1><p>as项目内的android模块通过<strong>decompile转换库</strong>调用python命令,把java目录下的代码打成.jar包，这里打的jar包是不包含lib，也就是只包含java目录下的代码，然后替换到打包工具的对应的目录，然后打包工具生成apk。</p>
 <p>我们这里举例说明一下，假设我们需要生成s1-common-sdk的jar包。</p>
@@ -339,6 +350,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
 
         
 
@@ -349,7 +363,10 @@
     <a href="/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/" rel="prev" title="Java-接口和内部类">
       <i class="fa fa-chevron-left"></i> Java-接口和内部类
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/21/%E5%86%99%E4%BD%9C%E6%A8%A1%E6%9D%BF%E6%80%BB%E7%BB%93/" rel="next" title="技术写作模板">
+      技术写作模板 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -424,18 +441,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -479,12 +496,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">49k</span>
+    <span title="Symbols count total">50k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">44 mins.</span>
+    <span title="Reading time total">45 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

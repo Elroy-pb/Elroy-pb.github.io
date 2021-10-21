@@ -133,12 +133,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -294,7 +294,7 @@
 </blockquote>
 <p><strong>内核态</strong> : 当一个任务（进程）执行系统调用而陷入内核代码中执行时，我们就称进程处于内核运行态（或简称为内核态）此时处理器处于特权级最高的（0级）内核代码中执行<br><strong>用户态</strong> : 当进程在执行用户自己的代码时，则称其处于用户运行态（用户态）。即此时处理器在特权级最低的（3级）用户代码中运行。<br>处理器在特权等级高的时候才能执行那些特权CPU指令。 </p>
 <h2 id="扩展概念"><a href="#扩展概念" class="headerlink" title="扩展概念"></a>扩展概念</h2><h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>系统调用是 <strong>类 Unix</strong> 操作系统中活动进程对内核执行的服务的请求，例如输入/输出(I/O) 或进程创建。活动进程是当前在 CPU 中进行的进程，与在 CPU 中等待其下一次运行的进程相反。I/O 是将数据传入或传出 CPU 以及传入或传出外围设备（如磁盘驱动器、键盘、鼠标和打印机）的任何程序、操作或设备。<br>系统调用主要通过如下两个函数来实现:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">copy_from_user</span><span class="params">()</span></span> <span class="comment">// 将数据从用户空间拷贝到内核空间</span></span><br><span class="line"><span class="function"><span class="title">copy_to_user</span><span class="params">()</span></span> <span class="comment">// 将数据从内核空间拷贝到用户空间</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">copy_from_user() // 将数据从用户空间拷贝到内核空间</span><br><span class="line">copy_to_user() // 将数据从内核空间拷贝到用户空间</span><br></pre></td></tr></table></figure>
 <h3 id="Linux-使用两级保护机制："><a href="#Linux-使用两级保护机制：" class="headerlink" title="Linux 使用两级保护机制："></a>Linux 使用两级保护机制：</h3><p>Linux 使用两级保护机制：0 级供系统内核使用，3 级供用户程序使用。</p>
 <h3 id="Linux-内存映射"><a href="#Linux-内存映射" class="headerlink" title="Linux 内存映射"></a>Linux 内存映射</h3><p>Binder IPC 机制中涉及到的内存映射通过 mmap() 来实现，mmap() 是操作系统中一种内存映射的方法。内存映射简单的讲就是将用户空间的一块内存区域映射到内核空间。映射关系建立后，用户对这块内存区域的修改可以直接反应到内核空间；反之内核空间对这段区域的修改也能直接反应到用户空间。</p>
 <p>内存映射能减少数据拷贝次数，实现用户空间和内核空间的高效互动。两个空间各自的修改能直接反映在映射的内存区域，从而被对方空间及时感知。也正因为如此，内存映射能够提供对进程间通信的支持。</p>
@@ -401,18 +401,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -456,12 +456,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">49k</span>
+    <span title="Symbols count total">50k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">44 mins.</span>
+    <span title="Reading time total">45 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

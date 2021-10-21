@@ -135,12 +135,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -268,14 +268,14 @@
 
       
         <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android <span class="number">10</span> (Q)  新增了分区存储的概念，targetSdkVersion=<span class="number">29</span>  </span><br><span class="line">Android &gt;<span class="number">10</span><span class="literal">()</span> *强制开启分区存储的概念，targetSdkVersion&gt;=<span class="number">30</span></span><br><span class="line"><span class="comment">// 这里我们在罗列上一些开发的细节</span></span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= <span class="number">28</span>时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= <span class="number">29</span>时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=<span class="string">&quot;true&quot;</span> ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= <span class="number">30</span>时，Android会强制执行分区存储，无法关闭。可以通过<span class="module-access"><span class="module"><span class="identifier">Environment</span>.</span></span>is<span class="constructor">ExternalStorageLegacy()</span>判断应用存储的运行方式，<span class="literal">true</span>表示以传统的兼容方式运行，<span class="literal">false</span>表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android 10 (Q)  新增了分区存储的概念，targetSdkVersion=29  </span><br><span class="line">Android &gt;10() *强制开启分区存储的概念，targetSdkVersion&gt;=30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy()判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
 </ul>
 <p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
 <p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : <span class="regexp">/data/u</span>ser<span class="regexp">/0/</span>com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;Environment.getDataDirectory() : &quot;</span> + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getFilesDir() : &quot;</span> + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getCacheDir() : &quot;</span> + this.cacheDir!!.absolutePath)</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;----&quot;</span>, <span class="string">&quot;context.getDataDir() : &quot;</span> + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : /data/user/0/com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : /data/user/0/com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : /data/user/0/com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;Environment.getDataDirectory() : &quot; + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getFilesDir() : &quot; + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getCacheDir() : &quot; + this.cacheDir!!.absolutePath)</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(&quot;----&quot;, &quot;context.getDataDir() : &quot; + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
 <p>外部存储：</p>
 <p>现在的手机基本上都是内置了 <strong>SD</strong> 卡，同时也提供 <strong>SD 卡的拓展</strong>。<br>所说的外部存储，就是手机设备内置的 SD卡 和 扩展的SD卡 提供的存储空间<br>外部存储 也会为 安装的app 提供一块区域（文件夹） ，用来存放私有的文件<br>通常的路径是：**/storage/emulated/0/Android/data/包名/**</p>
@@ -433,18 +433,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -488,12 +488,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">49k</span>
+    <span title="Symbols count total">50k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">44 mins.</span>
+    <span title="Reading time total">45 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

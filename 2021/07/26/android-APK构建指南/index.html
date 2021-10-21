@@ -136,12 +136,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -326,7 +326,7 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
 <p>后来改为主模块final常量方式内联，非主模块引用方式，这样等按照从下到上编译到App模块的时候，所有的资源id都已经确定了，底层模块的资源只需要通过引用就能拿到自己对应的id，而修改(新增，删除，修改)了资源之后，也只需要重新生成R文件就好了。编译耗时大大减少。</p>
 <p>在我们平常打包的时候，反编译apk，再合并资源回编时，也是要重新生成R文件。  </p>
 <p>开发时，在其他module代码引用资源文件时,使用以下代码进行索引  </p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier <span class="keyword">for</span> <span class="keyword">the</span> <span class="keyword">given</span> resource <span class="built_in">name</span>.  A fully</span><br><span class="line"> * qualified resource <span class="built_in">name</span> <span class="keyword">is</span> <span class="keyword">of</span> <span class="keyword">the</span> form <span class="string">&quot;package:type/entry&quot;</span>.  The <span class="keyword">first</span></span><br><span class="line"> * two components (package <span class="keyword">and</span> type) are optional <span class="keyword">if</span> defType <span class="keyword">and</span></span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use <span class="keyword">of</span> this function <span class="keyword">is</span> discouraged.  It <span class="keyword">is</span> much more</span><br><span class="line"> * efficient <span class="keyword">to</span> retrieve resources <span class="keyword">by</span> identifier than <span class="keyword">by</span> <span class="built_in">name</span>.</span><br><span class="line"> * </span><br><span class="line"> * @param <span class="built_in">name</span> The <span class="built_in">name</span> <span class="keyword">of</span> <span class="keyword">the</span> desired resource.</span><br><span class="line"> * @param defType Optional default resource type <span class="keyword">to</span> find, <span class="keyword">if</span> <span class="string">&quot;type/&quot;</span> <span class="keyword">is</span></span><br><span class="line"> *                <span class="keyword">not</span> included <span class="keyword">in</span> <span class="keyword">the</span> <span class="built_in">name</span>.  Can be null <span class="keyword">to</span> require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package <span class="keyword">to</span> find, <span class="keyword">if</span> <span class="string">&quot;package:&quot;</span> <span class="keyword">is</span></span><br><span class="line"> *                   <span class="keyword">not</span> included <span class="keyword">in</span> <span class="keyword">the</span> <span class="built_in">name</span>.  Can be null <span class="keyword">to</span> require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @<span class="literal">return</span> int The associated resource identifier.  Returns <span class="number">0</span> <span class="keyword">if</span> no such</span><br><span class="line"> *         resource was found.  (<span class="number">0</span> <span class="keyword">is</span> <span class="keyword">not</span> a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String <span class="built_in">name</span>, String defType, String defPackage) &#123;</span><br><span class="line"><span class="built_in">    return</span> mResourcesImpl.getIdentifier(<span class="built_in">name</span>, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Return a resource identifier for the given resource name.  A fully</span><br><span class="line"> * qualified resource name is of the form &quot;package:type/entry&quot;.  The first</span><br><span class="line"> * two components (package and type) are optional if defType and</span><br><span class="line"> * defPackage, respectively, are specified here.</span><br><span class="line"> * </span><br><span class="line"> * &lt;p&gt;Note: use of this function is discouraged.  It is much more</span><br><span class="line"> * efficient to retrieve resources by identifier than by name.</span><br><span class="line"> * </span><br><span class="line"> * @param name The name of the desired resource.</span><br><span class="line"> * @param defType Optional default resource type to find, if &quot;type/&quot; is</span><br><span class="line"> *                not included in the name.  Can be null to require an</span><br><span class="line"> *                explicit type.</span><br><span class="line"> * @param defPackage Optional default package to find, if &quot;package:&quot; is</span><br><span class="line"> *                   not included in the name.  Can be null to require an</span><br><span class="line"> *                   explicit package.</span><br><span class="line"> * </span><br><span class="line"> * @return int The associated resource identifier.  Returns 0 if no such</span><br><span class="line"> *         resource was found.  (0 is not a valid resource ID.)</span><br><span class="line"> */</span><br><span class="line">public int getIdentifier(String name, String defType, String defPackage) &#123;</span><br><span class="line">    return mResourcesImpl.getIdentifier(name, defType, defPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？"><a href="#为什么同一个资源，不同模块产生的R-java中的资源id值是不统一的？" class="headerlink" title="为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？"></a>为什么同一个资源，不同模块产生的R.java中的资源id值是不统一的？</h3><p>因为资源id只是表示资源的次序，而不是别的跟资源本身绑定的属性。当到了不同的模块以后，参与编译的资源变多了，那次序肯定会改变。资源id也就改变了。并且子模块的资源id只是引用形式存在于代码中，id具体是什么值并不是很care。</p>
 <h3 id="apk或者aab，为什么需要对齐？"><a href="#apk或者aab，为什么需要对齐？" class="headerlink" title="apk或者aab，为什么需要对齐？"></a><em>apk或者aab</em>，为什么需要对齐？</h3><blockquote>
@@ -437,18 +437,18 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -492,12 +492,12 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">49k</span>
+    <span title="Symbols count total">50k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">44 mins.</span>
+    <span title="Reading time total">45 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
