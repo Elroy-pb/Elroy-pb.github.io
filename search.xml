@@ -70,10 +70,10 @@
 </ul>
 ]]></content>
       <categories>
-        <category>个人修炼</category>
+        <category>Code</category>
       </categories>
       <tags>
-        <tag>个人修炼</tag>
+        <tag>Code</tag>
       </tags>
   </entry>
   <entry>
@@ -166,7 +166,8 @@
 1.让类声明为实现给定的接口
 2.对接口中的方法进行定义
 </code></pre>
-<h1 id="内部类-—-inner-class"><a href="#内部类-—-inner-class" class="headerlink" title="内部类 — inner class"></a>内部类 — inner class</h1><p>内部类（inner class）是定义在另一个类中的类</p>
+<h2 id="java十万个为什么"><a href="#java十万个为什么" class="headerlink" title="java十万个为什么"></a>java十万个为什么</h2><p>为什么接口内无法定义静态方法？</p>
+<h1 id="内部类-—-inner-class"><a href="#内部类-—-inner-class" class="headerlink" title="内部类 — inner class"></a>内部类 — inner class</h1><p>内部类（inner class）是定义在另一个类中的类，其实也可以区分为外部类和内部类，这2者的关系，<br>我个人的理解就好像是<strong>火车车厢</strong>跟<strong>火车车厢内的旅客</strong>关系，火车先组装好，再把旅客放上去，旅客在车厢内，肯定是很自然拿到车厢的信息。<br>举个例子：自然拿到车厢的班次，车厢内座位。</p>
 <pre><code>内部类的方法可以访问该类定义所在的作用域中的数据，包括私有数据。  
 内部类可以对同一个包中的其他类隐藏起来。  
 当想定义一个回调函数并且不想编写大量的代码的时候，可以使用匿名类内部类对比。
@@ -182,10 +183,15 @@
 <li>静态内部类</li>
 <li>匿名内部类<h4 id="内部类的共性"><a href="#内部类的共性" class="headerlink" title="内部类的共性"></a>内部类的共性</h4></li>
 </ul>
-<p>1.内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号。<br>内部类不能用普通的方式访问。内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。  </p>
+<p>1.内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号。<br>内部类不能用普通的方式访问。内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>2.内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。  </p>
 <h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><p>1.局部类不能用public和private访问说明符进行声明。<br>2.他的作用域被限定在这声明这个局部类的块中。<br>3.局部内部类中不可定义静态变量，可以访问外部类的局部变量(即方法内的变量)，但是变量必须是final的。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Outer2 &#123;</span><br><span class="line">private int s = 100;</span><br><span class="line">private int out_i = 1;</span><br><span class="line">public void f(final int k)&#123;</span><br><span class="line">final int s = 200;</span><br><span class="line">int i = 1;</span><br><span class="line">final int j = 10;</span><br><span class="line">class Inner&#123; //定义在方法内部</span><br><span class="line">int s = 300;//可以定义与外部类同名的变量</span><br><span class="line">//static int m = 20;//不可以定义静态变量</span><br><span class="line">Inner(int k)&#123;</span><br><span class="line">inner_f(k);</span><br><span class="line">&#125;</span><br><span class="line">int inner_i = 100;</span><br><span class="line">void inner_f(int k)&#123;</span><br><span class="line">System.out.println(out_i);//如果内部类没有与外部类同名的变量，在内部类中可以直接访问外部类的实例变量</span><br><span class="line">System.out.println(k);//可以访问外部类的局部变量(即方法内的变量)，但是变量必须是final的</span><br><span class="line">// System.out.println(i);</span><br><span class="line">System.out.println(s);//如果内部类中有与外部类同名的变量，直接用变量名访问的是内部类的变量</span><br><span class="line">System.out.println(this.s);//用&quot;this.变量名&quot; 访问的也是内部类变量</span><br><span class="line">System.out.println(Outer2.this.s);//用外部&quot;外部类类名.this.变量名&quot; 访问的是外部类变量</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">new Inner(k);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">//访问局部内部类必须先有外部类对象</span><br><span class="line">Outer2 out = new Outer2();</span><br><span class="line">out.f(3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Outer3 &#123;</span><br><span class="line"></span><br><span class="line">private static int i = 1;</span><br><span class="line">private int j = 10;</span><br><span class="line">public static void outer_f1()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">public void outer_f2()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 静态内部类可以用public，protect，private修饰</span><br><span class="line">static class Inner &#123;</span><br><span class="line">static int inner_i = 100;</span><br><span class="line">int inner_j = 200;</span><br><span class="line"></span><br><span class="line">static void inner_f1() &#123;</span><br><span class="line">System.out.println(&quot;Outer.i &quot; + i);//静态内部类只能访问外部类的静态成员</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void inner_f2() &#123;</span><br><span class="line">// System.out.println(&quot;Outer.i&quot;+j);//静态内部类不能访问外部类的非静态成员</span><br><span class="line">// outer_f2();//包括非静态变量和非静态方法</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void outer_f3()&#123;</span><br><span class="line">System.out.println(Inner.inner_i);</span><br><span class="line">Inner.inner_f1();</span><br><span class="line">// 外部类访问内部类的非静态成员:实例化内部类即可</span><br><span class="line">Inner inner = new Inner();</span><br><span class="line">inner.inner_f2();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">new Outer().outer_f3();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>我们在上文提到这个观点: </p>
+<blockquote>
+<p>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员的变量。</p>
+</blockquote>
+<p>这里解释为什么，内部类是静态，那么它就是类级别的成员，根据类的加载机制(加载顺序)，就不在依赖对象而存在。所以静态内部类，不能访问外部类非静态成员。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Outer3 &#123;</span><br><span class="line"></span><br><span class="line">private static int i = 1;</span><br><span class="line">private int j = 10;</span><br><span class="line">public static void outer_f1()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">public void outer_f2()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 静态内部类可以用public，protect，private修饰</span><br><span class="line">static class Inner &#123;</span><br><span class="line">static int inner_i = 100;</span><br><span class="line">int inner_j = 200;</span><br><span class="line"></span><br><span class="line">static void inner_f1() &#123;</span><br><span class="line">System.out.println(&quot;Outer.i &quot; + i);//静态内部类只能访问外部类的静态成员</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void inner_f2() &#123;</span><br><span class="line">// System.out.println(&quot;Outer.i&quot;+j);//静态内部类不能访问外部类的非静态成员</span><br><span class="line">// outer_f2();//包括非静态变量和非静态方法</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void outer_f3()&#123;</span><br><span class="line">System.out.println(Inner.inner_i);</span><br><span class="line">Inner.inner_f1();</span><br><span class="line">// 外部类访问内部类的非静态成员:实例化内部类即可</span><br><span class="line">Inner inner = new Inner();</span><br><span class="line">inner.inner_f2();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">new Outer().outer_f3();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意：<em><strong><strong><strong>生成（new）一个静态内部类不需要外部类成员：这是静态内部类和成员内部类的区别。静态内部类的对象可以直接生成：<br>Outer.Inner in=new Outer.Inner()；<br>而不需要通过生成外部类对象来生成。这样实际上使静态内部类成为了一个顶级类。静态内部类不可用private来进行定义。</strong></strong></strong></em></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class StaticInnerClassTest</span><br><span class="line">&#123;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">double[] d = new double[20];</span><br><span class="line">for (int i= 0;i&lt;d.length;i++)</span><br><span class="line">d[i] = 100 * Math.random();</span><br><span class="line">ArrayAlg.Pair p = ArrayAlg.minmax(d);</span><br><span class="line">System.out.println(&quot;min = &quot; + p.getFirst());</span><br><span class="line">System.out.println(&quot;min = &quot; + p.getSecond());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ArrayAlg</span><br><span class="line">&#123;</span><br><span class="line">public static class Pair</span><br><span class="line">&#123;</span><br><span class="line">private double first;</span><br><span class="line">private double second;</span><br><span class="line"></span><br><span class="line">public Pair(double first, double second) &#123;</span><br><span class="line">this.first = first;</span><br><span class="line">this.second = second;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public double getFirst() &#123;</span><br><span class="line">return first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public double getSecond() &#123;</span><br><span class="line">return second;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Pair minmax(double[] values)&#123;</span><br><span class="line"></span><br><span class="line">double min = Double.MAX_VALUE;</span><br><span class="line">double max = Double.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">for (double v : values)&#123;</span><br><span class="line">if (min &gt; v);</span><br><span class="line">if (max &lt; v);</span><br><span class="line">&#125;</span><br><span class="line">return new Pair(min,max);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -205,27 +211,26 @@
 <p>案例</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class OuterClass &#123;  </span><br><span class="line">    public void display(final String name,String age)&#123;  </span><br><span class="line">        class InnerClass&#123;  </span><br><span class="line">            void display()&#123;  </span><br><span class="line">                System.out.println(name);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
 <p>从上面代码中看好像name参数应该是被内部类直接调用？<br>其实不然，在java编译之后实际的操作如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class OuterClass$InnerClass &#123;  </span><br><span class="line">    public InnerClass(String name,String age)&#123;  </span><br><span class="line">        this.InnerClass$name = name;  </span><br><span class="line">        this.InnerClass$age = age;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public void display()&#123;  </span><br><span class="line">        System.out.println(this.InnerClass$name + &quot;----&quot; + this.InnerClass$age );  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">所以从上面代码来看，内部类并不是直接调用方法传递的参数，而是利用自身的构造器对传入的参数进行备份，自己内部方法调用的实际上时自己的属性而不是外部方法传递进来的参数。</span><br><span class="line">直到这里还没有解释为什么是final？在内部类中的属性和外部方法的参数两者从外表上看是同一个东西，但实际上却不是，所以他们两者是可以任意变化的，也就是说在内部类中我对属性的改变并不会影响到外部的形参，而然这从程序员的角度来看这是不可行的，毕竟站在程序的角度来看这两个根本就是同一个，如果内部类该变了，而外部方法的形参却没有改变这是难以理解和不可接受的，所以为了保持参数的一致性，就规定使用final来避免形参的不改变。</span><br><span class="line"></span><br><span class="line">简单理解就是，拷贝引用，为了避免引用值发生改变，例如被外部类的方法修改等，而导致内部类得到的值不一致，于是用final来让该引用不可改变。</span><br><span class="line">故如果定义了一个匿名内部类，并且希望它使用一个其外部定义的参数，那么编译器会要求该参数引用是final的。</span><br><span class="line"></span><br><span class="line">### 匿名内部类初始化</span><br><span class="line">    我们一般都是利用构造器来完成某个实例的初始化工作的，但是匿名内部类是没有构造器的！那怎么来初始化匿名内部类呢？使用构造代码块！利用构造代码块能够达到为匿名内部类创建一个构造器的效果。</span><br></pre></td></tr></table></figure>
-<p>public class OutClass {<br>    public InnerClass getInnerClass(final int age,final String name){<br>        return new InnerClass() {<br>            int age_ ;<br>            String name_;<br>            //构造代码块完成初始化工作<br>            {<br>                if(0 &lt; age &amp;&amp; age &lt; 200){<br>                    age_ = age;<br>                    name_ = name;<br>                }<br>            }<br>            public String getName() {<br>                return name_;<br>            }  </p>
-<pre><code>        public int getAge() &#123;  
-            return age_;  
-        &#125;  
-    &#125;;  
-&#125;  
-  
-public static void main(String[] args) &#123;  
-    OutClass out = new OutClass();  
-      
-    InnerClass inner_1 = out.getInnerClass(201, &quot;chenssy&quot;);  
-    System.out.println(inner_1.getName());  
-      
-    InnerClass inner_2 = out.getInnerClass(23, &quot;chenssy&quot;);  
-    System.out.println(inner_2.getName());  
-&#125;  
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class OuterClass$InnerClass &#123;  </span><br><span class="line">    public InnerClass(String name,String age)&#123;  </span><br><span class="line">        this.InnerClass$name = name;  </span><br><span class="line">        this.InnerClass$age = age;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public void display()&#123;  </span><br><span class="line">        System.out.println(this.InnerClass$name + &quot;----&quot; + this.InnerClass$age );  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>所以从上面代码来看，内部类并不是直接调用方法传递的参数，而是利用自身的构造器对传入的参数进行备份，自己内部方法调用的实际上时自己的属性而不是外部方法传递进来的参数。<br>直到这里还没有解释为什么是final？在内部类中的属性和外部方法的参数两者从外表上看是同一个东西，但实际上却不是，所以他们两者是可以任意变化的，也就是说在内部类中我对属性的改变并不会影响到外部的形参，而然这从程序员的角度来看这是不可行的，毕竟站在程序的角度来看这两个根本就是同一个，如果内部类该变了，而外部方法的形参却没有改变这是难以理解和不可接受的，所以为了保持参数的一致性，就规定使用final来避免形参的不改变。</p>
+<p>简单理解就是，拷贝引用，为了避免引用值发生改变，例如被外部类的方法修改等，而导致内部类得到的值不一致，于是用final来让该引用不可改变。<br>故如果定义了一个匿名内部类，并且希望它使用一个其外部定义的参数，那么编译器会要求该参数引用是final的。</p>
+<h3 id="匿名内部类初始化"><a href="#匿名内部类初始化" class="headerlink" title="匿名内部类初始化"></a>匿名内部类初始化</h3><pre><code>我们一般都是利用构造器来完成某个实例的初始化工作的，但是匿名内部类是没有构造器的！那怎么来初始化匿名内部类呢？使用构造代码块！利用构造代码块能够达到为匿名内部类创建一个构造器的效果。
 </code></pre>
-<p>}</p>
-<pre><code>
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class OutClass &#123;  </span><br><span class="line">    public InnerClass getInnerClass(final int age,final String name)&#123;  </span><br><span class="line">        return new InnerClass() &#123;  </span><br><span class="line">            int age_ ;  </span><br><span class="line">            String name_;  </span><br><span class="line">            //构造代码块完成初始化工作  </span><br><span class="line">            &#123;  </span><br><span class="line">                if(0 &lt; age &amp;&amp; age &lt; 200)&#123;  </span><br><span class="line">                    age_ = age;  </span><br><span class="line">                    name_ = name;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">            public String getName() &#123;  </span><br><span class="line">                return name_;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            public int getAge() &#123;  </span><br><span class="line">                return age_;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        OutClass out = new OutClass();  </span><br><span class="line">          </span><br><span class="line">        InnerClass inner_1 = out.getInnerClass(201, &quot;chenssy&quot;);  </span><br><span class="line">        System.out.println(inner_1.getName());  </span><br><span class="line">          </span><br><span class="line">        InnerClass inner_2 = out.getInnerClass(23, &quot;chenssy&quot;);  </span><br><span class="line">        System.out.println(inner_2.getName());  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="类加载顺序：有继承关系的加载顺序"><a href="#类加载顺序：有继承关系的加载顺序" class="headerlink" title="类加载顺序：有继承关系的加载顺序"></a>类加载顺序：有继承关系的加载顺序</h1><p><a href="https://www.cnblogs.com/sxkgeek/p/9647992.html">参考文章(CSDN)-类加载的顺序</a></p>
+<p>1.首先加载父类的静态字段或者静态语句块</p>
+<p>2.子类的静态字段或静态语句块</p>
+<p>3.父类普通变量以及语句块</p>
+<p>4.父类构造方法被加载</p>
+<p>5.子类变量或者语句块被加载</p>
+<p>6.子类构造方法被加载</p>
+<h2 id="类加载顺序-关键点"><a href="#类加载顺序-关键点" class="headerlink" title="类加载顺序:关键点"></a>类加载顺序:关键点</h2><ul>
+<li>静态代码块（只加载一次）</li>
+<li>构造方法（创建一个实例就加载一次）</li>
+<li>静态方法，调用的时候才会加载，不调用的时候不会加载</li>
+<li>静态语句块和静态变量被初始化的顺序与代码先后顺序有关</li>
+</ul>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -1205,6 +1210,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -1312,30 +1341,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
