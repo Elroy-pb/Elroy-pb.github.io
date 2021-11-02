@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android-性能优化-启动优化</title>
+    <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
+<ul>
+<li>作者：Android帅次<br>来源：<a href="https://juejin.cn/post/7020245974962405412">稀土掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  </li>
+</ul>
+</blockquote>
+<ul>
+<li><a href="https://time.geekbang.org/column/intro/100021101?code=XYo6BbXL8QKIVD8hO/4J00rK7TGKbHld2l2RSdESqQ4=&source=app_share">极客学院</a></li>
+</ul>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>随着我们开发项目的游戏包越来越大，app冷启动的问题耗时也是越来越严重，在高端手机上还好，但是在低端手机上的问题会越来越明显，毕竟启动快慢在一定程度上是玩家体验很重要的一环。我们尽量Unity和Android角度尽可能去分析。</p>
+</blockquote>
+<h1 id="启动内部机制"><a href="#启动内部机制" class="headerlink" title="启动内部机制"></a>启动内部机制</h1><p>我们需要这几种启动的方式有什么不同，这块不会很复杂，大部分同学都是接触过。</p>
+<p>应用有三种启动状态：</p>
+<p>冷启动:</p>
+<p>温启动:</p>
+<p>温启动介于冷启动和热启动中间吧。例如：</p>
+<p>用户按返回键退出应用，然后重新启动。进程可能还没有被杀死，但应用必须通过调用onCreate（）重新创建 Activity。</p>
+<p>系统回收了应用的内存，然后用户重新运行应用。应用进程和Activity都需要重新启动。</p>
+<p>热启动:</p>
+<p>热启动时，系统将应用从后台拉回前台，应用程序的 Activity 在内存中没有被销毁，那么应用程序可以避免重复对象初始化，UI的布局和渲染。</p>
+<p>如果 Activity 被销毁则需要重新创建。</p>
+<p>和冷启动的区别:不需要创建 Application。</p>
+<h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><p>这块我们主要是对于这启动流程的剖析，从用户点击图标开始，整个启动过程经过哪<br>几个关键阶段，又会给用户带来哪些体验问题。</p>
+<h2 id="启动过程分析"><a href="#启动过程分析" class="headerlink" title="启动过程分析"></a>启动过程分析</h2><h2 id="启动过慢的表现"><a href="#启动过慢的表现" class="headerlink" title="启动过慢的表现"></a>启动过慢的表现</h2><h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>技术写作模板</title>
     <url>/2021/10/21/%E5%86%99%E4%BD%9C%E6%A8%A1%E6%9D%BF%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="写作的注意事项"><a href="#写作的注意事项" class="headerlink" title="写作的注意事项"></a>写作的注意事项</h1><ul>
@@ -74,6 +108,17 @@
       </categories>
       <tags>
         <tag>Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
