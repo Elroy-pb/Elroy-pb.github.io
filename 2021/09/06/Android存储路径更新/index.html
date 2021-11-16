@@ -28,13 +28,15 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="Android10(Q)---分区存储">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8.awebp">
+<meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp">
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
 <meta property="article:published_time" content="2021-09-06T03:32:17.000Z">
-<meta property="article:modified_time" content="2021-09-09T02:00:29.845Z">
+<meta property="article:modified_time" content="2021-11-15T09:15:24.609Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
+<meta name="twitter:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8.awebp">
 
 <link rel="canonical" href="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/">
 
@@ -229,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-09 10:00:29" itemprop="dateModified" datetime="2021-09-09T10:00:29+08:00">2021-09-09</time>
+                <time title="Modified: 2021-11-15 17:15:24" itemprop="dateModified" datetime="2021-11-15T17:15:24+08:00">2021-11-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.3k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -267,14 +269,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+        <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><blockquote>
+<ul>
+<li>作者：青蛙要fly<br>来源：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
+</ul>
+</blockquote>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android 10 (Q)  新增了分区存储的概念，targetSdkVersion=29  </span><br><span class="line">Android &gt;10() *强制开启分区存储的概念，targetSdkVersion&gt;=30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy()判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
 </ul>
-<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
+<p>内部存储：</p>
+<ul>
+<li>内部存储  </li>
+</ul>
+<ul>
+<li>  /data/<pre><code>     /app/ : apk
+     /data/ : package:sp,data,webview-cash
+</code></pre>
+</li>
+<li><pre><code>/system/
+</code></pre>
+</li>
+<li><pre><code>/cache/
+</code></pre>
+</li>
+</ul>
+<p>/data/data/ : 设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下。</p>
+<p>Android 6.0以上的手机或者模拟器该路径可能为： /data/data/ 变为 /data/user/0</p>
+<p>当app被卸载的时候，这个文件夹 会被删除掉。</p>
+<p>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
 <p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
+<p>为了帮助大家更好的理解，请看这这张脑图，对于开发和理解应该是够用了。</p>
+<p><img src="android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8.awebp" alt="android内部存储-1"><br><img src="android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp" alt="android内部存储-2"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : /data/user/0/com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : /data/user/0/com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : /data/user/0/com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;Environment.getDataDirectory() : &quot; + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getFilesDir() : &quot; + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getCacheDir() : &quot; + this.cacheDir!!.absolutePath)</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(&quot;----&quot;, &quot;context.getDataDir() : &quot; + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
 <p>外部存储：</p>
@@ -417,7 +445,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">1.1.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">1.2.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">1.2.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">2.1.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">2.2.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -488,12 +516,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">52k</span>
+    <span title="Symbols count total">54k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">47 mins.</span>
+    <span title="Reading time total">49 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

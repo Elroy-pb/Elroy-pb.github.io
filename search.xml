@@ -45,7 +45,7 @@
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
 <p>随着我们开发项目的游戏包越来越大，app冷启动的问题耗时也是越来越严重，在高端手机上还好，但是在低端手机上的问题会越来越明显，毕竟启动快慢在一定程度上是玩家体验很重要的一环。我们尽量Unity和Android角度尽可能去分析。</p>
 </blockquote>
-<h1 id="启动内部机制"><a href="#启动内部机制" class="headerlink" title="启动内部机制"></a>启动内部机制</h1><p>我们需要这几种启动的方式有什么不同，这块不会很复杂，大部分同学都是接触过。</p>
+<h1 id="Android的启动机制"><a href="#Android的启动机制" class="headerlink" title="Android的启动机制"></a>Android的启动机制</h1><p>我们需要这几种启动的方式有什么不同，这块不会很复杂，大部分同学都是接触过。</p>
 <p>应用有三种启动状态：</p>
 <p>冷启动:</p>
 <p>温启动:</p>
@@ -57,6 +57,34 @@
 <p>如果 Activity 被销毁则需要重新创建。</p>
 <p>和冷启动的区别:不需要创建 Application。</p>
 <h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><p>这块我们主要是对于这启动流程的剖析，从用户点击图标开始，整个启动过程经过哪<br>几个关键阶段，又会给用户带来哪些体验问题。</p>
+<p>其实就是作为开发者要知道哪些是我们可以干预的，哪些是干预不了的。</p>
+<h1 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h1><p>我们针对的主要还是冷启动这块，先简单的剖析下启动的流程。<br>冷启动之前</p>
+<p>首先，会启动App<br>然后，加载空白Window<br>最后，创建进程<br>需要注意的是，这些都是系统的行为，一般情况下我们是无法直接干预的。  </p>
+<p>随后任务<br>首先，创建Application<br>启动主线程<br>创建MainActivity<br>加载布局<br>布置屏幕<br>首帧绘制<br>通常到了界面首帧绘制完成后，我们就可以认为启动已经结束了。  </p>
+<p>优化方向<br>我们的优化方向就是 <strong>Application</strong>和<strong>Activity</strong>的生命周期 这个阶段，因为这个阶段的时机对于我们来说是可控的  </p>
+<h1 id="优化核心思想"><a href="#优化核心思想" class="headerlink" title="优化核心思想"></a>优化核心思想</h1><p>启动优化是对 启动流程的那些步骤进行优化呢？</p>
+<p>作为app的使用用户，不论你的app是游戏还是电商，用户关心的是<strong>当我的手机按下桌面的图标后，app的内容要尽快的显示出来。</strong> </p>
+<p>特别像打车遇到高峰期，抢单软件和游戏app或者做定时活动的时候，启动响应太慢，这用户群体基本上就凉了一半，不能忽视其重要性。</p>
+<p>根据启动流程的分析，显示页面能和用户交互，这是主线程做的事情。那么就要求 我们不能再主线程做耗时的操作。启动中的系统任务我们无法干预，能干预的就是在创建应用和创建 Activity 的过程中可能会出现的性能问题。这一过程具体就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Application的attachBaseContext</span><br><span class="line">Application的onCreate</span><br><span class="line">activity的onCreate</span><br><span class="line">activity的onStart</span><br><span class="line">activity的onResume</span><br></pre></td></tr></table></figure>
+
+<!-- 作者：胡飞洋
+链接：https://juejin.cn/post/6854573215474253838
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->
+
+
+
+
+<h1 id="启动检测"><a href="#启动检测" class="headerlink" title="启动检测"></a>启动检测</h1><h2 id="使用adb-shell获取应用的启动时间"><a href="#使用adb-shell获取应用的启动时间" class="headerlink" title="使用adb shell获取应用的启动时间"></a>使用adb shell获取应用的启动时间</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am start -W packageName]/AppstartActivity</span><br></pre></td></tr></table></figure>
+
+<p>ThisTime<br>表示最后一个Activity启动耗时。<br>TotalTime<br>表示所有Activity启动耗时。<br>WaitTime<br>表示AMS启动Activity的总耗时。<br>一般来说，只需查看得到的TotalTime，即应用的启动时间，其包括 创建进程 + Application初始化 + Activity初始化到界面显示 的过程。  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">作者：jsonchao</span><br><span class="line">链接：https://juejin.cn/post/6844904093786308622</span><br><span class="line">来源：稀土掘金</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+<h2 id="Jaba-Code"><a href="#Jaba-Code" class="headerlink" title="Jaba-Code"></a>Jaba-Code</h2><p>你可以使用 reportFullyDrawn() 方法来测量应用程序启动和所有资源和视图层次结构的完整显示之间经过的时间。在应用程序执行延迟加载的情况下，这可能很有价值。在延迟加载中，应用程序不会阻止窗口的初始绘制，而是异步加载资源并更新视图层次结构。<br>这里我在Activity.onCreate()中加了个工作线程。并在里面调用reportFullyDrawn() 方法。代码如下</p>
+<p>作者：Android帅次<br>链接：<a href="https://juejin.cn/post/7020245974962405412">https://juejin.cn/post/7020245974962405412</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                reportFullyDrawn();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br></pre></td></tr></table></figure>
+
+<p>作者：Android帅次<br>链接：<a href="https://juejin.cn/post/7020245974962405412">https://juejin.cn/post/7020245974962405412</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 <h2 id="启动过程分析"><a href="#启动过程分析" class="headerlink" title="启动过程分析"></a>启动过程分析</h2><h2 id="启动过慢的表现"><a href="#启动过慢的表现" class="headerlink" title="启动过慢的表现"></a>启动过慢的表现</h2><h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>]]></content>
       <categories>
         <category>Android</category>
@@ -404,14 +432,40 @@
   <entry>
     <title>Android存储路径更新(前章)</title>
     <url>/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/</url>
-    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><blockquote>
+<ul>
+<li>作者：青蛙要fly<br>来源：<a href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
+</ul>
+</blockquote>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Android 10 (Q)  新增了分区存储的概念，targetSdkVersion=29  </span><br><span class="line">Android &gt;10() *强制开启分区存储的概念，targetSdkVersion&gt;=30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy()判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
 </ul>
-<p>内部存储：<br>设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来 存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下；<br>但是 当app被卸载的时候，这个文件夹 会被删除掉。<br>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
+<p>内部存储：</p>
+<ul>
+<li>内部存储  </li>
+</ul>
+<ul>
+<li>  /data/<pre><code>     /app/ : apk
+     /data/ : package:sp,data,webview-cash
+</code></pre>
+</li>
+<li><pre><code>/system/
+</code></pre>
+</li>
+<li><pre><code>/cache/
+</code></pre>
+</li>
+</ul>
+<p>/data/data/ : 设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹，这个文件夹也用来存放SharedPreferences 和 SQLiteDatabase 的数据， App 中的 WebView 缓存页面信息也在这文件夹下。</p>
+<p>Android 6.0以上的手机或者模拟器该路径可能为： /data/data/ 变为 /data/user/0</p>
+<p>当app被卸载的时候，这个文件夹 会被删除掉。</p>
+<p>开发过程中，可通过 Context对象提供的 API 读取操作 内部存储中的文件</p>
 <p>强烈建议大家开发的手机尽量Root或者使用64位的模拟器 👍🏻,可以对整体目录有个清晰了解。</p>
+<p>为了帮助大家更好的理解，请看这这张脑图，对于开发和理解应该是够用了。</p>
+<p><img src="android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8.awebp" alt="android内部存储-1"><br><img src="android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp" alt="android内部存储-2"></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">    * Environment.getDataDirectory() : /data</span><br><span class="line">    * context.getFilesDir() : /data/user/0/com.e.dk_wd/files</span><br><span class="line">    * context.getCacheDir() : /data/user/0/com.e.dk_wd/cache</span><br><span class="line">    * context.getDataDir() : /data/user/0/com.e.dk_wd</span><br><span class="line">*/</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;Environment.getDataDirectory() : &quot; + Environment.getDataDirectory().absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getFilesDir() : &quot; + this.filesDir!!.absolutePath)</span><br><span class="line">    Log.i(&quot;----&quot;, &quot;context.getCacheDir() : &quot; + this.cacheDir!!.absolutePath)</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">        Log.i(&quot;----&quot;, &quot;context.getDataDir() : &quot; + this.dataDir!!.absolutePath)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>如果你想看app的看存储的话，提前root，或者你用模拟器打开即可。</p>
 <p>外部存储：</p>
