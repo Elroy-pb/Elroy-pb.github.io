@@ -429,6 +429,17 @@
       </tags>
   </entry>
   <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android 与 Unity 的交互</title>
     <url>/2021/07/29/Android%E4%B8%8EUnity%E7%9A%84%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[<p><img src="Unity%E7%9B%AE%E5%BD%95.jpg" alt="路径示例"></p>
@@ -443,15 +454,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
+    <title>Android卡顿优化-前章</title>
+    <url>/2021/09/07/Android%E5%8D%A1%E9%A1%BF%E4%BC%98%E5%8C%96-%E5%89%8D%E7%AB%A0/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Android-Activity</title>
@@ -540,11 +545,6 @@
       <tags>
         <tag>Android</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Android卡顿优化-前章</title>
-    <url>/2021/09/07/Android%E5%8D%A1%E9%A1%BF%E4%BC%98%E5%8C%96-%E5%89%8D%E7%AB%A0/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Android存储路径更新(前章)</title>
@@ -882,6 +882,15 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
       </tags>
   </entry>
   <entry>
+    <title>Java-并发篇-1</title>
+    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
+    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java-接口和内部类</title>
     <url>/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/</url>
     <content><![CDATA[<!-- 接口和内部类 -->
@@ -959,15 +968,6 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
       <categories>
         <category>Java</category>
       </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-并发篇-1</title>
-    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
-    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
-]]></content>
       <tags>
         <tag>Java</tag>
       </tags>
