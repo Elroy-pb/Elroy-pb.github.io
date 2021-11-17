@@ -28,11 +28,13 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="启动优化 - 应用篇">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/start_1_1.png">
 <meta property="article:published_time" content="2021-11-02T08:56:45.000Z">
-<meta property="article:modified_time" content="2021-11-16T08:55:17.270Z">
+<meta property="article:modified_time" content="2021-11-17T08:36:28.999Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/start_1_1.png">
 
 <link rel="canonical" href="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
 
@@ -227,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-16 16:55:17" itemprop="dateModified" datetime="2021-11-16T16:55:17+08:00">2021-11-16</time>
+                <time title="Modified: 2021-11-17 16:36:28" itemprop="dateModified" datetime="2021-11-17T16:36:28+08:00">2021-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.1k</span>
+              <span>4.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
+              <span>4 mins.</span>
             </span>
             <div class="post-description">启动优化 - 应用篇</div>
 
@@ -273,6 +275,9 @@
 <ul>
 <li><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/intro/100021101?code=XYo6BbXL8QKIVD8hO/4J00rK7TGKbHld2l2RSdESqQ4=&source=app_share">极客学院</a></li>
 </ul>
+<h1 id="解决问题的基本思路"><a href="#解决问题的基本思路" class="headerlink" title="解决问题的基本思路"></a>解决问题的基本思路</h1><blockquote>
+<p>发现问题 ==&gt; 定位问题 ==&gt; 改善问题 ==&gt; 验证问题</p>
+</blockquote>
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
 <p>随着我们开发项目的游戏包越来越大，app冷启动的问题耗时也是越来越严重，在高端手机上还好，但是在低端手机上的问题会越来越明显，毕竟启动快慢在一定程度上是玩家体验很重要的一环。我们尽量Unity和Android角度尽可能去分析。</p>
 </blockquote>
@@ -289,34 +294,48 @@
 <p>和冷启动的区别:不需要创建 Application。</p>
 <h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><p>这块我们主要是对于这启动流程的剖析，从用户点击图标开始，整个启动过程经过哪<br>几个关键阶段，又会给用户带来哪些体验问题。</p>
 <p>其实就是作为开发者要知道哪些是我们可以干预的，哪些是干预不了的。</p>
-<h1 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h1><p>我们针对的主要还是冷启动这块，先简单的剖析下启动的流程。<br>冷启动之前</p>
-<p>首先，会启动App<br>然后，加载空白Window<br>最后，创建进程<br>需要注意的是，这些都是系统的行为，一般情况下我们是无法直接干预的。  </p>
+<h1 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h1><p>我们针对的主要还是冷启动这块，先简单的剖析下启动的流程。<br><img src="start_1_1.png" alt="app-启动流程"></p>
+<p>冷启动之前(关于android启动Api，后面我们会单独开一章来讲)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">一. Step1 - Step 11：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，</span><br><span class="line">它要启动一个Activity；</span><br><span class="line"></span><br><span class="line">二. Step 12 - Step 16：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知Launcher进入Paused状态；</span><br><span class="line"></span><br><span class="line">三. Step 17 - Step 24：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，它已经准备就绪进入Paused状态，</span><br><span class="line">于是ActivityManagerService就创建一个新的进程，用来启动一个ActivityThread实例，</span><br><span class="line">即将要启动的Activity就是在这个ActivityThread实例中运行；</span><br><span class="line"></span><br><span class="line">四. Step 25 - Step 27：</span><br><span class="line">ActivityThread通过Binder进程间通信机制将一个ApplicationThread类型的Binder对象传递给ActivityManagerService，</span><br><span class="line">以便以后ActivityManagerService能够通过这个Binder对象和它进行通信；</span><br><span class="line"></span><br><span class="line">五. Step 28 - Step 35：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知ActivityThread，</span><br><span class="line">现在一切准备就绪，它可以真正执行Activity的启动操作了。</span><br></pre></td></tr></table></figure>
+<pre><code>首先，会启动App  
+然后，加载空白Window  
+最后，创建进程  
+</code></pre>
+<p>需要注意的是，这些都是系统的行为，一般情况下我们是无法直接干预的。  </p>
 <p>随后任务<br>首先，创建Application<br>启动主线程<br>创建MainActivity<br>加载布局<br>布置屏幕<br>首帧绘制<br>通常到了界面首帧绘制完成后，我们就可以认为启动已经结束了。  </p>
-<p>优化方向<br>我们的优化方向就是 <strong>Application</strong>和<strong>Activity</strong>的生命周期 这个阶段，因为这个阶段的时机对于我们来说是可控的  </p>
+<h1 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h1><p>我们的优化方向就是 <strong>Application</strong>和<strong>Activity</strong>的生命周期 这个阶段，因为这个阶段的时机对于我们来说是可控的  </p>
 <h1 id="优化核心思想"><a href="#优化核心思想" class="headerlink" title="优化核心思想"></a>优化核心思想</h1><p>启动优化是对 启动流程的那些步骤进行优化呢？</p>
 <p>作为app的使用用户，不论你的app是游戏还是电商，用户关心的是<strong>当我的手机按下桌面的图标后，app的内容要尽快的显示出来。</strong> </p>
 <p>特别像打车遇到高峰期，抢单软件和游戏app或者做定时活动的时候，启动响应太慢，这用户群体基本上就凉了一半，不能忽视其重要性。</p>
 <p>根据启动流程的分析，显示页面能和用户交互，这是主线程做的事情。那么就要求 我们不能再主线程做耗时的操作。启动中的系统任务我们无法干预，能干预的就是在创建应用和创建 Activity 的过程中可能会出现的性能问题。这一过程具体就是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Application的attachBaseContext</span><br><span class="line">Application的onCreate</span><br><span class="line">activity的onCreate</span><br><span class="line">activity的onStart</span><br><span class="line">activity的onResume</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p>关于 Activity,Application生命周期具体可以看这里<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5fd095c740af">Android生命周期</a><br>关于Activity启动模式 : <a target="_blank" rel="noopener" href="https://zhupengbo.com/2021/08/11/Android%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6-Activity/">Activity 启动模式</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">App = Application</span><br><span class="line">App ==&gt; attachBaseContext</span><br><span class="line">App ==&gt; onCreate</span><br><span class="line">Activity ==&gt; onCreate</span><br><span class="line">Activity ==&gt; onStart</span><br><span class="line">Activity ==&gt; onResume</span><br></pre></td></tr></table></figure>
 <!-- 作者：胡飞洋
 链接：https://juejin.cn/post/6854573215474253838
 来源：稀土掘金
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->
 
 
-
-
 <h1 id="启动检测"><a href="#启动检测" class="headerlink" title="启动检测"></a>启动检测</h1><h2 id="使用adb-shell获取应用的启动时间"><a href="#使用adb-shell获取应用的启动时间" class="headerlink" title="使用adb shell获取应用的启动时间"></a>使用adb shell获取应用的启动时间</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell am start -W packageName]/AppstartActivity</span><br></pre></td></tr></table></figure>
 
 <p>ThisTime<br>表示最后一个Activity启动耗时。<br>TotalTime<br>表示所有Activity启动耗时。<br>WaitTime<br>表示AMS启动Activity的总耗时。<br>一般来说，只需查看得到的TotalTime，即应用的启动时间，其包括 创建进程 + Application初始化 + Activity初始化到界面显示 的过程。  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">作者：jsonchao</span><br><span class="line">链接：https://juejin.cn/post/6844904093786308622</span><br><span class="line">来源：稀土掘金</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-<h2 id="Jaba-Code"><a href="#Jaba-Code" class="headerlink" title="Jaba-Code"></a>Jaba-Code</h2><p>你可以使用 reportFullyDrawn() 方法来测量应用程序启动和所有资源和视图层次结构的完整显示之间经过的时间。在应用程序执行延迟加载的情况下，这可能很有价值。在延迟加载中，应用程序不会阻止窗口的初始绘制，而是异步加载资源并更新视图层次结构。<br>这里我在Activity.onCreate()中加了个工作线程。并在里面调用reportFullyDrawn() 方法。代码如下</p>
+<h2 id="Java-Code-线下测"><a href="#Java-Code-线下测" class="headerlink" title="Java-Code 线下测"></a>Java-Code 线下测</h2><p>你可以使用 reportFullyDrawn() 方法来测量应用程序启动和所有资源和视图层次结构的完整显示之间经过的时间。在应用程序执行延迟加载的情况下，这可能很有价值。在延迟加载中，应用程序不会阻止窗口的初始绘制，而是异步加载资源并更新视图层次结构。<br>这里我在Activity.onCreate()中加了个工作线程。并在里面调用reportFullyDrawn() 方法。代码如下</p>
 <p>作者：Android帅次<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7020245974962405412">https://juejin.cn/post/7020245974962405412</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                reportFullyDrawn();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                reportFullyDrawn();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br><span class="line"></span><br><span class="line">作者：Android帅次</span><br><span class="line">链接：https://juejin.cn/post/7020245974962405412</span><br><span class="line">来源：稀土掘金</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
 
-<p>作者：Android帅次<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7020245974962405412">https://juejin.cn/post/7020245974962405412</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<h2 id="启动过程分析"><a href="#启动过程分析" class="headerlink" title="启动过程分析"></a>启动过程分析</h2><h2 id="启动过慢的表现"><a href="#启动过慢的表现" class="headerlink" title="启动过慢的表现"></a>启动过慢的表现</h2><h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>
+<h1 id="白屏或者黑屏"><a href="#白屏或者黑屏" class="headerlink" title="白屏或者黑屏"></a>白屏或者黑屏</h1><p>这块我就不写了，网上一堆，自己google一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">//优点：避免启动app时白屏黑屏等现象</span><br><span class="line">//缺点：容易造成点击桌面图标无响应</span><br><span class="line">//（可以配合三方库懒加载，异步初始化等方案使用，减少初始化时长）</span><br><span class="line">//实现如下</span><br><span class="line">//0. appTheme</span><br><span class="line"> &lt;!-- Base application theme. --&gt;</span><br><span class="line">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;</span><br><span class="line">    &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/c_ff000000&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/c_ff000000&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/c_ff000000&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowActionBar&quot;&gt;false&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowNoTitle&quot;&gt;true&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">//1. styles.xml中设置</span><br><span class="line">//1.1 禁用预览窗口</span><br><span class="line">&lt;style name=&quot;AppTheme.Launcher&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowBackground&quot;&gt;@null&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowDisablePreview&quot;&gt;true&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">//1.2 指定透明背景</span><br><span class="line">&lt;style name=&quot;AppTheme.Launcher&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowBackground&quot;&gt;@color/c_00ffffff&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:windowIsTranslucent&quot;&gt;true&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">//2. 为启动页/闪屏页Activity设置theme</span><br><span class="line">&lt;activity</span><br><span class="line">    android:name=&quot;.splash.SplashActivity&quot;</span><br><span class="line">    android:screenOrientation=&quot;portrait&quot;</span><br><span class="line">    android:theme=&quot;@style/AppTheme.Launcher&quot;&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br><span class="line">//3. 在该Activity.onCreate()中设置AppTheme（设置布局id之前）</span><br><span class="line">//比如我是基类中单独抽取的获取布局id方法，那么在启动页中重写此方法时加入如下配置：</span><br><span class="line"> @Override</span><br><span class="line">protected int getContentViewId() &#123;</span><br><span class="line">    setTheme(R.style.AppTheme_Launcher);</span><br><span class="line">    return R.layout.activity_splash;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="MultiDex"><a href="#MultiDex" class="headerlink" title="MultiDex"></a>MultiDex</h1><p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c2d7b76ff063">简书-MultiDex</a><br>提出一个疑问 ：主进程如何得知加载进程完成加载？</p>
+<!-- ## 启动过程分析 -->
+
+
+<!-- ## 启动过慢的表现 -->
+
+<h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>
     </div>
 
     
@@ -399,7 +418,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E7%9A%84%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">Android的启动机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">启动分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B7%E5%90%AF%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">冷启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">6.</span> <span class="nav-text">优化核心思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B"><span class="nav-number">7.</span> <span class="nav-text">启动检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8adb-shell%E8%8E%B7%E5%8F%96%E5%BA%94%E7%94%A8%E7%9A%84%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4"><span class="nav-number">7.1.</span> <span class="nav-text">使用adb shell获取应用的启动时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jaba-Code"><span class="nav-number">7.2.</span> <span class="nav-text">Jaba-Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">7.3.</span> <span class="nav-text">启动过程分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%BF%87%E6%85%A2%E7%9A%84%E8%A1%A8%E7%8E%B0"><span class="nav-number">7.4.</span> <span class="nav-text">启动过慢的表现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">7.5.</span> <span class="nav-text">如何优化</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">解决问题的基本思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E7%9A%84%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">Android的启动机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%88%86%E6%9E%90"><span class="nav-number">5.</span> <span class="nav-text">启动分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B7%E5%90%AF%E5%8A%A8"><span class="nav-number">6.</span> <span class="nav-text">冷启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="nav-number">7.</span> <span class="nav-text">优化方向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">8.</span> <span class="nav-text">优化核心思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B"><span class="nav-number">9.</span> <span class="nav-text">启动检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8adb-shell%E8%8E%B7%E5%8F%96%E5%BA%94%E7%94%A8%E7%9A%84%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4"><span class="nav-number">9.1.</span> <span class="nav-text">使用adb shell获取应用的启动时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Code-%E7%BA%BF%E4%B8%8B%E6%B5%8B"><span class="nav-number">9.2.</span> <span class="nav-text">Java-Code 线下测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BD%E5%B1%8F%E6%88%96%E8%80%85%E9%BB%91%E5%B1%8F"><span class="nav-number">10.</span> <span class="nav-text">白屏或者黑屏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MultiDex"><span class="nav-number">11.</span> <span class="nav-text">MultiDex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">11.1.</span> <span class="nav-text">如何优化</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -470,12 +489,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">54k</span>
+    <span title="Symbols count total">57k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">49 mins.</span>
+    <span title="Reading time total">51 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
