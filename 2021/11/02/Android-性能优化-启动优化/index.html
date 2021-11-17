@@ -30,7 +30,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/start_1_1.png">
 <meta property="article:published_time" content="2021-11-02T08:56:45.000Z">
-<meta property="article:modified_time" content="2021-11-17T08:36:28.999Z">
+<meta property="article:modified_time" content="2021-11-17T08:48:48.824Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">26</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">27</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-17 16:36:28" itemprop="dateModified" datetime="2021-11-17T16:36:28+08:00">2021-11-17</time>
+                <time title="Modified: 2021-11-17 16:48:48" itemprop="dateModified" datetime="2021-11-17T16:48:48+08:00">2021-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.7k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
+              <span>5 mins.</span>
             </span>
             <div class="post-description">启动优化 - 应用篇</div>
 
@@ -295,6 +295,7 @@
 <h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><p>这块我们主要是对于这启动流程的剖析，从用户点击图标开始，整个启动过程经过哪<br>几个关键阶段，又会给用户带来哪些体验问题。</p>
 <p>其实就是作为开发者要知道哪些是我们可以干预的，哪些是干预不了的。</p>
 <h1 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h1><p>我们针对的主要还是冷启动这块，先简单的剖析下启动的流程。<br><img src="start_1_1.png" alt="app-启动流程"></p>
+<p>T1 预览窗口显示。系统在拉起微信进程之前，会先根据微信的 Theme 属性创建预览窗口。当然如果我们禁用预览窗口或者将预览窗口指定为透明，用户在这段时间依然看到的是桌面。<br>T2 闪屏显示。在微信进程和闪屏窗口页面创建完毕，并且完成一系列 inflate view、onmeasure、onlayout 等准备工作后，用户终于可以看到熟悉的“小地球”。<br>T3 主页显示。在完成主窗口创建和页面显示的准备工作后，用户可以看到微信的主界面。<br>T4 界面可操作。在启动完成后，微信会有比较多的工作需要继续执行，例如聊天和朋友圈界面的预加载、小程序框架和进程的准备等。在这些工作完成后，用户才可以真正开始愉快地聊天。  </p>
 <p>冷启动之前(关于android启动Api，后面我们会单独开一章来讲)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">一. Step1 - Step 11：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，</span><br><span class="line">它要启动一个Activity；</span><br><span class="line"></span><br><span class="line">二. Step 12 - Step 16：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知Launcher进入Paused状态；</span><br><span class="line"></span><br><span class="line">三. Step 17 - Step 24：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，它已经准备就绪进入Paused状态，</span><br><span class="line">于是ActivityManagerService就创建一个新的进程，用来启动一个ActivityThread实例，</span><br><span class="line">即将要启动的Activity就是在这个ActivityThread实例中运行；</span><br><span class="line"></span><br><span class="line">四. Step 25 - Step 27：</span><br><span class="line">ActivityThread通过Binder进程间通信机制将一个ApplicationThread类型的Binder对象传递给ActivityManagerService，</span><br><span class="line">以便以后ActivityManagerService能够通过这个Binder对象和它进行通信；</span><br><span class="line"></span><br><span class="line">五. Step 28 - Step 35：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知ActivityThread，</span><br><span class="line">现在一切准备就绪，它可以真正执行Activity的启动操作了。</span><br></pre></td></tr></table></figure>
 <pre><code>首先，会启动App  
@@ -434,7 +435,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -494,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">51 mins.</span>
+    <span title="Reading time total">52 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

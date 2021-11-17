@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android-性能优化-启动优化-进阶篇</title>
+    <url>/2021/11/17/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96-%E8%BF%9B%E9%98%B6%E7%AF%87/</url>
+    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://juejin.cn/post/6854573215474253838#heading-0">掘金</a><br><a href="https://juejin.cn/post/6844904093786308622#heading-0">掘金</a></p>
+<h1 id="脑图"><a href="#脑图" class="headerlink" title="脑图"></a>脑图</h1><p><img src="xmind.awebp" alt="深入探索Android启动速度优化"></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-性能优化-IO优化</title>
     <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-IO%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><blockquote>
@@ -62,6 +75,7 @@
 <h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><p>这块我们主要是对于这启动流程的剖析，从用户点击图标开始，整个启动过程经过哪<br>几个关键阶段，又会给用户带来哪些体验问题。</p>
 <p>其实就是作为开发者要知道哪些是我们可以干预的，哪些是干预不了的。</p>
 <h1 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h1><p>我们针对的主要还是冷启动这块，先简单的剖析下启动的流程。<br><img src="start_1_1.png" alt="app-启动流程"></p>
+<p>T1 预览窗口显示。系统在拉起微信进程之前，会先根据微信的 Theme 属性创建预览窗口。当然如果我们禁用预览窗口或者将预览窗口指定为透明，用户在这段时间依然看到的是桌面。<br>T2 闪屏显示。在微信进程和闪屏窗口页面创建完毕，并且完成一系列 inflate view、onmeasure、onlayout 等准备工作后，用户终于可以看到熟悉的“小地球”。<br>T3 主页显示。在完成主窗口创建和页面显示的准备工作后，用户可以看到微信的主界面。<br>T4 界面可操作。在启动完成后，微信会有比较多的工作需要继续执行，例如聊天和朋友圈界面的预加载、小程序框架和进程的准备等。在这些工作完成后，用户才可以真正开始愉快地聊天。  </p>
 <p>冷启动之前(关于android启动Api，后面我们会单独开一章来讲)</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">一. Step1 - Step 11：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，</span><br><span class="line">它要启动一个Activity；</span><br><span class="line"></span><br><span class="line">二. Step 12 - Step 16：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知Launcher进入Paused状态；</span><br><span class="line"></span><br><span class="line">三. Step 17 - Step 24：</span><br><span class="line">Launcher通过Binder进程间通信机制通知ActivityManagerService，它已经准备就绪进入Paused状态，</span><br><span class="line">于是ActivityManagerService就创建一个新的进程，用来启动一个ActivityThread实例，</span><br><span class="line">即将要启动的Activity就是在这个ActivityThread实例中运行；</span><br><span class="line"></span><br><span class="line">四. Step 25 - Step 27：</span><br><span class="line">ActivityThread通过Binder进程间通信机制将一个ApplicationThread类型的Binder对象传递给ActivityManagerService，</span><br><span class="line">以便以后ActivityManagerService能够通过这个Binder对象和它进行通信；</span><br><span class="line"></span><br><span class="line">五. Step 28 - Step 35：</span><br><span class="line">ActivityManagerService通过Binder进程间通信机制通知ActivityThread，</span><br><span class="line">现在一切准备就绪，它可以真正执行Activity的启动操作了。</span><br></pre></td></tr></table></figure>
 <pre><code>首先，会启动App  
