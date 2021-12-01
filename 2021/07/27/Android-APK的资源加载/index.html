@@ -24,17 +24,17 @@
   <meta name="description" content="Android-APK的资源加载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-APK的资源加载">
-<meta property="og:url" content="http://example.com/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/index.html">
+<meta property="og:url" content="http://example.com/2021/07/27/Android-APK%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="Android-APK的资源加载">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-07-27T07:18:12.975Z">
-<meta property="article:modified_time" content="2021-11-12T08:50:59.054Z">
+<meta property="article:modified_time" content="2021-11-29T12:53:36.382Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/">
+<link rel="canonical" href="http://example.com/2021/07/27/Android-APK%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">
 
 
 <script id="page-configurations">
@@ -138,7 +138,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">27</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">28</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/Android-APK%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-12 16:50:59" itemprop="dateModified" datetime="2021-11-12T16:50:59+08:00">2021-11-12</time>
+                <time title="Modified: 2021-11-29 20:53:36" itemprop="dateModified" datetime="2021-11-29T20:53:36+08:00">2021-11-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,7 +245,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>29</span>
+              <span>530</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -265,7 +265,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="APK的资源加载"><a href="#APK的资源加载" class="headerlink" title="APK的资源加载"></a>APK的资源加载</h1><h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>
+        <h1 id="APK的资源"><a href="#APK的资源" class="headerlink" title="APK的资源"></a>APK的资源</h1><p>Android 资源大概分为两个部分：assets 和 res </p>
+<h2 id="assets-资源"><a href="#assets-资源" class="headerlink" title="assets 资源"></a>assets 资源</h2><p>assets 资源放在 assets 目录下，它里面保存一些原始的文件，可以以任何方式来进行组织，这些文件最终会原封不动的被打包进 APK 文件中，通过AssetManager 来获取 asset 资源，代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AssetManager assetManager = context.getAssets();</span><br><span class="line">InputStream is = assetManager.open(&quot;fileName&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="res-资源"><a href="#res-资源" class="headerlink" title="res 资源"></a>res 资源</h2><p>res 资源放在主工程的 res 目录下，这类资源一般都会在编译阶段生成一个资源 ID 供我们使用，res 目录包括 animator、anim、 color、drawable、layout、menu、raw、values、XML等，通过 getResource() 去获取 Resources 对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Resources res = getContext().getResources();</span><br></pre></td></tr></table></figure>
+
+<p>在APK的生成过程中，会生成资源索引表 <strong>resources.arsc</strong> 文件和 <strong>R.java文件</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhupengbo.com/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/">APK构建指南</a> 关于R.id 请看这里。</p>
+<p>resources.arsc 资源索引表 </p>
+<h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>
     </div>
 
     
@@ -348,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">APK的资源加载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AssetManager"><span class="nav-number">1.1.</span> <span class="nav-text">AssetManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resources"><span class="nav-number">1.2.</span> <span class="nav-text">Resources</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#APK%E7%9A%84%E8%B5%84%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">APK的资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#assets-%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">assets 资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#res-%E8%B5%84%E6%BA%90"><span class="nav-number">1.2.</span> <span class="nav-text">res 资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AssetManager"><span class="nav-number">1.3.</span> <span class="nav-text">AssetManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resources"><span class="nav-number">1.4.</span> <span class="nav-text">Resources</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -364,7 +374,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -375,7 +385,7 @@
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -419,12 +429,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">57k</span>
+    <span title="Symbols count total">64k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">52 mins.</span>
+    <span title="Reading time total">58 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

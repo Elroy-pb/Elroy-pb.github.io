@@ -1,6 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android开发资源汇总</title>
+    <url>/2021/11/29/Android%E5%BC%80%E5%8F%91%E8%B5%84%E6%BA%90%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h1 id="颜色透明度汇总"><a href="#颜色透明度汇总" class="headerlink" title="颜色透明度汇总"></a>颜色透明度汇总</h1><p>半透明颜色值不同于平时使用的颜色，半透明颜色值共 8 位，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android:background=&quot;#AAxxxxxx&quot;</span><br></pre></td></tr></table></figure>
+<p>前 2 位(AA)是透明度，后 6 位(xxxxxx) 是颜色，透明度和颜色结合在一起就可以写出各种颜色的透明度。下面是透明度说明表。</p>
+<table>
+<thead>
+<tr>
+<th align="left">透明度百分比</th>
+<th align="center">对应的值</th>
+<th align="left">备注</th>
+<th align="left">MORE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">100%</td>
+<td align="center">FF</td>
+<td align="left">完全不透明</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">95%</td>
+<td align="center">F2</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">90%</td>
+<td align="center">E6</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">85%</td>
+<td align="center">D9</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">80%</td>
+<td align="center">CC</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">75%</td>
+<td align="center">BF</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">70%</td>
+<td align="center">B3</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">65%</td>
+<td align="center">A6</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">60%</td>
+<td align="center">99</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">55%</td>
+<td align="center">8C</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">50%</td>
+<td align="center">80</td>
+<td align="left">半透明 50%</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">45%</td>
+<td align="center">73</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">40%</td>
+<td align="center">40</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">35%</td>
+<td align="center">59</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">30%</td>
+<td align="center">4D</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">25%</td>
+<td align="center">40</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">20%</td>
+<td align="center">33</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">15%</td>
+<td align="center">26</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">10%</td>
+<td align="center">1A</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">5%</td>
+<td align="center">0D</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">0%</td>
+<td align="center">00</td>
+<td align="left">全透明</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>使用举例：</p>
+<p>全透明：#00000000<br>半透明：#80000000<br>不透明：#FF000000<br>白色半透明：#80FFFFFF<br>不同像素密度的配置限定符<br>官方链接：<a href="https://developer.android.com/training/multiscreen/screendensities?hl=zh-cn">https://developer.android.com/training/multiscreen/screendensities?hl=zh-cn</a></p>
+<p>密度限定符    说明<br>ldpi    适用于低密度 (ldpi) 屏幕 (~ 120dpi) 的资源<br>mdpi    适用于中密度 (mdpi) 屏幕 (~ 160dpi) 的资源（这是基准密度）<br>hdpi    适用于高密度 (hdpi) 屏幕 (~ 240dpi) 的资源<br>xhdpi    适用于加高 (xhdpi) 密度屏幕 (~ 320dpi) 的资源<br>xxhdpi    适用于超超高密度 (xxhdpi) 屏幕 (~ 480dpi) 的资源<br>xxxhdpi    适用于超超超高密度 (xxxhdpi) 屏幕 (~ 640dpi) 的资源<br>nodpi    适用于所有密度的资源。这些是与密度无关的资源。无论当前屏幕的密度是多少，系统都不会缩放以此限定符标记的资源<br>tvdpi    适用于密度介于 mdpi 和 hdpi 之间的屏幕（约 213dpi）的资源。这不属于“主要”密度组。它主要用于电视，而大多数应用都不需要它。对于大多数应用而言，提供 mdpi 和 hdpi 资源便已足够，系统将视情况对其进行缩放。如果您发现有必要提供 tvdpi 资源，应按一个系数来确定其大小，即 1.33*mdpi。例如，如果某张图片在 mdpi 屏幕上的大小为 100px x 100px，那么它在 tvdpi 屏幕上的大小应该为 133px x 133px<br>要针对不同的密度创建备用可绘制位图资源，您应遵循六种主要密度之间的 3:4:6:8:12:16 缩放比。例如，如果您有一个可绘制位图资源，它在中密度屏幕上的大小为 48x48 像素，那么它在其他各种密度的屏幕上的大小应该为：</p>
+<p>36x36 (0.75x) - 低密度 (ldpi)<br>48x48（1.0x 基准）- 中密度 (mdpi)<br>72x72 (1.5x) - 高密度 (hdpi)<br>96x96 (2.0x) - 超高密度 (xhdpi)<br>144x144 (3.0x) - 超超高密度 (xxhdpi)<br>192x192 (4.0x) - 超超超高密度 (xxxhdpi)<br>Android studio 插件版本与 gradle 版本对应关系<br>Android studio 插件版本与 gradle 版本对应关系如下所示：</p>
+<p>AS 插件版本    Gradle 版本<br>1.0.0 - 1.1.3    2.2.1 - 2.3<br>1.2.0 - 1.3.1    2.2.1 - 2.9<br>1.5.0    2.2.1 - 2.13<br>2.0.0 - 2.1.2    2.10 - 2.13<br>2.1.3 - 2.2.3    2.14.1+<br>2.3.0+    3.3+<br>3.0.0+    4.1+<br>3.1.0+    4.4+<br>3.2.0 - 3.2.1    4.6+<br>3.3.0 - 3.3.3    4.10.1+<br>3.4.0 - 3.4.3    5.1.1+<br>3.5.0 - 3.5.4    5.4.1+<br>3.6.0 - 3.6.4    5.6.4+<br>4.0.0+    6.1.1+<br>4.1.0+    6.5+<br>以上信息参考 Android Gradle 插件版本说明</p>
+<p>Android Studio 根据动物名称来命名，而 Android 系统 10.0 之前都是以甜点的方式来命名，我们在来会汇总一下 Android 系统的命名方案。</p>
+<p>2007 年 11 月 5 日发布最初的版本（Android 0.5），至今 Android 发行了多个版本，Android 操作系统有预发行的内部版本，分别为铁臂阿童木（Astro）与机器人班亭（Bender），从 2009 年 5 月开始， Android 的版本代号以甜点来命名，且每个代号间的前缀以英文本母序接续排列。</p>
+<p>Android 系统名字、版本、API level 的对应关系<br>Android 系统名字、版本、API level 的对应关系如下所示：</p>
+<p>名称    版本号    发版日期    API    API<br>Android 1.0    1.0    2008年9月23日    1    BASE<br>Android 1.1    1.1    2009年2月9日    2    BASE_1_1<br>Android Cupcake（纸杯蛋糕）    1.5    2009年4月27日    3    CUPCAKE<br>Android Donut（甜甜圈）    1.6    2009年9月15日    4    DONUT<br>Android Eclair（闪电泡芙）    2.0 – 2.1    2009年10月26日    5 – 7    ECLAIR_MR1（2.1.x）<br>ECLAIR_0_1（2.0.1）<br>ECLAIR（2.0）<br>Android Froyo（优格冰淇淋）    2.2 – 2.2.3    2010年5月20日    8    FROYO<br>Android Gingerbread（姜饼）    2.3 – 2.3.7    2010年12月6日    9 - 10    GINGERBREAD_MR1（ 2.3.3 - 2.3.4）<br>GINGERBREAD（2.3、2.3.1、2.3.2）<br>Android Honeycomb（蜂巢）    3.0 – 3.2.6    2011年2月22日    11 - 13    HONEYCOMB_MR2（3.2）<br>HONEYCOMB_MR1（3.1x）<br>HONEYCOMB（3.0.x）<br>Android Ice Cream Sandwich（冰淇淋三明治）    4.0 – 4.0.4    2011年10月18日    14 - 15    ICE_CREAM_SANDWICH_MR1（4.0.3、4.0.4）<br>ICE_CREAM_SANDWICH （4.0、4.0.1、4.0.2）<br>Android Jelly Bean（果冻豆）    4.1 – 4.3.1    2012年7月9日    16 – 18    JELLY_BEAN_MR2（4.3）<br>JELLY_BEAN_MR1（4.2 - 4.2.2）<br>JELLY_BEAN（4.1 - 4.1.1）<br>Android KitKat（奇巧巧克力）    4.4 – 4.4.4    2013年10月31日    19 - 20    KITKAT<br>Android Lollipop（棒棒糖）    5.0 – 5.1.1    2014年11月12日    21 - 22    LOLLIPOP_MR1（5.1）<br>LOLLIPOP（5.0）<br>Android Marshmallow（棉花糖）    6.0 – 6.0.1    2015年10月5日    23    M<br>Android Nougat（牛轧糖）    7.0 – 7.1.2    2016年8月22日    24 - 25    N_MR1（7.1 - 7.11） N（7.0）<br>Android Oreo（奥利奥）    8.0 – 8.1    2017年8月21日    26 – 27    O_MR1（8.1） O （8.0）<br>Android Pie（派）    9    2018年8月6日    28    P<br>Android 10    10    2019年9月3日    29    Q<br>Android 11    11    2020年2月19日    30    R<br>从 Android Q 开始不再以甜品命名，且直接称 Android Q 为 Android 10。以上信息参考 uses-sdk</p>
+<p>跳转到系统各个设置界面<br>跳转常用方法如下：</p>
+<p>// 第一个参：包名<br>// 第二个参数：各个设置的类名(可以参考下面)<br>ComponentName cm = new ComponentName(“com.android.settings”,<br>            “com.android.settings.RadioInfo”);<br>    intent.setComponent(cm);<br>    intent.setAction(“android.intent.action.VIEW”);<br>    startActivity(intent);<br>各个设置的类名汇总</p>
+<p>com.android.settings.AccessibilitySettings 辅助功能设置<br>com.android.settings.ActivityPicker 选择活动<br>com.android.settings.ApnSettings APN设置<br>com.android.settings.ApplicationSettings 应用程序设置<br>com.android.settings.BandMode 设置GSM/UMTS波段<br>com.android.settings.BatteryInfo 电池信息<br>com.android.settings.DateTimeSettings 日期和坝上旅游网时间设置<br>com.android.settings.DateTimeSettingsSetupWizard 日期和时间设置<br>com.android.settings.DevelopmentSettings 应用程序设置=》开发设置<br>com.android.settings.DeviceAdminSettings 设备管理器<br>com.android.settings.DeviceInfoSettings 关于手机<br>com.android.settings.Display 显示——设置显示字体大小及预览<br>com.android.settings.DisplaySettings 显示设置<br>com.android.settings.DockSettings 底座设置<br>com.android.settings.IccLockSettings SIM卡锁定设置<br>com.android.settings.InstalledAppDetails 语言和键盘设置<br>com.android.settings.LanguageSettings 语言和键盘设置<br>com.android.settings.LocalePicker 选择手机语言<br>com.android.settings.LocalePickerInSetupWizard 选择手机语言<br>com.android.settings.ManageApplications 已下载（安装）软件列表<br>com.android.settings.MasterClear 恢复出厂设置<br>com.android.settings.MediaFormat 格式化手机闪存<br>com.android.settings.PhysicalKeyboardSettings 设置键盘<br>com.android.settings.PrivacySettings 隐私设置<br>com.android.settings.ProxySelector 代理设置<br>com.android.settings.RadioInfo 手机信息<br>com.android.settings.RunningServices 正在运行的程序（服务）<br>com.android.settings.SecuritySettings 位置和安全设置<br>com.android.settings.Settings 系统设置<br>com.android.settings.SettingsSafetyLegalActivity 安全信息<br>com.android.settings.SoundSettings 声音设置<br>com.android.settings.TestingSettings 测试——显示手机信息、电池信息、使用情况统计、Wifi information、服务信息<br>com.android.settings.TetherSettings 绑定与便携式热点<br>com.android.settings.TextToSpeechSettings 文字转语音设置<br>com.android.settings.UsageStats 使用情况统计<br>com.android.settings.UserDictionarySettings 用户词典<br>com.android.settings.VoiceInputOutputSettings 语音输入与输出设置<br>com.android.settings.WirelessSettings 无线和网络设置<br>Android 设备信息以及系统 API<br>Build 系列</p>
+<p>Build 系列    android.os.Build<br>系统版本    RELEASE    获取系统版本字符串。如4.1.2 或2.2 或2.3等    4.4.4<br>系统版本值    SDK_INT        19<br>品牌    BRAND    获取设备品牌    Huawei<br>型号    MODEL    获取手机的型号    HUAWEI G750-T01<br>ID    ID    设备版本号    HUAWEITAG-TLOO<br>DISPLAY    DISPLAY    获取设备显示的版本包（在系统设置中显示为版本号）和ID一样    TAG-TLOOCO1B166-TLOO<br>产品名    PRODUCT    整个产品的名称    G750-T01<br>制造商    MANUFACTURER    获取设备制造商    HUAWEI<br>设备名    DEVICE    获取设备驱动名称    hwG750-T01<br>硬件    HARDWARE    设备硬件名称,一般和基板名称一样（BOARD）    mt6592<br>指纹    FINGERPRINT    设备的唯一标识。由设备的多个信息拼接合成    Huawei/G750-T01/hwG750-T01:4.2.2/HuaweiG750-T01/C00B152:user/ota-rel-keys,release-keys<br>串口序列号    SERIAL    返回串口序列号    YGKBBBB5C1711949<br>设备版本类型    TYPE    主要为user 或eng.    user<br>描述build的标签    TAGS    设备标签。如release-keys 或测试的 test-keys    release-keys<br>设备主机地址    HOST    设备主机地址    scmbuild<br>设备用户名    USER    基本上都为android-build    queen<br>固件开发版本代号    codename    设备当前的系统开发代号，一般使用REL代替    REL<br>源码控制版本号    build_incremental    系统源代码控制值，一个数字或者git hash值    C01B166<br>主板    board    获取设备基板名称    TAG-TL00<br>主板引导程序    bootloader    获取设备引导程序版本号    unkonwn<br>Build时间    time    Build时间    1476084456000<br>系统的API级别    SDK_INT    数字表示    19<br>cpu指令集1    CPU_ABI    获取设备指令集名称（CPU的类型）    arm64-v8a<br>cpu指令集1    CPU_ABI2<br>Android 硬件设备信息：</p>
+<p>名称    接口参数名称    备注    示例<br>序列号    getDeviceId    序列号IMEI    865872025238821<br>andrlid_id    getString    android_id    bcbc00f09479aa5b<br>手机号码    getLine1Number    手机号码    13117511178<br>手机卡序列号    getSimSerialNumber    手机卡序列号    89860179328595969501<br>手机卡IMSI号    getSubscriberId    IMSI    460017932859596<br>手机卡国家    getSimCountryIso    手机卡国家    cn<br>运营商    getSimOperator    运营商    46001<br>运营商名字    getSimOperatorName    运营商名字    中国联通<br>国家iso代码    getNetworkCountryIso    国家iso代码字    cn<br>网络运营商类型    getNetworkOperator    返回MCC+MNC代码    (SIM卡运营商国家代码和运营商网络代码)(IMSI) 46001<br>网络类型名    getNetworkOperatorName    返回移动网络运营商的名字(SPN)    中国联通<br>网络    getNetworkType    网络    3<br>手机类型    getPhoneType    机类型    1<br>手机卡状态    getSimState        1<br>mac地址    getMacAddress    mac地址    a8:a6:68:a3:d9:ef<br>蓝牙名称    getName        HUAWEI TAG-TL00<br>固件版本    固件版本    无线电固件版本号，通常是不可用的    MOLY.WR8.W1328.MD.TG.MP.V1.P22, 2014/07/15 19:57<br>WifiManager</p>
+<p>WifiManager    WIFI相关<br>蓝牙地址    getAddress    蓝牙地址MAC地址    6a: cd:57:f2:3b:59<br>无线路由器名    getSSID    WIFI名字    210e03fcf0<br>无线路由器地址    getBSSID        ce:ea:8c:1a:5c:b2<br>内网ip(wifl可用)    getIpAddress    可以用代码转成192.168形式    -2023511872<br>Display 屏幕相关</p>
+<p>Display    屏幕相关<br>屏幕密度    density    屏幕密度（像素比例：0.75/1.0/1.5/2.0）    2.0<br>屏幕密度    densityDpi    屏幕密度（每寸像素：120/160/240/320）    480<br>手机内置分辨率    getWidth    内置好的不准确已废弃API    720<br>手机内置分辨率    getHeight<br>字体缩放比例    scaledDensity        2.0</p>
+]]></content>
+      <tags>
+        <tag>Android-Develop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-性能优化-启动优化-进阶篇</title>
     <url>/2021/11/17/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96-%E8%BF%9B%E9%98%B6%E7%AF%87/</url>
     <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://juejin.cn/post/6854573215474253838#heading-0">掘金</a><br><a href="https://juejin.cn/post/6844904093786308622#heading-0">掘金</a></p>
@@ -438,7 +601,7 @@
     <title>Android-CMD集合</title>
     <url>/2021/09/07/Android-CMD%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[<h2 id="ADB"><a href="#ADB" class="headerlink" title="ADB"></a>ADB</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">重启adb </span><br><span class="line">adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</span><br><span class="line">查看当前的进程</span><br><span class="line">adb shell ps | grep package-name </span><br><span class="line">过滤日志</span><br><span class="line">adb logcat </span><br><span class="line">查看链接cpu架构信息</span><br><span class="line">adb shell </span><br><span class="line">cat/proc/cpuinfo </span><br><span class="line">查看已经连接的设备</span><br><span class="line">adb devices</span><br><span class="line">指定设备安装apk</span><br><span class="line">adb -s xxx install xxx.apk</span><br><span class="line"></span><br><span class="line">keytool -list -v -keystore  xxx.keystore</span><br><span class="line">查看签名秘钥</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="ADB-进阶CMD"><a href="#ADB-进阶CMD" class="headerlink" title="ADB 进阶CMD"></a>ADB 进阶CMD</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dev:每隔 1s 输出一次APP CPU信息，命令如下</span><br><span class="line">$adb shell</span><br><span class="line">$adb top -d 1 | grep com.packagename.xxx</span><br><span class="line"></span><br><span class="line">dev: 获取Apk安装的路径</span><br><span class="line">adb shell pm path com.packagename.xxx</span><br><span class="line"></span><br><span class="line">dev: 导出apk文件</span><br><span class="line">adb pull /data/app/com.packagename.xxx/base.apk</span><br><span class="line"></span><br><span class="line">adb shell pm list package</span><br><span class="line">example:</span><br><span class="line">$ adb shell pm list package tao</span><br><span class="line">package:com.taobao.taobao</span><br><span class="line"></span><br><span class="line">dev:结合 grep 搜索包名</span><br><span class="line">$ adb shell pm list package | grep -i z</span><br><span class="line">package:ru.zdevs.zarchiver</span><br></pre></td></tr></table></figure>
+<h2 id="ADB-进阶CMD"><a href="#ADB-进阶CMD" class="headerlink" title="ADB 进阶CMD"></a>ADB 进阶CMD</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dev:每隔 1s 输出一次APP CPU信息，命令如下</span><br><span class="line">$adb shell</span><br><span class="line">$adb top -d 1 | grep com.packagename.xxx</span><br><span class="line"></span><br><span class="line">dev: 获取Apk安装的路径</span><br><span class="line">adb shell pm path com.packagename.xxx</span><br><span class="line"></span><br><span class="line">dev: 导出apk文件</span><br><span class="line">adb pull /data/app/com.packagename.xxx/base.apk</span><br><span class="line"></span><br><span class="line">adb shell pm list package</span><br><span class="line">example:</span><br><span class="line">$ adb shell pm list package tao</span><br><span class="line">package:com.taobao.taobao</span><br><span class="line"></span><br><span class="line">dev:结合 grep 搜索包名</span><br><span class="line">$ adb shell pm list package | grep -i z</span><br><span class="line">package:ru.zdevs.zarchiver</span><br><span class="line"></span><br><span class="line">查询进程优先级</span><br><span class="line">adb shell dumpsys meminfo</span><br></pre></td></tr></table></figure>
 
 <h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Gradle</span><br><span class="line">查看主要的任务</span><br><span class="line">./gradlew tasks </span><br><span class="line">查看所有任务，包括缓存任务</span><br><span class="line">./gradlew tasks --all</span><br><span class="line">调试模式构建并打印堆栈日志</span><br><span class="line">./gradlew build --info --debug --stacktrace</span><br></pre></td></tr></table></figure>
 
@@ -1146,8 +1309,18 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
   </entry>
   <entry>
     <title>Android-APK的资源加载</title>
-    <url>/2021/07/27/android-%E5%A4%96%E6%8C%82%E7%AF%87/</url>
-    <content><![CDATA[<h1 id="APK的资源加载"><a href="#APK的资源加载" class="headerlink" title="APK的资源加载"></a>APK的资源加载</h1><h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>]]></content>
+    <url>/2021/07/27/Android-APK%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/</url>
+    <content><![CDATA[<h1 id="APK的资源"><a href="#APK的资源" class="headerlink" title="APK的资源"></a>APK的资源</h1><p>Android 资源大概分为两个部分：assets 和 res </p>
+<h2 id="assets-资源"><a href="#assets-资源" class="headerlink" title="assets 资源"></a>assets 资源</h2><p>assets 资源放在 assets 目录下，它里面保存一些原始的文件，可以以任何方式来进行组织，这些文件最终会原封不动的被打包进 APK 文件中，通过AssetManager 来获取 asset 资源，代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AssetManager assetManager = context.getAssets();</span><br><span class="line">InputStream is = assetManager.open(&quot;fileName&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="res-资源"><a href="#res-资源" class="headerlink" title="res 资源"></a>res 资源</h2><p>res 资源放在主工程的 res 目录下，这类资源一般都会在编译阶段生成一个资源 ID 供我们使用，res 目录包括 animator、anim、 color、drawable、layout、menu、raw、values、XML等，通过 getResource() 去获取 Resources 对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Resources res = getContext().getResources();</span><br></pre></td></tr></table></figure>
+
+<p>在APK的生成过程中，会生成资源索引表 <strong>resources.arsc</strong> 文件和 <strong>R.java文件</strong></p>
+<p><a href="https://zhupengbo.com/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/">APK构建指南</a> 关于R.id 请看这里。</p>
+<p>resources.arsc 资源索引表 </p>
+<h2 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a>AssetManager</h2><h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1371,6 +1544,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -1478,30 +1675,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
