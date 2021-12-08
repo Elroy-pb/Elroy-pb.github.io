@@ -414,6 +414,17 @@
       </tags>
   </entry>
   <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-性能优化-启动优化</title>
     <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
@@ -486,17 +497,6 @@
 <!-- ## 启动过慢的表现 -->
 
 <h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1056,6 +1056,58 @@
       </tags>
   </entry>
   <entry>
+    <title>Java-并发篇-1</title>
+    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
+    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-内存篇</title>
+    <url>/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/</url>
+    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&mid=2648464745&idx=1&sn=374b770823d0a9e9677386160e57f71c&chksm=876600ccb01189dac48a843f71d39521c5bbc6cb6afb113e9d90ef7211c22d579a23c20cd8c5&scene=21#wechat_redirect">漫画解说 “内存映射”</a></p>
+<hr>
+<h1 id="内存是什么-—-RAM-Definition"><a href="#内存是什么-—-RAM-Definition" class="headerlink" title="内存是什么 — RAM Definition"></a>内存是什么 — RAM Definition</h1><blockquote>
+<p>Memory,as it’s used with regard to computer, most commonly refers to semicondutor devices whose contents can be accessed(i.e., read and written to) at extremely high speeds but which are retained only temporarily(i.e.,which in use or,at most,while the power supply remains on).<br>内存，因为它被用于计算机，最常指的是<strong>半导体的设备</strong>，其内容可以用极高速度访问(即读取和写入)，但只能暂时保留。</p>
+</blockquote>
+<p>运行内存又可划分为虚拟内存和物理内存</p>
+<h2 id="Virtual-memory-Definition-虚拟内存"><a href="#Virtual-memory-Definition-虚拟内存" class="headerlink" title="Virtual memory Definition (虚拟内存)"></a>Virtual memory Definition (虚拟内存)</h2><blockquote>
+<p>Virtual memory is the use of space on a hard disk (HDD) is simulate additional main memory</p>
+</blockquote>
+<blockquote>
+<p>译：虚拟内存是使用硬盘 (HDD) 上的空间来模拟额外的主内存 </p>
+</blockquote>
+<h2 id="主内存—物理内存"><a href="#主内存—物理内存" class="headerlink" title="主内存—物理内存"></a>主内存—物理内存</h2><p>通俗易懂就是你现在电脑或者手机配置，在系统属性上写着RAM 8G就是你的物理内存的大小</p>
+<h2 id="Other-Types-of-Memory-其他内存的模型"><a href="#Other-Types-of-Memory-其他内存的模型" class="headerlink" title="Other Types of Memory (其他内存的模型)"></a>Other Types of Memory (其他内存的模型)</h2><blockquote>
+<p>The most basic of them is read-only memory(ROM),whose contents are written in at the factory and thereafter cannot be erased or rewritten.</p>
+</blockquote>
+<hr>
+<h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><p><a href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
+<h1 id="Linux十万个为什么"><a href="#Linux十万个为什么" class="headerlink" title="Linux十万个为什么"></a>Linux十万个为什么</h1><h1 id="虚拟内存为什么会设计出来"><a href="#虚拟内存为什么会设计出来" class="headerlink" title="虚拟内存为什么会设计出来"></a>虚拟内存为什么会设计出来</h1><p>在早期的计算机中，程序是直接运行在物理内存上的，那个时候的计算机和程序内存都很小。程序运行时会把其全部加载到内存，只要程序所需的内存不超过计算机剩余内存就不会出现问题。</p>
+<p>但由于程序是可以直接访问物理内存的，这也带来了内存数据的不安全性，轻则程序挂掉，重则操作系统崩溃。</p>
+<p>所以，我们希望程序间的内存数据是安全的互不影响的。同时计算机程序直接运行在物理内存上也导致了内存使用率较低，程序运行内存地址不确定，不同的运行顺序甚至会出错。此时在程序的执行过程中，已经存在着大量在物理内存和硬盘之间的数据交换过程。</p>
+<p>基于以上问题，那我们可以是不是考虑在物理内存之上增加一个中间层，让程序通过虚拟地址去间接的访问物理内存呢。通过虚拟内存，每个进程好像都可以独占内存一样，每个进程看到的内存都是一致的，这称为虚拟地址空间。</p>
+<p>（这种思想在现在也用的很广泛，例如很多优秀的中间层：Nginx、Redis 等等）</p>
+<p>这样只要系统处理好虚拟地址到物理地址的映射关系，就可以保证不同的程序访问不同的内存区域，就可以达到物理内存地址隔离的效果，进而保证数据的安全性</p>
+<h1 id="内存映射是什么"><a href="#内存映射是什么" class="headerlink" title="内存映射是什么"></a>内存映射是什么</h1><p>关于内存映射，首先要明白什么是<strong>虚拟内存</strong>和<strong>物理内存</strong> 。<br>虚拟内存与物理内存的映射关系是通过 <strong>页表</strong>。<br>页表通过内存页进行映射</p>
+<h1 id="页表是什么"><a href="#页表是什么" class="headerlink" title="页表是什么"></a>页表是什么</h1><blockquote>
+<p>但 页表 并不是按字节来进行映射的，而是按照 内存页 为单位进行映射，一般一个 内存页 的大小为 4KB（为什么要加一般呢，这是因为除了4KB，还有其他大小的内存页，如2MB，4MB，1GB等），页表 的每一个 页表项 都保存着物理内存页的地址。</p>
+</blockquote>
+<blockquote>
+<p> 所以，4GB 的虚拟内存空间需要 1MB 大小的页表来关联（因为 4GB / 4KB = 1MB）。也就是说，0 ~ 4095 的虚拟内存地址都是使用 页表 的第一个 页表项 来映射的，而 4096 ~ 8191 的虚拟内存地址使用 页表 的第二个 页表项 来映射的，以此类推..</p>
+</blockquote>
+<h1 id="cr3是什么"><a href="#cr3是什么" class="headerlink" title="cr3是什么"></a>cr3是什么</h1><p>cr3 是 CPU 中的一个寄存器，用于保存 <strong>页表</strong> 的物理内存地址，通过这个寄存器就能找到进程的 <strong>页表</strong> 了</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java-接口和内部类</title>
     <url>/2021/10/03/Java-%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB/</url>
     <content><![CDATA[<!-- 接口和内部类 -->
@@ -1138,134 +1190,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java-并发篇-1</title>
-    <url>/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/</url>
-    <content><![CDATA[<p><a href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
-]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux-内存篇</title>
-    <url>/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/</url>
-    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&mid=2648464745&idx=1&sn=374b770823d0a9e9677386160e57f71c&chksm=876600ccb01189dac48a843f71d39521c5bbc6cb6afb113e9d90ef7211c22d579a23c20cd8c5&scene=21#wechat_redirect">漫画解说 “内存映射”</a></p>
-<hr>
-<h1 id="内存是什么-—-RAM-Definition"><a href="#内存是什么-—-RAM-Definition" class="headerlink" title="内存是什么 — RAM Definition"></a>内存是什么 — RAM Definition</h1><blockquote>
-<p>Memory,as it’s used with regard to computer, most commonly refers to semicondutor devices whose contents can be accessed(i.e., read and written to) at extremely high speeds but which are retained only temporarily(i.e.,which in use or,at most,while the power supply remains on).<br>内存，因为它被用于计算机，最常指的是<strong>半导体的设备</strong>，其内容可以用极高速度访问(即读取和写入)，但只能暂时保留。</p>
-</blockquote>
-<p>运行内存又可划分为虚拟内存和物理内存</p>
-<h2 id="Virtual-memory-Definition-虚拟内存"><a href="#Virtual-memory-Definition-虚拟内存" class="headerlink" title="Virtual memory Definition (虚拟内存)"></a>Virtual memory Definition (虚拟内存)</h2><blockquote>
-<p>Virtual memory is the use of space on a hard disk (HDD) is simulate additional main memory</p>
-</blockquote>
-<blockquote>
-<p>译：虚拟内存是使用硬盘 (HDD) 上的空间来模拟额外的主内存 </p>
-</blockquote>
-<h2 id="主内存—物理内存"><a href="#主内存—物理内存" class="headerlink" title="主内存—物理内存"></a>主内存—物理内存</h2><p>通俗易懂就是你现在电脑或者手机配置，在系统属性上写着RAM 8G就是你的物理内存的大小</p>
-<h2 id="Other-Types-of-Memory-其他内存的模型"><a href="#Other-Types-of-Memory-其他内存的模型" class="headerlink" title="Other Types of Memory (其他内存的模型)"></a>Other Types of Memory (其他内存的模型)</h2><blockquote>
-<p>The most basic of them is read-only memory(ROM),whose contents are written in at the factory and thereafter cannot be erased or rewritten.</p>
-</blockquote>
-<hr>
-<h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><p><a href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
-<h1 id="Linux十万个为什么"><a href="#Linux十万个为什么" class="headerlink" title="Linux十万个为什么"></a>Linux十万个为什么</h1><h1 id="虚拟内存为什么会设计出来"><a href="#虚拟内存为什么会设计出来" class="headerlink" title="虚拟内存为什么会设计出来"></a>虚拟内存为什么会设计出来</h1><p>在早期的计算机中，程序是直接运行在物理内存上的，那个时候的计算机和程序内存都很小。程序运行时会把其全部加载到内存，只要程序所需的内存不超过计算机剩余内存就不会出现问题。</p>
-<p>但由于程序是可以直接访问物理内存的，这也带来了内存数据的不安全性，轻则程序挂掉，重则操作系统崩溃。</p>
-<p>所以，我们希望程序间的内存数据是安全的互不影响的。同时计算机程序直接运行在物理内存上也导致了内存使用率较低，程序运行内存地址不确定，不同的运行顺序甚至会出错。此时在程序的执行过程中，已经存在着大量在物理内存和硬盘之间的数据交换过程。</p>
-<p>基于以上问题，那我们可以是不是考虑在物理内存之上增加一个中间层，让程序通过虚拟地址去间接的访问物理内存呢。通过虚拟内存，每个进程好像都可以独占内存一样，每个进程看到的内存都是一致的，这称为虚拟地址空间。</p>
-<p>（这种思想在现在也用的很广泛，例如很多优秀的中间层：Nginx、Redis 等等）</p>
-<p>这样只要系统处理好虚拟地址到物理地址的映射关系，就可以保证不同的程序访问不同的内存区域，就可以达到物理内存地址隔离的效果，进而保证数据的安全性</p>
-<h1 id="内存映射是什么"><a href="#内存映射是什么" class="headerlink" title="内存映射是什么"></a>内存映射是什么</h1><p>关于内存映射，首先要明白什么是<strong>虚拟内存</strong>和<strong>物理内存</strong> 。<br>虚拟内存与物理内存的映射关系是通过 <strong>页表</strong>。<br>页表通过内存页进行映射</p>
-<h1 id="页表是什么"><a href="#页表是什么" class="headerlink" title="页表是什么"></a>页表是什么</h1><blockquote>
-<p>但 页表 并不是按字节来进行映射的，而是按照 内存页 为单位进行映射，一般一个 内存页 的大小为 4KB（为什么要加一般呢，这是因为除了4KB，还有其他大小的内存页，如2MB，4MB，1GB等），页表 的每一个 页表项 都保存着物理内存页的地址。</p>
-</blockquote>
-<blockquote>
-<p> 所以，4GB 的虚拟内存空间需要 1MB 大小的页表来关联（因为 4GB / 4KB = 1MB）。也就是说，0 ~ 4095 的虚拟内存地址都是使用 页表 的第一个 页表项 来映射的，而 4096 ~ 8191 的虚拟内存地址使用 页表 的第二个 页表项 来映射的，以此类推..</p>
-</blockquote>
-<h1 id="cr3是什么"><a href="#cr3是什么" class="headerlink" title="cr3是什么"></a>cr3是什么</h1><p>cr3 是 CPU 中的一个寄存器，用于保存 <strong>页表</strong> 的物理内存地址，通过这个寄存器就能找到进程的 <strong>页表</strong> 了</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux-进程与线程</title>
-    <url>/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>名词是对客观事物的指代，形容词是对客观事物的描述。</p>
-<p>进程和线程又分别是什么? 进程和线程区别到底是什么?<br>带着简单的疑问，我们慢慢往下看看，本文不会过多章节去分析代码，而是比较多去谈自己的理解！</p>
-<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>进程是<strong>操作系统</strong>分配资源的最小单位,线程是调度的基本单位,线程之间共享进程资源。</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>其实就这么简单的一句话，就可以引申出很多概念。<br>逆向思维(反推)，从已有的结果出发挖掘更多的可能性.  </p>
-<blockquote>
-<p>到底线程之间共享了哪些进程资源？<br>共享资源意味着什么？<br>共享资源这种机制是如何实现的？<br>线程有哪些是线程私有的  </p>
-</blockquote>
-<h3 id="计算机扩展概念"><a href="#计算机扩展概念" class="headerlink" title="计算机扩展概念"></a>计算机扩展概念</h3><p>其实无论是谈生意也好，还是谈工作也好，首先必须要解决一个问题，就是明确主题和双方信息差的问题！<br>为了更好的理解，我们需要了解一些基础的计算机知识(linux)。具体文献请参考原文</p>
-<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a><a href="http://www.linfo.org/cpu.html">CPU</a></h3><blockquote>
-<p>A CPU contains three main sections: (1) <strong>an arithmetic/logic unit</strong>, (2) <strong>a control unit</strong> and (3) <strong><a href="http://www.linfo.org/register.html">registers</a></strong>. The arithmetic/logic unit contains circuitry that performs data manipulation. The control unit consists of circuitry for coordinating the machine’s activities. The registers are high speed memory cells that are used for holding instructions for data that is currently being processed.  </p>
-</blockquote>
-<p>CPU 包含三个主要部分：(1)<strong>算术/逻辑单元</strong>，(2)<strong>控制单元</strong>和 (3)<strong>寄存器</strong>。<br>算术/逻辑单元包含执行数据操作的电路。<br>控制单元由用于协调机器活动的电路组成。<br>寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
-<h3 id="Register-Definition-—-寄存器"><a href="#Register-Definition-—-寄存器" class="headerlink" title="Register Definition — 寄存器"></a><a href="http://www.linfo.org/register.html">Register Definition</a> — 寄存器</h3><blockquote>
-<p>A register is a very small amount of very fast memory that is built into the CPU (central processing unit) in order to speed up its operations by providing quick access to commonly used values.<br>寄存器是非常快又微型的存储器内置于Cpu，是通过访问快速提供的值,已加快Cpu(中央处理单元)的操作</p>
-</blockquote>
-<p>作用:寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
-<p>专用寄存器存储内部 CPU 数据，例如程序计数器（也称为指令指针）、堆栈指针和状态寄存器。</p>
-<h4 id="寄存器概念扩展"><a href="#寄存器概念扩展" class="headerlink" title="寄存器概念扩展"></a>寄存器概念扩展</h4><p>寄存器是存储器层次结构的顶部，是系统操作数据的最快方式。<br>在它们下面是几个级别的高速缓存，至少其中一些也内置在 CPU 中，而其中一些可能在其他专用芯片上。高速缓存比寄存器慢，但要丰富得多。在不同级别的高速缓存之下是主存储器，它更慢但更丰富（例如，与只有 32 个寄存器相比，数百兆字节）。但反过来，它仍然比存储设备和媒体（例如，硬盘驱动器和 CDROM）快得多，容量也小得多。</p>
-<h4 id="其他作用"><a href="#其他作用" class="headerlink" title="其他作用"></a>其他作用</h4><p><strong>指令寄存器</strong>保存CPU正在执行的指令。<br><strong>地址寄存器</strong>保存内存地址，用于访问内存。<br><strong>数据寄存器</strong>用于存储整数。  </p>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><blockquote>
-<p>线程运行的本质就是函数。<br>函数的执行总会有一个源头，这个源头就是所谓的入口函数，相当于java的main的函数，<em>CPU</em> 从入口函数开始执行从而形成一个执行流，只不过我们人为的给执行流起一个名字，这个名字就叫线程。  </p>
-</blockquote>
-<h3 id="线程私有"><a href="#线程私有" class="headerlink" title="线程私有"></a>线程私有</h3><p>凡事从本质出发，我们就要去分析函数包含了些哪些信息。线程之间既然共享了进程资源，那就会对应不共享的资源，也就是线程私有资源<br>函数运行时的信息包含了栈帧中，栈帧中保存了函数的返回值，调用其他函数的参数，局部变量，该函数的寄存器初始值。  </p>
-<p><img src="%E5%87%BD%E6%95%B0%E4%BF%A1%E6%81%AF.jpeg" alt="函数信息"></p>
-<p>这里延伸出一个问题，因为线程是可以被操作系统随时暂停运行的和恢复运行的，那是怎么做到的？<br>可以通过保存以及恢复程序计数器的值就可以知道线程的从哪里运行又从哪里开始。</p>
-<p>由于每个线程的本质都是函数的运行，函数运行时的信息是保存在栈中的，因此<strong>每个线程都有对应自己独立，私有的栈区</strong></p>
-<p><img src="%E7%BA%BF%E7%A8%8B%E6%A0%88%E5%8C%BA.jpeg" alt="线程私有"></p>
-<p>同时像函数的局部变量也是存放到寄存器之中，运行完就释放掉，回收内存。</p>
-<p>所属线程的栈区，程序计数器，栈指针以及函数运行使用的寄存器都是线程私有的。</p>
-<h3 id="线程间的共享"><a href="#线程间的共享" class="headerlink" title="线程间的共享"></a>线程间的共享</h3><h4 id="代码区"><a href="#代码区" class="headerlink" title="代码区"></a>代码区</h4><p>编译后的可执行机器指令,从可执行文件中加载到内存的，可执行程序中的代码区就是用来初始化进程地址空间中的代码区的。</p>
-<h4 id="数据区"><a href="#数据区" class="headerlink" title="数据区"></a>数据区</h4><p>进程地址空间中的数据区，这里存放的就是所谓的全局变量。<br>全局变量简单的理解，一般不会被系统回收的变量，即使函数执行完后该变量依然存在，对于其他线程也是可见的 </p>
-<h4 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h4><p>对象存放的地址空间，可被GC。<br>变量的地址，也就是指针。<br>任何一个线程都可以访问指针指向的数据，因此堆区也是线程共享的属于进程的资源。</p>
-<h4 id="栈区"><a href="#栈区" class="headerlink" title="栈区"></a>栈区</h4><p>因为线程不像进程，进程是互相隔离，且独立。<br>如果一个线程能拿到来自另一个线程栈帧上的指针，那么该线程就可以改变另一个线程的栈区，也就是说这些线程可以任意修改本属于另一个线程栈区中的变量。<br>一个线程的栈区对其它线程是可以见的，也就是说我们可以修改属于任何一个线程的栈区  </p>
-<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>如果程序在运行过程中打开了一些文件，那么进程地址空间中还保存有打开的文件信息，进程打开的文件也可以被所有的线程使用，这也属于线程间的共享资源。</p>
-<p>如图<br><img src="%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB.jpeg" alt="线程共享"><br>线程共享的地址，除了线程上下文的信息  </p>
-<p>对于这个地方，我们引入java虚拟机<br>如图<br><img src="jvm.jpeg" alt="线程共享">  </p>
-<p>这里再扩展一下,jdk.1.8.0其实以及取消了方法区,与之对于的是元空间</p>
-<ul>
-<li>以下jdk1.8 的标准（）<ul>
-<li> 移除了永久代（PermGen），替换为元空间（Metaspace）；</li>
-<li> 永久代中的 class metadata 转移到了 native memory（本地内存，而不是虚拟机）；</li>
-<li> 永久代中的 interned Strings 和 class static variables 转移到了 Java heap；<br>永久代参数 （PermSize MaxPermSize） -&gt; 元空间参数（MetaspaceSize MaxMetaspaceSize） </li>
-</ul>
-</li>
-</ul>
-<p><img src="jdk-1.8.0.png" alt="jdk-1.8.0.png">  </p>
-<p>其实以下的概念我们都在上文讲过:</p>
-<h3 id="java线程私有："><a href="#java线程私有：" class="headerlink" title="java线程私有："></a>java线程私有：</h3><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>• 程序计数器：<br>    1. 每一个线程都需要有独立的计数器，各个线程互不干扰，独立存储<br>    2. 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制<br>    3. 在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。<br>注意：程序计数器是唯一一个不会出现 OutOfMemoryError 的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡 </p>
-<h4 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h4><p>• Java虚拟机栈：<br>• 描述的是 Java 方法执行的内存模型，每次方法调用的数据都是通过栈传递的。<br>• 栈内存(Stack),其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。<br>• Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。  </p>
-<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>• 本地方法栈<br>• 虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。  </p>
-<ul>
-<li>线程共享:<br>• 堆<br>• 方法区<br>• 直接内存(非运行时数据区）<br>直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致 OutOfMemoryError 异常出现。<br>本机直接内存的分配不会收到 Java 堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。    </li>
-</ul>
-<!-- ### Android十万个为什么 
-#### Android中的context
-很多人面试包括开发，最常遇到的一个名词就是Context，就是android的上下文，但是很多开发者其实不知道Context代表了什么意思，这里我的理解是 (格外提一点 寄存器是多个，不是一个)
-> 线程的栈区 + 程序计数器 + 栈指针 + 函数运行使用的寄存器 = 上下文
-
-Android操作系统可以随时中断并且回复正常，依靠的就是线程上下文。
-
-这里要引入一个概念：除了CPU以外所有的执行环境，主要是寄存器的一些内容，就构成了的进程的上下文环境。进程的上下文是进程执行的环境。当这个程序执行完了，或者分配给他的CPU时间片用完了，那它就要被切换出去，等待下一次CPU的临幸。在被切换出去做的主要工作就是保存程序上下文，因为这个是下次他被CPU临幸的运行环境，必须保存 -->
-
-<!-- 作者：zhonyong
-链接：https://www.zhihu.com/question/25532384/answer/81152571
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android-APK构建流程</title>
     <url>/2021/07/26/android-APK%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h1 id="Apk构建流程"><a href="#Apk构建流程" class="headerlink" title="Apk构建流程"></a>Apk构建流程</h1><h2 id="Apk是什么"><a href="#Apk是什么" class="headerlink" title="Apk是什么"></a>Apk是什么</h2><p>维基百科，自由的百科全书<br>跳到导航跳到搜索<br>APK<br>APK format icon (2014-2019).png<br>扩展名    .apk、.xapk、.apks、.apkm<br>互联网媒体类型    application/vnd.android.package-archive<br>格式类型    包管理器 存档文件<br>专门属    软件包<br>延伸自    JAR 和 ZIP</p>
@@ -1344,6 +1268,82 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-进程与线程</title>
+    <url>/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>名词是对客观事物的指代，形容词是对客观事物的描述。</p>
+<p>进程和线程又分别是什么? 进程和线程区别到底是什么?<br>带着简单的疑问，我们慢慢往下看看，本文不会过多章节去分析代码，而是比较多去谈自己的理解！</p>
+<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>进程是<strong>操作系统</strong>分配资源的最小单位,线程是调度的基本单位,线程之间共享进程资源。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>其实就这么简单的一句话，就可以引申出很多概念。<br>逆向思维(反推)，从已有的结果出发挖掘更多的可能性.  </p>
+<blockquote>
+<p>到底线程之间共享了哪些进程资源？<br>共享资源意味着什么？<br>共享资源这种机制是如何实现的？<br>线程有哪些是线程私有的  </p>
+</blockquote>
+<h3 id="计算机扩展概念"><a href="#计算机扩展概念" class="headerlink" title="计算机扩展概念"></a>计算机扩展概念</h3><p>其实无论是谈生意也好，还是谈工作也好，首先必须要解决一个问题，就是明确主题和双方信息差的问题！<br>为了更好的理解，我们需要了解一些基础的计算机知识(linux)。具体文献请参考原文</p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a><a href="http://www.linfo.org/cpu.html">CPU</a></h3><blockquote>
+<p>A CPU contains three main sections: (1) <strong>an arithmetic/logic unit</strong>, (2) <strong>a control unit</strong> and (3) <strong><a href="http://www.linfo.org/register.html">registers</a></strong>. The arithmetic/logic unit contains circuitry that performs data manipulation. The control unit consists of circuitry for coordinating the machine’s activities. The registers are high speed memory cells that are used for holding instructions for data that is currently being processed.  </p>
+</blockquote>
+<p>CPU 包含三个主要部分：(1)<strong>算术/逻辑单元</strong>，(2)<strong>控制单元</strong>和 (3)<strong>寄存器</strong>。<br>算术/逻辑单元包含执行数据操作的电路。<br>控制单元由用于协调机器活动的电路组成。<br>寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
+<h3 id="Register-Definition-—-寄存器"><a href="#Register-Definition-—-寄存器" class="headerlink" title="Register Definition — 寄存器"></a><a href="http://www.linfo.org/register.html">Register Definition</a> — 寄存器</h3><blockquote>
+<p>A register is a very small amount of very fast memory that is built into the CPU (central processing unit) in order to speed up its operations by providing quick access to commonly used values.<br>寄存器是非常快又微型的存储器内置于Cpu，是通过访问快速提供的值,已加快Cpu(中央处理单元)的操作</p>
+</blockquote>
+<p>作用:寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
+<p>专用寄存器存储内部 CPU 数据，例如程序计数器（也称为指令指针）、堆栈指针和状态寄存器。</p>
+<h4 id="寄存器概念扩展"><a href="#寄存器概念扩展" class="headerlink" title="寄存器概念扩展"></a>寄存器概念扩展</h4><p>寄存器是存储器层次结构的顶部，是系统操作数据的最快方式。<br>在它们下面是几个级别的高速缓存，至少其中一些也内置在 CPU 中，而其中一些可能在其他专用芯片上。高速缓存比寄存器慢，但要丰富得多。在不同级别的高速缓存之下是主存储器，它更慢但更丰富（例如，与只有 32 个寄存器相比，数百兆字节）。但反过来，它仍然比存储设备和媒体（例如，硬盘驱动器和 CDROM）快得多，容量也小得多。</p>
+<h4 id="其他作用"><a href="#其他作用" class="headerlink" title="其他作用"></a>其他作用</h4><p><strong>指令寄存器</strong>保存CPU正在执行的指令。<br><strong>地址寄存器</strong>保存内存地址，用于访问内存。<br><strong>数据寄存器</strong>用于存储整数。  </p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><blockquote>
+<p>线程运行的本质就是函数。<br>函数的执行总会有一个源头，这个源头就是所谓的入口函数，相当于java的main的函数，<em>CPU</em> 从入口函数开始执行从而形成一个执行流，只不过我们人为的给执行流起一个名字，这个名字就叫线程。  </p>
+</blockquote>
+<h3 id="线程私有"><a href="#线程私有" class="headerlink" title="线程私有"></a>线程私有</h3><p>凡事从本质出发，我们就要去分析函数包含了些哪些信息。线程之间既然共享了进程资源，那就会对应不共享的资源，也就是线程私有资源<br>函数运行时的信息包含了栈帧中，栈帧中保存了函数的返回值，调用其他函数的参数，局部变量，该函数的寄存器初始值。  </p>
+<p><img src="%E5%87%BD%E6%95%B0%E4%BF%A1%E6%81%AF.jpeg" alt="函数信息"></p>
+<p>这里延伸出一个问题，因为线程是可以被操作系统随时暂停运行的和恢复运行的，那是怎么做到的？<br>可以通过保存以及恢复程序计数器的值就可以知道线程的从哪里运行又从哪里开始。</p>
+<p>由于每个线程的本质都是函数的运行，函数运行时的信息是保存在栈中的，因此<strong>每个线程都有对应自己独立，私有的栈区</strong></p>
+<p><img src="%E7%BA%BF%E7%A8%8B%E6%A0%88%E5%8C%BA.jpeg" alt="线程私有"></p>
+<p>同时像函数的局部变量也是存放到寄存器之中，运行完就释放掉，回收内存。</p>
+<p>所属线程的栈区，程序计数器，栈指针以及函数运行使用的寄存器都是线程私有的。</p>
+<h3 id="线程间的共享"><a href="#线程间的共享" class="headerlink" title="线程间的共享"></a>线程间的共享</h3><h4 id="代码区"><a href="#代码区" class="headerlink" title="代码区"></a>代码区</h4><p>编译后的可执行机器指令,从可执行文件中加载到内存的，可执行程序中的代码区就是用来初始化进程地址空间中的代码区的。</p>
+<h4 id="数据区"><a href="#数据区" class="headerlink" title="数据区"></a>数据区</h4><p>进程地址空间中的数据区，这里存放的就是所谓的全局变量。<br>全局变量简单的理解，一般不会被系统回收的变量，即使函数执行完后该变量依然存在，对于其他线程也是可见的 </p>
+<h4 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h4><p>对象存放的地址空间，可被GC。<br>变量的地址，也就是指针。<br>任何一个线程都可以访问指针指向的数据，因此堆区也是线程共享的属于进程的资源。</p>
+<h4 id="栈区"><a href="#栈区" class="headerlink" title="栈区"></a>栈区</h4><p>因为线程不像进程，进程是互相隔离，且独立。<br>如果一个线程能拿到来自另一个线程栈帧上的指针，那么该线程就可以改变另一个线程的栈区，也就是说这些线程可以任意修改本属于另一个线程栈区中的变量。<br>一个线程的栈区对其它线程是可以见的，也就是说我们可以修改属于任何一个线程的栈区  </p>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>如果程序在运行过程中打开了一些文件，那么进程地址空间中还保存有打开的文件信息，进程打开的文件也可以被所有的线程使用，这也属于线程间的共享资源。</p>
+<p>如图<br><img src="%E7%BA%BF%E7%A8%8B%E5%85%B1%E4%BA%AB.jpeg" alt="线程共享"><br>线程共享的地址，除了线程上下文的信息  </p>
+<p>对于这个地方，我们引入java虚拟机<br>如图<br><img src="jvm.jpeg" alt="线程共享">  </p>
+<p>这里再扩展一下,jdk.1.8.0其实以及取消了方法区,与之对于的是元空间</p>
+<ul>
+<li>以下jdk1.8 的标准（）<ul>
+<li> 移除了永久代（PermGen），替换为元空间（Metaspace）；</li>
+<li> 永久代中的 class metadata 转移到了 native memory（本地内存，而不是虚拟机）；</li>
+<li> 永久代中的 interned Strings 和 class static variables 转移到了 Java heap；<br>永久代参数 （PermSize MaxPermSize） -&gt; 元空间参数（MetaspaceSize MaxMetaspaceSize） </li>
+</ul>
+</li>
+</ul>
+<p><img src="jdk-1.8.0.png" alt="jdk-1.8.0.png">  </p>
+<p>其实以下的概念我们都在上文讲过:</p>
+<h3 id="java线程私有："><a href="#java线程私有：" class="headerlink" title="java线程私有："></a>java线程私有：</h3><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>• 程序计数器：<br>    1. 每一个线程都需要有独立的计数器，各个线程互不干扰，独立存储<br>    2. 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制<br>    3. 在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。<br>注意：程序计数器是唯一一个不会出现 OutOfMemoryError 的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡 </p>
+<h4 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h4><p>• Java虚拟机栈：<br>• 描述的是 Java 方法执行的内存模型，每次方法调用的数据都是通过栈传递的。<br>• 栈内存(Stack),其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。<br>• Java 虚拟机栈会出现两种异常：StackOverFlowError 和 OutOfMemoryError。  </p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>• 本地方法栈<br>• 虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。  </p>
+<ul>
+<li>线程共享:<br>• 堆<br>• 方法区<br>• 直接内存(非运行时数据区）<br>直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致 OutOfMemoryError 异常出现。<br>本机直接内存的分配不会收到 Java 堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。    </li>
+</ul>
+<!-- ### Android十万个为什么 
+#### Android中的context
+很多人面试包括开发，最常遇到的一个名词就是Context，就是android的上下文，但是很多开发者其实不知道Context代表了什么意思，这里我的理解是 (格外提一点 寄存器是多个，不是一个)
+> 线程的栈区 + 程序计数器 + 栈指针 + 函数运行使用的寄存器 = 上下文
+
+Android操作系统可以随时中断并且回复正常，依靠的就是线程上下文。
+
+这里要引入一个概念：除了CPU以外所有的执行环境，主要是寄存器的一些内容，就构成了的进程的上下文环境。进程的上下文是进程执行的环境。当这个程序执行完了，或者分配给他的CPU时间片用完了，那它就要被切换出去，等待下一次CPU的临幸。在被切换出去做的主要工作就是保存程序上下文，因为这个是下次他被CPU临幸的运行环境，必须保存 -->
+
+<!-- 作者：zhonyong
+链接：https://www.zhihu.com/question/25532384/answer/81152571
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 -->]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1481,57 +1481,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>android-Handler机制-2</title>
-    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
-    <content><![CDATA[<table>
-<thead>
-<tr>
-<th align="left">Class</th>
-<th align="center">Name</th>
-<th align="left">DES</th>
-<th align="left">MORE</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Message</td>
-<td align="center">消息</td>
-<td align="left">使用了享元设计模式 链表的数据结构</td>
-<td align="left">详情</td>
-</tr>
-<tr>
-<td align="left">MessageQuene</td>
-<td align="center">消息队列</td>
-<td align="left">单链表的数据结构</td>
-<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
-</tr>
-<tr>
-<td align="left">Handler</td>
-<td align="center">message的处理者</td>
-<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">ThreadLocal</td>
-<td align="center">数据结构是键值对</td>
-<td align="left">只有在指定的线程可以获取到存储的数据</td>
-<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
-</tr>
-<tr>
-<td align="left">Looper</td>
-<td align="center">循环器</td>
-<td align="left"><img src="code_looper_1.jpg" alt="code_looper"></td>
-<td align="left">类Looper的prepare的函数,即是对Looper进行了初始化，将Looper对象引用保存在sThreadLocal中，先保证了Looper和Threadlocal-1V1关系,由于sThreadLocal获取的值是通过获取当前线程获取线程唯一的变量,这样就保证了一个线程只有一个looper</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -1642,6 +1591,57 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>android-Handler机制-2</title>
+    <url>/2021/07/27/android-Handler%E6%9C%BA%E5%88%B6-2/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th align="left">Class</th>
+<th align="center">Name</th>
+<th align="left">DES</th>
+<th align="left">MORE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Message</td>
+<td align="center">消息</td>
+<td align="left">使用了享元设计模式 链表的数据结构</td>
+<td align="left">详情</td>
+</tr>
+<tr>
+<td align="left">MessageQuene</td>
+<td align="center">消息队列</td>
+<td align="left">单链表的数据结构</td>
+<td align="left">优先级的队列 — 根据时间先后顺序排队的单链表</td>
+</tr>
+<tr>
+<td align="left">Handler</td>
+<td align="center">message的处理者</td>
+<td align="left">即线程间传递的对象，传递的信息包含在其中    Handler的构造函 ，在构造函数中初始化了一个Looper 和 MessageQueue。</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ThreadLocal</td>
+<td align="center">数据结构是键值对</td>
+<td align="left">只有在指定的线程可以获取到存储的数据</td>
+<td align="left">获取线程唯一的变量 Theadlocal value 线程内部的数据存储类,使用场景：当某些数据是以线程为作用域，并且不同线程具有不同的数据副本</td>
+</tr>
+<tr>
+<td align="left">Looper</td>
+<td align="center">循环器</td>
+<td align="left"><img src="code_looper_1.jpg" alt="code_looper"></td>
+<td align="left">类Looper的prepare的函数,即是对Looper进行了初始化，将Looper对象引用保存在sThreadLocal中，先保证了Looper和Threadlocal-1V1关系,由于sThreadLocal获取的值是通过获取当前线程获取线程唯一的变量,这样就保证了一个线程只有一个looper</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/07/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -1674,6 +1674,21 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机English词汇普及更正</title>
+    <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
+    <content><![CDATA[<p>acronym 缩写</p>
+<p>pertain 属于<br>pertaiing to 属于<br>Threadlocal values pertaining to this thread.<br>This map is maintained by the ThreadLocal class.  </p>
+<p>usages n 用途,用法</p>
+<p>To help deal with very large and long-lived usages, the hash table entries use WeakReferences for keys.<br>为了处理非常大和生命周期非常长的线程(<strong>usages</strong>)，哈希表使用弱引用作为 key。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1750,21 +1765,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机English词汇普及更正</title>
-    <url>/2021/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BAEnglish%E8%AF%8D%E6%B1%87%E6%99%AE%E5%8F%8A%E6%9B%B4%E6%AD%A3/</url>
-    <content><![CDATA[<p>acronym 缩写</p>
-<p>pertain 属于<br>pertaiing to 属于<br>Threadlocal values pertaining to this thread.<br>This map is maintained by the ThreadLocal class.  </p>
-<p>usages n 用途,用法</p>
-<p>To help deal with very large and long-lived usages, the hash table entries use WeakReferences for keys.<br>为了处理非常大和生命周期非常长的线程(<strong>usages</strong>)，哈希表使用弱引用作为 key。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
