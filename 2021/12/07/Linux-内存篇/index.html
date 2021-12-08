@@ -29,7 +29,7 @@
 <meta property="og:description" content="内存学习之路-1">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-07T03:09:50.703Z">
-<meta property="article:modified_time" content="2021-12-07T11:17:54.344Z">
+<meta property="article:modified_time" content="2021-12-08T10:49:59.487Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -133,12 +133,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">8</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">9</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">29</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">31</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-12-07 11:09:50 / Modified: 19:17:54" itemprop="dateCreated datePublished" datetime="2021-12-07T11:09:50+08:00">2021-12-07</time>
+              <time title="Created: 2021-12-07 11:09:50" itemprop="dateCreated datePublished" datetime="2021-12-07T11:09:50+08:00">2021-12-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-08 18:49:59" itemprop="dateModified" datetime="2021-12-08T18:49:59+08:00">2021-12-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,16 +266,23 @@
 
       
         <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&mid=2648464745&idx=1&sn=374b770823d0a9e9677386160e57f71c&chksm=876600ccb01189dac48a843f71d39521c5bbc6cb6afb113e9d90ef7211c22d579a23c20cd8c5&scene=21#wechat_redirect">漫画解说 “内存映射”</a></p>
-<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h1 id="RAM-Definition-内存"><a href="#RAM-Definition-内存" class="headerlink" title="RAM Definition (内存)"></a>RAM Definition (内存)</h1><blockquote>
+<hr>
+<h1 id="内存是什么-—-RAM-Definition"><a href="#内存是什么-—-RAM-Definition" class="headerlink" title="内存是什么 — RAM Definition"></a>内存是什么 — RAM Definition</h1><blockquote>
 <p>Memory,as it’s used with regard to computer, most commonly refers to semicondutor devices whose contents can be accessed(i.e., read and written to) at extremely high speeds but which are retained only temporarily(i.e.,which in use or,at most,while the power supply remains on).<br>内存，因为它被用于计算机，最常指的是<strong>半导体的设备</strong>，其内容可以用极高速度访问(即读取和写入)，但只能暂时保留。</p>
 </blockquote>
+<p>运行内存又可划分为虚拟内存和物理内存</p>
 <h2 id="Virtual-memory-Definition-虚拟内存"><a href="#Virtual-memory-Definition-虚拟内存" class="headerlink" title="Virtual memory Definition (虚拟内存)"></a>Virtual memory Definition (虚拟内存)</h2><blockquote>
 <p>Virtual memory is the use of space on a hard disk (HDD) is simulate additional main memory</p>
 </blockquote>
-<h2 id="物理内存"><a href="#物理内存" class="headerlink" title="物理内存"></a>物理内存</h2><p>通俗易懂就是你现在电脑或者手机配置，在系统属性上写着RAM 8G就是你的物理内存的大小</p>
-<h1 id="Other-Types-of-Memory-其他内存的模型"><a href="#Other-Types-of-Memory-其他内存的模型" class="headerlink" title="Other Types of Memory (其他内存的模型)"></a>Other Types of Memory (其他内存的模型)</h1><blockquote>
+<blockquote>
+<p>译：虚拟内存是使用硬盘 (HDD) 上的空间来模拟额外的主内存 </p>
+</blockquote>
+<h2 id="主内存—物理内存"><a href="#主内存—物理内存" class="headerlink" title="主内存—物理内存"></a>主内存—物理内存</h2><p>通俗易懂就是你现在电脑或者手机配置，在系统属性上写着RAM 8G就是你的物理内存的大小</p>
+<h2 id="Other-Types-of-Memory-其他内存的模型"><a href="#Other-Types-of-Memory-其他内存的模型" class="headerlink" title="Other Types of Memory (其他内存的模型)"></a>Other Types of Memory (其他内存的模型)</h2><blockquote>
 <p>The most basic of them is read-only memory(ROM),whose contents are written in at the factory and thereafter cannot be erased or rewritten.</p>
 </blockquote>
+<hr>
+<h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><p><a target="_blank" rel="noopener" href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
 <h1 id="Linux十万个为什么"><a href="#Linux十万个为什么" class="headerlink" title="Linux十万个为什么"></a>Linux十万个为什么</h1><h1 id="虚拟内存为什么会设计出来"><a href="#虚拟内存为什么会设计出来" class="headerlink" title="虚拟内存为什么会设计出来"></a>虚拟内存为什么会设计出来</h1><p>在早期的计算机中，程序是直接运行在物理内存上的，那个时候的计算机和程序内存都很小。程序运行时会把其全部加载到内存，只要程序所需的内存不超过计算机剩余内存就不会出现问题。</p>
 <p>但由于程序是可以直接访问物理内存的，这也带来了内存数据的不安全性，轻则程序挂掉，重则操作系统崩溃。</p>
 <p>所以，我们希望程序间的内存数据是安全的互不影响的。同时计算机程序直接运行在物理内存上也导致了内存使用率较低，程序运行内存地址不确定，不同的运行顺序甚至会出错。此时在程序的执行过程中，已经存在着大量在物理内存和硬盘之间的数据交换过程。</p>
@@ -305,7 +318,10 @@
     <a href="/2021/11/29/Android%E5%BC%80%E5%8F%91%E8%B5%84%E6%BA%90%E6%B1%87%E6%80%BB/" rel="prev" title="Android开发资源汇总">
       <i class="fa fa-chevron-left"></i> Android开发资源汇总
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/08/Code-%E5%BF%83%E5%BE%97%E8%AE%B0%E5%BD%95/" rel="next" title="Code-心得记录">
+      Code-心得记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -364,7 +380,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAM-Definition-%E5%86%85%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">RAM Definition (内存)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory-Definition-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">3.1.</span> <span class="nav-text">Virtual memory Definition (虚拟内存)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">3.2.</span> <span class="nav-text">物理内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-Types-of-Memory-%E5%85%B6%E4%BB%96%E5%86%85%E5%AD%98%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">Other Types of Memory (其他内存的模型)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">5.</span> <span class="nav-text">Linux十万个为什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AE%BE%E8%AE%A1%E5%87%BA%E6%9D%A5"><span class="nav-number">6.</span> <span class="nav-text">虚拟内存为什么会设计出来</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">7.</span> <span class="nav-text">内存映射是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">8.</span> <span class="nav-text">页表是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cr3%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">9.</span> <span class="nav-text">cr3是什么</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88-%E2%80%94-RAM-Definition"><span class="nav-number">2.</span> <span class="nav-text">内存是什么 — RAM Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory-Definition-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">Virtual memory Definition (虚拟内存)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E2%80%94%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">主内存—物理内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Types-of-Memory-%E5%85%B6%E4%BB%96%E5%86%85%E5%AD%98%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">Other Types of Memory (其他内存的模型)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">内存管理的基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">Linux十万个为什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AE%BE%E8%AE%A1%E5%87%BA%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">虚拟内存为什么会设计出来</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text">内存映射是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">7.</span> <span class="nav-text">页表是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cr3%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">8.</span> <span class="nav-text">cr3是什么</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -380,18 +396,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
