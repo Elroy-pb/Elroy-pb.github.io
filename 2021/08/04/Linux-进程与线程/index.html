@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/jvm.jpeg">
 <meta property="og:image" content="http://example.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/jdk-1.8.0.png">
 <meta property="article:published_time" content="2021-08-04T02:13:30.000Z">
-<meta property="article:modified_time" content="2021-12-08T09:38:38.821Z">
+<meta property="article:modified_time" content="2021-12-09T03:35:53.906Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -144,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">31</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">33</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-08 17:38:38" itemprop="dateModified" datetime="2021-12-08T17:38:38+08:00">2021-12-08</time>
+                <time title="Modified: 2021-12-09 11:35:53" itemprop="dateModified" datetime="2021-12-09T11:35:53+08:00">2021-12-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,13 +273,8 @@
       
         <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>名词是对客观事物的指代，形容词是对客观事物的描述。</p>
 <p>进程和线程又分别是什么? 进程和线程区别到底是什么?<br>带着简单的疑问，我们慢慢往下看看，本文不会过多章节去分析代码，而是比较多去谈自己的理解！</p>
-<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>进程是<strong>操作系统</strong>分配资源的最小单位,线程是调度的基本单位,线程之间共享进程资源。</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>其实就这么简单的一句话，就可以引申出很多概念。<br>逆向思维(反推)，从已有的结果出发挖掘更多的可能性.  </p>
-<blockquote>
-<p>到底线程之间共享了哪些进程资源？<br>共享资源意味着什么？<br>共享资源这种机制是如何实现的？<br>线程有哪些是线程私有的  </p>
-</blockquote>
-<h3 id="计算机扩展概念"><a href="#计算机扩展概念" class="headerlink" title="计算机扩展概念"></a>计算机扩展概念</h3><p>其实无论是谈生意也好，还是谈工作也好，首先必须要解决一个问题，就是明确主题和双方信息差的问题！<br>为了更好的理解，我们需要了解一些基础的计算机知识(linux)。具体文献请参考原文</p>
-<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a><a target="_blank" rel="noopener" href="http://www.linfo.org/cpu.html">CPU</a></h3><blockquote>
+<h1 id="计算机扩展概念"><a href="#计算机扩展概念" class="headerlink" title="计算机扩展概念"></a>计算机扩展概念</h1><p>其实无论是谈生意也好，还是谈工作也好，首先必须要解决一个问题，就是明确主题和双方信息差的问题！<br>为了更好的理解，我们需要了解一些基础的计算机知识(linux)。具体文献请参考原文</p>
+<h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a><a target="_blank" rel="noopener" href="http://www.linfo.org/cpu.html">CPU</a></h2><blockquote>
 <p>A CPU contains three main sections: (1) <strong>an arithmetic/logic unit</strong>, (2) <strong>a control unit</strong> and (3) <strong><a target="_blank" rel="noopener" href="http://www.linfo.org/register.html">registers</a></strong>. The arithmetic/logic unit contains circuitry that performs data manipulation. The control unit consists of circuitry for coordinating the machine’s activities. The registers are high speed memory cells that are used for holding instructions for data that is currently being processed.  </p>
 </blockquote>
 <p>CPU 包含三个主要部分：(1)<strong>算术/逻辑单元</strong>，(2)<strong>控制单元</strong>和 (3)<strong>寄存器</strong>。<br>算术/逻辑单元包含执行数据操作的电路。<br>控制单元由用于协调机器活动的电路组成。<br>寄存器是<strong>高速存储</strong>单元，用于保存当前正在处理的数据的指令。</p>
@@ -290,6 +285,13 @@
 <p>专用寄存器存储内部 CPU 数据，例如程序计数器（也称为指令指针）、堆栈指针和状态寄存器。</p>
 <h4 id="寄存器概念扩展"><a href="#寄存器概念扩展" class="headerlink" title="寄存器概念扩展"></a>寄存器概念扩展</h4><p>寄存器是存储器层次结构的顶部，是系统操作数据的最快方式。<br>在它们下面是几个级别的高速缓存，至少其中一些也内置在 CPU 中，而其中一些可能在其他专用芯片上。高速缓存比寄存器慢，但要丰富得多。在不同级别的高速缓存之下是主存储器，它更慢但更丰富（例如，与只有 32 个寄存器相比，数百兆字节）。但反过来，它仍然比存储设备和媒体（例如，硬盘驱动器和 CDROM）快得多，容量也小得多。</p>
 <h4 id="其他作用"><a href="#其他作用" class="headerlink" title="其他作用"></a>其他作用</h4><p><strong>指令寄存器</strong>保存CPU正在执行的指令。<br><strong>地址寄存器</strong>保存内存地址，用于访问内存。<br><strong>数据寄存器</strong>用于存储整数。  </p>
+<hr>
+<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>进程是<strong>操作系统</strong>分配资源的最小单位,线程是调度的基本单位,线程之间共享进程资源。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>其实就这么简单的一句话，就可以引申出很多概念。<br>逆向思维(反推)，从已有的结果出发挖掘更多的可能性.  </p>
+<blockquote>
+<p>到底线程之间共享了哪些进程资源？<br>共享资源意味着什么？<br>共享资源这种机制是如何实现的？<br>线程有哪些是线程私有的  </p>
+</blockquote>
+<hr>
 <h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><blockquote>
 <p>线程运行的本质就是函数。<br>函数的执行总会有一个源头，这个源头就是所谓的入口函数，相当于java的main的函数，<em>CPU</em> 从入口函数开始执行从而形成一个执行流，只不过我们人为的给执行流起一个名字，这个名字就叫线程。  </p>
 </blockquote>
@@ -419,7 +421,7 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%89%A9%E5%B1%95%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">计算机扩展概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">2.1.2.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Definition-%E2%80%94-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">Register Definition — 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E6%A6%82%E5%BF%B5%E6%89%A9%E5%B1%95"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">寄存器概念扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">其他作用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">线程私有</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="nav-number">2.2.2.</span> <span class="nav-text">线程间的共享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%8C%BA"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">代码区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%8C%BA"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">堆区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E5%8C%BA"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">栈区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.2.5.</span> <span class="nav-text">文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%EF%BC%9A"><span class="nav-number">2.2.3.</span> <span class="nav-text">java线程私有：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%89%A9%E5%B1%95%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">计算机扩展概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU"><span class="nav-number">2.1.</span> <span class="nav-text">CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Definition-%E2%80%94-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">Register Definition — 寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E6%A6%82%E5%BF%B5%E6%89%A9%E5%B1%95"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">寄存器概念扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">其他作用</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">3.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">线程私有</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="nav-number">3.2.2.</span> <span class="nav-text">线程间的共享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%8C%BA"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">代码区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%8C%BA"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">堆区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E5%8C%BA"><span class="nav-number">3.2.2.4.</span> <span class="nav-text">栈区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.2.5.</span> <span class="nav-text">文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%BA%BF%E7%A8%8B%E7%A7%81%E6%9C%89%EF%BC%9A"><span class="nav-number">3.2.3.</span> <span class="nav-text">java线程私有：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-number">3.2.3.3.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -435,7 +437,7 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -490,12 +492,12 @@ Android操作系统可以随时中断并且回复正常，依靠的就是线程�
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">66k</span>
+    <span title="Symbols count total">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:01</span>
+    <span title="Reading time total">1:04</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

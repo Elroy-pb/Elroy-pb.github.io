@@ -28,11 +28,14 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="内存学习之路-1">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/Paging.jpg">
+<meta property="og:image" content="http://example.com/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/use-paging.png">
 <meta property="article:published_time" content="2021-12-07T03:09:50.703Z">
-<meta property="article:modified_time" content="2021-12-08T10:49:59.487Z">
+<meta property="article:modified_time" content="2021-12-10T08:51:11.657Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/Paging.jpg">
 
 <link rel="canonical" href="http://example.com/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/">
 
@@ -138,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">31</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">33</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-08 18:49:59" itemprop="dateModified" datetime="2021-12-08T18:49:59+08:00">2021-12-08</time>
+                <time title="Modified: 2021-12-10 16:51:11" itemprop="dateModified" datetime="2021-12-10T16:51:11+08:00">2021-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +248,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.5k</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
             <div class="post-description">内存学习之路-1</div>
 
@@ -282,7 +285,29 @@
 <p>The most basic of them is read-only memory(ROM),whose contents are written in at the factory and thereafter cannot be erased or rewritten.</p>
 </blockquote>
 <hr>
-<h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><p><a target="_blank" rel="noopener" href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
+<h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><h1 id="CPU知识扩展"><a href="#CPU知识扩展" class="headerlink" title="CPU知识扩展"></a>CPU知识扩展</h1><p><a target="_blank" rel="noopener" href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
+<p>CPU只能访问其寄存器（Register）和内存（Memory）， 无法直接访问硬盘（Disk）。 存储在硬盘上的数据必须首先传输到内存中才能被CPU访问。从访问速度来看，对寄存器的访问非常快，通常为1纳秒； 对内存的访问相对较慢，通常为100纳秒（使用缓存加速的情况下；而对硬盘驱动器的访问速度最慢，通常为10毫秒。</p>
+<h1 id="Linux主要的内存管理技术"><a href="#Linux主要的内存管理技术" class="headerlink" title="Linux主要的内存管理技术"></a>Linux主要的内存管理技术</h1><pre><code>Base and limit registers（基址寄存器和界限寄存器）
+Virtual memory（虚拟内存）
+Swapping（交换）
+Segmentation（分段）
+Paging（分页)
+</code></pre>
+<h2 id="Base-and-limit-registers（基址寄存器和界限寄存器）"><a href="#Base-and-limit-registers（基址寄存器和界限寄存器）" class="headerlink" title="Base and limit registers（基址寄存器和界限寄存器）"></a>Base and limit registers（基址寄存器和界限寄存器）</h2><p>必须限制进程，以便它们只能访问属于该特定进程的内存位置。</p>
+<p>每个进程都有一个基址寄存器和限制寄存器：</p>
+<p>基址寄存器保存最小的有效存储器地址<br>限制寄存器指定范围的大小</p>
+<h1 id="Paging（分页"><a href="#Paging（分页" class="headerlink" title="Paging（分页)"></a>Paging（分页)</h1><p>有时可用内存被分成许多小块，其中没有一块足够大以满足下一个内存需求，然而他们的总和却可以。这个问题被称为碎片（Fragmentation），许多内存分配策略都会受其影响。</p>
+<p>分页将物理内存划分为多个大小相等的块，称为帧（Frame）。</p>
+<p>并将进程的逻辑内存空间也划分为大小相等的块，称为页面（Page）。</p>
+<p>任何进程中的任何页面都可以放入任何可用的帧中。</p>
+<p>页表（Page Table）用于查找此刻存储特定页面的帧。</p>
+<p><img src="Paging.jpg" alt="Linux-Paging">  </p>
+<p>使用分页时，虚拟内存地址是一对：&lt;页码，偏移量&gt;</p>
+<p>页码（Page Number）：用作页表的索引，以查找此页面的条目<br>偏移量（Offset）：与基址相结合，以定义物理内存地址</p>
+<p><img src="use-paging.png" alt="Linux-Paging">  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">举一个分页地址转换的例子：</span><br><span class="line"></span><br><span class="line">虚拟内存地址为0x13325328，页表项0x13325包含的值是0x03004，那么物理地址是什么？</span><br><span class="line"></span><br><span class="line">答案：</span><br><span class="line">物理地址是0x03004328</span><br><span class="line">页码为0x13325，偏移量为0x328</span><br><span class="line">相应的帧号是0x03004</span><br><span class="line"></span><br><span class="line">作者：未子涵</span><br><span class="line">链接：https://www.jianshu.com/p/2787a0661742</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
 <h1 id="Linux十万个为什么"><a href="#Linux十万个为什么" class="headerlink" title="Linux十万个为什么"></a>Linux十万个为什么</h1><h1 id="虚拟内存为什么会设计出来"><a href="#虚拟内存为什么会设计出来" class="headerlink" title="虚拟内存为什么会设计出来"></a>虚拟内存为什么会设计出来</h1><p>在早期的计算机中，程序是直接运行在物理内存上的，那个时候的计算机和程序内存都很小。程序运行时会把其全部加载到内存，只要程序所需的内存不超过计算机剩余内存就不会出现问题。</p>
 <p>但由于程序是可以直接访问物理内存的，这也带来了内存数据的不安全性，轻则程序挂掉，重则操作系统崩溃。</p>
 <p>所以，我们希望程序间的内存数据是安全的互不影响的。同时计算机程序直接运行在物理内存上也导致了内存使用率较低，程序运行内存地址不确定，不同的运行顺序甚至会出错。此时在程序的执行过程中，已经存在着大量在物理内存和硬盘之间的数据交换过程。</p>
@@ -380,7 +405,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88-%E2%80%94-RAM-Definition"><span class="nav-number">2.</span> <span class="nav-text">内存是什么 — RAM Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory-Definition-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">Virtual memory Definition (虚拟内存)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E2%80%94%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">主内存—物理内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Types-of-Memory-%E5%85%B6%E4%BB%96%E5%86%85%E5%AD%98%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">Other Types of Memory (其他内存的模型)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">内存管理的基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">Linux十万个为什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AE%BE%E8%AE%A1%E5%87%BA%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">虚拟内存为什么会设计出来</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text">内存映射是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">7.</span> <span class="nav-text">页表是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cr3%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">8.</span> <span class="nav-text">cr3是什么</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88-%E2%80%94-RAM-Definition"><span class="nav-number">2.</span> <span class="nav-text">内存是什么 — RAM Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory-Definition-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">2.1.</span> <span class="nav-text">Virtual memory Definition (虚拟内存)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%86%85%E5%AD%98%E2%80%94%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">主内存—物理内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Types-of-Memory-%E5%85%B6%E4%BB%96%E5%86%85%E5%AD%98%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">Other Types of Memory (其他内存的模型)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">内存管理的基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95"><span class="nav-number">4.</span> <span class="nav-text">CPU知识扩展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%BB%E8%A6%81%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF"><span class="nav-number">5.</span> <span class="nav-text">Linux主要的内存管理技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Base-and-limit-registers%EF%BC%88%E5%9F%BA%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8%E5%92%8C%E7%95%8C%E9%99%90%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">Base and limit registers（基址寄存器和界限寄存器）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paging%EF%BC%88%E5%88%86%E9%A1%B5"><span class="nav-number">6.</span> <span class="nav-text">Paging（分页)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%8D%81%E4%B8%87%E4%B8%AA%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">7.</span> <span class="nav-text">Linux十万个为什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AE%BE%E8%AE%A1%E5%87%BA%E6%9D%A5"><span class="nav-number">8.</span> <span class="nav-text">虚拟内存为什么会设计出来</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">9.</span> <span class="nav-text">内存映射是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">10.</span> <span class="nav-text">页表是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cr3%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">11.</span> <span class="nav-text">cr3是什么</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -396,7 +421,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -451,12 +476,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">66k</span>
+    <span title="Symbols count total">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:01</span>
+    <span title="Reading time total">1:04</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
