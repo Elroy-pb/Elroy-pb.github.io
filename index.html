@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">35</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,95 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/13/Android-AmS%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/13/Android-AmS%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Android-AmS内部原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-12-13 20:24:32 / Modified: 20:25:43" itemprop="dateCreated datePublished" datetime="2021-12-13T20:24:32+08:00">2021-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GUI</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/13/Android-AmS%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -362,10 +451,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-12-10 16:53:41 / Modified: 16:54:32" itemprop="dateCreated datePublished" datetime="2021-12-10T16:53:41+08:00">2021-12-10</time>
+              <time title="Created: 2021-12-10 16:53:41" itemprop="dateCreated datePublished" datetime="2021-12-10T16:53:41+08:00">2021-12-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-13 17:28:44" itemprop="dateModified" datetime="2021-12-13T17:28:44+08:00">2021-12-13</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -373,7 +468,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>459</span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -392,9 +487,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Android对Linux系统的内存管理机制进行的优化"><a href="#Android对Linux系统的内存管理机制进行的优化" class="headerlink" title="Android对Linux系统的内存管理机制进行的优化"></a>Android对Linux系统的内存管理机制进行的优化</h1><p>Android对内存的使用方式同样是“尽最大限度的使用”，这一点继承了Linux的优点。只不过有所不同的是，Linux侧重于尽可能多的缓存磁盘数据以降低磁盘IO进而提高系统的数据访问性能，而Android侧重于尽可能多的缓存进程以提高应用启动和切换速度。Linux系统在进程活动停止后就结束该进程，而Android系统则会在内存中尽量长时间的保持应用进程，直到系统需要更多内存为止。这些保留在内存中的进程，通常情况下不会影响系统整体运行速度，反而会在用户再次激活这些进程时，加快进程的启动速度，因为不用重新加载界面资源了，这是Android标榜的特性之一。所以，Android现在不推荐显式的“退出”应用。</p>
-<p>那为什么内存少的时候运行大型程序会慢呢，原因是：在内存剩余不多时打开大型程序会触发系统自身的进程调度策略，这是十分消耗系统资源的操作，特别是在一个程序频繁向系统申请内存的时候。这种情况下系统并不会关闭所有打开的进程，而是选择性关闭，频繁的调度自然会拖慢系统。</p>
-
+          
       
     </div>
 
@@ -535,10 +628,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-12-08 10:37:27 / Modified: 16:20:08" itemprop="dateCreated datePublished" datetime="2021-12-08T10:37:27+08:00">2021-12-08</time>
+              <time title="Created: 2021-12-08 10:37:27" itemprop="dateCreated datePublished" datetime="2021-12-08T10:37:27+08:00">2021-12-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-14 00:11:31" itemprop="dateModified" datetime="2021-12-14T00:11:31+08:00">2021-12-14</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -546,7 +645,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>202</span>
+              <span>390</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -566,15 +665,16 @@
 
       
           <h1 id="思考心得"><a href="#思考心得" class="headerlink" title="思考心得"></a>思考心得</h1><p>💻 程序是如何执行的?</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br></pre></td></tr></table></figure>
 
-<!-- 编写 ==> 目的 
-编译 ==> 
-运行时 ==>
-如何加载 ==> 
-如何回收 ==>  -->
 <hr>
-<h1 id="投资心得"><a href="#投资心得" class="headerlink" title="投资心得"></a>投资心得</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h1><p>分析源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.首先猜想源码的功能</span><br><span class="line">2.再根据功能去找对应的代码</span><br><span class="line">3.对整体进行有效的逻辑分析</span><br><span class="line"></span><br><span class="line">如果是我来做这块功能的模块，我应该怎么设计.</span><br><span class="line">1.需要多少步骤。(需要哪些步骤，能不能简化)</span><br><span class="line">2.考虑使用的场景。</span><br><span class="line">3.考虑用户的体验。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 编写 ==&gt; 目的 </span><br><span class="line">编译 ==&gt; </span><br><span class="line">运行时 ==&gt;</span><br><span class="line">如何加载 ==&gt; </span><br><span class="line">如何回收 ==&gt;  --&gt;</span><br><span class="line">---</span><br><span class="line"># 投资心得</span><br></pre></td></tr></table></figure>
+
+<p>```</p>
 <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>操作系统在读取可执行程序头时做了三件事：<br>1.创建虚拟内存空间来容纳一个进程</p>
 <p>2.根据文件头内容建立程序虚拟内存地址与elf文件的映射关系表，vma（virtual memory area）结构</p>
 <p>3.初始化程序的栈空间与堆空间    </p>
@@ -867,101 +967,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">Android-性能优化-启动优化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-11-02 16:56:45" itemprop="dateCreated datePublished" datetime="2021-11-02T16:56:45+08:00">2021-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-17 16:48:48" itemprop="dateModified" datetime="2021-11-17T16:48:48+08:00">2021-11-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>5 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>启动优化 - 应用篇</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-IO%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1124,7 +1129,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1179,7 +1184,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">72k</span>
+    <span title="Symbols count total">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

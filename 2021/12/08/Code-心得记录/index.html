@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="思考心得💻 程序是如何执行的? 123456789101112输入 &#x3D;&#x3D;&gt; 输出编程编写 &#x3D;&gt; 编译 &#x3D;&gt; 可执行文件 &#x3D;&gt; 加载 &#x3D;&gt; 回收操作系统CpuHHD    投资心得1 操作系统操作系统在读取可执行程序头时做了三件事：1.创建虚拟内存空间来容纳一个进程 2.根据文件头内容建立程序虚拟内存地址与elf文件的映射关系表，vma（virtual memory">
+  <meta name="description" content="思考心得💻 程序是如何执行的? 123456789输入 &#x3D;&#x3D;&gt; 输出编程编写 &#x3D;&gt; 编译 &#x3D;&gt; 可执行文件 &#x3D;&gt; 加载 &#x3D;&gt; 回收操作系统CpuHHD   阅读源码分析源码 123456781.首先猜想源码的功能2.再根据功能去找对应的代码3.对整体进行有效的逻辑分析如果是我来做这块功能的模块，我应该怎么设计.1.需要多少步骤。(需要哪些步骤，能不能简化)2.考虑使">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Code-心得记录">
 <meta property="og:url" content="http://example.com/2021/12/08/Code-%E5%BF%83%E5%BE%97%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="思考心得💻 程序是如何执行的? 123456789101112输入 &#x3D;&#x3D;&gt; 输出编程编写 &#x3D;&gt; 编译 &#x3D;&gt; 可执行文件 &#x3D;&gt; 加载 &#x3D;&gt; 回收操作系统CpuHHD    投资心得1 操作系统操作系统在读取可执行程序头时做了三件事：1.创建虚拟内存空间来容纳一个进程 2.根据文件头内容建立程序虚拟内存地址与elf文件的映射关系表，vma（virtual memory">
+<meta property="og:description" content="思考心得💻 程序是如何执行的? 123456789输入 &#x3D;&#x3D;&gt; 输出编程编写 &#x3D;&gt; 编译 &#x3D;&gt; 可执行文件 &#x3D;&gt; 加载 &#x3D;&gt; 回收操作系统CpuHHD   阅读源码分析源码 123456781.首先猜想源码的功能2.再根据功能去找对应的代码3.对整体进行有效的逻辑分析如果是我来做这块功能的模块，我应该怎么设计.1.需要多少步骤。(需要哪些步骤，能不能简化)2.考虑使">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-08T02:37:27.000Z">
-<meta property="article:modified_time" content="2021-12-08T08:20:08.480Z">
+<meta property="article:modified_time" content="2021-12-13T16:11:31.681Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="心得">
 <meta name="twitter:card" content="summary">
@@ -138,7 +138,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">35</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-12-08 10:37:27 / Modified: 16:20:08" itemprop="dateCreated datePublished" datetime="2021-12-08T10:37:27+08:00">2021-12-08</time>
+              <time title="Created: 2021-12-08 10:37:27" itemprop="dateCreated datePublished" datetime="2021-12-08T10:37:27+08:00">2021-12-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-14 00:11:31" itemprop="dateModified" datetime="2021-12-14T00:11:31+08:00">2021-12-14</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -230,7 +236,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>202</span>
+              <span>390</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -250,15 +256,16 @@
 
       
         <h1 id="思考心得"><a href="#思考心得" class="headerlink" title="思考心得"></a>思考心得</h1><p>💻 程序是如何执行的?</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br></pre></td></tr></table></figure>
 
-<!-- 编写 ==> 目的 
-编译 ==> 
-运行时 ==>
-如何加载 ==> 
-如何回收 ==>  -->
 <hr>
-<h1 id="投资心得"><a href="#投资心得" class="headerlink" title="投资心得"></a>投资心得</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h1><p>分析源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.首先猜想源码的功能</span><br><span class="line">2.再根据功能去找对应的代码</span><br><span class="line">3.对整体进行有效的逻辑分析</span><br><span class="line"></span><br><span class="line">如果是我来做这块功能的模块，我应该怎么设计.</span><br><span class="line">1.需要多少步骤。(需要哪些步骤，能不能简化)</span><br><span class="line">2.考虑使用的场景。</span><br><span class="line">3.考虑用户的体验。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 编写 ==&gt; 目的 </span><br><span class="line">编译 ==&gt; </span><br><span class="line">运行时 ==&gt;</span><br><span class="line">如何加载 ==&gt; </span><br><span class="line">如何回收 ==&gt;  --&gt;</span><br><span class="line">---</span><br><span class="line"># 投资心得</span><br></pre></td></tr></table></figure>
+
+<p>```</p>
 <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>操作系统在读取可执行程序头时做了三件事：<br>1.创建虚拟内存空间来容纳一个进程</p>
 <p>2.根据文件头内容建立程序虚拟内存地址与elf文件的映射关系表，vma（virtual memory area）结构</p>
 <p>3.初始化程序的栈空间与堆空间    </p>
@@ -345,7 +352,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E5%BF%83%E5%BE%97"><span class="nav-number">1.</span> <span class="nav-text">思考心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%95%E8%B5%84%E5%BF%83%E5%BE%97"><span class="nav-number">2.</span> <span class="nav-text">投资心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">操作系统</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E5%BF%83%E5%BE%97"><span class="nav-number">1.</span> <span class="nav-text">思考心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">阅读源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">操作系统</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -361,7 +368,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -416,7 +423,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">72k</span>
+    <span title="Symbols count total">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
