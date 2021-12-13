@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java-反射与应用</title>
+    <url>/2021/12/13/Java-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Android-小常识普及</title>
     <url>/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/</url>
     <content><![CDATA[<h1 id="Home键退出和返回键退出的区别"><a href="#Home键退出和返回键退出的区别" class="headerlink" title="Home键退出和返回键退出的区别"></a>Home键退出和返回键退出的区别</h1><p>Home键退出，程序保留状态为后台进程；<br>而返回键退出，程序保留状态为空进程，空进程更容易被系统回收。Home键其实主要用于进程间切换，返回键则是真正的退出程序。</p>
@@ -60,8 +65,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Android</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -89,21 +94,28 @@
     <title>Linux-内存篇</title>
     <url>/2021/12/07/Linux-%E5%86%85%E5%AD%98%E7%AF%87/</url>
     <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://mp.weixin.qq.com/s?__biz=MzA3NzYzODg1OA==&mid=2648464745&idx=1&sn=374b770823d0a9e9677386160e57f71c&chksm=876600ccb01189dac48a843f71d39521c5bbc6cb6afb113e9d90ef7211c22d579a23c20cd8c5&scene=21#wechat_redirect">漫画解说 “内存映射”</a></p>
+<p><a href="https://javaguide.cn/cs-basics/operating-system/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98&%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/#">操作系统常见面试题总结</a></p>
 <hr>
 <h1 id="内存是什么-—-RAM-Definition"><a href="#内存是什么-—-RAM-Definition" class="headerlink" title="内存是什么 — RAM Definition"></a>内存是什么 — RAM Definition</h1><blockquote>
 <p>Memory,as it’s used with regard to computer, most commonly refers to semicondutor devices whose contents can be accessed(i.e., read and written to) at extremely high speeds but which are retained only temporarily(i.e.,which in use or,at most,while the power supply remains on).<br>内存，因为它被用于计算机，最常指的是<strong>半导体的设备</strong>，其内容可以用极高速度访问(即读取和写入)，但只能暂时保留。</p>
 </blockquote>
 <p>运行内存又可划分为虚拟内存和物理内存</p>
 <h2 id="Virtual-memory-Definition-虚拟内存"><a href="#Virtual-memory-Definition-虚拟内存" class="headerlink" title="Virtual memory Definition (虚拟内存)"></a>Virtual memory Definition (虚拟内存)</h2><blockquote>
-<p>Virtual memory is the use of space on a hard disk (HDD) is simulate additional main memory</p>
+<p>Virtual memory is the use of space on a hard disk (HDD) is simulate additional main memory<br>译：虚拟内存是使用硬盘 (HDD) 上的空间来模拟额外的主内存 </p>
 </blockquote>
+<h3 id="虚拟内存的意义"><a href="#虚拟内存的意义" class="headerlink" title="虚拟内存的意义"></a>虚拟内存的意义</h3><p>虚拟内存为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。</p>
+<p>虚拟内存的重要意义是它定义了一个连续的虚拟地址空间，并且把内存扩展到硬盘空间</p>
 <blockquote>
-<p>译：虚拟内存是使用硬盘 (HDD) 上的空间来模拟额外的主内存 </p>
+<p>虚拟内存 使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。与没有使用虚拟内存技术的系统相比，使用这种技术的系统使得大型程序的编写变得更容易，对真正的物理内存（例如 RAM）的使用也更有效率。目前，大多数操作系统都使用了虚拟内存，如 Windows 家族的“虚拟内存”；Linux 的“交换空间”等。From:<a href="https://zh.wikipedia.org/wiki/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98">https://zh.wikipedia.org/wiki/虚拟内存</a>  (opens new window)</p>
 </blockquote>
 <h2 id="主内存—物理内存"><a href="#主内存—物理内存" class="headerlink" title="主内存—物理内存"></a>主内存—物理内存</h2><p>通俗易懂就是你现在电脑或者手机配置，在系统属性上写着RAM 8G就是你的物理内存的大小</p>
 <h2 id="Other-Types-of-Memory-其他内存的模型"><a href="#Other-Types-of-Memory-其他内存的模型" class="headerlink" title="Other Types of Memory (其他内存的模型)"></a>Other Types of Memory (其他内存的模型)</h2><blockquote>
 <p>The most basic of them is read-only memory(ROM),whose contents are written in at the factory and thereafter cannot be erased or rewritten.</p>
 </blockquote>
+<h2 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h2><p>局部性原理既适用于程序结构，也适用于数据结构</p>
+<h3 id="局部性原理表现在以下两个方面："><a href="#局部性原理表现在以下两个方面：" class="headerlink" title="局部性原理表现在以下两个方面："></a>局部性原理表现在以下两个方面：</h3><p>时间局部性 ：如果程序中的某条指令一旦执行，不久以后该指令可能再次执行；如果某数据被访问过，不久以后该数据可能再次被访问。产生时间局部性的典型原因，是由于在程序中存在着大量的循环操作。<br>空间局部性 ：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，即程序在一段时间内所访问的地址，可能集中在一定的范围之内，这是因为指令通常是顺序存放、顺序执行的，数据也一般是以向量、数组、表等形式簇聚存储的。<br>时间局部性是通过将近来使用的指令和数据保存到高速缓存存储器中，并使用高速缓存的层次结构实现。<br>空间局部性通常是使用较大的高速缓存，并将预取机制集成到高速缓存控制逻辑中实现。虚拟内存技术实际上就是建立了 “内存一外存”的两级存储器的结构，利用局部性原理实现髙速缓存  </p>
+<pre><code>基于局部性原理，在程序装入时，可以将程序的一部分装入内存，而将其他部分留在外存，就可以启动程序执行。由于外存往往比内存大很多，所以我们运行的软件的内存大小实际上是可以比计算机系统实际的内存大小大的。在程序执行过程中，当所访问的信息不在内存时，由操作系统将所需要的部分调入内存，然后继续执行程序。另一方面，操作系统将内存中暂时不使用的内容换到外存上，从而腾出空间存放将要调入内存的信息。这样，计算机好像为用户提供了一个比实际内存大的多的存储器——虚拟存储器。 实际上，我觉得虚拟内存同样是一种时间换空间的策略，你用 CPU 的计算时间，页的调入调出花费的时间，换来了一个虚拟的更大的空间来支持程序的运行。不得不感叹，程序世界几乎不是时间换空间就是空间换时间。
+</code></pre>
 <hr>
 <h1 id="内存管理的基础"><a href="#内存管理的基础" class="headerlink" title="内存管理的基础"></a>内存管理的基础</h1><h1 id="CPU知识扩展"><a href="#CPU知识扩展" class="headerlink" title="CPU知识扩展"></a>CPU知识扩展</h1><p><a href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/#CPU">CPU</a></p>
 <p>CPU只能访问其寄存器（Register）和内存（Memory）， 无法直接访问硬盘（Disk）。 存储在硬盘上的数据必须首先传输到内存中才能被CPU访问。从访问速度来看，对寄存器的访问非常快，通常为1纳秒； 对内存的访问相对较慢，通常为100纳秒（使用缓存加速的情况下；而对硬盘驱动器的访问速度最慢，通常为10毫秒。</p>
