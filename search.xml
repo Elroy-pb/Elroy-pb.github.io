@@ -3,7 +3,49 @@
   <entry>
     <title>Android-AmS内部原理</title>
     <url>/2021/12/13/Android-AmS%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="补充文章"><a href="#补充文章" class="headerlink" title="补充文章"></a>补充文章</h1><p><a href="https://cloud.tencent.com/developer/article/1029670">https://cloud.tencent.com/developer/article/1029670</a></p>
+<h1 id="AMS-主要功能"><a href="#AMS-主要功能" class="headerlink" title="AMS 主要功能"></a>AMS 主要功能</h1><p>1 .统一调度各个 App 的 Activity</p>
+<p>2.内存管理</p>
+<p>3.进程管理</p>
+<h1 id="Android内存管理"><a href="#Android内存管理" class="headerlink" title="Android内存管理"></a>Android内存管理</h1><ul>
+<li>Android内存管理分为2个部分</li>
+</ul>
+<ul>
+<li>应用程序关闭之后，后台对应的进程没有真正的关闭，以便下次快速的再启动(温启动)。</li>
+<li>当系统内存不够时，Ams(ActivityManagerService)会主动根据一定的优先级规则退出优先级低的进程</li>
+</ul>
+<h1 id="关闭与退出"><a href="#关闭与退出" class="headerlink" title="关闭与退出"></a>关闭与退出</h1><p>关闭是指进程对应的窗口不显示，而后台的进程还在保存。<br>Android 关闭的机制除了占用内存之外，基本上不会降低前台应用的程序。</p>
+<p>消息分发机制<br>每一个App的对应一个 ActivityThread，该类初始化后就进入Looper.loop()的无限循环。</p>
+<p><strong>ActivityThread</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        Looper.prepareMainLooper();</span><br><span class="line">        ActivityThread thread = new ActivityThread();</span><br><span class="line">        if (sMainThreadHandler == null) &#123;</span><br><span class="line">            sMainThreadHandler = thread.getHandler();</span><br><span class="line">        &#125;</span><br><span class="line">        Looper.loop();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>之后则是靠消息分发机制运行，没有消息则会sleep，阻塞起来，直到有新的msg过来。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void loop() &#123;</span><br><span class="line">    final Looper me = myLooper();</span><br><span class="line">    final MessageQueue queue = me.mQueue;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        Message msg = queue.next(); // might block</span><br><span class="line">        if (msg == null) &#123;</span><br><span class="line">            // No message indicates that the message queue is quitting.</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结：在Linux的内核调度中，如果一个线程的状态为sleep，除了占用调用本身时间之外，不占用Cpu的时间片。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Message msg = queue.next(); // might block</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>被唤醒的3种情况<br>定时器中断<br>用户按键消息(消息线程)<br>Binder消息(Binder线程)  </p>
+</blockquote>
+<h2 id="温启动"><a href="#温启动" class="headerlink" title="温启动"></a>温启动</h2><p> 温启动时由于app的进程仍然存在，只执行冷启动第二阶段流程</p>
+<blockquote>
+<p>1、创建app对象<br>2、启动主进程<br>3、创建MainActivity<br>4、渲染视图<br>5、执行onLayout<br>6、执行onDraw  </p>
+</blockquote>
+<p>温启动常见场景：</p>
+<blockquote>
+<p>1、用户双击返回键退出应用<br>2、app由于内存不足被回收</p>
+</blockquote>
+<hr>
+<h1 id="Android-与-Linux-配合"><a href="#Android-与-Linux-配合" class="headerlink" title="Android 与 Linux  配合"></a>Android 与 Linux  配合</h1><p>App 和 AmS 是运行在2个独立的 Java虚拟机，App申请内存不会通知AmS，AmS也无法感知App申请内存。</p>
+<p>Java虚拟机运行时，每一个 App都有各自独立的内存空间。各自独立，进程互斥。</p>
+<p>由于 Android 底层的 Linux 的内存机制不是使用 磁盘虚拟内存，所以 RAM=实际的物理内存。<br>为了在 RAM 中容纳所需的一切，Android 会尝试跨进程共享 RAM 页面。</p>
+<blockquote>
+<p> 回收的系统的“”潜规则  </p>
+</blockquote>
+<h2 id="OOM-Killer"><a href="#OOM-Killer" class="headerlink" title="OOM Killer"></a>OOM Killer</h2><p>在Android中运行了一个OOM 进程，即Out Of Memory。</p>
+<p>该进程启动时会首先向Linux内核中把自己注册为一个OOM Killer，即当Linux内核的内存管理模块检测到系统内存低的时候就会通知已经注册的OOM进程，然后这些OOM Killer就可以根据各种规则进行内存释放了，当然也可以什么都不做。</p>
+<p>Android中的OOM Killer进程是仅仅适用于Android应用程序的，该进程在运行时，AmS需要把每一个应用程序的oom_adj值告知给Killer。这个值的范围在－16到15，值越低，说明越重要，这个值类似于Linux系统中的进程nice值，只是在标准的Linux中，有其自己的一套Killer机制。</p>
+<p>总结：当发生低内存的条件时，Linux内核管理模块通知OOM Killer，Killer则根据AmS所告知的优先级，强制退出优先级低的应用进程</p>
+]]></content>
       <categories>
         <category>Android</category>
       </categories>
