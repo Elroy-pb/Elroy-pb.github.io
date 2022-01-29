@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java-类的加载</title>
+    <url>/2022/01/29/Java-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD/</url>
+    <content><![CDATA[<p>类的加载过程:</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java-内存模型</title>
+    <url>/2022/01/29/Java-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="并发模型"><a href="#并发模型" class="headerlink" title="并发模型"></a>并发模型</h1><p>如果开发项目涉及到并发，一般需要考虑2个问题</p>
+<ul>
+<li>线程之间如何通信 </li>
+<li>线程之间如何同步 （这里的线程是指并发执行的活动实体）</li>
+</ul>
+<p>通信是指线程之间以何种机制来交换信息。</p>
+<blockquote>
+<p>比如Android比较常见的:线程之间的通信机制 Handler</p>
+</blockquote>
+<p>在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。</p>
+<!-- 同步是指程序用于控制不同线程之间操作发生相对顺序的机制。在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。 Java 的并发采用的是共享内存模型，Java 线程之间的通信总是隐式进行，整个通信过程对程序员完全透明。如果编写多线程程序的 Java 程序员不理解隐式进行的线程之间通信的工作机制，很可能会遇到各种奇怪的内存可见性问题。  -->
+
+<h1 id="Java的并发模型"><a href="#Java的并发模型" class="headerlink" title="Java的并发模型"></a>Java的并发模型</h1><p>Java内存模型规定所有的变量都是存在主存当中（类似于前面说的物理内存），每个线程都有自己的工作内存（类似于前面的高速缓存）。线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。并且每个线程不能访问其他线程的工作内存。</p>
+<blockquote>
+<p>在java中，所有实例域、静态域和数组元素存储在堆内存中，堆内存在线程之间共享（本文使用“共享变量”这个术语代指实例域，静态域和数组元素）。</p>
+</blockquote>
+<blockquote>
+<p>局部变量（Local variables），方法定义参数（java语言规范称之为formal method parameters）和异常处理器参数（exception handler parameters）不会在线程之间共享，它们不会有内存可见性问题，也不受内存模型的影响</p>
+</blockquote>
+<p>1.在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信，</p>
+<blockquote>
+<p>典型的共享内存通信方式就是通过共享对象进行通信。</p>
+</blockquote>
+<blockquote>
+<p>参考  <a href="https://zhupengbo.com/2021/08/04/Linux-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">Linux 进程与线程</a></p>
+</blockquote>
+<p>每个线程都有对应自己独立，私有的栈区。</p>
+<p>Java线程之间的通信由Java内存模型（本文简称为JMM)控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。从抽象的角度来看，JMM定义了线程和主内存之间的抽象关系:线程之间的共享变量存储在主内存( main memory )中，每个线程都有一个私有的本地内存( local memory )，本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。</p>
+<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><h1 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h1><h1 id=""><a href="#" class="headerlink" title=""></a></h1><!-- 
+# Android共享内存
+
+
+
+2.在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信，在java中典型
+的消息传递方式就是wait()和notify()。
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">同步,异步,串行与并行:</span><br><span class="line">Java同步机制（同步方法或者同步块中）有4种实现方式：</span><br><span class="line">① ThreadLocal  </span><br><span class="line">② synchronized()   </span><br><span class="line">③ wait() 与 notify() </span><br><span class="line">④ volatile </span><br><span class="line">异步的同义语是非阻塞（None Blocking）。</span><br><span class="line">— 以通讯为例</span><br><span class="line">同步:发送一个请求,等待返回,然后再发送下一个请求</span><br><span class="line">异步:发送一个请求,不等待返回,随时可以再发送下一个请求</span><br><span class="line">并发:同时发送多个请求 --&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Zygote剖析</title>
+    <url>/2022/01/13/Zygote%E5%89%96%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="Zygote"><a href="#Zygote" class="headerlink" title="Zygote"></a>Zygote</h1><p>任何系统启动过程的本质都是要建立一套系统运行所需的环境。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p><strong>Zygote</strong> 进程运行时，会初始化 <strong>Dalvik虚拟机</strong>，并启动它。<br>Android的应用程序是由Java编写的，它们不能直接以本地进程的形态运行在Linux 上，只能运行在Dalvik虚拟机中。</p>
+<p>并且，每个应用程序都运行在各自的虚拟机中，</p>
+<p>应用程序每次运行都要重新初始化并启动虚拟机，这个过程会耗费相当长时间，是拖慢应用程序的原因之一。</p>
+<p>因此，在Android 中，应用程序运行前，Zygote进程通过共享已运行的虚拟机的代码与内存信息，缩短应用程序运行所耗费的时间。并且，它会事先将应用程序要使用的Android Framework中的类与资源加载到内存中，并组织形成所用资源的链接信息。新运行的Android应用程序在使用所需资源时不必每次重新形成资源的链接信息，这会节省大量时间，提高程序运行速度。</p>
+<p>反推 一般Zygote都是Android应用程序。 </p>
+<blockquote>
+</blockquote>
+<ol>
+<li>init进程系统启动后运行在用户空间中的首个进程。  </li>
+<li>init进程启动完系统运行所需要的各种 Daemon后。  </li>
+<li>启动Zygote进程。</li>
+</ol>
+<hr>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android-渲染机制</title>
     <url>/2022/01/10/Android-%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="像素的计算"><a href="#像素的计算" class="headerlink" title="像素的计算"></a>像素的计算</h1><p>简单的科普下</p>
@@ -26,9 +109,13 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
 <h1 id="Dpi"><a href="#Dpi" class="headerlink" title="Dpi"></a>Dpi</h1><p>dpi（dots per inch）点每英寸，常用于平面印刷。</p>
 <p>dot就是一个点，打印机或屏幕通过这些点把图片print出来。</p>
 <p>如果是针对在电脑屏幕或手机屏幕上面来说DPI=PPI。</p>
-<p>这里有一个非常好的链接。我总结下：Pixel是一个带颜色的方块，一个图片其实就是由这些方块组成的。dot就是一个点，打印机或屏幕通过这些点把图片print出来。</p>
+<p>我总结下：Pixel是一个带颜色的方块，一个图片其实就是由这些方块组成的。dot就是一个点，打印机或屏幕通过这些点把图片print出来。</p>
 <p>例如：一个150ppi的图片在600dpi的设备上显示，每个pixel有16个dot (600 dots/150 pixels)PPI vs. DPI: what’s the difference?</p>
-<p>作者：蛮大人<br>链接：<a href="https://www.zhihu.com/question/23770739/answer/51830906">https://www.zhihu.com/question/23770739/answer/51830906</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<pre><code>作者：蛮大人
+链接：https://www.zhihu.com/question/23770739/answer/51830906  
+来源：知乎  
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  
+</code></pre>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -72,7 +159,7 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
 <p>1、用户双击返回键退出应用<br>2、app由于内存不足被回收</p>
 </blockquote>
 <hr>
-<h1 id="Android-与-Linux-配合"><a href="#Android-与-Linux-配合" class="headerlink" title="Android 与 Linux  配合"></a>Android 与 Linux  配合</h1><p>App 和 AmS 是运行在2个独立的 Java虚拟机，App申请内存不会通知AmS，AmS也无法感知App申请内存。</p>
+<h1 id="Android-与-Linux-配合"><a href="#Android-与-Linux-配合" class="headerlink" title="Android 与 Linux  配合"></a>Android 与 Linux  配合</h1><p>App 和 AmS 是运行在2个独立的 Java虚拟机()，App申请内存不会通知AmS，AmS也无法感知App申请内存。</p>
 <p>Java虚拟机运行时，每一个 App都有各自独立的内存空间。各自独立，进程互斥。</p>
 <p>由于 Android 底层的 Linux 的内存机制不是使用 磁盘虚拟内存，所以 RAM=实际的物理内存。<br>为了在 RAM 中容纳所需的一切，Android 会尝试跨进程共享 RAM 页面。</p>
 <blockquote>
@@ -101,6 +188,9 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
     <content><![CDATA[<h1 id="Home键退出和返回键退出的区别"><a href="#Home键退出和返回键退出的区别" class="headerlink" title="Home键退出和返回键退出的区别"></a>Home键退出和返回键退出的区别</h1><p>Home键退出，程序保留状态为后台进程；<br>而返回键退出，程序保留状态为空进程，空进程更容易被系统回收。Home键其实主要用于进程间切换，返回键则是真正的退出程序。</p>
 <p>从理论上来讲，无论是哪种情况，在没有任何后台工作线程（即便应用处于后台，工作线程仍然可以执行）的前提下，被置于后台的进程都只是保留他们的运行状态，并不会占用CPU资源，所以也不耗电。只有音乐播放软件之类的应用需要在后台运行Service，而Service是需要占用CPU时间的，此时才会耗电。所以说没有带后台服务的应用是不耗电也不占用CPU时间的，没必要关闭，这种设计本身就是Android的优势之一，可以让应用下次启动时更快。然而现实是，很多应用多多少少都会有一些后台工作线程，这可能是开发人员经验不足导致（比如线程未关闭或者循环发送的Handler消息未停止），也可能是为了需求而有意为之，导致整个Android应用的生态环境并不是一片干净。</p>
 ]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
   </entry>
   <entry>
     <title>操作系统</title>
@@ -615,6 +705,17 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -688,17 +789,6 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1799,6 +1889,41 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -1906,41 +2031,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
