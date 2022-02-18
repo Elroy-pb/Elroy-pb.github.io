@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/02/18/Android-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6-2/%E4%BC%98%E5%8C%96java%E5%A0%86.png">
 <meta property="og:image" content="http://example.com/2022/02/18/Android-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6-2/%E5%87%8F%E5%B0%91apk%E4%BD%93%E7%A7%AF.png">
 <meta property="article:published_time" content="2022-02-18T03:52:44.000Z">
-<meta property="article:modified_time" content="2022-02-18T11:43:42.729Z">
+<meta property="article:modified_time" content="2022-02-18T15:46:04.603Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Linux">
@@ -232,7 +232,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-02-18 11:52:44 / Modified: 19:43:42" itemprop="dateCreated datePublished" datetime="2022-02-18T11:52:44+08:00">2022-02-18</time>
+              <time title="Created: 2022-02-18 11:52:44 / Modified: 23:46:04" itemprop="dateCreated datePublished" datetime="2022-02-18T11:52:44+08:00">2022-02-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,14 +254,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.4k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
             <div class="post-description">Android-内存管理原理</div>
 
@@ -277,6 +277,28 @@
         <h1 id="设备物理内存"><a href="#设备物理内存" class="headerlink" title="设备物理内存"></a>设备物理内存</h1><p>设备的物理内存被分为很多页（Page），每页 4KB。不同的页用来做不同的事情。</p>
 <p><img src="physical-type.png" alt="物理内存"> </p>
 <p>橘色的是已使用页，黄色的是缓存页（数据在磁盘上有备份，所以 Cache Pages 是可以被回收的），绿色的是空闲页。 </p>
+<hr>
+<p>RAM 分为多个“页面”。通常，每个页面为 4KB 的内存。<br>系统会将页面视为“可用”或“已使用”。可用页面是未使用的 RAM。已使用的页面是系统目前正在使用的 RAM，并分为以下类别：</p>
+<p>缓存页：有存储器中的文件（例如代码或内存映射文件）支持的内存。缓存内存有两种类型：</p>
+<ul>
+<li>私有页：由一个进程拥有且未共享<ul>
+<li>干净页：存储器中未经修改的文件副本，可由 kswapd 删除以增加可用内存</li>
+<li>脏页：存储器中经过修改的文件副本；可由 kswapd 移动到 zRAM 或在 zRAM 中进行压缩以增加可用内存</li>
+</ul>
+</li>
+<li>共享页：由多个进程使用<ul>
+<li>干净页：存储器中未经修改的文件副本，可由 kswapd 删除以增加可用内存</li>
+<li>脏页：存储器中经过修改的文件副本；允许通过 kswapd 或者通过明确使用 msync() 或 munmap() 将更改写回存储器中的文件，以增加可用空间</li>
+</ul>
+</li>
+<li>匿名页：没有存储器中的文件支持的内存（例如，由设置了 MAP_ANONYMOUS 标记的 mmap() 进行分配）<ul>
+<li>脏页：可由 kswapd 移动到 zRAM/在 zRAM 中进行压缩以增加可用内存</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意：干净页包含存在于存储器中的文件（或文件一部分）的精确副本。如果干净页不再包含文件的精确副本（例如，因应用操作所致），则会变成脏页。干净页可以删除，因为始终可以使用存储器中的数据重新生成它们；脏页则不能删除，否则数据将会丢失。</p>
+</blockquote>
 <h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p><img src="%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="物理内存"> </p>
 <p>1）这是一个 2G 内存的手机，X 轴表示使用时间，Y 轴表示内存使用情况。 </p>
 <p>2）随着打开的应用越来越多，Used Pages 也越来越多，而 Cached Pages 和 Free Pages 则越来越少。 </p>
@@ -317,7 +339,7 @@
 <p>Rss - Resident Set Size 是分配给进程的物理页数。进程之间共享的页面被计算多次。 </p>
 <p>Pss - Proportional Set Size 采用 Rss 数，但在共享进程之间平均分配共享页面。例如，如果三个进程共享 9MB，则每个进程在 Pss 中获得 3MB。 </p>
 <p>Uss - Unique Set Size 也称为 Private Dirty，它基本上是进程内无法分页到磁盘的 RAM 量，因为它没有磁盘上的相同数据支持，并且不与任何其他进程共享</p>
-<h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>私有脏内存 指的是 App 已用内存，以上物理内存，显示橘色的是已使用页。<br>私有干净  表明是 App 缓存内存，可以被 kswapd 回收的内存。</p>
+<h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>私有脏内存 == 指的是 App 已用内存，以上物理内存，显示橘色的是已使用页。<br>私有干净内存 == 表明是 App 缓存内存，可以被 kswapd 回收的内存。  </p>
 
     </div>
 
@@ -470,7 +492,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">80k</span>
+    <span title="Symbols count total">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

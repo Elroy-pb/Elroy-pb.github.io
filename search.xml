@@ -6,6 +6,28 @@
     <content><![CDATA[<h1 id="设备物理内存"><a href="#设备物理内存" class="headerlink" title="设备物理内存"></a>设备物理内存</h1><p>设备的物理内存被分为很多页（Page），每页 4KB。不同的页用来做不同的事情。</p>
 <p><img src="physical-type.png" alt="物理内存"> </p>
 <p>橘色的是已使用页，黄色的是缓存页（数据在磁盘上有备份，所以 Cache Pages 是可以被回收的），绿色的是空闲页。 </p>
+<hr>
+<p>RAM 分为多个“页面”。通常，每个页面为 4KB 的内存。<br>系统会将页面视为“可用”或“已使用”。可用页面是未使用的 RAM。已使用的页面是系统目前正在使用的 RAM，并分为以下类别：</p>
+<p>缓存页：有存储器中的文件（例如代码或内存映射文件）支持的内存。缓存内存有两种类型：</p>
+<ul>
+<li>私有页：由一个进程拥有且未共享<ul>
+<li>干净页：存储器中未经修改的文件副本，可由 kswapd 删除以增加可用内存</li>
+<li>脏页：存储器中经过修改的文件副本；可由 kswapd 移动到 zRAM 或在 zRAM 中进行压缩以增加可用内存</li>
+</ul>
+</li>
+<li>共享页：由多个进程使用<ul>
+<li>干净页：存储器中未经修改的文件副本，可由 kswapd 删除以增加可用内存</li>
+<li>脏页：存储器中经过修改的文件副本；允许通过 kswapd 或者通过明确使用 msync() 或 munmap() 将更改写回存储器中的文件，以增加可用空间</li>
+</ul>
+</li>
+<li>匿名页：没有存储器中的文件支持的内存（例如，由设置了 MAP_ANONYMOUS 标记的 mmap() 进行分配）<ul>
+<li>脏页：可由 kswapd 移动到 zRAM/在 zRAM 中进行压缩以增加可用内存</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意：干净页包含存在于存储器中的文件（或文件一部分）的精确副本。如果干净页不再包含文件的精确副本（例如，因应用操作所致），则会变成脏页。干净页可以删除，因为始终可以使用存储器中的数据重新生成它们；脏页则不能删除，否则数据将会丢失。</p>
+</blockquote>
 <h1 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h1><h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p><img src="%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="物理内存"> </p>
 <p>1）这是一个 2G 内存的手机，X 轴表示使用时间，Y 轴表示内存使用情况。 </p>
 <p>2）随着打开的应用越来越多，Used Pages 也越来越多，而 Cached Pages 和 Free Pages 则越来越少。 </p>
@@ -46,7 +68,7 @@
 <p>Rss - Resident Set Size 是分配给进程的物理页数。进程之间共享的页面被计算多次。 </p>
 <p>Pss - Proportional Set Size 采用 Rss 数，但在共享进程之间平均分配共享页面。例如，如果三个进程共享 9MB，则每个进程在 Pss 中获得 3MB。 </p>
 <p>Uss - Unique Set Size 也称为 Private Dirty，它基本上是进程内无法分页到磁盘的 RAM 量，因为它没有磁盘上的相同数据支持，并且不与任何其他进程共享</p>
-<h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>私有脏内存 指的是 App 已用内存，以上物理内存，显示橘色的是已使用页。<br>私有干净  表明是 App 缓存内存，可以被 kswapd 回收的内存。</p>
+<h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>私有脏内存 == 指的是 App 已用内存，以上物理内存，显示橘色的是已使用页。<br>私有干净内存 == 表明是 App 缓存内存，可以被 kswapd 回收的内存。  </p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -813,6 +835,17 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -886,17 +919,6 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1997,6 +2019,41 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2104,41 +2161,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
