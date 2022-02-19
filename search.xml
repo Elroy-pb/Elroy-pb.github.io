@@ -69,7 +69,7 @@
 <p>Pss - Proportional Set Size 采用 Rss 数，但在共享进程之间平均分配共享页面。例如，如果三个进程共享 9MB，则每个进程在 Pss 中获得 3MB。 </p>
 <p>Uss - Unique Set Size 也称为 Private Dirty，它基本上是进程内无法分页到磁盘的 RAM 量，因为它没有磁盘上的相同数据支持，并且不与任何其他进程共享</p>
 <h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>私有脏内存 == 指的是 App 已用内存，以上物理内存，显示橘色的是已使用页。<br>私有干净内存 == 表明是 App 缓存内存，可以被 kswapd 回收的内存。  </p>
-]]></content>
+<h1 id="zram"><a href="#zram" class="headerlink" title="zram"></a>zram</h1>]]></content>
       <categories>
         <category>Linux</category>
         <category>Android</category>
@@ -154,7 +154,13 @@
 <p>在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。</p>
 <!-- 同步是指程序用于控制不同线程之间操作发生相对顺序的机制。在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。 Java 的并发采用的是共享内存模型，Java 线程之间的通信总是隐式进行，整个通信过程对程序员完全透明。如果编写多线程程序的 Java 程序员不理解隐式进行的线程之间通信的工作机制，很可能会遇到各种奇怪的内存可见性问题。  -->
 
-<h1 id="Java的并发模型"><a href="#Java的并发模型" class="headerlink" title="Java的并发模型"></a>Java的并发模型</h1><p>Java内存模型规定所有的变量都是存在主存当中（类似于前面说的物理内存），每个线程都有自己的工作内存（类似于前面的高速缓存）。线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。并且每个线程不能访问其他线程的工作内存。</p>
+<h1 id="Java的并发模型"><a href="#Java的并发模型" class="headerlink" title="Java的并发模型"></a>Java的并发模型</h1><!-- 最近看罗翔老师的刑法课程还有刑法相关的书，让我领悟到一些比较深刻的道理，嫌弃人的犯罪的内在动机有时候更重要。 -->
+
+<p>编程上的专业术语都有特定的定义，饮水思源，思考为什么要设计出来，还有为什么要这样设计，当2个时候都满足的时候，定义也就自然而然的清楚了。</p>
+<p>众所周知，我们Java是跨平台，因为不同平台的硬件和操作系统访问都是存在访问差异的，为了要保证Java程序在各个平台下的运行对内存的访问都能得到一致效果的机制和规范，这就是为什么要设计JMM内存模型。</p>
+<p>根据Google后，相关的资料，其实JMM只是一个抽象的概念，描述一个规则和规范，这个后面会细讲。</p>
+<p>目的是解决由于多线程通过主存(共享内存)进行通信时，存在的原子性，可见性(缓存一致性)以及有序性问题。</p>
+<h2 id="JMM-规范"><a href="#JMM-规范" class="headerlink" title="JMM 规范"></a>JMM 规范</h2><p>Java内存模型规定所有的变量都是存在主存当中（类似于前面说的物理内存），每个线程都有自己的工作内存（类似于前面的高速缓存）。线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。并且每个线程不能访问其他线程的工作内存。</p>
 <blockquote>
 <p>在java中，所有实例域、静态域和数组元素存储在堆内存中，堆内存在线程之间共享（本文使用“共享变量”这个术语代指实例域，静态域和数组元素）。</p>
 </blockquote>
@@ -170,7 +176,44 @@
 </blockquote>
 <p>每个线程都有对应自己独立，私有的栈区。</p>
 <p>Java线程之间的通信由Java内存模型（本文简称为JMM)控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。从抽象的角度来看，JMM定义了线程和主内存之间的抽象关系:线程之间的共享变量存储在主内存( main memory )中，每个线程都有一个私有的本地内存( local memory )，本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。</p>
-<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><h1 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h1><h1 id=""><a href="#" class="headerlink" title=""></a></h1><!-- 
+<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><p>java代码 &gt; 编译器重排序 &gt; 指令重排序 &gt; 内存重排序</p>
+<h2 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h2><p>CPU运行效率 相比缓存、内存、硬盘IO之间效率有着指数级的差别，目的就是把CPU的资源利用起来</p>
+<h2 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h2><p>针对程序代码语而言，编译器可以在不改变单线程程序语义的情况下，可以对代码语句顺序进行调整重新排序。</p>
+<h1 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h1><h1 id="as-if—serial-语义"><a href="#as-if—serial-语义" class="headerlink" title="as-if—serial 语义"></a>as-if—serial 语义</h1><p>as-if-serial语义的意思指∶不管怎么重排序（编译器和处理器为了提高并行度），(单线程）程序的执行结果不能被改变。编译器，runtime 和处理器都必须遵守as-if-serial语义。</p>
+<h1 id="程序顺序规则"><a href="#程序顺序规则" class="headerlink" title="程序顺序规则"></a>程序顺序规则</h1><p>JMM仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。</p>
+<p>在计算机中，软件技术和硬件技术有一个共同的目标∶在不改变程序执行结果的前提下，尽可能的开发并行度。编译器和处理器遵从这一目标，从happens –before 的定义我们可以看出，JMM同样遵从这一目标。</p>
+<hr>
+<h1 id="happen-before"><a href="#happen-before" class="headerlink" title="happen-before"></a>happen-before</h1><h1 id="volatile-的特性"><a href="#volatile-的特性" class="headerlink" title="volatile 的特性"></a>volatile 的特性</h1><ul>
+<li>简而言之，volatile变量自身具有下列特性︰</li>
+</ul>
+<ul>
+<li>内存可见性 : 当线程A更新了 volatile 修饰的变量时，它会立即刷新到主线程，并且将其余缓存中该变量的值清空，导致其余线程只能去主内存读取最新值。</li>
+<li>原子性︰对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。</li>
+<li>有序性 : 保证这个变量之前的代码一定会比它先执行，而之后的代码一定会比它后执行, 编译器不会对此变量次序进行排序优化。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">//x、y为非volatile变量</span><br><span class="line">//flag为volatile变量</span><br><span class="line"> </span><br><span class="line">x = 2;        //语句1</span><br><span class="line">y = 0;        //语句2</span><br><span class="line">flag = true;  //语句3</span><br><span class="line">x = 4;         //语句4</span><br><span class="line">y = -1;       //语句5</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于 flag变量 为volatile变量，那么在进行指令重排序的过程的时候，不会将语句3放到语句1、语句2前面，也不会讲语句3放到语句4、语句5后面。但是要注意语句1和语句2的顺序、语句4和语句5的顺序是不作任何保证的。并且volatile关键字能保证，执行到语句3时，语句1和语句2必定是执行完毕了的，且语句1和语句2的执行结果对语句3、语句4、语句5是可见的。</p>
+</blockquote>
+<p>1）当程序执行到volatile变量的读操作或者写操作时，在其前面的操作的更改肯定全部已经进行，且结果已经对后面的操作可见；在其后面的操作肯定还没有进行。</p>
+<p>2）在进行指令优化时，不能将在对volatile变量访问的语句放在其后面执行，也不能把volatile变量后面的语句放到其前面执行。</p>
+<blockquote>
+<p>什么是复合操作 ?  既读又写</p>
+</blockquote>
+<h1 id="volatile-写-读建立的happen-before-关系"><a href="#volatile-写-读建立的happen-before-关系" class="headerlink" title="volatile 写-读建立的happen-before 关系"></a>volatile 写-读建立的happen-before 关系</h1><p>从内存的语义，volatile写和锁的释放有相同的内存语义，volatile读和锁的获取有相同的内存语义。</p>
+<h1 id="volatile-写-读-内存语义"><a href="#volatile-写-读-内存语义" class="headerlink" title="volatile 写-读 内存语义"></a>volatile 写-读 内存语义</h1><p>线程A写一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所在修改的)消息。</p>
+<p>线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的(在写这个volatile变量之前对共享变量所做修改的)消息。</p>
+<p>线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</p>
+<h1 id="JMM内存屏障插入策略"><a href="#JMM内存屏障插入策略" class="headerlink" title="JMM内存屏障插入策略"></a>JMM内存屏障插入策略</h1><p>内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）是一种CPU指令，用于控制特定条件下的重排序和内存可见性问题。Java编译器也会根据内存屏障的规则禁止重排序。</p>
+<p><img src="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png" alt="内存屏障示意表"></p>
+<h1 id="释放和获得锁的含义"><a href="#释放和获得锁的含义" class="headerlink" title="释放和获得锁的含义"></a>释放和获得锁的含义</h1><p>当线程释放锁时，JMM 会把本地的内存中的共享变量刷新到主存。</p>
+<p>当线程获得锁时，JMM 会把本地的内存中的共享变量置为无效。从而使监视器的保护的临界代码必须要从主存中读取共享变量。</p>
+<h1 id="内存访问重排序与Java内存模型"><a href="#内存访问重排序与Java内存模型" class="headerlink" title="内存访问重排序与Java内存模型"></a>内存访问重排序与Java内存模型</h1><p><img src="https://p0.meituan.net/travelcube/94e93b3a7b49dc4c46b528fde1a03cd967665.png" alt="重排序示意表"></p>
+<p>当第二个操作是volatile 写时，不管第一个操作是什么，都不能重排序。这个规则确保volatile 写之前的操作不会被编译器重排序到volatile 写之后。</p>
+<p>当第一个操作是volatile 读时，不管第二个操作是什么，都不能重排序。这个规则确保volatile 读之后的操作不会被编译器重排序到volatile 读之前。</p>
+<hr>
+<h1 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h1><!-- 
 # Android共享内存
 
 
@@ -384,8 +427,11 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br></pre></td></tr></table></figure>
 
 <hr>
+<h1 id="视频观看"><a href="#视频观看" class="headerlink" title="视频观看"></a>视频观看</h1><p>Google发布会，包括Google相关的资料也可以学习。<br>可以先看Google相关的视频资料，再根据这些视频资料，去阅读源码。</p>
 <h1 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h1><p>分析源码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.首先猜想源码的功能</span><br><span class="line">2.再根据功能去找对应的代码</span><br><span class="line">3.对整体进行有效的逻辑分析</span><br><span class="line"></span><br><span class="line">如果是我来做这块功能的模块，我应该怎么设计.</span><br><span class="line">1.需要多少步骤。(需要哪些步骤，能不能简化,还有关联性)</span><br><span class="line">2.考虑使用的场景。</span><br><span class="line">3.考虑用户的体验。</span><br></pre></td></tr></table></figure>
+
+
 
 <hr>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 编写 ==&gt; 目的 </span><br><span class="line">编译 ==&gt; </span><br><span class="line">运行时 ==&gt;</span><br><span class="line">如何加载 ==&gt; </span><br><span class="line">如何回收 ==&gt;  --&gt;</span><br><span class="line">---</span><br><span class="line"># 投资心得</span><br></pre></td></tr></table></figure>
@@ -2019,41 +2065,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo CMD</title>
-    <url>/2021/07/19/hexo/</url>
-    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2161,6 +2172,41 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo CMD</title>
+    <url>/2021/07/19/hexo/</url>
+    <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n &quot;博客名称&quot;  =&gt; hexo new &quot;博客名称&quot;   #这两个都是创建新文章，前者是简写模式</span><br><span class="line">hexo p  =&gt; hexo publish</span><br><span class="line">hexo g  =&gt; hexo generate  #生成</span><br><span class="line">hexo s  =&gt; hexo server  #启动服务预览</span><br><span class="line">hexo d  =&gt; hexo deploy  #部署  </span><br><span class="line"></span><br><span class="line">hexo server   #Hexo 会监视文件变动并自动更新，无须重启服务器。</span><br><span class="line">hexo server -s   #静态模式</span><br><span class="line">hexo server -p 5000   #更改端口</span><br><span class="line">hexo server -i 192.168.1.1   #自定义IP</span><br><span class="line">hexo clean   #清除缓存，网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g   #生成静态网页</span><br><span class="line">hexo d   #开始部署</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
