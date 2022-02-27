@@ -28,14 +28,14 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="Java-内存模型 简介">
 <meta property="og:locale">
-<meta property="og:image" content="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png">
 <meta property="og:image" content="https://p0.meituan.net/travelcube/94e93b3a7b49dc4c46b528fde1a03cd967665.png">
+<meta property="og:image" content="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png">
 <meta property="article:published_time" content="2022-01-29T15:16:02.000Z">
-<meta property="article:modified_time" content="2022-02-19T17:03:41.057Z">
+<meta property="article:modified_time" content="2022-02-27T16:50:24.061Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png">
+<meta name="twitter:image" content="https://p0.meituan.net/travelcube/94e93b3a7b49dc4c46b528fde1a03cd967665.png">
 
 <link rel="canonical" href="http://example.com/2022/01/29/Java-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
 
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-20 01:03:41" itemprop="dateModified" datetime="2022-02-20T01:03:41+08:00">2022-02-20</time>
+                <time title="Modified: 2022-02-28 00:50:24" itemprop="dateModified" datetime="2022-02-28T00:50:24+08:00">2022-02-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,7 +248,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.8k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -281,7 +281,6 @@
 <!-- 同步是指程序用于控制不同线程之间操作发生相对顺序的机制。在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。 Java 的并发采用的是共享内存模型，Java 线程之间的通信总是隐式进行，整个通信过程对程序员完全透明。如果编写多线程程序的 Java 程序员不理解隐式进行的线程之间通信的工作机制，很可能会遇到各种奇怪的内存可见性问题。  -->
 
 <h1 id="Java的并发模型"><a href="#Java的并发模型" class="headerlink" title="Java的并发模型"></a>Java的并发模型</h1><!-- 最近看罗翔老师的刑法课程还有刑法相关的书，让我领悟到一些比较深刻的道理，嫌弃人的犯罪的内在动机有时候更重要。 -->
-
 <p>编程上的专业术语都有特定的定义，饮水思源，思考为什么要设计出来，还有为什么要这样设计，当2个时候都满足的时候，定义也就自然而然的清楚了。</p>
 <p>众所周知，我们Java是跨平台，因为不同平台的硬件和操作系统访问都是存在访问差异的，为了要保证Java程序在各个平台下的运行对内存的访问都能得到一致效果的机制和规范，这就是为什么要设计JMM内存模型。</p>
 <p>根据Google后，相关的资料，其实JMM只是一个抽象的概念，描述一个规则和规范，这个后面会细讲。</p>
@@ -309,7 +308,14 @@
 <h1 id="程序顺序规则"><a href="#程序顺序规则" class="headerlink" title="程序顺序规则"></a>程序顺序规则</h1><p>JMM仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。</p>
 <p>在计算机中，软件技术和硬件技术有一个共同的目标∶在不改变程序执行结果的前提下，尽可能的开发并行度。编译器和处理器遵从这一目标，从happens –before 的定义我们可以看出，JMM同样遵从这一目标。</p>
 <hr>
-<h1 id="happen-before"><a href="#happen-before" class="headerlink" title="happen-before"></a>happen-before</h1><h1 id="volatile-的特性"><a href="#volatile-的特性" class="headerlink" title="volatile 的特性"></a>volatile 的特性</h1><ul>
+<h1 id="happen-before"><a href="#happen-before" class="headerlink" title="happen-before"></a>happen-before</h1><p>JVM 规定了先行发生的有的原则，让一个操作无需控制就能先于另一个操作完成</p>
+<h2 id="单一线程原则"><a href="#单一线程原则" class="headerlink" title="单一线程原则"></a>单一线程原则</h2><blockquote>
+<p>Single Thread rule<br>在同一个线程内，书写在前面的操作happen-before后面的操作。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 3; // 1</span><br><span class="line">int b = a + 1; // 2</span><br></pre></td></tr></table></figure>
+<p>这个时候，java虚拟机不会对 1，2 的顺序进行重排序排序，jvm一定会保证1对2的可见性。<br>再换个例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 3; // 1</span><br><span class="line">int b = 4; // 2</span><br></pre></td></tr></table></figure>
+<h2 id="这2个语句没有依赖性，所以指定会进行重排序，有可能2是在1的前面。"><a href="#这2个语句没有依赖性，所以指定会进行重排序，有可能2是在1的前面。" class="headerlink" title="这2个语句没有依赖性，所以指定会进行重排序，有可能2是在1的前面。"></a>这2个语句没有依赖性，所以指定会进行重排序，有可能2是在1的前面。</h2><h2 id="管程锁定规则-锁的原则"><a href="#管程锁定规则-锁的原则" class="headerlink" title="管程锁定规则(锁的原则)"></a>管程锁定规则(锁的原则)</h2><h2 id="同一个锁的unlock操作happen-before此锁的lock操作"><a href="#同一个锁的unlock操作happen-before此锁的lock操作" class="headerlink" title="同一个锁的unlock操作happen-before此锁的lock操作"></a>同一个锁的unlock操作happen-before此锁的lock操作</h2><h2 id="volatile-的特性"><a href="#volatile-的特性" class="headerlink" title="volatile 的特性"></a>volatile 的特性</h2><ul>
 <li>简而言之，volatile变量自身具有下列特性︰</li>
 </ul>
 <ul>
@@ -317,7 +323,7 @@
 <li>原子性︰对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。</li>
 <li>有序性 : 保证这个变量之前的代码一定会比它先执行，而之后的代码一定会比它后执行, 编译器不会对此变量次序进行排序优化。</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//x、y为非volatile变量</span><br><span class="line">//flag为volatile变量</span><br><span class="line"> </span><br><span class="line">x = 2;        //语句1</span><br><span class="line">y = 0;        //语句2</span><br><span class="line">flag = true;  //语句3</span><br><span class="line">x = 4;         //语句4</span><br><span class="line">y = -1;       //语句5</span><br></pre></td></tr></table></figure>
+<h3 id="volatile变量规则"><a href="#volatile变量规则" class="headerlink" title="volatile变量规则"></a>volatile变量规则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//x、y为非volatile变量</span><br><span class="line">//flag为volatile变量</span><br><span class="line"> </span><br><span class="line">x = 2;        //语句1</span><br><span class="line">y = 0;        //语句2</span><br><span class="line">flag = true;  //语句3</span><br><span class="line">x = 4;         //语句4</span><br><span class="line">y = -1;       //语句5</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>由于 flag变量 为volatile变量，那么在进行指令重排序的过程的时候，不会将语句3放到语句1、语句2前面，也不会讲语句3放到语句4、语句5后面。但是要注意语句1和语句2的顺序、语句4和语句5的顺序是不作任何保证的。并且volatile关键字能保证，执行到语句3时，语句1和语句2必定是执行完毕了的，且语句1和语句2的执行结果对语句3、语句4、语句5是可见的。</p>
@@ -331,17 +337,36 @@
 <h1 id="volatile-写-读-内存语义"><a href="#volatile-写-读-内存语义" class="headerlink" title="volatile 写-读 内存语义"></a>volatile 写-读 内存语义</h1><p>线程A写一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所在修改的)消息。</p>
 <p>线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的(在写这个volatile变量之前对共享变量所做修改的)消息。</p>
 <p>线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</p>
-<h1 id="JMM内存屏障插入策略"><a href="#JMM内存屏障插入策略" class="headerlink" title="JMM内存屏障插入策略"></a>JMM内存屏障插入策略</h1><p>内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）是一种CPU指令，用于控制特定条件下的重排序和内存可见性问题。Java编译器也会根据内存屏障的规则禁止重排序。</p>
-<p><img src="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png" alt="内存屏障示意表"></p>
 <h1 id="释放和获得锁的含义"><a href="#释放和获得锁的含义" class="headerlink" title="释放和获得锁的含义"></a>释放和获得锁的含义</h1><p>当线程释放锁时，JMM 会把本地的内存中的共享变量刷新到主存。</p>
 <p>当线程获得锁时，JMM 会把本地的内存中的共享变量置为无效。从而使监视器的保护的临界代码必须要从主存中读取共享变量。</p>
 <h1 id="内存访问重排序与Java内存模型"><a href="#内存访问重排序与Java内存模型" class="headerlink" title="内存访问重排序与Java内存模型"></a>内存访问重排序与Java内存模型</h1><p><img src="https://p0.meituan.net/travelcube/94e93b3a7b49dc4c46b528fde1a03cd967665.png" alt="重排序示意表"></p>
-<p>当第二个操作是volatile 写时，不管第一个操作是什么，都不能重排序。这个规则确保volatile 写之前的操作不会被编译器重排序到volatile 写之后。</p>
-<p>当第一个操作是volatile 读时，不管第二个操作是什么，都不能重排序。这个规则确保volatile 读之后的操作不会被编译器重排序到volatile 读之前。</p>
-<hr>
-<h1 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h1><!-- 
-# Android共享内存
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">volatile int v1 = 1;</span><br><span class="line">volatile int v2 = 2;</span><br><span class="line">int v3 = 3;</span><br><span class="line"></span><br><span class="line">void test()&#123;</span><br><span class="line">    int a = v3 + 1;</span><br><span class="line">    int b = v1 + v3; // 第二个 volatile 写时。</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p>当第二个操作是volatile 写时，不管第一个操作是什么，都不能重排序。这个规则确保volatile 写之前的操作不会被编译器重排序到volatile 写之后。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">volatile int v1 = 1;</span><br><span class="line">volatile int v2 = 2;</span><br><span class="line">int v3 = 0;</span><br><span class="line"></span><br><span class="line">void test()&#123;</span><br><span class="line">    int a = v1; // 第一个 volatile 读</span><br><span class="line">    int b = v3 + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当第一个操作是 volatile 读时，不管第二个操作是什么，都不能重排序。这个规则确保volatile 读之后的操作不会被编译器重排序到 volatile 读之前。</p>
+<hr>
+<h1 id="volatile-内存语义"><a href="#volatile-内存语义" class="headerlink" title="volatile 内存语义"></a>volatile 内存语义</h1><p>为了实现 volatile 的内存语义，编译器在生成字节码时，会在指令序列中插入 内存屏障 来禁止特定类型的处理器重排序。</p>
+<h2 id="JMM内存屏障插入策略"><a href="#JMM内存屏障插入策略" class="headerlink" title="JMM内存屏障插入策略"></a>JMM内存屏障插入策略</h2><p>内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）是一种CPU指令，用于控制特定条件下的重排序和内存可见性问题。Java编译器也会根据内存屏障的规则禁止重排序。</p>
+<p><img src="https://p0.meituan.net/travelcube/bde75d1129494bf77b8b8b1ade546cd276768.png" alt="内存屏障示意表"></p>
+<h2 id="JMM内存屏障插入策略-1"><a href="#JMM内存屏障插入策略-1" class="headerlink" title="JMM内存屏障插入策略"></a>JMM内存屏障插入策略</h2><ul>
+<li><p>在每个 volatile 写操作的前面插入一个 <strong>StoreStore</strong>屏障。</p>
+</li>
+<li><p>在每个 volatile 写操作的后面插入一个 <strong>StoreLoa</strong>屏障。</p>
+</li>
+<li></li>
+<li><p>在每个 volatile 读操作的前面插入一个 <strong>LoadLoad</strong>屏障。</p>
+</li>
+<li><p>在每个 volatile 读操作的后面插入一个 <strong>LoadStore</strong>屏障。</p>
+</li>
+</ul>
+<p>在 StoreStore屏障可以保证在 volatile 写之前，其前面的操作已经对任意处理器可见，把StoreStore上面的普通读写操作在volatile写之前刷新到主存。</p>
+<hr>
+<!-- # ReentrantLock -->
+
+
+<!-- 
+# Android共享内存
 
 
 2.在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信，在java中典型
@@ -429,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">并发模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java%E7%9A%84%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">Java的并发模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JMM-%E8%A7%84%E8%8C%83"><span class="nav-number">2.1.</span> <span class="nav-text">JMM 规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.1.</span> <span class="nav-text">指令重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">编译器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#as-if%E2%80%94serial-%E8%AF%AD%E4%B9%89"><span class="nav-number">5.</span> <span class="nav-text">as-if—serial 语义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%A1%BA%E5%BA%8F%E8%A7%84%E5%88%99"><span class="nav-number">6.</span> <span class="nav-text">程序顺序规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#happen-before"><span class="nav-number">7.</span> <span class="nav-text">happen-before</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">8.</span> <span class="nav-text">volatile 的特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E5%86%99-%E8%AF%BB%E5%BB%BA%E7%AB%8B%E7%9A%84happen-before-%E5%85%B3%E7%B3%BB"><span class="nav-number">9.</span> <span class="nav-text">volatile 写-读建立的happen-before 关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E5%86%99-%E8%AF%BB-%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89"><span class="nav-number">10.</span> <span class="nav-text">volatile 写-读 内存语义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JMM%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C%E6%8F%92%E5%85%A5%E7%AD%96%E7%95%A5"><span class="nav-number">11.</span> <span class="nav-text">JMM内存屏障插入策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E5%92%8C%E8%8E%B7%E5%BE%97%E9%94%81%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">12.</span> <span class="nav-text">释放和获得锁的含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E9%87%8D%E6%8E%92%E5%BA%8F%E4%B8%8EJava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">13.</span> <span class="nav-text">内存访问重排序与Java内存模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ReentrantLock"><span class="nav-number">14.</span> <span class="nav-text">ReentrantLock</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">并发模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java%E7%9A%84%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">Java的并发模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JMM-%E8%A7%84%E8%8C%83"><span class="nav-number">2.1.</span> <span class="nav-text">JMM 规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.1.</span> <span class="nav-text">指令重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">编译器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">数据依赖性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#as-if%E2%80%94serial-%E8%AF%AD%E4%B9%89"><span class="nav-number">5.</span> <span class="nav-text">as-if—serial 语义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%A1%BA%E5%BA%8F%E8%A7%84%E5%88%99"><span class="nav-number">6.</span> <span class="nav-text">程序顺序规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#happen-before"><span class="nav-number">7.</span> <span class="nav-text">happen-before</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%B8%80%E7%BA%BF%E7%A8%8B%E5%8E%9F%E5%88%99"><span class="nav-number">7.1.</span> <span class="nav-text">单一线程原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%992%E4%B8%AA%E8%AF%AD%E5%8F%A5%E6%B2%A1%E6%9C%89%E4%BE%9D%E8%B5%96%E6%80%A7%EF%BC%8C%E6%89%80%E4%BB%A5%E6%8C%87%E5%AE%9A%E4%BC%9A%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%8C%E6%9C%89%E5%8F%AF%E8%83%BD2%E6%98%AF%E5%9C%A81%E7%9A%84%E5%89%8D%E9%9D%A2%E3%80%82"><span class="nav-number">7.2.</span> <span class="nav-text">这2个语句没有依赖性，所以指定会进行重排序，有可能2是在1的前面。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%A8%8B%E9%94%81%E5%AE%9A%E8%A7%84%E5%88%99-%E9%94%81%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">7.3.</span> <span class="nav-text">管程锁定规则(锁的原则)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E9%94%81%E7%9A%84unlock%E6%93%8D%E4%BD%9Chappen-before%E6%AD%A4%E9%94%81%E7%9A%84lock%E6%93%8D%E4%BD%9C"><span class="nav-number">7.4.</span> <span class="nav-text">同一个锁的unlock操作happen-before此锁的lock操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile-%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">7.5.</span> <span class="nav-text">volatile 的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99"><span class="nav-number">7.5.1.</span> <span class="nav-text">volatile变量规则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E5%86%99-%E8%AF%BB%E5%BB%BA%E7%AB%8B%E7%9A%84happen-before-%E5%85%B3%E7%B3%BB"><span class="nav-number">8.</span> <span class="nav-text">volatile 写-读建立的happen-before 关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E5%86%99-%E8%AF%BB-%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89"><span class="nav-number">9.</span> <span class="nav-text">volatile 写-读 内存语义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E5%92%8C%E8%8E%B7%E5%BE%97%E9%94%81%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">10.</span> <span class="nav-text">释放和获得锁的含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E9%87%8D%E6%8E%92%E5%BA%8F%E4%B8%8EJava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">11.</span> <span class="nav-text">内存访问重排序与Java内存模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile-%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89"><span class="nav-number">12.</span> <span class="nav-text">volatile 内存语义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JMM%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C%E6%8F%92%E5%85%A5%E7%AD%96%E7%95%A5"><span class="nav-number">12.1.</span> <span class="nav-text">JMM内存屏障插入策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JMM%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C%E6%8F%92%E5%85%A5%E7%AD%96%E7%95%A5-1"><span class="nav-number">12.2.</span> <span class="nav-text">JMM内存屏障插入策略</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -500,12 +525,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">83k</span>
+    <span title="Symbols count total">84k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:15</span>
+    <span title="Reading time total">1:16</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
