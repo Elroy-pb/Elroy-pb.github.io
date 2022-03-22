@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp">
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
 <meta property="article:published_time" content="2021-09-06T03:32:17.000Z">
-<meta property="article:modified_time" content="2021-11-15T09:15:24.609Z">
+<meta property="article:modified_time" content="2022-03-22T20:06:01.334Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-11-15 17:15:24" itemprop="dateModified" datetime="2021-11-15T17:15:24+08:00">2021-11-15</time>
+                <time title="Modified: 2022-03-23 04:06:01" itemprop="dateModified" datetime="2022-03-23T04:06:01+08:00">2022-03-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,14 +249,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.5k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>4 mins.</span>
             </span>
             <div class="post-description">Android10(Q)---分区存储</div>
 
@@ -274,8 +274,23 @@
 <li>作者：青蛙要fly<br>来源：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </blockquote>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android 10 (Q)  新增了分区存储的概念，targetSdkVersion=29  </span><br><span class="line">Android &gt;10() *强制开启分区存储的概念，targetSdkVersion&gt;=30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy()判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="存储访问以及适配"><a href="#存储访问以及适配" class="headerlink" title="存储访问以及适配"></a>存储访问以及适配</h1><blockquote>
+<p>“存储访问”主要是从“效率和复用的角度出发”，透过缓存来提上效率，降低服务器的负担，透过 持久化存储 来实现媒体数据的复用</p>
+</blockquote>
+<blockquote>
+<p>“存储访问适配”的主要是从“保护用户隐私”出发，透过新的传输机制，来确保本App的私密空间不被越界和泄露</p>
+</blockquote>
+<h2 id="为什么要适配存储访问"><a href="#为什么要适配存储访问" class="headerlink" title="为什么要适配存储访问"></a>为什么要适配存储访问</h2><p>接收和发送中的细节。主要的关键就是”缓存“。</p>
+<p>收发</p>
+<p>收</p>
+<p>发</p>
+<p>1.从”效率到平衡“</p>
+<p>1.1 对手机来说，有了缓存，下次再加载已经访问的内容时，可以直接从本地调取，而无需重新下载，对app的性能是很大的提高，节省了 时间，流量，电量。</p>
+<p>本地闪存速度 300MB/s以上 &gt; https 请求有几十毫秒的延迟。<br>并且 https 请求涉及 加解密，大量的https 请求意味着大量的运算，损失电量。</p>
+<p>1.2 对服务端来说，客户端缓存存在，使得服务器的”超高并发“有所缓减，大幅度降低网络拥堵和服务器奔溃。</p>
+<p>2.从”复用到隐私“</p>
+<h2 id="Android10-Q-—分区存储的由来"><a href="#Android10-Q-—分区存储的由来" class="headerlink" title="Android10(Q)—分区存储的由来"></a>Android10(Q)—分区存储的由来</h2><p>在 Android 版本的不断升级更替中，Google团队对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。<br>用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android = 10(Q)  新增了分区存储的概念，targetSdkVersion == 29  </span><br><span class="line">Android &gt; 10(Q)  强制开启分区存储的概念，targetSdkVersion &gt;= 30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy() 判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
@@ -445,7 +460,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">2.1.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">2.2.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E4%BB%A5%E5%8F%8A%E9%80%82%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">存储访问以及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%82%E9%85%8D%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要适配存储访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android10-Q-%E2%80%94%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">2.2.</span> <span class="nav-text">Android10(Q)—分区存储的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">2.3.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">2.4.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">2.4.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -516,7 +531,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

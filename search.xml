@@ -476,8 +476,6 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
 <h1 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h1><p>分析源码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.首先猜想源码的功能</span><br><span class="line">2.再根据功能去找对应的代码</span><br><span class="line">3.对整体进行有效的逻辑分析</span><br><span class="line"></span><br><span class="line">如果是我来做这块功能的模块，我应该怎么设计.</span><br><span class="line">1.需要多少步骤。(需要哪些步骤，能不能简化,还有关联性)</span><br><span class="line">2.考虑使用的场景。</span><br><span class="line">3.考虑用户的体验。</span><br></pre></td></tr></table></figure>
 
-
-
 <hr>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!-- 编写 ==&gt; 目的 </span><br><span class="line">编译 ==&gt; </span><br><span class="line">运行时 ==&gt;</span><br><span class="line">如何加载 ==&gt; </span><br><span class="line">如何回收 ==&gt;  --&gt;</span><br><span class="line">---</span><br><span class="line"># 投资心得</span><br></pre></td></tr></table></figure>
 
@@ -926,17 +924,6 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -1010,6 +997,17 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1194,8 +1192,23 @@ Paging（分页)
 <li>作者：青蛙要fly<br>来源：<a href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </blockquote>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在Android版本的不断升级更替中，Google对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Android 10 (Q)  新增了分区存储的概念，targetSdkVersion=29  </span><br><span class="line">Android &gt;10() *强制开启分区存储的概念，targetSdkVersion&gt;=30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy()判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="存储访问以及适配"><a href="#存储访问以及适配" class="headerlink" title="存储访问以及适配"></a>存储访问以及适配</h1><blockquote>
+<p>“存储访问”主要是从“效率和复用的角度出发”，透过缓存来提上效率，降低服务器的负担，透过 持久化存储 来实现媒体数据的复用</p>
+</blockquote>
+<blockquote>
+<p>“存储访问适配”的主要是从“保护用户隐私”出发，透过新的传输机制，来确保本App的私密空间不被越界和泄露</p>
+</blockquote>
+<h2 id="为什么要适配存储访问"><a href="#为什么要适配存储访问" class="headerlink" title="为什么要适配存储访问"></a>为什么要适配存储访问</h2><p>接收和发送中的细节。主要的关键就是”缓存“。</p>
+<p>收发</p>
+<p>收</p>
+<p>发</p>
+<p>1.从”效率到平衡“</p>
+<p>1.1 对手机来说，有了缓存，下次再加载已经访问的内容时，可以直接从本地调取，而无需重新下载，对app的性能是很大的提高，节省了 时间，流量，电量。</p>
+<p>本地闪存速度 300MB/s以上 &gt; https 请求有几十毫秒的延迟。<br>并且 https 请求涉及 加解密，大量的https 请求意味着大量的运算，损失电量。</p>
+<p>1.2 对服务端来说，客户端缓存存在，使得服务器的”超高并发“有所缓减，大幅度降低网络拥堵和服务器奔溃。</p>
+<p>2.从”复用到隐私“</p>
+<h2 id="Android10-Q-—分区存储的由来"><a href="#Android10-Q-—分区存储的由来" class="headerlink" title="Android10(Q)—分区存储的由来"></a>Android10(Q)—分区存储的由来</h2><p>在 Android 版本的不断升级更替中，Google团队对存储目录操作的限制也是越来越严格。<br>至于为什么要限制，其实是有迹可循的。第一点是出于用户安全数据的保护，Android (Q)10 之前，Android的文件存储现象就像个垃圾桶，只要app取得了存储空间的读写权限，WRITE_EXTERNAL_STORAGE，就可以肆意创建文件，难以管理。<br>用户体验也特别差，打开文件管理器，会发现，想找个具体的文件根本无从下手。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Android = 10(Q)  新增了分区存储的概念，targetSdkVersion == 29  </span><br><span class="line">Android &gt; 10(Q)  强制开启分区存储的概念，targetSdkVersion &gt;= 30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy() 判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
 <li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
@@ -2110,30 +2123,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2241,6 +2230,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
