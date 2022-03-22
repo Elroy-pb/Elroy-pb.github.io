@@ -451,6 +451,26 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
     <content><![CDATA[<h1 id="思考心得"><a href="#思考心得" class="headerlink" title="思考心得"></a>思考心得</h1><p>💻 程序是如何执行的?</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入 ==&gt; 输出</span><br><span class="line"></span><br><span class="line">编程</span><br><span class="line">编写 =&gt; 编译 =&gt; 可执行文件 =&gt; 加载 =&gt; 回收</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作系统</span><br><span class="line">Cpu</span><br><span class="line">HHD</span><br></pre></td></tr></table></figure>
 
+<h1 id="如何思考"><a href="#如何思考" class="headerlink" title="如何思考"></a>如何思考</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">任何技术都绝非凭空产生,一项技术的存在，必然是为了在特定场景下，成为解决特定问题时的不可替代。 —— ©KunMinX</span><br><span class="line">是深度思考的 main 方法。</span><br><span class="line"></span><br><span class="line">abstract 1：宇宙中，任何现象绝非凭空存在，一个现象的存在，必然是出于某种目的。×（暂时无法证明 100% 成立，因为自然界除了规律就是概率，后者是独立事件，并非总是存在特定的因果关系）</span><br><span class="line"></span><br><span class="line">abstract 2：人类社会中，任何一个人造物绝非凭空存在，一个人造物的存在，必然是为了解决某种需求。√（可以 100% 确证，无法推翻，因而，当我们去追溯人造物 存在的背景 </span><br><span class="line"></span><br><span class="line">—— 它的存在主要是 为了解决什么需求 时，我们便 基本能够确知 该事物的本质：我们 用 80% 的时间去抓住作为精华的那 20%，是谓 对此事物有了深入的理解、从而有观点可负责。）</span><br><span class="line"></span><br><span class="line">abstract 3：工具是人造物的子类，工具是一种人造物，所以工具仍然满足上述推论，即 确立了背景认知，即有机会确立对该事物本质的认识。</span><br><span class="line"></span><br><span class="line">abstract 4：技术是一种工具，从而技术也是一种人造物，所以技术仍然满足上述推论、适合以 abstract 3 认识工具的方式来思考技术。</span><br><span class="line"></span><br><span class="line">—— ©KunMinX </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综上<br>真正的 问题 多数时候 并不在于外界，不在于拥有了多少资源，而在于 认知的版图：</p>
+</blockquote>
+<blockquote>
+<p>对事物的认知有多深，能驾驭的事物也就有多少；</p>
+</blockquote>
+<blockquote>
+<p>所认知的领域有多大，能介入的领域也就有多广。</p>
+</blockquote>
+<blockquote>
+<p>二鸟在林，不如一鸟在手。四处搜刮和囤积的表面信息再多 也无济于事；唯有对一件事情有了深入的理解，才能印象深刻 乃至 真正成为自己的 —— 是随时随地可受用的知识。</p>
+</blockquote>
+<blockquote>
+<p>所以，越是后知后觉，就越是需要 认清现状、踏踏实实、没有商量余地地将 “绝不可绕过的基础现象” 给想明白、给确立下来，</p>
+</blockquote>
+<blockquote>
+<p>唯有这样，未来才 真真实实地 有资本、有方向地 能在 “世界” 这个市场中博弈。</p>
+</blockquote>
 <hr>
 <h1 id="视频观看"><a href="#视频观看" class="headerlink" title="视频观看"></a>视频观看</h1><p>Google发布会，包括Google相关的资料也可以学习。<br>可以先看Google相关的视频资料，再根据这些视频资料，去阅读源码。</p>
 <h1 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h1><p>分析源码</p>
@@ -2090,6 +2110,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2197,30 +2241,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
