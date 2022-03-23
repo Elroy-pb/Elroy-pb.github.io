@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>游戏篇章-Unity与SDK交互</title>
+    <url>/2022/03/24/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-Unity%E4%B8%8ESDK%E4%BA%A4%E4%BA%92/</url>
+    <content><![CDATA[<h1 id="游戏启动篇"><a href="#游戏启动篇" class="headerlink" title="游戏启动篇"></a>游戏启动篇</h1><h2 id="CP视角"><a href="#CP视角" class="headerlink" title="CP视角"></a>CP视角</h2><p>游戏App分为2种类型，分包与整包。<br>游戏模式可以大致分成2类，测试模式(内网)与线上模式(外网)。</p>
+<ul>
+<li>游戏的初始化</li>
+</ul>
+<ol>
+<li>检查游戏版本更新  </li>
+<li>1 一般是通过利用<strong>SVN</strong>主分支的版本号，进行线上环境游戏资源的更新。  </li>
+<li>2 获取有序更新URL  </li>
+</ol>
+<p>2.加载本地资源  </p>
+<hr>
+<p>SDK视角</p>
+]]></content>
+      <tags>
+        <tag>Game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/23/Activity%20%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%203%20%E4%B8%AA%E8%BE%9F%E8%B0%A3/</url>
+    <content><![CDATA[<h1 id="技术文章参考"><a href="#技术文章参考" class="headerlink" title="技术文章参考"></a>技术文章参考</h1><p><a href="%E9%87%8D%E5%AD%A6%E5%AE%89%E5%8D%93">https://xiaozhuanlan.com/topic/0213584967</a></p>
+<h1 id="进程模式"><a href="#进程模式" class="headerlink" title="进程模式"></a>进程模式</h1><p>Android 平台的 App，通常情况下都是单进程。</p>
+<p>由于 Android 平台资源有限，需要为不同进程设置优先级，以便在系统资源紧张的情况下，将优先级较低的进程杀死，以释放资源。</p>
+<p>因而，进程模式的存在就是为了标记和区分进程的优先级。</p>
+<h1 id="存在哪几种进程模式？"><a href="#存在哪几种进程模式？" class="headerlink" title="存在哪几种进程模式？"></a>存在哪几种进程模式？</h1><p>按优先级从高到低，进程模式主要包含：</p>
+<p>前景进程、可见进程、服务进程、背景进程、空白进程 这 5 大类别 </p>
+<p><img src="%E9%87%8D%E5%AD%A6%E5%AE%89%E5%8D%93" alt="https://images.xiaozhuanlan.com/photo/2021/a1e4a82bc9771970300307a37fcd2476.png"></p>
+<p>通常，App 进程的级别，由其活跃的或处于栈顶的组件的活动状况（比如所处生命周期）决定。</p>
+<p>例如，当一个 App 的 Activity 处于 onResume，那么该 Activity 所在的整个进程都会成为前景进程。</p>
+<blockquote>
+<p>划重点 👆 👆 👆</p>
+</blockquote>
+<p>于此同时，需要再次强调的是，当系统回收资源时，针对的是 App 的进程，而不是针对 App 进程中的某个组件。（此处对应文末的 “辟谣 2”）</p>
+<blockquote>
+<p>划重点 👆 👆 👆 </p>
+</blockquote>
+<h1 id="前景模式、可见模式，二者的区别？"><a href="#前景模式、可见模式，二者的区别？" class="headerlink" title="前景模式、可见模式，二者的区别？"></a>前景模式、可见模式，二者的区别？</h1><p>由于手机屏幕空间有限，一次只能展示一个窗口，但如果你拿 PC 来考虑，就不难理解为何要同时存在 “前景” 和 “可见” 这两种概念。</p>
+<p>前景模式就相当于 PC 中 “获得焦点” 的窗口。</p>
+<p>可见模式即是那些你可以看见，但 “失去焦点” 的窗口</p>
+<h1 id="官方的可见模式的含义"><a href="#官方的可见模式的含义" class="headerlink" title="官方的可见模式的含义"></a>官方的可见模式的含义</h1><p>可见模式，不如我们称其为 “失焦模式”<br>为保持称谓的一致，本文在正文中沿用了 “官方文档” 对其所定义的各进程模式的称谓，同时本文也另辟蹊径地通过 “类比” 的方式来分析 “前景”、“可见” 等模式的本质和设计依据。</p>
+<p>为此有小伙伴在理解了本文思路后，因官方 “可见模式” 这个概念的语义而产生困扰，毕竟确实如其所说，从字面上看，“可见” 即包含了 “前景可见” 和 “被部分遮挡但可见” 这两种情况，</p>
+<p>其实我个人猜测，所谓 “前景模式” 和 “可见模式” 的概念，大概率是继承于 PC 操作系统中窗体的相关概念，然而 Android 又不想和它重名，就像鸿蒙手机系统的 Framework “换汤不换药” 地将 Activity 等组件改名为 Ability 一样，</p>
+<p>因而综上，我们不妨结合本文的思路，来给 “可见模式” 取个更为恰当的名称 —— “失焦模式” —— 失去焦点的模式，与之相对的就是 “获焦模式”，这样无论从哪个角度来看，都是恰当的，毕竟 获焦或失焦隐含的潜台词就是 “页面已经可见了”。</p>
+<h1 id="Activity-被系统回收"><a href="#Activity-被系统回收" class="headerlink" title="Activity 被系统回收"></a>Activity 被系统回收</h1><p>系统回收的是进程，系统回收的是进程，系统回收的是进程！<br>重要的事情要讲三遍 👆👆👆</p>
+<p>请不要再使用 “Activity 被系统回收” 等与客观实际有一定出入的描述（尤其在面试时，因为此处无意间流露了对 “计算机操作系统” 等基础知识的掌握程度，容易给人留下专业基础不扎实的印象。当然如果你是有意借此试探面试官的反应，看他到底 “行不行”，那就当我没说）</p>
+<p>具体而言，如果 Activity A 和 B 分属于同一个 App 的两个进程，且 A 在后台进程，那么内存不足时 A 可能因为进程被回收而 受牵连；而如果 A 和 B 在同一个进程内，且 B 乃至 B 所处的进程处于前景或可见，那 A 则不会 受牵连。</p>
+<p>简言之，这类事情的本质是 “进程被系统回收”。也即，只要 Activity 是保持在 Stop 而未步入 Destroy（例如处于非栈顶的位置），那么该 Activity 此时 “被回收” 只可能是因为所在进程被系统回收。</p>
+<p>划重点 👆👆👆</p>
+<h1 id="如何理解Android手机内存"><a href="#如何理解Android手机内存" class="headerlink" title="如何理解Android手机内存"></a>如何理解Android手机内存</h1>]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/23/%E7%AE%A1%E7%A8%8B%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E4%B8%87%E8%83%BD%E9%92%A5%E5%8C%99/</url>
+    <content><![CDATA[<h1 id="技术文章参考"><a href="#技术文章参考" class="headerlink" title="技术文章参考"></a>技术文章参考</h1><p><a href="%E6%9E%81%E5%AE%A2%E4%B9%8B%E5%AE%B6">https://time.geekbang.org/column/article/86089</a></p>
+<h1 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h1><p>1.管程是一种概念，任何语言都可以通用。</p>
+<p>java采用的是管程技术，synchronized 关键字及 wait notify notifyAll 三个方法都是管程的组成部分。</p>
+<p>而管程和信号量是等价的，所谓等价指的是用管程能够实现信号量，也能用信号量实现管程。</p>
+<p>管程，对应的英文是 Monitor，很多 Java 领域的同学都喜欢将其翻译成“监视器”，这是直译。操作系统领域一般都翻译成“管程”，这个是意译，而我自己也更倾向于使用“管程”。</p>
+<h1 id="MESA模型"><a href="#MESA模型" class="headerlink" title="MESA模型"></a>MESA模型</h1><p>java管程实现参考的是MESA模型。</p>
+<p>有两大核心问题：<br>一个是互斥，即同一时刻只允许一个线程访问共享资源；另一个是同步，即线程之间如何通信、协作。 </p>
+<h1 id="管程解决“互斥”问题的解决方案"><a href="#管程解决“互斥”问题的解决方案" class="headerlink" title="管程解决“互斥”问题的解决方案"></a>管程解决“互斥”问题的解决方案</h1><p>管程解决互斥问题的思路很简单，就是将共享变量及其对共享变量的操作统一封装起来。</p>
+<p>假如我们要实现一个线程安全的阻塞队列，一个最直观的想法就是：将线程不安全的队列封装起来，对外提供线程安全的操作方法，例如入队操作和出队操作。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Android-内存管理机制-2</title>
     <url>/2022/02/18/Android-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6-2/</url>
     <content><![CDATA[<h1 id="设备物理内存"><a href="#设备物理内存" class="headerlink" title="设备物理内存"></a>设备物理内存</h1><p>设备的物理内存被分为很多页（Page），每页 4KB。不同的页用来做不同的事情。</p>
@@ -1192,6 +1259,15 @@ Paging（分页)
 <li>作者：青蛙要fly<br>来源：<a href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </blockquote>
+<h1 id="什么是适配"><a href="#什么是适配" class="headerlink" title="什么是适配"></a>什么是适配</h1><p>摘录 ==&gt; <strong>重学安卓：豁然开朗 存储访问 适配解析</strong> </p>
+<blockquote>
+<p>当我们提起适配的时候，我们是在说什么<br>在思考 “为什么要适配存储访问” 之前，我们先来确认一下，当我们提起适配的时候，我们到底是在说什么 —— 为什么是 “适配”，为什么不是 “改进” 或 “升级” 呢？</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">因为这是一种 历史包袱：适配涉及的是 对已停止维护的老系统的 兼容，以及对新系统新设计的 API 的 支持。</span><br></pre></td></tr></table></figure>
+
+<h1 id="Google-为什么要强制适配"><a href="#Google-为什么要强制适配" class="headerlink" title="Google 为什么要强制适配"></a>Google 为什么要强制适配</h1><p>适配通常是出于 隐私安全、硬件匹配 等因素的考虑。硬件匹配，比如这些年 Android 的 “刘海屏状态栏、折叠屏页面重建、全面屏手势” 等等；</p>
+<p>而我们今天所谈存储及主要涉及的是 隐私安全，尤其国内盗取用户信息已经成为了常态，而这可以大大提高我们作为用户的安全和隐私保护度。</p>
+<p>我们这里再细节一点深究 Android10 的分区存储的强制适配的原因，是因为Android的外部目录，即使App卸载了，原本遗留在该目录下的文件依然存在，这就很容易被被有心之人盯上，所以这是Google开启分区存储的主要原因。</p>
 <h1 id="存储访问以及适配"><a href="#存储访问以及适配" class="headerlink" title="存储访问以及适配"></a>存储访问以及适配</h1><blockquote>
 <p>“存储访问”主要是从“效率和复用的角度出发”，透过缓存来提上效率，降低服务器的负担，透过 持久化存储 来实现媒体数据的复用</p>
 </blockquote>
@@ -1199,9 +1275,17 @@ Paging（分页)
 <p>“存储访问适配”的主要是从“保护用户隐私”出发，透过新的传输机制，来确保本App的私密空间不被越界和泄露</p>
 </blockquote>
 <h2 id="为什么要适配存储访问"><a href="#为什么要适配存储访问" class="headerlink" title="为什么要适配存储访问"></a>为什么要适配存储访问</h2><p>接收和发送中的细节。主要的关键就是”缓存“。</p>
-<p>收发</p>
-<p>收</p>
-<p>发</p>
+<ul>
+<li>收发</li>
+</ul>
+<ul>
+<li><p>收</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.向服务端发起请求，</span><br><span class="line"></span><br><span class="line">2.收到响应结果，展示到界面（数据在 “内存 RAM” 中），并 缓存一份数据到私有目录（数据被持久化存储到 “闪存 ROM” 中），</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>发</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.在内存中编辑数据，点击按钮提交，</span><br><span class="line"></span><br><span class="line">2.提交时，会先展示结果到界面、并且 缓存一份数据到私有目录，同时再提交给服务端，</span><br></pre></td></tr></table></figure>
+
 <p>1.从”效率到平衡“</p>
 <p>1.1 对手机来说，有了缓存，下次再加载已经访问的内容时，可以直接从本地调取，而无需重新下载，对app的性能是很大的提高，节省了 时间，流量，电量。</p>
 <p>本地闪存速度 300MB/s以上 &gt; https 请求有几十毫秒的延迟。<br>并且 https 请求涉及 加解密，大量的https 请求意味着大量的运算，损失电量。</p>
@@ -1294,7 +1378,6 @@ Paging（分页)
 <li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
 </ul>
 <p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
-<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
 ]]></content>
       <categories>
         <category>Android</category>

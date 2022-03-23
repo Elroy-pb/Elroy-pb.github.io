@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp">
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
 <meta property="article:published_time" content="2021-09-06T03:32:17.000Z">
-<meta property="article:modified_time" content="2022-03-22T20:06:01.334Z">
+<meta property="article:modified_time" content="2022-03-23T16:37:58.180Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">41</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">44</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-23 04:06:01" itemprop="dateModified" datetime="2022-03-23T04:06:01+08:00">2022-03-23</time>
+                <time title="Modified: 2022-03-24 00:37:58" itemprop="dateModified" datetime="2022-03-24T00:37:58+08:00">2022-03-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.9k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -274,6 +274,15 @@
 <li>作者：青蛙要fly<br>来源：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903566113505293#heading-1">掘金</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </blockquote>
+<h1 id="什么是适配"><a href="#什么是适配" class="headerlink" title="什么是适配"></a>什么是适配</h1><p>摘录 ==&gt; <strong>重学安卓：豁然开朗 存储访问 适配解析</strong> </p>
+<blockquote>
+<p>当我们提起适配的时候，我们是在说什么<br>在思考 “为什么要适配存储访问” 之前，我们先来确认一下，当我们提起适配的时候，我们到底是在说什么 —— 为什么是 “适配”，为什么不是 “改进” 或 “升级” 呢？</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为这是一种 历史包袱：适配涉及的是 对已停止维护的老系统的 兼容，以及对新系统新设计的 API 的 支持。</span><br></pre></td></tr></table></figure>
+
+<h1 id="Google-为什么要强制适配"><a href="#Google-为什么要强制适配" class="headerlink" title="Google 为什么要强制适配"></a>Google 为什么要强制适配</h1><p>适配通常是出于 隐私安全、硬件匹配 等因素的考虑。硬件匹配，比如这些年 Android 的 “刘海屏状态栏、折叠屏页面重建、全面屏手势” 等等；</p>
+<p>而我们今天所谈存储及主要涉及的是 隐私安全，尤其国内盗取用户信息已经成为了常态，而这可以大大提高我们作为用户的安全和隐私保护度。</p>
+<p>我们这里再细节一点深究 Android10 的分区存储的强制适配的原因，是因为Android的外部目录，即使App卸载了，原本遗留在该目录下的文件依然存在，这就很容易被被有心之人盯上，所以这是Google开启分区存储的主要原因。</p>
 <h1 id="存储访问以及适配"><a href="#存储访问以及适配" class="headerlink" title="存储访问以及适配"></a>存储访问以及适配</h1><blockquote>
 <p>“存储访问”主要是从“效率和复用的角度出发”，透过缓存来提上效率，降低服务器的负担，透过 持久化存储 来实现媒体数据的复用</p>
 </blockquote>
@@ -281,9 +290,17 @@
 <p>“存储访问适配”的主要是从“保护用户隐私”出发，透过新的传输机制，来确保本App的私密空间不被越界和泄露</p>
 </blockquote>
 <h2 id="为什么要适配存储访问"><a href="#为什么要适配存储访问" class="headerlink" title="为什么要适配存储访问"></a>为什么要适配存储访问</h2><p>接收和发送中的细节。主要的关键就是”缓存“。</p>
-<p>收发</p>
-<p>收</p>
-<p>发</p>
+<ul>
+<li>收发</li>
+</ul>
+<ul>
+<li><p>收</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.向服务端发起请求，</span><br><span class="line"></span><br><span class="line">2.收到响应结果，展示到界面（数据在 “内存 RAM” 中），并 缓存一份数据到私有目录（数据被持久化存储到 “闪存 ROM” 中），</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>发</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.在内存中编辑数据，点击按钮提交，</span><br><span class="line"></span><br><span class="line">2.提交时，会先展示结果到界面、并且 缓存一份数据到私有目录，同时再提交给服务端，</span><br></pre></td></tr></table></figure>
+
 <p>1.从”效率到平衡“</p>
 <p>1.1 对手机来说，有了缓存，下次再加载已经访问的内容时，可以直接从本地调取，而无需重新下载，对app的性能是很大的提高，节省了 时间，流量，电量。</p>
 <p>本地闪存速度 300MB/s以上 &gt; https 请求有几十毫秒的延迟。<br>并且 https 请求涉及 加解密，大量的https 请求意味着大量的运算，损失电量。</p>
@@ -376,7 +393,6 @@
 <li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
 </ul>
 <p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
-<h4 id="共有目录"><a href="#共有目录" class="headerlink" title="共有目录"></a>共有目录</h4><p>其实开启分区存储，对内部还有和外部私有目录是没有影响的。<br>这个目录有个明显的地方，该目录保存之后的文件，即使在app卸载后文件也依旧停留在了手机上，所以这也是被google团队重点关照的地方。</p>
 
     </div>
 
@@ -460,7 +476,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E4%BB%A5%E5%8F%8A%E9%80%82%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">存储访问以及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%82%E9%85%8D%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要适配存储访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android10-Q-%E2%80%94%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">2.2.</span> <span class="nav-text">Android10(Q)—分区存储的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">2.3.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">2.4.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">2.4.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">私有存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E6%9C%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">共有目录</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%82%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">什么是适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BC%BA%E5%88%B6%E9%80%82%E9%85%8D"><span class="nav-number">3.</span> <span class="nav-text">Google 为什么要强制适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E4%BB%A5%E5%8F%8A%E9%80%82%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">存储访问以及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%82%E9%85%8D%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要适配存储访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android10-Q-%E2%80%94%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">4.2.</span> <span class="nav-text">Android10(Q)—分区存储的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">4.3.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">4.4.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">私有存储</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -476,7 +492,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -487,7 +503,7 @@
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -531,12 +547,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">85k</span>
+    <span title="Symbols count total">87k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:17</span>
+    <span title="Reading time total">1:19</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
