@@ -1,6 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>游戏篇章-AAB实践说明</title>
+    <url>/2022/05/30/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-AAB%E5%AE%9E%E8%B7%B5%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
+<blockquote>
+<p>App 动态化框架，动态化概念指的是 Play Dynamic Delivery </p>
+<blockquote>
+<p><strong>上线要求</strong>:从 2021 年 8 月起，新应用需要使用 Android App Bundle 才能在 Google Play 中发布。  </p>
+</blockquote>
+</blockquote>
+<h2 id="About-Android-App-Bundles"><a href="#About-Android-App-Bundles" class="headerlink" title="About Android App Bundles"></a>About Android App Bundles</h2><blockquote>
+<p>Android App Bundle 是一种包含编译后代码和资源文件的新的上传格式（.aab） </p>
+</blockquote>
+<p>补充:<strong>Android Application Bundle</strong> != <strong>Apk</strong><br>App Bundle 纯粹是为了上传设计的文件，用户无法直接安装和使用它。<br>虽然AAB和Apk本质上都是压缩包,但是内部的目录结构完全不同，以下是一个Abb正常的aab文件结构</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">–BundleConfig.pb ： 打包bundle的时候，自动生成</span><br><span class="line">–base : base目录</span><br><span class="line">——assets: 对应apk的assets目录</span><br><span class="line">——dex: 原apk中classes.dex,classes2.dex…都放这里</span><br><span class="line">——lib: 原apk中lib目录都放这里</span><br><span class="line">——manifest: 原apk的AndroidManifest.xml放这里，需要是编译后的AndroidManifest.xml</span><br><span class="line">——res：apk中的资源放这里，需要是编译后的资源</span><br><span class="line">——root: apk中相对于根目录的其他资源文件</span><br><span class="line">——resources.pb：编译资源的时候会生成的</span><br><span class="line">——assets.pb:编译bundle的时候会生成的</span><br><span class="line">——native.pb: 编译bundle的时候会生成的</span><br></pre></td></tr></table></figure>
+
+<h2 id="Google-Play-Dynamic-Delivery"><a href="#Google-Play-Dynamic-Delivery" class="headerlink" title="Google Play Dynamic Delivery"></a>Google Play Dynamic Delivery</h2><blockquote>
+<p>简介:Google Play 推出新 app 交付模式，叫做动态交付 (Dynamic Delivery)，它根据每个用户的设备信息，使用开发者上传的 app bundle 来生成对应的 apk 文件。</p>
+<blockquote>
+<p><img src="https://conorlee.top/images/blogimages/2019/640.gif" alt="AAB">  </p>
+</blockquote>
+</blockquote>
+<h2 id="Play-Asset-Delivery"><a href="#Play-Asset-Delivery" class="headerlink" title="Play Asset Delivery"></a>Play Asset Delivery</h2><blockquote>
+<p>Play Asset Delivery (PAD)可以让依靠 Google Play 来托管和提供你的资产包，PAD提供灵活的分发模式，本质上减少包的体积，让用户更佳的体验,目前分发模式有3种，分别为<br><strong>1.install-time 2.fast-follow 3.on-demand</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">分发模式</th>
+<th align="center">大小限制</th>
+<th align="left">简介</th>
+<th align="left">详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">install-time  =&gt; 安装时分发</td>
+<td align="center">总下载大小上限为1GB</td>
+<td align="left">资源包在用户安装应用时进行分发，”预先”资源包</td>
+<td align="left">在应用启动是使用，用户无法修改或删除这些资源包</td>
+</tr>
+<tr>
+<td align="left">fast-follow =&gt; 快速跟进式分发</td>
+<td align="center">下载大小上限为512MB</td>
+<td align="left">资源包在用户安装应用后立即自动下载</td>
+<td align="left">用户无需打开应用即可开始 fast-follow 下载。此类下载不会阻止用户访问应用。</td>
+</tr>
+<tr>
+<td align="left">on-demand =&gt; 按需分发</td>
+<td align="center">下载大小上限为512MB</td>
+<td align="left">资源包会在应用运行时进行下载</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><strong>注意 ！！！</strong>：如果为资源包选择 <strong>install-time 分发类型</strong>，就无需在游戏中使用 <strong>Play Asset Delivery API</strong>。这些资源包与主应用 APK同时安装。<br>目前公司项目使用就是分发模式就是 <strong>install-time</strong></p>
+<p>由于google规定需要apk&lt;150m，等于aab中的base目录&lt;150m，如果超出限制，需要把多出的资源迁移到install-time，让google去动态下发资源</p>
+<h1 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h1><p>由<strong>S1-EN</strong>项目举例，该项目使用模块化，该项目包含以下的模块</p>
+<h2 id="项目模块"><a href="#项目模块" class="headerlink" title="项目模块"></a>项目模块</h2><table>
+<thead>
+<tr>
+<th align="left">模块</th>
+<th align="center">类型</th>
+<th align="left">简介</th>
+<th align="left">包含依赖</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">EN</td>
+<td align="center">APP</td>
+<td align="left">完整项目</td>
+<td align="left">ENGameResource</td>
+</tr>
+<tr>
+<td align="left">EN_HW</td>
+<td align="center">AAB</td>
+<td align="left"></td>
+<td align="left">ENGameResource,install_time</td>
+</tr>
+<tr>
+<td align="left">ENGameResource</td>
+<td align="center">游戏资源</td>
+<td align="left">对应替换游戏资源</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">ENAPPLib</td>
+<td align="center">LIB</td>
+<td align="left"></td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">install_time</td>
+<td align="center">AAB-分发模式</td>
+<td align="left">安装时分发</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">on_demand</td>
+<td align="center">AAB-分发模式</td>
+<td align="left">按需分发</td>
+<td align="left">无</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ABB = ENGameResource + EN_HW + install_time</span><br></pre></td></tr></table></figure>
+
+<h2 id="出包需求"><a href="#出包需求" class="headerlink" title="出包需求"></a>出包需求</h2><p>我们以S1-EN 欧美出包来举例，一般需要出2个类型的包，一直为正常的APK，给运营测试，另外一种为AAB给发行上架应用。</p>
+<p>对应出包格式和命名可以查看此目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\\192.168.1.181\apk\欧美\</span><br></pre></td></tr></table></figure>
+
+<h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><p><strong>ABB = ENGameResource + EN_HW + install_time</strong></p>
+<p>所以对应项目替换的路径，看下图</p>
+<p><img src="ABB%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5.png" alt="Android-AAB"></p>
+<!-- # 项目 -->
+
+<!-- # 软件使用说明
+### 需要提前安装的环境   
+* 需要自己额外再安装的路径  
+    1. python3
+    2. aapt  
+    3. gradle 
+    4. as-pro  ==> 模板工程 
+* 该工具内置了反编译的环境 请勿随意修改路径  
+    1. apktool  
+    2. dex2jar  
+    3. smali  
+
+2 需要在该工具路径下/tool/apktool/signature/config/apk.ini文件配置以下路径
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#配置项 后续看项目的需求支持可增加参数</span><br><span class="line">[config]</span><br><span class="line"># 注意所有配置项需要顶行写，&quot;=&quot; 号两边和行首尾不能有空格</span><br><span class="line"># AS 路径 </span><br><span class="line">as_path=/Users/zhupengbo/Desktop/S3/S3_Hw</span><br><span class="line"># AAB 生成的路径 必填</span><br><span class="line">abb_path=/Users/zhupengbo/tool/apktool/apk/abb</span><br><span class="line"># 版本号和版本名</span><br><span class="line">versionCode=1</span><br><span class="line">versionName=1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.该项目增加了pad配置表<br>3.1 <strong>aab_pad.xls</strong> 配置表路径在 <strong>/apktool/signature/config</strong> 的路径下<br>3.2 配置的方法<br>支持配置<strong>文件路径</strong>和<strong>文件夹</strong><br>S3项目以resource路径下进行配表，该路径包含了游戏内的资源  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">配置形式为:resource/路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>aab_pad.xls 格式如下-示例</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">resource/model</td>
+</tr>
+<tr>
+<td align="left">resource/Video</td>
+</tr>
+<tr>
+<td align="left">resource/allRes.json</td>
+</tr>
+<tr>
+<td align="left">resource/ui</td>
+</tr>
+</tbody></table>
+<p>4 该工具支持下终端下执行，调用示例</p>
+<pre><code>/Users/zhupengbo/tool/apktool/android_pack.sh /Users/zhupengbo/tool/apktool/apk/apk/AAA.apk
+``` --&gt;
+
+
+
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>Google</category>
+      </categories>
+      <tags>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>游戏篇章-Unity与SDK交互</title>
     <url>/2022/03/24/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-Unity%E4%B8%8ESDK%E4%BA%A4%E4%BA%92/</url>
     <content><![CDATA[<h1 id="游戏启动篇"><a href="#游戏启动篇" class="headerlink" title="游戏启动篇"></a>游戏启动篇</h1><h2 id="CP视角"><a href="#CP视角" class="headerlink" title="CP视角"></a>CP视角</h2><p>游戏App分为2种类型，分包与整包。<br>游戏模式可以大致分成2类，测试模式(内网)与线上模式(外网)。</p>
@@ -993,6 +1161,17 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -1066,17 +1245,6 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
