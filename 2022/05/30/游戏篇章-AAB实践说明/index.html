@@ -29,9 +29,11 @@
 <meta property="og:description" content="Android Application Bundle 简介">
 <meta property="og:locale">
 <meta property="og:image" content="https://conorlee.top/images/blogimages/2019/640.gif">
+<meta property="og:image" content="http://example.com/2022/05/30/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-AAB%E5%AE%9E%E8%B7%B5%E8%AF%B4%E6%98%8E/APKDB.png">
+<meta property="og:image" content="http://example.com/2022/05/30/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-AAB%E5%AE%9E%E8%B7%B5%E8%AF%B4%E6%98%8E/%E8%A7%A3%E5%8E%8B%E5%90%8E.png">
 <meta property="og:image" content="http://example.com/2022/05/30/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-AAB%E5%AE%9E%E8%B7%B5%E8%AF%B4%E6%98%8E/ABB%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5.png">
 <meta property="article:published_time" content="2022-05-30T07:23:04.000Z">
-<meta property="article:modified_time" content="2022-05-30T07:24:29.967Z">
+<meta property="article:modified_time" content="2022-06-15T15:41:59.677Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Google">
 <meta name="twitter:card" content="summary">
@@ -141,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,10 +224,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-05-30 15:23:04 / Modified: 15:24:29" itemprop="dateCreated datePublished" datetime="2022-05-30T15:23:04+08:00">2022-05-30</time>
+              <time title="Created: 2022-05-30 15:23:04" itemprop="dateCreated datePublished" datetime="2022-05-30T15:23:04+08:00">2022-05-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-15 23:41:59" itemprop="dateModified" datetime="2022-06-15T23:41:59+08:00">2022-06-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -242,7 +250,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.8k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -367,9 +375,22 @@
 <p>对应出包格式和命名可以查看此目录</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\192.168.1.181\apk\欧美\</span><br></pre></td></tr></table></figure>
 
-<h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><p><strong>ABB = ENGameResource + EN_HW + install_time</strong></p>
+<h2 id="出包需求-1"><a href="#出包需求-1" class="headerlink" title="出包需求"></a>出包需求</h2><p>我们以S1-EN 欧美出包来举例，一般需要出2个类型的包，一直为正常的APK，给运营测试，另外一种为AAB给发行上架应用。</p>
+<p>对应出包格式和命名可以查看此目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\192.168.1.181\apk\欧美\</span><br></pre></td></tr></table></figure>
+<p>一般我们是先出APK,后出AAB。</p>
+<h2 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h2><p>我们是先从145打包机上，打包一个完整的APK，复制到本地进行解压出对应的游戏资源。<br>解压的过程可以自由发挥，在我的电脑我是内置了解压的Apk的程序。<br>使用APKDB编辑,会出现以下页面，回车即可</p>
+<p><img src="APKDB.png" alt="Android-AAB"></p>
+<p>右键Apk-&gt;使用APKDB编辑-&gt;按下回车</p>
+<p><img src="%E8%A7%A3%E5%8E%8B%E5%90%8E.png" alt="Android-AAB"></p>
+<p>实际上我们只需要用到截图中的几个目录</p>
+<p><strong>ABB = ENGameResource + EN_HW + install_time</strong></p>
 <p>所以对应项目替换的路径，看下图</p>
 <p><img src="ABB%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5.png" alt="Android-AAB"></p>
+<h1 id="install-time"><a href="#install-time" class="headerlink" title="install-time"></a>install-time</h1><blockquote>
+<p>由于google规定需要apk&lt;150m，等于aab中的base目录&lt;150m，如果超出限制，需要把多出的资源迁移到install-time，让google去动态下发资源</p>
+</blockquote>
+<p>我们S1-EN欧美打包的AAB主要是使用了install_time分发模式，我们把原本asset资源下的部分游戏资源迁移到 install-time模块下，</p>
 <!-- # 项目 -->
 
 <!-- # 软件使用说明
@@ -440,7 +461,10 @@
     <a href="/2022/03/24/%E6%B8%B8%E6%88%8F%E7%AF%87%E7%AB%A0-Unity%E4%B8%8ESDK%E4%BA%A4%E4%BA%92/" rel="prev" title="游戏篇章-Unity与SDK交互">
       <i class="fa fa-chevron-left"></i> 游戏篇章-Unity与SDK交互
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/14/%E6%B8%B8%E6%88%8F%E5%95%86%E5%8A%A1-%E5%90%AF%E8%92%99/" rel="next" title="游戏商务-启蒙">
+      游戏商务-启蒙 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -499,7 +523,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-Android-App-Bundles"><span class="nav-number">1.</span> <span class="nav-text">Google - Android App Bundles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#About-Android-App-Bundles"><span class="nav-number">1.1.</span> <span class="nav-text">About Android App Bundles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google-Play-Dynamic-Delivery"><span class="nav-number">1.2.</span> <span class="nav-text">Google Play Dynamic Delivery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Play-Asset-Delivery"><span class="nav-number">1.3.</span> <span class="nav-text">Play Asset Delivery</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">项目模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E5%8C%85%E9%9C%80%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">出包需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">实际操作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-Android-App-Bundles"><span class="nav-number">1.</span> <span class="nav-text">Google - Android App Bundles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#About-Android-App-Bundles"><span class="nav-number">1.1.</span> <span class="nav-text">About Android App Bundles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google-Play-Dynamic-Delivery"><span class="nav-number">1.2.</span> <span class="nav-text">Google Play Dynamic Delivery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Play-Asset-Delivery"><span class="nav-number">1.3.</span> <span class="nav-text">Play Asset Delivery</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">项目模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E5%8C%85%E9%9C%80%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">出包需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E5%8C%85%E9%9C%80%E6%B1%82-1"><span class="nav-number">2.3.</span> <span class="nav-text">出包需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="nav-number">2.4.</span> <span class="nav-text">实际操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#install-time"><span class="nav-number">3.</span> <span class="nav-text">install-time</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -515,7 +539,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -570,12 +594,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">90k</span>
+    <span title="Symbols count total">92k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:22</span>
+    <span title="Reading time total">1:23</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
