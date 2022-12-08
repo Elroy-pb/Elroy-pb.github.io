@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Game.1</title>
+    <url>/2022/12/08/Game-1/</url>
+    <content><![CDATA[<blockquote>
+<p>一切商业化价值最大化其实都是人性在推动!</p>
+</blockquote>
+<h1 id="游戏优化结点"><a href="#游戏优化结点" class="headerlink" title="游戏优化结点"></a>游戏优化结点</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">游戏内可以优化的地方:</span><br><span class="line">1.转生 </span><br><span class="line">2.寻宝 </span><br><span class="line">3.邮件 领取状态 邮件内容 </span><br><span class="line">4.红包 如果按照红包流量词去划分 那么大部分的玩家将涌向冠名区服</span><br><span class="line">5.大米 </span><br><span class="line">6.交易 </span><br><span class="line">7.聊天 </span><br><span class="line">8.玩家流失结点 </span><br><span class="line">    8.1 活动</span><br><span class="line">    8.2 Npc</span><br><span class="line">    8.3 玩家登记结点  角色，信息，区服。</span><br><span class="line">    8.4 退出时间  </span><br></pre></td></tr></table></figure>
+<h1 id="商业流程"><a href="#商业流程" class="headerlink" title="商业流程"></a>商业流程</h1><p>从Cp角度出发</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">源码 Cocos </span><br><span class="line">Gm后台</span><br><span class="line">前端 :</span><br><span class="line">后端 : </span><br><span class="line">sdk : Android,Ios.H5</span><br><span class="line">后台 : 玩家信息，聊天监控，</span><br><span class="line">美术 : 场景，原画，动作</span><br><span class="line">策划 : 执行策划,数值策划,系统策划 </span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编程指南</title>
+    <url>/2022/11/19/%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="摘录"><a href="#摘录" class="headerlink" title="摘录"></a>摘录</h1>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机-固态硬盘</title>
     <url>/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/</url>
     <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">任何技术都绝非凭空存在，一项技术的存在，必有其存在缘由 —— 为了在特定场景下 解决某个或某些问题。</span><br><span class="line"></span><br><span class="line">换言之，认识技术，必从认识背景做起 —— 当我们确知了某项技术在特定场景下的不可替代，便是抓住了该技术的本质</span><br></pre></td></tr></table></figure>
@@ -9,8 +33,9 @@
 
 <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><hr>
 <p>固态硬盘中使用是NAND Flash存储颗粒，其需要搭载主控，缓存和存储颗粒，通过预先写入的固件来工作。<br>现在手机里用的emcp和UFS是基于NAND Flash深度开发而来的，其内部嵌入了主控和MDDR组件，是一种自我管理型的存储芯片。<br>这样手机厂商就不需要去管不同存储颗粒的厂商的技术差异。<br>这是手机硬盘和固态硬盘的区别。</p>
-<p>nand flash的发明，我想更应该介绍一位华裔科学家，施敏</p>
+<p>NAND Flash的发明，我想更应该介绍一位华裔科学家，施敏<br>时间刻度表 </p>
 <hr>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="学习视频"><a href="#学习视频" class="headerlink" title="学习视频"></a>学习视频</h2><iframe src="//player.bilibili.com/player.html?aid=298568120&bvid=BV1aF411u7Ct&cid=717122780&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 ]]></content>
       <categories>
         <category>计算机</category>
@@ -51,8 +76,7 @@
 <p>初次会面 : 商务</p>
 <p>2次会面:</p>
 <p>测试周期-上线数据测试</p>
-<h1 id="话术"><a href="#话术" class="headerlink" title="话术"></a>话术</h1><p>自报点位</p>
-<h1 id="游戏评测关键点"><a href="#游戏评测关键点" class="headerlink" title="游戏评测关键点"></a>游戏评测关键点</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">节点</span><br><span class="line">1.客户端大小</span><br><span class="line">2.题材受众</span><br><span class="line">3.类型受众</span><br><span class="line">4.游戏界面/UI</span><br><span class="line">5.角色设计</span><br><span class="line">6.装备设计</span><br><span class="line">7.游戏装备设计:美观程度，和市面其他传奇对比，特殊装备阶级UI分层明显，有特殊视觉效果处理</span><br><span class="line">8.场景地图设计:完善</span><br><span class="line">9.技能特效表现力 ：装备及时回收</span><br><span class="line">10.画面融合度 : </span><br><span class="line">11.新手引导</span><br><span class="line">12.音乐及音效</span><br><span class="line">13.操作方式/手感</span><br><span class="line">14.上手难度:完整的新手引导</span><br><span class="line">15.游戏节奏：适中</span><br><span class="line">16.战斗系统</span><br><span class="line">17.副本/关卡系统</span><br><span class="line">18.升级系统</span><br><span class="line">19.PVP系统</span><br><span class="line">20.道具系统</span><br><span class="line">21.交流机制</span><br><span class="line">22.帮助系统 ：游戏的攻略</span><br><span class="line">23.创新点:战宠 </span><br><span class="line">24.用户激励:</span><br><span class="line">25.游戏目标/追求</span><br><span class="line">26.社交关系</span><br><span class="line">27.次日留存</span><br><span class="line">28.首充奖励</span><br><span class="line">29.运营活动</span><br><span class="line">30.日常活动</span><br><span class="line">31.消费体验:消费深度足够</span><br><span class="line">32.客户端兼容性:Android,IOS</span><br><span class="line">33.加载:加载很流畅，游戏内各个功能切换、关卡加载读取流畅</span><br><span class="line">34.产品完成度</span><br><span class="line">35.游戏稳定性</span><br><span class="line">36.数值</span><br><span class="line">37:对标竞品</span><br><span class="line">38:版本计划 硬核,买量,BT，长尾，信息流</span><br><span class="line">39:跨服 3个服 1500的量</span><br><span class="line">40:底层由来</span><br><span class="line">端游-2018-手游-2020-引擎</span><br></pre></td></tr></table></figure>
+<h1 id="话术"><a href="#话术" class="headerlink" title="话术"></a>话术</h1><h1 id="游戏评测关键点"><a href="#游戏评测关键点" class="headerlink" title="游戏评测关键点"></a>游戏评测关键点</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">节点</span><br><span class="line">1.客户端大小</span><br><span class="line">2.题材受众</span><br><span class="line">3.类型受众</span><br><span class="line">4.游戏界面/UI</span><br><span class="line">5.角色设计</span><br><span class="line">6.装备设计</span><br><span class="line">7.游戏装备设计:美观程度，和市面其他传奇对比，特殊装备阶级UI分层明显，有特殊视觉效果处理</span><br><span class="line">8.场景地图设计:完善</span><br><span class="line">9.技能特效表现力 ：装备及时回收</span><br><span class="line">10.画面融合度 : </span><br><span class="line">11.新手引导</span><br><span class="line">12.音乐及音效</span><br><span class="line">13.操作方式/手感</span><br><span class="line">14.上手难度:完整的新手引导</span><br><span class="line">15.游戏节奏：适中</span><br><span class="line">16.战斗系统</span><br><span class="line">17.副本/关卡系统</span><br><span class="line">18.升级系统</span><br><span class="line">19.PVP系统</span><br><span class="line">20.道具系统</span><br><span class="line">21.交流机制</span><br><span class="line">22.帮助系统 ：游戏的攻略</span><br><span class="line">23.创新点:战宠 </span><br><span class="line">24.用户激励:</span><br><span class="line">25.游戏目标/追求</span><br><span class="line">26.社交关系</span><br><span class="line">27.次日留存</span><br><span class="line">28.首充奖励</span><br><span class="line">29.运营活动</span><br><span class="line">30.日常活动</span><br><span class="line">31.消费体验:消费深度足够</span><br><span class="line">32.客户端兼容性:Android,IOS</span><br><span class="line">33.加载:加载很流畅，游戏内各个功能切换、关卡加载读取流畅</span><br><span class="line">34.产品完成度</span><br><span class="line">35.游戏稳定性</span><br><span class="line">36.数值</span><br><span class="line">37:对标竞品</span><br><span class="line">38:版本计划 硬核,买量,BT，长尾，信息流</span><br><span class="line">39:跨服 3个服 1500的量</span><br><span class="line">40:底层由来</span><br><span class="line">端游-2018-手游-2020-引擎</span><br></pre></td></tr></table></figure>
 <h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.后台 </span><br><span class="line">技术结点</span><br><span class="line">需要统计出玩家流失结点，分析数据.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">自己发的话，研发：渠道=5：5，</span><br><span class="line">找发行去发，研发：发行：渠道=2：3：5</span><br></pre></td></tr></table></figure>]]></content>
@@ -2450,6 +2474,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2617,30 +2665,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
