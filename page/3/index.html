@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,166 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/" class="post-title-link" itemprop="url">Android-小常识普及</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-10 16:57:57" itemprop="dateCreated datePublished" datetime="2021-12-10T16:57:57+08:00">2021-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-05 05:54:59" itemprop="dateModified" datetime="2023-04-05T05:54:59+08:00">2023-04-05</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Home键退出和返回键退出的区别"><a href="#Home键退出和返回键退出的区别" class="headerlink" title="Home键退出和返回键退出的区别"></a>Home键退出和返回键退出的区别</h1><p>Home键退出，程序保留状态为后台进程；<br>而返回键退出，程序保留状态为空进程，空进程更容易被系统回收。Home键其实主要用于进程间切换，返回键则是真正的退出程序。</p>
+<p>从理论上来讲，无论是哪种情况，在没有任何后台工作线程（即便应用处于后台，工作线程仍然可以执行）的前提下，被置于后台的进程都只是保留他们的运行状态，并不会占用CPU资源，所以也不耗电。只有音乐播放软件之类的应用需要在后台运行Service，而Service是需要占用CPU时间的，此时才会耗电。所以说没有带后台服务的应用是不耗电也不占用CPU时间的，没必要关闭，这种设计本身就是Android的优势之一，可以让应用下次启动时更快。然而现实是，很多应用多多少少都会有一些后台工作线程，这可能是开发人员经验不足导致（比如线程未关闭或者循环发送的Handler消息未停止），也可能是为了需求而有意为之，导致整个Android应用的生态环境并不是一片干净。</p>
+<h1 id="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"><a href="#请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？" class="headerlink" title="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"></a>请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？</h1><p>这两个还是有区别的，GPU渲染就是hwa（hard ware acceleration硬件加速）的一种，其存在的意义就是为了分担CPU的负担，其原理是通过GPU对软件图形图像的处理来减轻CPU的负担，从而使应用软件能够以更快的速度被处理，以达到提速的目的，简单来说就是一般情况下软件的2D图形图像处理是交给CPU的，3D图形图像处理才是交给GPU的，而开启这个则是强制用GPU进行2D图形图像处理从而降低CPU处理器的负担，这个主要是2D界面的图形也交给GPU处理从而更流畅点。</p>
+<p>而HW叠加层，HW和叠加层应该分开理解，HW指的是硬件加速，而这个硬件指的是GPU处理器，而不是其它硬件或处理器硬件，至于为什么可以去参考一下硬解的相关资料，然后叠加层指的是使用CPU进行辅助运算，而不只是让GPU来进行全部的渲染工作，这个也是停用HW叠加层默认关闭的原因，汇总起来就是停用GPU上的CPU辅助计算，停用HW叠加层默认关闭就是说明HW叠加层默认是开启的，为什么会默认开启？这个就是因为就算开启了强制进行GPU渲染但并不是所有的图形处理交给了GPU，像游戏里面的一些画面、视频中的硬解（手机上不开启的话硬解是靠SQV的）就不是全部交给GPU的，而开启停用HW叠加层就是关闭HW叠加层，关闭HW叠加层就意味着图形处理任务就全部交给了GPU，这个主要是可以让游戏、视频之类一些原本不是GPU渲染的画面也强制使用GPU进行处理（像一些配置的视频显示不支持硬解，然后开启强制进行GPU渲染后就可以硬解了，因为强制使用GPU而不是手机上的另一个SQV硬解了，但因视频配置、屏幕刷新率之类的还是会有卡顿的情况，开启HW叠加层可以让部分高帧率的视频达到流畅的效果，但也受限于视频配置、屏幕刷新率等其它因素）。强制进行GPU渲染和停用HW叠加层不建议长时间开启，虽然开启这些可以让性能更好，但是也会损耗不少东西。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">操作系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-10 16:53:41" itemprop="dateCreated datePublished" datetime="2021-12-10T16:53:41+08:00">2021-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-24 00:00:24" itemprop="dateModified" datetime="2022-03-24T00:00:24+08:00">2022-03-24</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -956,196 +1116,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/" class="post-title-link" itemprop="url">AndroidSdk-模块化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-19 10:55:59" itemprop="dateCreated datePublished" datetime="2021-10-19T10:55:59+08:00">2021-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-21 14:49:38" itemprop="dateModified" datetime="2021-10-21T14:49:38+08:00">2021-10-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.4k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Android-模块化指南</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/" class="post-title-link" itemprop="url">Android-组件化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-19 10:55:59" itemprop="dateCreated datePublished" datetime="2021-10-19T10:55:59+08:00">2021-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-30 06:43:16" itemprop="dateModified" datetime="2022-01-30T06:43:16+08:00">2022-01-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>40</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Android-组件化指南</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,7 +1187,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1263,7 +1233,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1272,12 +1242,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">92k</span>
+    <span title="Symbols count total">99k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:30</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

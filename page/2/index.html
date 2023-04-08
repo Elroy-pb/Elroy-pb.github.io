@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,192 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/23/Activity%20%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%203%20%E4%B8%AA%E8%BE%9F%E8%B0%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/23/Activity%20%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%203%20%E4%B8%AA%E8%BE%9F%E8%B0%A3/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-23 23:44:56" itemprop="dateCreated datePublished" datetime="2022-03-23T23:44:56+08:00">2022-03-23</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="技术文章参考"><a href="#技术文章参考" class="headerlink" title="技术文章参考"></a>技术文章参考</h1><p><a href="%E9%87%8D%E5%AD%A6%E5%AE%89%E5%8D%93">https://xiaozhuanlan.com/topic/0213584967</a></p>
+<h1 id="进程模式"><a href="#进程模式" class="headerlink" title="进程模式"></a>进程模式</h1><p>Android 平台的 App，通常情况下都是单进程。</p>
+<p>由于 Android 平台资源有限，需要为不同进程设置优先级，以便在系统资源紧张的情况下，将优先级较低的进程杀死，以释放资源。</p>
+<p>因而，进程模式的存在就是为了标记和区分进程的优先级。</p>
+<h1 id="存在哪几种进程模式？"><a href="#存在哪几种进程模式？" class="headerlink" title="存在哪几种进程模式？"></a>存在哪几种进程模式？</h1><p>按优先级从高到低，进程模式主要包含：</p>
+<p>前景进程、可见进程、服务进程、背景进程、空白进程 这 5 大类别 </p>
+<p><img src="%E9%87%8D%E5%AD%A6%E5%AE%89%E5%8D%93" alt="https://images.xiaozhuanlan.com/photo/2021/a1e4a82bc9771970300307a37fcd2476.png"></p>
+<p>通常，App 进程的级别，由其活跃的或处于栈顶的组件的活动状况（比如所处生命周期）决定。</p>
+<p>例如，当一个 App 的 Activity 处于 onResume，那么该 Activity 所在的整个进程都会成为前景进程。</p>
+<blockquote>
+<p>划重点 👆 👆 👆</p>
+</blockquote>
+<p>于此同时，需要再次强调的是，当系统回收资源时，针对的是 App 的进程，而不是针对 App 进程中的某个组件。（此处对应文末的 “辟谣 2”）</p>
+<blockquote>
+<p>划重点 👆 👆 👆 </p>
+</blockquote>
+<h1 id="前景模式、可见模式，二者的区别？"><a href="#前景模式、可见模式，二者的区别？" class="headerlink" title="前景模式、可见模式，二者的区别？"></a>前景模式、可见模式，二者的区别？</h1><p>由于手机屏幕空间有限，一次只能展示一个窗口，但如果你拿 PC 来考虑，就不难理解为何要同时存在 “前景” 和 “可见” 这两种概念。</p>
+<p>前景模式就相当于 PC 中 “获得焦点” 的窗口。</p>
+<p>可见模式即是那些你可以看见，但 “失去焦点” 的窗口</p>
+<h1 id="官方的可见模式的含义"><a href="#官方的可见模式的含义" class="headerlink" title="官方的可见模式的含义"></a>官方的可见模式的含义</h1><p>可见模式，不如我们称其为 “失焦模式”<br>为保持称谓的一致，本文在正文中沿用了 “官方文档” 对其所定义的各进程模式的称谓，同时本文也另辟蹊径地通过 “类比” 的方式来分析 “前景”、“可见” 等模式的本质和设计依据。</p>
+<p>为此有小伙伴在理解了本文思路后，因官方 “可见模式” 这个概念的语义而产生困扰，毕竟确实如其所说，从字面上看，“可见” 即包含了 “前景可见” 和 “被部分遮挡但可见” 这两种情况，</p>
+<p>其实我个人猜测，所谓 “前景模式” 和 “可见模式” 的概念，大概率是继承于 PC 操作系统中窗体的相关概念，然而 Android 又不想和它重名，就像鸿蒙手机系统的 Framework “换汤不换药” 地将 Activity 等组件改名为 Ability 一样，</p>
+<p>因而综上，我们不妨结合本文的思路，来给 “可见模式” 取个更为恰当的名称 —— “失焦模式” —— 失去焦点的模式，与之相对的就是 “获焦模式”，这样无论从哪个角度来看，都是恰当的，毕竟 获焦或失焦隐含的潜台词就是 “页面已经可见了”。</p>
+<h1 id="Activity-被系统回收"><a href="#Activity-被系统回收" class="headerlink" title="Activity 被系统回收"></a>Activity 被系统回收</h1><p>系统回收的是进程，系统回收的是进程，系统回收的是进程！<br>重要的事情要讲三遍 👆👆👆</p>
+<p>请不要再使用 “Activity 被系统回收” 等与客观实际有一定出入的描述（尤其在面试时，因为此处无意间流露了对 “计算机操作系统” 等基础知识的掌握程度，容易给人留下专业基础不扎实的印象。当然如果你是有意借此试探面试官的反应，看他到底 “行不行”，那就当我没说）</p>
+<p>具体而言，如果 Activity A 和 B 分属于同一个 App 的两个进程，且 A 在后台进程，那么内存不足时 A 可能因为进程被回收而 受牵连；而如果 A 和 B 在同一个进程内，且 B 乃至 B 所处的进程处于前景或可见，那 A 则不会 受牵连。</p>
+<p>简言之，这类事情的本质是 “进程被系统回收”。也即，只要 Activity 是保持在 Stop 而未步入 Destroy（例如处于非栈顶的位置），那么该 Activity 此时 “被回收” 只可能是因为所在进程被系统回收。</p>
+<p>划重点 👆👆👆</p>
+<h1 id="如何理解Android手机内存"><a href="#如何理解Android手机内存" class="headerlink" title="如何理解Android手机内存"></a>如何理解Android手机内存</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/23/%E7%AE%A1%E7%A8%8B%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E4%B8%87%E8%83%BD%E9%92%A5%E5%8C%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/23/%E7%AE%A1%E7%A8%8B%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E4%B8%87%E8%83%BD%E9%92%A5%E5%8C%99/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-23 23:44:43" itemprop="dateCreated datePublished" datetime="2022-03-23T23:44:43+08:00">2022-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-24 00:00:16" itemprop="dateModified" datetime="2022-03-24T00:00:16+08:00">2022-03-24</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>465</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="技术文章参考"><a href="#技术文章参考" class="headerlink" title="技术文章参考"></a>技术文章参考</h1><p><a href="%E6%9E%81%E5%AE%A2%E4%B9%8B%E5%AE%B6">https://time.geekbang.org/column/article/86089</a></p>
+<h1 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h1><p>1.管程是一种概念，任何语言都可以通用。</p>
+<p>java采用的是管程技术，synchronized 关键字及 wait notify notifyAll 三个方法都是管程的组成部分。</p>
+<p>而管程和信号量是等价的，所谓等价指的是用管程能够实现信号量，也能用信号量实现管程。</p>
+<p>管程，对应的英文是 Monitor，很多 Java 领域的同学都喜欢将其翻译成“监视器”，这是直译。操作系统领域一般都翻译成“管程”，这个是意译，而我自己也更倾向于使用“管程”。</p>
+<h1 id="MESA模型"><a href="#MESA模型" class="headerlink" title="MESA模型"></a>MESA模型</h1><p>java管程实现参考的是MESA模型。</p>
+<p>有两大核心问题：<br>一个是互斥，即同一时刻只允许一个线程访问共享资源；另一个是同步，即线程之间如何通信、协作。 </p>
+<h1 id="管程解决“互斥”问题的解决方案"><a href="#管程解决“互斥”问题的解决方案" class="headerlink" title="管程解决“互斥”问题的解决方案"></a>管程解决“互斥”问题的解决方案</h1><p>管程解决互斥问题的思路很简单，就是将共享变量及其对共享变量的操作统一封装起来。</p>
+<p>假如我们要实现一个线程安全的阻塞队列，一个最直观的想法就是：将线程不安全的队列封装起来，对外提供线程安全的操作方法，例如入队操作和出队操作。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -418,7 +604,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-20 20:45:18" itemprop="dateModified" datetime="2022-02-20T20:45:18+08:00">2022-02-20</time>
+                <time title="Modified: 2023-04-09 01:30:44" itemprop="dateModified" datetime="2023-04-09T01:30:44+08:00">2023-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -436,14 +622,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -456,6 +642,24 @@
 
       
           <p>类的加载过程:</p>
+<h1 id="Java-类的加载器"><a href="#Java-类的加载器" class="headerlink" title="Java 类的加载器"></a>Java 类的加载器</h1><p>Java 类的加载器是 Java 虚拟机（JVM）的一个重要组成部分，它负责将 Java 类文件加载到内存中，并将其转换为 Java 类对象。Java 类加载器主要有以下三种类型：</p>
+<p>Bootstrap ClassLoader（引导类加载器）：也称为根加载器，是 Java 虚拟机内置的类加载器，负责加载 Java 运行时环境所需的基础类，如 java.lang 包中的类。</p>
+<p>Extension ClassLoader（扩展类加载器）：负责加载 Java 运行时环境的扩展类，即位于 jre/lib/ext 目录下的类。</p>
+<p>System ClassLoader（系统类加载器）：也称为应用程序类加载器，负责加载应用程序类路径（Classpath）下的类。</p>
+<p>此外，还有一种特殊的类加载器：用户自定义类加载器。这种类加载器是由开发人员自己实现的，可以用来加载一些特殊的类或者是自定义的类，例如动态加载类、热部署、插件化等。用户自定义类加载器需要继承自 java.lang.ClassLoader 类，并重写父类中的 findClass() 方法来实现类的加载。</p>
+<p>Java 类加载器的作用是实现类的动态加载，这使得 Java 应用程序可以在运行时动态地加载一些类或者资源。通过类加载器，Java 应用程序可以实现一些特殊的功能，例如模块化编程、插件化架构、代码热替换等。同时，类加载器还能够保证类的安全性，避免因为恶意代码或者不良代码的加载而导致的安全漏洞。</p>
+<h1 id="java虚拟机是如何加载类"><a href="#java虚拟机是如何加载类" class="headerlink" title="java虚拟机是如何加载类"></a>java虚拟机是如何加载类</h1><p>假设有一个类 MyClass，该类的源代码位于 MyClass.java 文件中。当 Java 应用程序运行时，它需要将该类加载到内存中，并创建该类的实例。</p>
+<p>加载：Java 应用程序首先需要加载 MyClass 的二进制数据。Java 虚拟机根据类的全限定名 com.example.MyClass 来查找并加载该类的二进制数据，例如 com/example/MyClass.class 文件。</p>
+<p>验证：Java 虚拟机会对 MyClass 类的字节码进行验证，以确保它符合 Java 虚拟机规范。</p>
+<p>准备：在验证通过后，Java 虚拟机为 MyClass 类的静态变量分配内存，并设置默认值，例如将整型静态变量赋值为 0。</p>
+<p>解析：Java 虚拟机将 MyClass 类的符号引用（例如类名）转换为直接引用（例如内存地址），以便于执行代码时访问类的方法和属性。</p>
+<p>初始化：最后，Java 虚拟机执行 MyClass 类的静态初始化代码，例如赋初始值给静态变量。</p>
+<p>在加载 MyClass 类的过程中，Java 类加载器起到了关键的作用。如果 MyClass 类位于应用程序类路径下，则由系统类加载器加载；如果该类位于扩展路径下，则由扩展类加载器加载；如果该类是 Java 运行时环境的基础类，则由引导类加载器加载。</p>
+<p>总之，Java 应用程序的类加载过程是一个动态的过程，Java 类加载器负责将类加载到内存中，Java 虚拟机负责验证、准备、解析和初始化类，最终创建该类的实例。</p>
+<h2 id="什么是java虚拟机的规范"><a href="#什么是java虚拟机的规范" class="headerlink" title="什么是java虚拟机的规范"></a>什么是java虚拟机的规范</h2><p>Java 虚拟机规范（Java Virtual Machine Specification）是一份由 Oracle 公司发布的文档，描述了 Java 虚拟机（JVM）的实现规范和行为规范，包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JVM 的内部结构和运行机制。</span><br><span class="line">JVM 支持的数据类型和指令集。</span><br><span class="line">Java 字节码的格式和语义。</span><br><span class="line">类加载器的机制和类加载的过程。</span><br><span class="line">Java 虚拟机的执行引擎和垃圾回收机制。</span><br><span class="line">Java 虚拟机规范的主要作用是为 Java 语言的跨平台特性提供了支持。由于 Java 虚拟机规范定义了 Java 字节码的格式和语义，以及虚拟机的内部结构和运行机制，因此只要编译出的 Java 代码符合 Java 字节码的规范，就可以在任何支持 Java 虚拟机规范的平台上运行。</span><br></pre></td></tr></table></figure>
+<p>同时，Java 虚拟机规范还为 JVM 的实现提供了一些指导性的建议，使得不同的 JVM 实现可以保证在一定程度上的互操作性，也便于开发者对 JVM 进行优化和调试。</p>
+<p>Java 虚拟机规范是 Java 平台的核心技术之一，它不仅为 Java 语言的跨平台特性提供了支持，也为 Java 生态系统的发展</p>
 
       
     </div>
@@ -863,7 +1067,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/13/Java-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Java-反射与应用</a>
+            <a href="/2021/12/13/Java-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">Java-反射与应用-基础概念</a>
         </h2>
 
         <div class="post-meta">
@@ -880,7 +1084,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-29 23:17:51" itemprop="dateModified" datetime="2022-01-29T23:17:51+08:00">2022-01-29</time>
+                <time title="Modified: 2023-04-09 01:35:35" itemprop="dateModified" datetime="2023-04-09T01:35:35+08:00">2023-04-09</time>
               </span>
 
           <br>
@@ -889,14 +1093,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>0</span>
+              <span>3.4k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -908,167 +1112,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-      
-    </div>
+          <h1 id="RIIT"><a href="#RIIT" class="headerlink" title="RIIT"></a>RIIT</h1><blockquote>
+<p>RTTI（RunTime Type Information，运行时类型信息）能够在程序运行时发现和使用类型信息</p>
+</blockquote>
+<p>Java 是如何在运行时识别对象和类信息的。主要有两种方式：</p>
+<ol>
+<li>“传统的” RTTI：假定我们在编译时已经知道了所有的类型；</li>
+<li>“反射” 机制：允许我们在运行时发现和使用类的信息</li>
+</ol>
+<p>在 Java 中，每个对象都有一个与之关联的类，<strong>该类定义了对象的属性和方法</strong>。RTTI 允许程序在运行时确定对象的实际类型，而不是在编译时确定对象的静态类型。这意味着，即使对象的静态类型是某个父类或接口，程序仍然可以根据对象的实际类型来访问它的方法和属性。</p>
+<p>在 Java 中，可以使用 instanceof 运算符来检查对象的类型，并根据对象的类型来执行相应的操作。例如：</p>
+<figure class="highlight plaintext"><figcaption><span>code</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if (obj instanceof MyClass) &#123;</span><br><span class="line">   MyClass myObj = (MyClass) obj;</span><br><span class="line">   myObj.myMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<p>上面的代码会检查 obj 对象是否是 MyClass 类型的对象，如果是，就将 obj 强制转换为 MyClass 类型，并调用它的 myMethod 方法。</p>
+<p>需要注意的是，如果对象的类型与 instanceof 运算符中指定的类型不兼容，会抛出 ClassCastException 异常。因此，在使用 RTTI 时，应该始终使用强制类型转换之前进行类型检查。</p>
+<h2 id="为什么需要-RTTI-机制"><a href="#为什么需要-RTTI-机制" class="headerlink" title="为什么需要 RTTI 机制"></a>为什么需要 <strong>RTTI</strong> 机制</h2><p>RTTI 在 Java 中存在的意义在于它使得程序能够在运行时进行类型检查和动态多态性，从而使程序更加灵活、可靠和稳定。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;? extends Object&gt; objClass = obj.getClass();</span><br></pre></td></tr></table></figure>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/">
+<p>这里涉及到另外一个根本的问题，为什么我们需要在运行时识别对象和类信息。<br>我们看一个demo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The animal makes a sound&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The dog barks&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Cat extends Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The cat meows&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">   public static void main(String[] args) &#123;</span><br><span class="line">      Animal animal1 = new Animal();</span><br><span class="line">      Animal animal2 = new Dog();</span><br><span class="line">      Animal animal3 = new Cat();</span><br><span class="line">      </span><br><span class="line">      animal1.makeSound();</span><br><span class="line">      animal2.makeSound();</span><br><span class="line">      animal3.makeSound();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用多态性时，对象的实际类型和调用方法的类型可能不同，需要在运行时识别对象和类信息，在以上的信息中</p>
+<blockquote>
+<p>在上面的示例中，有三个 Animal 对象：animal1、animal2 和 animal3。  </p>
+<blockquote>
+<p>animal1 的实际类型是 Animal，animal2 的实际类型是 Dog，animal3 的实际类型是 Cat。<br>调用 makeSound() 方法时，animal1 会调用 Animal 类的 makeSound() 方法，输出 “The animal makes a sound”；animal2 会调用 Dog 类的 makeSound() 方法，输出 “The dog barks”；animal3 会调用 Cat 类的 makeSound() 方法，输出 “The cat meows”。</p>
+</blockquote>
+</blockquote>
+<p><strong>因为在编译时，编译器只能确定调用 makeSound() 方法的对象是 Animal 类型的，无法确定其实际类型是什么，因此需要在运行时识别对象和类信息，才能确定调用哪个方法。</strong></p>
+<p>通过这个例子，可以看到，运行时识别对象和类信息是多态性的关键，也是 Java 中许多其他特性的基础。</p>
+<h1 id="Class-对象"><a href="#Class-对象" class="headerlink" title="Class 对象"></a><strong>Class</strong> 对象</h1><p>引用</p>
+<p>要理解 RTTI 在 Java 中的工作原理，首先必须知道类型信息在运行时是如何表示的。<br>这项工作是由称为 Class 对象的特殊对象完成的，它包含了与类有关的信息。<br>实际上，Class 对象就是用来创建该类所有 “常规” 对象的。<br>Java 使用 Class 对象来实现RTTI，即便是类型转换这样的操作都是用 Class 对象实现的。</p>
+<p>类是程序的一部分，每个类都有一个 Class 对象。换言之，每当我们编写并且编译<br>了一个新类，就会产生一个 Class 对象（更恰当的说，是被保存在一个同名的 .class<br>文件中）。为了生成这个类的对象，Java 虚拟机 (JVM) 先会调用 “类加载器” 子系统把<br>这个类加载到内存中。</p>
+<blockquote>
+<p>类加载器首先会检查这个类的 Class 对象是否已经加载，如果尚未加载，默认的类<br>加载器就会根据类名查找 .class 文件（如果有附加的类加载器，这时候可能就会在数<br>据库中或者通过其它方式获得字节码）。这个类的字节码被加载后，JVM 会对其进行验<br>证，确保它没有损坏，并且不包含不良的 Java 代码 (这是 Java 安全防范的一种措施)。</p>
+</blockquote>
+<p>一旦某个类的 Class 对象被载入内存，它就可以用来创建这个类的所有对象。下<br>面的示范程序可以证明这点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// typeinfo/SweetShop.java</span><br><span class="line">// 检查类加载器工作方式</span><br><span class="line">class Cookie &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Cookie&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Gum &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Gum&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Candy &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Candy&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class SweetShop &#123;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">System.out.println(&quot;inside main&quot;);</span><br><span class="line">new Candy();</span><br><span class="line">System.out.println(&quot;After creating Candy&quot;);</span><br><span class="line">try &#123;</span><br><span class="line">Class.forName(&quot;Gum&quot;);</span><br><span class="line">&#125; catch(ClassNotFoundException e) &#123;</span><br><span class="line">System.out.println(&quot;Couldn&#x27;t find Gum&quot;);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;After Class.forName(\&quot;Gum\&quot;)&quot;);</span><br><span class="line">new Cookie();</span><br><span class="line">System.out.println(&quot;After creating Cookie&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">inside main</span><br><span class="line">Loading Candy</span><br><span class="line">After creating Candy</span><br><span class="line">Loading Gum</span><br><span class="line">After Class.forName(&quot;Gum&quot;)</span><br><span class="line">Loading Cookie</span><br><span class="line">After creating Cookie</span><br></pre></td></tr></table></figure>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
+<p>Class 对象仅在需要的时候才会被加载，static 初始化是在类加载时进行的。<br>重点的是注意这行代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;Gum&quot;);</span><br></pre></td></tr></table></figure>
+<p>forName() 是 Class 类的一个静态方法，我<br>们可以使用 forName() 根据目标类的类名（String）得到该类的 Class 对象。上面的<br>代码忽略了 forName() 的返回值，因为那个调用是为了得到它产生的 “副作用”。<br>从结果可以看出，forName() 执行的副作用是如果 Gum 类没有被加载就加载它，而在加载的过程中，Gum 的 static 初始化块被执行了。</p>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/" class="post-title-link" itemprop="url">Android-小常识普及</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-12-10 16:57:57" itemprop="dateCreated datePublished" datetime="2021-12-10T16:57:57+08:00">2021-12-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-20 23:42:20" itemprop="dateModified" datetime="2022-05-20T23:42:20+08:00">2022-05-20</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Home键退出和返回键退出的区别"><a href="#Home键退出和返回键退出的区别" class="headerlink" title="Home键退出和返回键退出的区别"></a>Home键退出和返回键退出的区别</h1><p>Home键退出，程序保留状态为后台进程；<br>而返回键退出，程序保留状态为空进程，空进程更容易被系统回收。Home键其实主要用于进程间切换，返回键则是真正的退出程序。</p>
-<p>从理论上来讲，无论是哪种情况，在没有任何后台工作线程（即便应用处于后台，工作线程仍然可以执行）的前提下，被置于后台的进程都只是保留他们的运行状态，并不会占用CPU资源，所以也不耗电。只有音乐播放软件之类的应用需要在后台运行Service，而Service是需要占用CPU时间的，此时才会耗电。所以说没有带后台服务的应用是不耗电也不占用CPU时间的，没必要关闭，这种设计本身就是Android的优势之一，可以让应用下次启动时更快。然而现实是，很多应用多多少少都会有一些后台工作线程，这可能是开发人员经验不足导致（比如线程未关闭或者循环发送的Handler消息未停止），也可能是为了需求而有意为之，导致整个Android应用的生态环境并不是一片干净。</p>
-<h1 id="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"><a href="#请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？" class="headerlink" title="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"></a>请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？</h1><p>这两个还是有区别的，GPU渲染就是hwa（hard ware acceleration硬件加速）的一种，其存在的意义就是为了分担CPU的负担，其原理是通过GPU对软件图形图像的处理来减轻CPU的负担，从而使应用软件能够以更快的速度被处理，以达到提速的目的，简单来说就是一般情况下软件的2D图形图像处理是交给CPU的，3D图形图像处理才是交给GPU的，而开启这个则是强制用GPU进行2D图形图像处理从而降低CPU处理器的负担，这个主要是2D界面的图形也交给GPU处理从而更流畅点。</p>
-<p>而HW叠加层，HW和叠加层应该分开理解，HW指的是硬件加速，而这个硬件指的是GPU处理器，而不是其它硬件或处理器硬件，至于为什么可以去参考一下硬解的相关资料，然后叠加层指的是使用CPU进行辅助运算，而不只是让GPU来进行全部的渲染工作，这个也是停用HW叠加层默认关闭的原因，汇总起来就是停用GPU上的CPU辅助计算，停用HW叠加层默认关闭就是说明HW叠加层默认是开启的，为什么会默认开启？这个就是因为就算开启了强制进行GPU渲染但并不是所有的图形处理交给了GPU，像游戏里面的一些画面、视频中的硬解（手机上不开启的话硬解是靠SQV的）就不是全部交给GPU的，而开启停用HW叠加层就是关闭HW叠加层，关闭HW叠加层就意味着图形处理任务就全部交给了GPU，这个主要是可以让游戏、视频之类一些原本不是GPU渲染的画面也强制使用GPU进行处理（像一些配置的视频显示不支持硬解，然后开启强制进行GPU渲染后就可以硬解了，因为强制使用GPU而不是手机上的另一个SQV硬解了，但因视频配置、屏幕刷新率之类的还是会有卡顿的情况，开启HW叠加层可以让部分高帧率的视频达到流畅的效果，但也受限于视频配置、屏幕刷新率等其它因素）。强制进行GPU渲染和停用HW叠加层不建议长时间开启，虽然开启这些可以让性能更好，但是也会损耗不少东西。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">操作系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-12-10 16:53:41" itemprop="dateCreated datePublished" datetime="2021-12-10T16:53:41+08:00">2021-12-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-24 00:00:24" itemprop="dateModified" datetime="2022-03-24T00:00:24+08:00">2022-03-24</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
       
     </div>
 
@@ -1154,7 +1238,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1200,7 +1284,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1209,12 +1293,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">92k</span>
+    <span title="Symbols count total">99k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:30</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

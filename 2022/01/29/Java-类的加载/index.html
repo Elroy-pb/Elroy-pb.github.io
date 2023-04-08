@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="类的加载过程:">
+  <meta name="description" content="类的加载过程: Java 类的加载器Java 类的加载器是 Java 虚拟机（JVM）的一个重要组成部分，它负责将 Java 类文件加载到内存中，并将其转换为 Java 类对象。Java 类加载器主要有以下三种类型： Bootstrap ClassLoader（引导类加载器）：也称为根加载器，是 Java 虚拟机内置的类加载器，负责加载 Java 运行时环境所需的基础类，如 java.lang 包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-类的加载">
 <meta property="og:url" content="http://example.com/2022/01/29/Java-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="类的加载过程:">
+<meta property="og:description" content="类的加载过程: Java 类的加载器Java 类的加载器是 Java 虚拟机（JVM）的一个重要组成部分，它负责将 Java 类文件加载到内存中，并将其转换为 Java 类对象。Java 类加载器主要有以下三种类型： Bootstrap ClassLoader（引导类加载器）：也称为根加载器，是 Java 虚拟机内置的类加载器，负责加载 Java 运行时环境所需的基础类，如 java.lang 包">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-01-29T15:17:19.000Z">
-<meta property="article:modified_time" content="2022-02-20T12:45:18.694Z">
+<meta property="article:modified_time" content="2023-04-08T17:30:44.713Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -138,7 +138,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-20 20:45:18" itemprop="dateModified" datetime="2022-02-20T20:45:18+08:00">2022-02-20</time>
+                <time title="Modified: 2023-04-09 01:30:44" itemprop="dateModified" datetime="2023-04-09T01:30:44+08:00">2023-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -265,6 +265,24 @@
 
       
         <p>类的加载过程:</p>
+<h1 id="Java-类的加载器"><a href="#Java-类的加载器" class="headerlink" title="Java 类的加载器"></a>Java 类的加载器</h1><p>Java 类的加载器是 Java 虚拟机（JVM）的一个重要组成部分，它负责将 Java 类文件加载到内存中，并将其转换为 Java 类对象。Java 类加载器主要有以下三种类型：</p>
+<p>Bootstrap ClassLoader（引导类加载器）：也称为根加载器，是 Java 虚拟机内置的类加载器，负责加载 Java 运行时环境所需的基础类，如 java.lang 包中的类。</p>
+<p>Extension ClassLoader（扩展类加载器）：负责加载 Java 运行时环境的扩展类，即位于 jre/lib/ext 目录下的类。</p>
+<p>System ClassLoader（系统类加载器）：也称为应用程序类加载器，负责加载应用程序类路径（Classpath）下的类。</p>
+<p>此外，还有一种特殊的类加载器：用户自定义类加载器。这种类加载器是由开发人员自己实现的，可以用来加载一些特殊的类或者是自定义的类，例如动态加载类、热部署、插件化等。用户自定义类加载器需要继承自 java.lang.ClassLoader 类，并重写父类中的 findClass() 方法来实现类的加载。</p>
+<p>Java 类加载器的作用是实现类的动态加载，这使得 Java 应用程序可以在运行时动态地加载一些类或者资源。通过类加载器，Java 应用程序可以实现一些特殊的功能，例如模块化编程、插件化架构、代码热替换等。同时，类加载器还能够保证类的安全性，避免因为恶意代码或者不良代码的加载而导致的安全漏洞。</p>
+<h1 id="java虚拟机是如何加载类"><a href="#java虚拟机是如何加载类" class="headerlink" title="java虚拟机是如何加载类"></a>java虚拟机是如何加载类</h1><p>假设有一个类 MyClass，该类的源代码位于 MyClass.java 文件中。当 Java 应用程序运行时，它需要将该类加载到内存中，并创建该类的实例。</p>
+<p>加载：Java 应用程序首先需要加载 MyClass 的二进制数据。Java 虚拟机根据类的全限定名 com.example.MyClass 来查找并加载该类的二进制数据，例如 com/example/MyClass.class 文件。</p>
+<p>验证：Java 虚拟机会对 MyClass 类的字节码进行验证，以确保它符合 Java 虚拟机规范。</p>
+<p>准备：在验证通过后，Java 虚拟机为 MyClass 类的静态变量分配内存，并设置默认值，例如将整型静态变量赋值为 0。</p>
+<p>解析：Java 虚拟机将 MyClass 类的符号引用（例如类名）转换为直接引用（例如内存地址），以便于执行代码时访问类的方法和属性。</p>
+<p>初始化：最后，Java 虚拟机执行 MyClass 类的静态初始化代码，例如赋初始值给静态变量。</p>
+<p>在加载 MyClass 类的过程中，Java 类加载器起到了关键的作用。如果 MyClass 类位于应用程序类路径下，则由系统类加载器加载；如果该类位于扩展路径下，则由扩展类加载器加载；如果该类是 Java 运行时环境的基础类，则由引导类加载器加载。</p>
+<p>总之，Java 应用程序的类加载过程是一个动态的过程，Java 类加载器负责将类加载到内存中，Java 虚拟机负责验证、准备、解析和初始化类，最终创建该类的实例。</p>
+<h2 id="什么是java虚拟机的规范"><a href="#什么是java虚拟机的规范" class="headerlink" title="什么是java虚拟机的规范"></a>什么是java虚拟机的规范</h2><p>Java 虚拟机规范（Java Virtual Machine Specification）是一份由 Oracle 公司发布的文档，描述了 Java 虚拟机（JVM）的实现规范和行为规范，包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JVM 的内部结构和运行机制。</span><br><span class="line">JVM 支持的数据类型和指令集。</span><br><span class="line">Java 字节码的格式和语义。</span><br><span class="line">类加载器的机制和类加载的过程。</span><br><span class="line">Java 虚拟机的执行引擎和垃圾回收机制。</span><br><span class="line">Java 虚拟机规范的主要作用是为 Java 语言的跨平台特性提供了支持。由于 Java 虚拟机规范定义了 Java 字节码的格式和语义，以及虚拟机的内部结构和运行机制，因此只要编译出的 Java 代码符合 Java 字节码的规范，就可以在任何支持 Java 虚拟机规范的平台上运行。</span><br></pre></td></tr></table></figure>
+<p>同时，Java 虚拟机规范还为 JVM 的实现提供了一些指导性的建议，使得不同的 JVM 实现可以保证在一定程度上的互操作性，也便于开发者对 JVM 进行优化和调试。</p>
+<p>Java 虚拟机规范是 Java 平台的核心技术之一，它不仅为 Java 语言的跨平台特性提供了支持，也为 Java 生态系统的发展</p>
 
     </div>
 
@@ -348,6 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">Java 类的加载器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">java虚拟机是如何加载类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFjava%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E8%A7%84%E8%8C%83"><span class="nav-number">2.1.</span> <span class="nav-text">什么是java虚拟机的规范</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -363,7 +382,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -409,7 +428,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -418,12 +437,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">92k</span>
+    <span title="Symbols count total">99k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:24</span>
+    <span title="Reading time total">1:30</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

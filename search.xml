@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java-碎碎念</title>
+    <url>/2023/02/05/Java-%E7%A2%8E%E7%A2%8E%E5%BF%B5/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在枚举出现之前，如果想要表示一组特定的离散值，往往使用一些常量。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Entity &#123;</span><br><span class="line"> </span><br><span class="line">    public static final int VIDEO = 1;//视频</span><br><span class="line">    public static final int AUDIO = 2;//音频</span><br><span class="line">    public static final int TEXT = 3;//文字</span><br><span class="line">    public static final int IMAGE = 4;//图片</span><br><span class="line"> </span><br><span class="line">    private int id;</span><br><span class="line">    private int type;</span><br><span class="line"> </span><br><span class="line">    public int getId() &#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setId(int id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    public int getType() &#123;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setType(int type) &#123;</span><br><span class="line">        this.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">————————————————</span><br><span class="line">版权声明：本文为CSDN博主「爱学习的小肥猪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。</span><br><span class="line">原文链接：https://blog.csdn.net/heima201907/article/details/105651722</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这样做的缺点有：<br>（1）代码可读性差、易用性低。由于setType()方法的参数是int型的，在阅读代码的时候往往会让读者感到一头雾水，根本不明白这个2到底是什么意思，代表的是什么类型。当然，要保证可读性，还有这样一个办法：<br>e.setType(Entity.AUDIO);<br>而这样的话，问题又来了。这样做，客户端必须对这些常量去建立理解，才能了解如何去使用这个东西。说白了，在调用的时候，如果用户不到Entity类中去看看，还真不知道这个参数应该怎么传、怎么调。像是setType(2)这种用法也是在所难免，因为它完全合法，不是每个人都能够建立起用常量名代替数值，从而增加程序可读性、降低耦合性的意识。<br>（2）类型不安全。在用户去调用的时候，必须保证类型完全一致，同时取值范围也要正确。像是setType(-1)这样的调用是合法的，但它并不合理，今后会为程序带来种种问题。也许你会说，加一个有效性验证嘛，但是，这样做的话，又会引出下面的第(3)个问题。<br>（3）耦合性高，扩展性差。假如，因为某些原因，需要修改Entity类中常量的值，那么，所有用到这些常量的代码也就都需要修改——当然，要仔细地修改，万一漏了一个，那可不是开玩笑的。同时，这样做也不利于扩展。例如，假如针对类别做了一个有效性验证，如果类别增加了或者有所变动，则有效性验证也需要做对应的修改，不利于后期维护。<br>————————————————<br>版权声明：本文为CSDN博主「爱学习的小肥猪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/heima201907/article/details/105651722">https://blog.csdn.net/heima201907/article/details/105651722</a>  </p>
+</blockquote>
+<p>枚举设计的目的是为了解决以上的问题。  </p>
+<p>基本总结一下，大概有2个特性</p>
+<ul>
+<li>枚举的两个特性：</li>
+</ul>
+<ul>
+<li>可被列举的集合（不能是无穷尽的）</li>
+<li>不可变性（一天24H我有生之年应该不会变了）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023-plan</title>
+    <url>/2023/01/14/2023-plan/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    GNU/gcc、</span><br><span class="line">    通用汇编、</span><br><span class="line">    CPU Architecture、</span><br><span class="line">    ARM/X86 汇编、</span><br><span class="line">    C/C++、</span><br><span class="line">    OS、</span><br><span class="line">    Linux、</span><br><span class="line">    图形学原理、</span><br><span class="line">    JVM、</span><br><span class="line">    多线程、</span><br><span class="line">    Android OS</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<p>在正式启动之前，一定要想清楚为什么做和怎么做的问题，且这些问题的答案一定要结合自身的实际情况获得，而不是模仿他人。</p>
+]]></content>
+      <tags>
+        <tag>个人成长</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Game.1</title>
     <url>/2022/12/08/Game-1/</url>
     <content><![CDATA[<blockquote>
 <p>一切商业化价值最大化其实都是人性在推动!</p>
 </blockquote>
-<h1 id="游戏优化结点"><a href="#游戏优化结点" class="headerlink" title="游戏优化结点"></a>游戏优化结点</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">游戏内可以优化的地方:</span><br><span class="line">1.转生 </span><br><span class="line">2.寻宝 </span><br><span class="line">3.邮件 领取状态 邮件内容 </span><br><span class="line">4.红包 如果按照红包流量词去划分 那么大部分的玩家将涌向冠名区服</span><br><span class="line">5.大米 </span><br><span class="line">6.交易 </span><br><span class="line">7.聊天 </span><br><span class="line">8.玩家流失结点 </span><br><span class="line">    8.1 活动</span><br><span class="line">    8.2 Npc</span><br><span class="line">    8.3 玩家登记结点  角色，信息，区服。</span><br><span class="line">    8.4 退出时间  </span><br></pre></td></tr></table></figure>
+<h1 id="游戏优化结点"><a href="#游戏优化结点" class="headerlink" title="游戏优化结点"></a>游戏优化结点</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">游戏内可以优化的地方:</span><br><span class="line">1.转生 </span><br><span class="line">2.寻宝 </span><br><span class="line">3.邮件 领取状态 邮件内容 </span><br><span class="line">4.红包 如果按照红包流量词去划分 那么大部分的玩家将涌向冠名区服</span><br><span class="line">5.大米 </span><br><span class="line">6.交易 交易物品，玩家信息</span><br><span class="line">7.聊天 </span><br><span class="line">8.玩家流失结点 </span><br><span class="line">    8.1 活动</span><br><span class="line">    8.2 Npc</span><br><span class="line">    8.3 玩家登记结点  角色，信息，区服。</span><br><span class="line">    8.4 退出时间</span><br><span class="line">9.拍卖行  </span><br></pre></td></tr></table></figure>
 <h1 id="商业流程"><a href="#商业流程" class="headerlink" title="商业流程"></a>商业流程</h1><p>从Cp角度出发</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">源码 Cocos </span><br><span class="line">Gm后台</span><br><span class="line">前端 :</span><br><span class="line">后端 : </span><br><span class="line">sdk : Android,Ios.H5</span><br><span class="line">后台 : 玩家信息，聊天监控，</span><br><span class="line">美术 : 场景，原画，动作</span><br><span class="line">策划 : 执行策划,数值策划,系统策划 </span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">源码 Cocos </span><br><span class="line">Gm后台</span><br><span class="line">前端 : </span><br><span class="line">后端 : </span><br><span class="line">sdk : Android,Ios.H5</span><br><span class="line">后台 : 玩家信息，聊天监控.</span><br><span class="line">美术 : 场景，原画，动作</span><br><span class="line">策划 : 执行策划,数值策划,系统策划 </span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Game</tag>
       </tags>
@@ -58,11 +95,11 @@
   <entry>
     <title>理财</title>
     <url>/2022/09/14/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/</url>
-    <content><![CDATA[<h1 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h1><p>1.在自己身上下功夫<br>2.學會謙虛<br>3.了解擬將擁有的影響力<br>4.學習投資<br>5.了解興趣真正的所在<br>6.和志同道合的人做朋友<br>7.避免自滿<br>8.經歷勝過物品<br>9.節儉的生活<br>10.控制好你的自我<br>11.讓自己的錢生錢<br>12.控制自己的慾望<br>13.明白真正的所求<br>14.關注你的儲蓄金<br>15.設立清晰的目標<br>16.制定長期財務計畫<br>總結是能控制自己才是最大的本事</p>
+    <content><![CDATA[<h1 id="基本准则"><a href="#基本准则" class="headerlink" title="基本准则"></a>基本准则</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.在自己身上下功夫  </span><br><span class="line">2.學會謙虛  </span><br><span class="line">3.了解擬將擁有的影響力  </span><br><span class="line">4.學習投資  </span><br><span class="line">5.了解興趣真正的所在  </span><br><span class="line">6.和志同道合的人做朋友  </span><br><span class="line">7.避免自滿  </span><br><span class="line">8.經歷勝過物品  </span><br><span class="line">9.節儉的生活  </span><br><span class="line">10.控制好你的自我  </span><br><span class="line">11.讓自己的錢生錢  </span><br><span class="line">12.控制自己的慾望  </span><br><span class="line">13.明白真正的所求  </span><br><span class="line">14.關注你的儲蓄金  </span><br><span class="line">15.設立清晰的目標  </span><br><span class="line">16.制定長期財務計畫  </span><br><span class="line">總結是能控制自己才是最大的本事  </span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>Game-Develop</tag>
         <tag>个人成长</tag>
+        <tag>Game-Develop</tag>
       </tags>
   </entry>
   <entry>
@@ -81,8 +118,8 @@
 
 <h1 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">自己发的话，研发：渠道=5：5，</span><br><span class="line">找发行去发，研发：发行：渠道=2：3：5</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
-        <tag>Game-Develop</tag>
         <tag>个人成长</tag>
+        <tag>Game-Develop</tag>
       </tags>
   </entry>
   <entry>
@@ -464,6 +501,24 @@
     <title>Java-类的加载</title>
     <url>/2022/01/29/Java-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD/</url>
     <content><![CDATA[<p>类的加载过程:</p>
+<h1 id="Java-类的加载器"><a href="#Java-类的加载器" class="headerlink" title="Java 类的加载器"></a>Java 类的加载器</h1><p>Java 类的加载器是 Java 虚拟机（JVM）的一个重要组成部分，它负责将 Java 类文件加载到内存中，并将其转换为 Java 类对象。Java 类加载器主要有以下三种类型：</p>
+<p>Bootstrap ClassLoader（引导类加载器）：也称为根加载器，是 Java 虚拟机内置的类加载器，负责加载 Java 运行时环境所需的基础类，如 java.lang 包中的类。</p>
+<p>Extension ClassLoader（扩展类加载器）：负责加载 Java 运行时环境的扩展类，即位于 jre/lib/ext 目录下的类。</p>
+<p>System ClassLoader（系统类加载器）：也称为应用程序类加载器，负责加载应用程序类路径（Classpath）下的类。</p>
+<p>此外，还有一种特殊的类加载器：用户自定义类加载器。这种类加载器是由开发人员自己实现的，可以用来加载一些特殊的类或者是自定义的类，例如动态加载类、热部署、插件化等。用户自定义类加载器需要继承自 java.lang.ClassLoader 类，并重写父类中的 findClass() 方法来实现类的加载。</p>
+<p>Java 类加载器的作用是实现类的动态加载，这使得 Java 应用程序可以在运行时动态地加载一些类或者资源。通过类加载器，Java 应用程序可以实现一些特殊的功能，例如模块化编程、插件化架构、代码热替换等。同时，类加载器还能够保证类的安全性，避免因为恶意代码或者不良代码的加载而导致的安全漏洞。</p>
+<h1 id="java虚拟机是如何加载类"><a href="#java虚拟机是如何加载类" class="headerlink" title="java虚拟机是如何加载类"></a>java虚拟机是如何加载类</h1><p>假设有一个类 MyClass，该类的源代码位于 MyClass.java 文件中。当 Java 应用程序运行时，它需要将该类加载到内存中，并创建该类的实例。</p>
+<p>加载：Java 应用程序首先需要加载 MyClass 的二进制数据。Java 虚拟机根据类的全限定名 com.example.MyClass 来查找并加载该类的二进制数据，例如 com/example/MyClass.class 文件。</p>
+<p>验证：Java 虚拟机会对 MyClass 类的字节码进行验证，以确保它符合 Java 虚拟机规范。</p>
+<p>准备：在验证通过后，Java 虚拟机为 MyClass 类的静态变量分配内存，并设置默认值，例如将整型静态变量赋值为 0。</p>
+<p>解析：Java 虚拟机将 MyClass 类的符号引用（例如类名）转换为直接引用（例如内存地址），以便于执行代码时访问类的方法和属性。</p>
+<p>初始化：最后，Java 虚拟机执行 MyClass 类的静态初始化代码，例如赋初始值给静态变量。</p>
+<p>在加载 MyClass 类的过程中，Java 类加载器起到了关键的作用。如果 MyClass 类位于应用程序类路径下，则由系统类加载器加载；如果该类位于扩展路径下，则由扩展类加载器加载；如果该类是 Java 运行时环境的基础类，则由引导类加载器加载。</p>
+<p>总之，Java 应用程序的类加载过程是一个动态的过程，Java 类加载器负责将类加载到内存中，Java 虚拟机负责验证、准备、解析和初始化类，最终创建该类的实例。</p>
+<h2 id="什么是java虚拟机的规范"><a href="#什么是java虚拟机的规范" class="headerlink" title="什么是java虚拟机的规范"></a>什么是java虚拟机的规范</h2><p>Java 虚拟机规范（Java Virtual Machine Specification）是一份由 Oracle 公司发布的文档，描述了 Java 虚拟机（JVM）的实现规范和行为规范，包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JVM 的内部结构和运行机制。</span><br><span class="line">JVM 支持的数据类型和指令集。</span><br><span class="line">Java 字节码的格式和语义。</span><br><span class="line">类加载器的机制和类加载的过程。</span><br><span class="line">Java 虚拟机的执行引擎和垃圾回收机制。</span><br><span class="line">Java 虚拟机规范的主要作用是为 Java 语言的跨平台特性提供了支持。由于 Java 虚拟机规范定义了 Java 字节码的格式和语义，以及虚拟机的内部结构和运行机制，因此只要编译出的 Java 代码符合 Java 字节码的规范，就可以在任何支持 Java 虚拟机规范的平台上运行。</span><br></pre></td></tr></table></figure>
+<p>同时，Java 虚拟机规范还为 JVM 的实现提供了一些指导性的建议，使得不同的 JVM 实现可以保证在一定程度上的互操作性，也便于开发者对 JVM 进行优化和调试。</p>
+<p>Java 虚拟机规范是 Java 平台的核心技术之一，它不仅为 Java 语言的跨平台特性提供了支持，也为 Java 生态系统的发展</p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -706,9 +761,49 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
       </tags>
   </entry>
   <entry>
-    <title>Java-反射与应用</title>
+    <title>Java-反射与应用-基础概念</title>
     <url>/2021/12/13/Java-%E5%8F%8D%E5%B0%84%E4%B8%8E%E5%BA%94%E7%94%A8/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="RIIT"><a href="#RIIT" class="headerlink" title="RIIT"></a>RIIT</h1><blockquote>
+<p>RTTI（RunTime Type Information，运行时类型信息）能够在程序运行时发现和使用类型信息</p>
+</blockquote>
+<p>Java 是如何在运行时识别对象和类信息的。主要有两种方式：</p>
+<ol>
+<li>“传统的” RTTI：假定我们在编译时已经知道了所有的类型；</li>
+<li>“反射” 机制：允许我们在运行时发现和使用类的信息</li>
+</ol>
+<p>在 Java 中，每个对象都有一个与之关联的类，<strong>该类定义了对象的属性和方法</strong>。RTTI 允许程序在运行时确定对象的实际类型，而不是在编译时确定对象的静态类型。这意味着，即使对象的静态类型是某个父类或接口，程序仍然可以根据对象的实际类型来访问它的方法和属性。</p>
+<p>在 Java 中，可以使用 instanceof 运算符来检查对象的类型，并根据对象的类型来执行相应的操作。例如：</p>
+<figure class="highlight plaintext"><figcaption><span>code</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">if (obj instanceof MyClass) &#123;</span><br><span class="line">   MyClass myObj = (MyClass) obj;</span><br><span class="line">   myObj.myMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码会检查 obj 对象是否是 MyClass 类型的对象，如果是，就将 obj 强制转换为 MyClass 类型，并调用它的 myMethod 方法。</p>
+<p>需要注意的是，如果对象的类型与 instanceof 运算符中指定的类型不兼容，会抛出 ClassCastException 异常。因此，在使用 RTTI 时，应该始终使用强制类型转换之前进行类型检查。</p>
+<h2 id="为什么需要-RTTI-机制"><a href="#为什么需要-RTTI-机制" class="headerlink" title="为什么需要 RTTI 机制"></a>为什么需要 <strong>RTTI</strong> 机制</h2><p>RTTI 在 Java 中存在的意义在于它使得程序能够在运行时进行类型检查和动态多态性，从而使程序更加灵活、可靠和稳定。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class&lt;? extends Object&gt; objClass = obj.getClass();</span><br></pre></td></tr></table></figure>
+
+<p>这里涉及到另外一个根本的问题，为什么我们需要在运行时识别对象和类信息。<br>我们看一个demo</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The animal makes a sound&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The dog barks&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Cat extends Animal &#123;</span><br><span class="line">   public void makeSound() &#123;</span><br><span class="line">      System.out.println(&quot;The cat meows&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">   public static void main(String[] args) &#123;</span><br><span class="line">      Animal animal1 = new Animal();</span><br><span class="line">      Animal animal2 = new Dog();</span><br><span class="line">      Animal animal3 = new Cat();</span><br><span class="line">      </span><br><span class="line">      animal1.makeSound();</span><br><span class="line">      animal2.makeSound();</span><br><span class="line">      animal3.makeSound();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用多态性时，对象的实际类型和调用方法的类型可能不同，需要在运行时识别对象和类信息，在以上的信息中</p>
+<blockquote>
+<p>在上面的示例中，有三个 Animal 对象：animal1、animal2 和 animal3。  </p>
+<blockquote>
+<p>animal1 的实际类型是 Animal，animal2 的实际类型是 Dog，animal3 的实际类型是 Cat。<br>调用 makeSound() 方法时，animal1 会调用 Animal 类的 makeSound() 方法，输出 “The animal makes a sound”；animal2 会调用 Dog 类的 makeSound() 方法，输出 “The dog barks”；animal3 会调用 Cat 类的 makeSound() 方法，输出 “The cat meows”。</p>
+</blockquote>
+</blockquote>
+<p><strong>因为在编译时，编译器只能确定调用 makeSound() 方法的对象是 Animal 类型的，无法确定其实际类型是什么，因此需要在运行时识别对象和类信息，才能确定调用哪个方法。</strong></p>
+<p>通过这个例子，可以看到，运行时识别对象和类信息是多态性的关键，也是 Java 中许多其他特性的基础。</p>
+<h1 id="Class-对象"><a href="#Class-对象" class="headerlink" title="Class 对象"></a><strong>Class</strong> 对象</h1><p>引用</p>
+<p>要理解 RTTI 在 Java 中的工作原理，首先必须知道类型信息在运行时是如何表示的。<br>这项工作是由称为 Class 对象的特殊对象完成的，它包含了与类有关的信息。<br>实际上，Class 对象就是用来创建该类所有 “常规” 对象的。<br>Java 使用 Class 对象来实现RTTI，即便是类型转换这样的操作都是用 Class 对象实现的。</p>
+<p>类是程序的一部分，每个类都有一个 Class 对象。换言之，每当我们编写并且编译<br>了一个新类，就会产生一个 Class 对象（更恰当的说，是被保存在一个同名的 .class<br>文件中）。为了生成这个类的对象，Java 虚拟机 (JVM) 先会调用 “类加载器” 子系统把<br>这个类加载到内存中。</p>
+<blockquote>
+<p>类加载器首先会检查这个类的 Class 对象是否已经加载，如果尚未加载，默认的类<br>加载器就会根据类名查找 .class 文件（如果有附加的类加载器，这时候可能就会在数<br>据库中或者通过其它方式获得字节码）。这个类的字节码被加载后，JVM 会对其进行验<br>证，确保它没有损坏，并且不包含不良的 Java 代码 (这是 Java 安全防范的一种措施)。</p>
+</blockquote>
+<p>一旦某个类的 Class 对象被载入内存，它就可以用来创建这个类的所有对象。下<br>面的示范程序可以证明这点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// typeinfo/SweetShop.java</span><br><span class="line">// 检查类加载器工作方式</span><br><span class="line">class Cookie &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Cookie&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Gum &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Gum&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Candy &#123;</span><br><span class="line">static &#123; System.out.println(&quot;Loading Candy&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class SweetShop &#123;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">System.out.println(&quot;inside main&quot;);</span><br><span class="line">new Candy();</span><br><span class="line">System.out.println(&quot;After creating Candy&quot;);</span><br><span class="line">try &#123;</span><br><span class="line">Class.forName(&quot;Gum&quot;);</span><br><span class="line">&#125; catch(ClassNotFoundException e) &#123;</span><br><span class="line">System.out.println(&quot;Couldn&#x27;t find Gum&quot;);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(&quot;After Class.forName(\&quot;Gum\&quot;)&quot;);</span><br><span class="line">new Cookie();</span><br><span class="line">System.out.println(&quot;After creating Cookie&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">inside main</span><br><span class="line">Loading Candy</span><br><span class="line">After creating Candy</span><br><span class="line">Loading Gum</span><br><span class="line">After Class.forName(&quot;Gum&quot;)</span><br><span class="line">Loading Cookie</span><br><span class="line">After creating Cookie</span><br></pre></td></tr></table></figure>
+
+<p>Class 对象仅在需要的时候才会被加载，static 初始化是在类加载时进行的。<br>重点的是注意这行代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class.forName(&quot;Gum&quot;);</span><br></pre></td></tr></table></figure>
+<p>forName() 是 Class 类的一个静态方法，我<br>们可以使用 forName() 根据目标类的类名（String）得到该类的 Class 对象。上面的<br>代码忽略了 forName() 的返回值，因为那个调用是为了得到它产生的 “副作用”。<br>从结果可以看出，forName() 执行的副作用是如果 Gum 类没有被加载就加载它，而在加载的过程中，Gum 的 static 初始化块被执行了。</p>
+]]></content>
   </entry>
   <entry>
     <title>Android-小常识普及</title>
