@@ -21,22 +21,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="谈谈 Android 渲染机制">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android-渲染机制">
-<meta property="og:url" content="http://example.com/2022/01/10/Android-%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6/index.html">
+  <meta name="description" content="凌晨四点钟，看海棠花未眠。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elroy-Pb">
+<meta property="og:url" content="http://example.com/archives/2023/04/index.html">
 <meta property="og:site_name" content="Elroy-Pb">
-<meta property="og:description" content="谈谈 Android 渲染机制">
+<meta property="og:description" content="凌晨四点钟，看海棠花未眠。">
 <meta property="og:locale">
-<meta property="og:image" content="https://pic3.zhimg.com/50/7960dd56f2627a5f4441538c26adf6d7_720w.jpg?source=1940ef5c">
-<meta property="article:published_time" content="2022-01-10T09:43:32.000Z">
-<meta property="article:modified_time" content="2022-01-11T02:09:08.855Z">
 <meta property="article:author" content="Elroy-Pb">
-<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic3.zhimg.com/50/7960dd56f2627a5f4441538c26adf6d7_720w.jpg?source=1940ef5c">
 
-<link rel="canonical" href="http://example.com/2022/01/10/Android-%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6/">
+<link rel="canonical" href="http://example.com/archives/2023/04/">
 
 
 <script id="page-configurations">
@@ -44,12 +39,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-Hans'
   };
 </script>
 <script src="/lib/fireworks.js"></script>
-  <title>Android-渲染机制 | Elroy-Pb</title>
+  <title>Archive | Elroy-Pb</title>
   
 
 
@@ -192,142 +187,51 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content archive">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/10/Android-%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Android-渲染机制
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-01-10 17:43:32" itemprop="dateCreated datePublished" datetime="2022-01-10T17:43:32+08:00">2022-01-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-11 10:09:08" itemprop="dateModified" datetime="2022-01-11T10:09:08+08:00">2022-01-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-            <div class="post-description">谈谈 Android 渲染机制</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        
+        <span class="collection-header">Nice! 54 posts in total. Keep on posting.</span>
+      </div>
 
       
-        <h1 id="像素的计算"><a href="#像素的计算" class="headerlink" title="像素的计算"></a>像素的计算</h1><p>简单的科普下</p>
-<ul>
-<li>1 Inch = 2.54 cm</li>
-<li>1 寸 = 3.33300 cm</li>
-<li>1尺=10寸, 1寸=10分<h1 id="Px"><a href="#Px" class="headerlink" title="Px"></a>Px</h1>个人简单的理解：Pixel是一个带颜色的方块，一个图片其实就是由这些方块组成的<h1 id="Ppi"><a href="#Ppi" class="headerlink" title="Ppi"></a>Ppi</h1>PPI的意思是：Pixels Per Inch ，即每英寸所拥有的像素数目。</li>
-</ul>
-<p>所以PPI的理论表述应该是px/in，如：iphone5s的PPI是326px/in。<br>可以看到：PPI=像素数量/物理尺寸（英寸数）</p>
-<blockquote>
-<p>注意，这里的像素数量指的是一个维度的，比如X轴的像素数量，或Y轴的像素数量，或者对角线的像素数量。而不是总的像素数量。</p>
-</blockquote>
-<p>那么就好办了。这是PPI的计算公式。</p>
-<img src="https://pic3.zhimg.com/50/7960dd56f2627a5f4441538c26adf6d7_720w.jpg?source=1940ef5c" data-rawwidth="500" data-rawheight="265" class="origin_image zh-lightbox-thumb" width="500" data-original="https://pic1.zhimg.com/7960dd56f2627a5f4441538c26adf6d7_r.jpg?source=1940ef5c"/>
-
-<p>我们再看一下勾股定律：如果直角三角形两直角边为a和b，斜边为c，那么a²+b²=c²。所以：PPI计算公式里√（x²+y²）这一部分计算的是屏幕对角线的像素数。(有人说对角线上的像素数量难以计算，所以特此说明：这里所说的对角线像素数并非实际上屏幕对角线有多少像素，只是在此公式中等效于对角线像素数量，只是数学意义上的一个值，用于计算。)而一般说的屏幕尺寸说的是屏幕对角线的长度。</p>
-<p>比如iphone 6 plus的屏幕尺寸是5.5in，说的也是屏幕对角线的长度。那么这个公式就回到了上面说的：PPI=像素数量/物理尺寸（英寸数）所以，如果知道屏幕横向或者竖向的物理尺寸，PPI也可以用横向或竖向的像素数来计算。即：屏幕分辨率是X*Y。PPI=X/屏幕宽度（英寸）PPI=Y/屏幕高度（英寸）这样就好理解的多。而之所以要用对角线来计算，是因为屏幕对角线长度（屏幕尺寸）是厂商制造时就定好的精确数值。而宽和高都需要计算才能得到。</p>
-<pre><code>作者：chen vincent
-链接：https://www.zhihu.com/question/21220154/answer/56288324
-来源：知乎
-s著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-</code></pre>
-<h1 id="Dpi"><a href="#Dpi" class="headerlink" title="Dpi"></a>Dpi</h1><p>dpi（dots per inch）点每英寸，常用于平面印刷。</p>
-<p>dot就是一个点，打印机或屏幕通过这些点把图片print出来。</p>
-<p>如果是针对在电脑屏幕或手机屏幕上面来说DPI=PPI。</p>
-<p>我总结下：Pixel是一个带颜色的方块，一个图片其实就是由这些方块组成的。dot就是一个点，打印机或屏幕通过这些点把图片print出来。</p>
-<p>例如：一个150ppi的图片在600dpi的设备上显示，每个pixel有16个dot (600 dots/150 pixels)PPI vs. DPI: what’s the difference?</p>
-<pre><code>作者：蛮大人
-链接：https://www.zhihu.com/question/23770739/answer/51830906  
-来源：知乎  
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  
-</code></pre>
-
+    <div class="collection-year">
+      <span class="collection-header">2023</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Android/" rel="tag"># Android</a>
-          </div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2023-04-09T06:06:29+08:00"
+              content="2023-04-09">
+          04-09
+        </time>
+      </div>
 
-        
+      <div class="post-title">
+          <a class="post-title-link" href="/2023/04/09/Java-%E6%B3%9B%E5%9E%8B/" itemprop="url">
+            <span itemprop="name">Java-泛型</span>
+          </a>
+      </div>
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/12/13/Android-AmS%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/" rel="prev" title="Android-AmS内部原理">
-      <i class="fa fa-chevron-left"></i> Android-AmS内部原理
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/13/Zygote%E5%89%96%E6%9E%90/" rel="next" title="Zygote剖析">
-      Zygote剖析 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
@@ -380,7 +284,6 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%83%8F%E7%B4%A0%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">像素的计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Px"><span class="nav-number">2.</span> <span class="nav-text">Px</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ppi"><span class="nav-number">3.</span> <span class="nav-text">Ppi</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dpi"><span class="nav-number">4.</span> <span class="nav-text">Dpi</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -29,7 +29,7 @@
 <meta property="og:description" content="RIIT RTTI（RunTime Type Information，运行时类型信息）能够在程序运行时发现和使用类型信息  Java 是如何在运行时识别对象和类信息的。主要有两种方式：  “传统的” RTTI：假定我们在编译时已经知道了所有的类型； “反射” 机制：允许我们在运行时发现和使用类的信息  在 Java 中，每个对象都有一个与之关联的类，该类定义了对象的属性和方法。RTTI 允许程序在">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-13T02:55:36.000Z">
-<meta property="article:modified_time" content="2023-04-08T17:35:35.552Z">
+<meta property="article:modified_time" content="2023-04-08T18:06:24.155Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta name="twitter:card" content="summary">
 
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">53</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">54</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-09 01:35:35" itemprop="dateModified" datetime="2023-04-09T01:35:35+08:00">2023-04-09</time>
+                <time title="Modified: 2023-04-09 02:06:24" itemprop="dateModified" datetime="2023-04-09T02:06:24+08:00">2023-04-09</time>
               </span>
 
           <br>
@@ -235,14 +235,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.4k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>7 mins.</span>
             </span>
 
         </div>
@@ -294,6 +294,22 @@
 <p>Class 对象仅在需要的时候才会被加载，static 初始化是在类加载时进行的。<br>重点的是注意这行代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;Gum&quot;);</span><br></pre></td></tr></table></figure>
 <p>forName() 是 Class 类的一个静态方法，我<br>们可以使用 forName() 根据目标类的类名（String）得到该类的 Class 对象。上面的<br>代码忽略了 forName() 的返回值，因为那个调用是为了得到它产生的 “副作用”。<br>从结果可以看出，forName() 执行的副作用是如果 Gum 类没有被加载就加载它，而在加载的过程中，Gum 的 static 初始化块被执行了。</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">interface HasBatteries &#123;&#125;</span><br><span class="line">interface Waterproof &#123;&#125;</span><br><span class="line">interface Shoots &#123;&#125;</span><br><span class="line">class Toy &#123;</span><br><span class="line">// 注释下面的无参数构造器会引起 NoSuchMethodError 错误</span><br><span class="line">Toy() &#123;&#125;</span><br><span class="line">Toy(int i) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">class FancyToy extends Toy</span><br><span class="line">implements HasBatteries, Waterproof, Shoots &#123;</span><br><span class="line">FancyToy() &#123; super(1); &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class ToyTest &#123;</span><br><span class="line">static void printInfo(Class cc) &#123;</span><br><span class="line">System.out.println(&quot;Class name: &quot; + cc.getName() +</span><br><span class="line">&quot; is interface? [&quot; + cc.isInterface() + &quot;]&quot;);</span><br><span class="line">System.out.println(</span><br><span class="line">&quot;Simple name: &quot; + cc.getSimpleName());</span><br><span class="line">System.out.println(</span><br><span class="line">&quot;Canonical name : &quot; + cc.getCanonicalName());</span><br><span class="line">&#125;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">Class c = null;</span><br><span class="line">try &#123;</span><br><span class="line">c = Class.forName(&quot;typeinfo.toys.FancyToy&quot;);</span><br><span class="line">&#125; catch(ClassNotFoundException e) &#123;</span><br><span class="line">System.out.println(&quot;Can&#x27;t find FancyToy&quot;);</span><br><span class="line">System.exit(1);</span><br><span class="line">&#125;</span><br><span class="line">printInfo(c);</span><br><span class="line">for(Class face : c.getInterfaces())</span><br><span class="line">printInfo(face);</span><br><span class="line">Class up = c.getSuperclass();</span><br><span class="line">Object obj = null;</span><br><span class="line">try &#123;</span><br><span class="line">// Requires no-arg constructor:</span><br><span class="line">obj = up.newInstance();</span><br><span class="line">&#125; catch(InstantiationException e) &#123;</span><br><span class="line">System.out.println(&quot;Cannot instantiate&quot;);</span><br><span class="line">System.exit(1);</span><br><span class="line">&#125; catch(IllegalAccessException e) &#123;</span><br><span class="line">System.out.println(&quot;Cannot access&quot;);</span><br><span class="line">System.exit(1);</span><br><span class="line">&#125;</span><br><span class="line">printInfo(obj.getClass());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">Class name: typeinfo.toys.FancyToy is interface?</span><br><span class="line">[false]</span><br><span class="line">Simple name: FancyToy</span><br><span class="line">Canonical name : typeinfo.toys.FancyToy</span><br><span class="line">Class name: typeinfo.toys.HasBatteries is interface?</span><br><span class="line">[true]</span><br><span class="line">Simple name: HasBatteries</span><br><span class="line">Canonical name : typeinfo.toys.HasBatteries</span><br><span class="line">Class name: typeinfo.toys.Waterproof is interface?</span><br><span class="line">[true]</span><br><span class="line">Simple name: Waterproof</span><br><span class="line">Canonical name : typeinfo.toys.Waterproof</span><br><span class="line">Class name: typeinfo.toys.Shoots is interface? [true]</span><br><span class="line">Simple name: Shoots</span><br><span class="line">Canonical name : typeinfo.toys.Shoots</span><br><span class="line">Class name: typeinfo.toys.Toy is interface? [false]</span><br><span class="line">Simple name: Toy</span><br><span class="line">Canonical name : typeinfo.toys.Toy</span><br></pre></td></tr></table></figure>
+
+<p>你还可以调用 getSuperclass() 方法来得到父类的 Class 对象，再用父类的 Class 对象调用该方法，重复多次，你就可以得到一个对象完整的类继承结构</p>
+<h2 id="类字面常量"><a href="#类字面常量" class="headerlink" title="类字面常量"></a>类字面常量</h2><p>当使用 .class 来创建对 Class 对象的引用时，不会自动地<br>初始化该 Class 对象。为了使用类而做的准备工作实际包含三个步骤：</p>
+<blockquote>
+<ol>
+<li>加载，这是由类加载器执行的。该步骤将查找字节码（通常在 classpath 所指定的<br>路径中查找，但这并非是必须的），并从这些字节码中创建一个 Class 对象。</li>
+<li>链接。在链接阶段将验证类中的字节码，为 static 字段分配存储空间，并且如果需要的话，将解析这个类创建的对其他类的所有引用。</li>
+<li>初始化。如果该类具有超类，则先初始化超类，执行 static 初始化器和 static 初始化块。</li>
+</ol>
+</blockquote>
+<p>直到第一次引用一个 static 方法（构造器隐式地是 static）或者非常量的 static<br>字段，才会进行类初始化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// typeinfo/ClassInitialization.java</span><br><span class="line">import java.util.*;</span><br><span class="line">第十九章类型信息 11</span><br><span class="line">class Initable &#123;</span><br><span class="line">static final int STATIC_FINAL = 47;</span><br><span class="line">static final int STATIC_FINAL2 =</span><br><span class="line">ClassInitialization.rand.nextInt(1000);</span><br><span class="line">static &#123;</span><br><span class="line">System.out.println(&quot;Initializing Initable&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Initable2 &#123;</span><br><span class="line">static int staticNonFinal = 147;</span><br><span class="line">static &#123;</span><br><span class="line">System.out.println(&quot;Initializing Initable2&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Initable3 &#123;</span><br><span class="line">static int staticNonFinal = 74;</span><br><span class="line">static &#123;</span><br><span class="line">System.out.println(&quot;Initializing Initable3&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class ClassInitialization &#123;</span><br><span class="line">public static Random rand = new Random(47);</span><br><span class="line">public static void</span><br><span class="line">main(String[] args) throws Exception &#123;</span><br><span class="line">Class initable = Initable.class;</span><br><span class="line">System.out.println(&quot;After creating Initable ref&quot;);</span><br><span class="line">// Does not trigger initialization:</span><br><span class="line">System.out.println(Initable.STATIC_FINAL);</span><br><span class="line">// Does trigger initialization:</span><br><span class="line">System.out.println(Initable.STATIC_FINAL2);</span><br><span class="line">// Does trigger initialization:</span><br><span class="line">System.out.println(Initable2.staticNonFinal);</span><br><span class="line">Class initable3 = Class.forName(&quot;Initable3&quot;);</span><br><span class="line">System.out.println(&quot;After creating Initable3 ref&quot;);</span><br><span class="line">System.out.println(Initable3.staticNonFinal);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">After creating Initable ref</span><br><span class="line">47</span><br><span class="line">Initializing Initable</span><br><span class="line">258</span><br><span class="line">Initializing Initable2</span><br><span class="line">147</span><br><span class="line">Initializing Initable3</span><br><span class="line">After creating Initable3 ref</span><br><span class="line">74</span><br></pre></td></tr></table></figure>
+
+<p>初始化有效地实现了尽可能的 “惰性”，从对 initable 引用的创建中可以看<br>到，仅使用 .class 语法来获得对类对象的引用不会引发初始化。</p>
+<p>但与此相反，使用 Class.forName() 来产生 Class 引用会立即就进行初始化，如 initable3。<br>如果一个 static final 值是 “编译期常量”（如 Initable.staticFinal），那么这<br>个值不需要对 Initable 类进行初始化就可以被读取。但是，如果只是将一个字段设置<br>成为 static 和 final，还不足以确保这种行为。<br>例如，对 Initable.staticFinal2 的访问将强制进行类的初始化，因为它不是一个编译期常量。<br>如果一个 static 字段不是 final 的，那么在对它访问时，总是要求在它被读取之<br>前，要先进行链接（为这个字段分配存储空间）和初始化（初始化该存储空间），就像<br>在对 Initable2.staticNonFinal 的访问中所看到的那样</p>
 
     </div>
 
@@ -374,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RIIT"><span class="nav-number">1.</span> <span class="nav-text">RIIT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-RTTI-%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要 RTTI 机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class-%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">Class 对象</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RIIT"><span class="nav-number">1.</span> <span class="nav-text">RIIT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-RTTI-%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要 RTTI 机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class-%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">Class 对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%AD%97%E9%9D%A2%E5%B8%B8%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">类字面常量</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -390,7 +406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -445,12 +461,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">99k</span>
+    <span title="Symbols count total">104k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:30</span>
+    <span title="Reading time total">1:35</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
