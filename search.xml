@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android-2023-10-23权限申请的变更</title>
+    <url>/2023/10/17/Android-2023-10-23%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7%E7%9A%84%E5%8F%98%E6%9B%B4/</url>
+    <content><![CDATA[<h1 id="Android-权限申请的变更"><a href="#Android-权限申请的变更" class="headerlink" title="Android-权限申请的变更"></a>Android-权限申请的变更</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Android 13 代号「提拉米苏（Tiramisu）」</span><br></pre></td></tr></table></figure>
+<p>Android-13 对比 Android-12的变化，</p>
+<h2 id="更严格的通知权限"><a href="#更严格的通知权限" class="headerlink" title="更严格的通知权限"></a>更严格的通知权限</h2><p>Android 13 为 App 的通知新增了运行时权限「POST_NOTIFICATIONS」，用户能够自由的选择通知的时间、位置，甚至是设置为「不用时移除权限」。这种限制类似于对于位置、话筒、相机、应用列表的权限设置。</p>
+<p>应用会在首次运行时向弹出请求窗口向用户请求许可，然后由用户决定是拒绝还是许可。但在 Android 12 或更早的系统版本中，通知权限则是一个安装时默认授予权限，具体的行为也是可以由应用开发者自己来定义的。</p>
+<h2 id="严格控电-续航"><a href="#严格控电-续航" class="headerlink" title="严格控电-续航"></a>严格控电-续航</h2><p>Android 13的目标之一是通过全新的、更严格的电池控制方案，来优化熄屏后App的电源消耗，从而最大化设备体验</p>
+<p>Android 操作系统版本的更新通常伴随着对应用程序权限系统的调整和改变。这些变更旨在增强用户的隐私保护和提供更细粒度的权限控制。以下是一些 Android 权限系统的变更和改进的常见示例：</p>
+<p>运行时权限控制：从 Android 6.0（Marshmallow）开始，Android 引入了运行时权限控制，允许用户在应用程序安装后，根据需要授予或拒绝应用程序特定权限的访问权，如访问相机、位置、联系人等。</p>
+<p>危险权限：Android 权限被分为普通权限和危险权限。危险权限需要用户明确同意，而普通权限在应用安装时自动授予。在较新的 Android 版本中，某些危险权限的使用受到更严格的控制。</p>
+<p>存储权限：在 Android 10 及更高版本中，存储权限发生了重大变化。应用程序需要逐个请求访问外部存储的权限，并在其清单文件中声明 MANAGE_EXTERNAL_STORAGE 权限以访问全部存储。这是为了增强隐私保护和减少对外部存储的滥用。</p>
+<p>一次性权限：在 Android 11 及更高版本中，用户可以授予应用程序一次性访问位置、麦克风和相机等权限，而不是永久性地授予权限。</p>
+<p>位置权限：在较新的 Android 版本中，位置权限的访问变得更加严格，用户可以选择只允许应用程序在使用时访问位置数据，而不是一直允许。</p>
+<p>通知权限：在 Android 版本中，通知权限系统也有所改进，用户可以更好地控制和管理应用程序的通知。</p>
+<p>访问后台位置：在 Android 11 及更高版本中，访问后台位置数据的权限更加受到限制，应用程序需要满足更高的要求才能访问后台位置数据。</p>
+<p>请注意，每个 Android 版本的权限系统可能有所不同，具体的变化和改进可能会因版本而异。要了解特定 Android 版本的权限变更，请查阅相关的 Android 开发者文档或官方发布说明。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+        <category>[object Object]</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Welcome-to-C++</title>
+    <url>/2023/10/05/Welcome-to-C/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>code ==&gt; compiler ==&gt; produces mechine code for your target platform（为目标平台生成机器代码)</p>
+<p>mechine code then contains the actual instructions that the target CPU can execute。(机器代码包含目标CPU可以执行的指令)</p>
+<p>所以使用C++是可以单独控制目标CPU每条指令。</p>
+<h2 id="How-C-Works"><a href="#How-C-Works" class="headerlink" title="How C++ Works"></a>How C++ Works</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int num = 42;</span><br><span class="line">    cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;The value of num is: &quot; &lt;&lt; num &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br></pre></td></tr></table></figure>
+<p>C++中的#符号通常被用于预处理器指令，这些指令在编译实际的C++代码之前被执行<br>#include &lt;该文件的所有内容&gt; ==<br>include will look for a file and will simply take the entire contents of the iostream file and paste it into our main.cpp. </p>
+<p>Once preprocessing is finished,our file will be complied,</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux-进程管理</title>
+    <url>/2023/08/23/Linux-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<blockquote>
+<p>Linux中的进程于Windows相比是很轻量级的，而且不严格区分进程和线程，线程不过是一种特殊的进程。</p>
+</blockquote>
+<h1 id="Linux-进程管理"><a href="#Linux-进程管理" class="headerlink" title="Linux-进程管理"></a>Linux-进程管理</h1><p>现代的操作系统提供2种虚拟机制，虚拟处理器和虚拟内存。</p>
+<h1 id="进程描述符"><a href="#进程描述符" class="headerlink" title="进程描述符"></a>进程描述符</h1><blockquote>
+<p>进程描述符的存放–PID<br>内核通过一个唯一的进程标识值(process identification value)或PID来标识每个进程。<br>PID是一个数，表示为pid_t隐含类型，实际上就是一个int类型。<br>PID实际上就是系统中允许同时存在的进程的最大数目。<br>PID的最大默认值为32768（受&lt;linux/thread.h&gt;中所定义PID最大值的限制），可通过/proc/sys/kernel/pid_max来查看</p>
+</blockquote>
+<h2 id="Andorid的进程描述符"><a href="#Andorid的进程描述符" class="headerlink" title="Andorid的进程描述符"></a>Andorid的进程描述符</h2><p>PID同样在Android上可以体现到，当你用AS启动调试App，在调试处可以看到这个值。</p>
+<blockquote>
+<p>内核把进程的列表存放在任务队列的双向循环链表中</p>
+</blockquote>
+<ul>
+<li>每一项都是类型为 task_struct , 称为进程描述符的结构. 在 &lt;linux/sched.h&gt; 文件中<br>task_struct 在 32 位机器上, 大约为 1.7KB</li>
+<li>通过 slab 分配器分配 task_struct 结构</li>
+<li>用 PID 来标识每个进程. 最大值为 32768 (short int 的最大值). PID 存放在进程描述符中. cat /proc/sys/kernel/pid_max</li>
+<li>进程描述符中的 state 描述了进程的当前状态</li>
+<li>TASK_RUNNING : 这是在用户空间唯一的可能状态</li>
+<li>TASK_INTERRUPTIBLE : 可中断 – 进程正在睡眠(也称为阻塞), 等待某些条件达成. 一旦达成, 内核就会把进程状态设置为运行.</li>
+<li>TASK_UNINTERRUPTIBLE : 不可中断 – 除了就算接收到信号也不会被唤醒或准备投入运行外, 这个状态与可中断状态相同.</li>
+<li>_TASK_TRACED : 被其他进程跟踪. 例如通过 ptrace 对调试程度进行跟踪</li>
+<li>_TASK_STOPPED : 停止. 进程停止执行. 通常是接收到信号: SIGSTOP, SIGTSTP, SIGTTIN, SIGTOU 等.</li>
+<li>进程家族树. 所有进程都是 PID 为 1 的 init 进程的后代. task_struct 中的 parent 指向父进程. children 指向子进程链表</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Binder-老生常谈</title>
+    <url>/2023/08/15/Binder-%E8%80%81%E7%94%9F%E5%B8%B8%E8%B0%88/</url>
+    <content><![CDATA[<h1 id="Binder起源"><a href="#Binder起源" class="headerlink" title="Binder起源"></a>Binder起源</h1><p>Android系统中使用的 <strong>Binder</strong> 机制，实际上是起源于一个叫 <strong>BeOS 操作系统</strong> 中的一个功能，后来 <strong>BeOS</strong> 被<strong>Palm</strong>收购了。这个<strong>Palm</strong> 就是鼎鼎大名的 <strong>Andy Rubin</strong> 创建的。后来 <strong>Palm</strong> 又被其他公司收购了，之后 <strong>Andy Rubin</strong> 就去创建了 <strong>Android</strong>。同时他还带走了原本在 Palm 公司的一些人，其中就有这个Binder框架的开发者 <strong>Dainne Hackborn</strong>。</p>
+<h2 id="内核扩展"><a href="#内核扩展" class="headerlink" title="内核扩展"></a>内核扩展</h2><p>AOSP（Android Open Source Project，和我们常说的 Android 是一个意思）所使用的操作系统内核就是 Linux。</p>
+<p><strong>AOSP 通用内核</strong>（也称为 Android 通用内核或ACK ）是kernel.org内核的下游。</p>
+<p>但 AOSP 使用的 Linux 内核是在原生 Linux 内核上加上了一些自己的东西。所以严格地说 Android 的内核和 Linux 还不是一回事，本文中我们叫它 AOSP 内核 以示区别，而 Linux 则称之为 Linux 内核。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Diffusion-如何写好一份提示词</title>
+    <url>/2023/07/28/Diffusion-%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%B8%80%E4%BB%BD%E6%8F%90%E7%A4%BA%E8%AF%8D/</url>
+    <content><![CDATA[<h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><p>要写好一份提示词，遵循原则为尽可能详细并且具体，从不同角度进行详细描述。下面从9个角度来介绍输入关键词。常用的关键词类别包括如下：<br>(1) 主体subject<br>(2) 媒介 medium<br>(3) 风格 style<br>(4) 画家 artist<br>(5) website<br>(6) 分辨率 resolution<br>(7) 额外细节 additional details<br>(8) 色调 color<br>(9) 光影 lighting  </p>
+]]></content>
+  </entry>
+  <entry>
     <title>Java-泛型</title>
     <url>/2023/04/09/Java-%E6%B3%9B%E5%9E%8B/</url>
     <content><![CDATA[<blockquote>
@@ -866,7 +961,8 @@ s著作权归作者所有。商业转载请联系作者获得授权，非商业�
   <entry>
     <title>操作系统</title>
     <url>/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>针对 Andorid 内核的管理， Google 定义了一个所谓 “AOSP 通用内核 ( AOSP common kernels，简称 ACKs)” 的概念。 ACKs 版本基于 Linux 内核 开发（术语上称之为 downstream，形象地说可以认为 Linux 内核 的发布处于上游，而 ACKs 随着 Linux 内核版本的升级而升级，就好像处在流水线的下游），ACKs 在 Linux 内核 的版本基础上包含了许多与 Android 社区相关但尚未合并到 LTS 的补丁程序，可以简单地分成以下几大类。</p>
+]]></content>
   </entry>
   <entry>
     <title>Android-内存管理机制-1</title>
@@ -1400,17 +1496,6 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -1484,6 +1569,17 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -2615,30 +2711,6 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/07/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android App Bundles</title>
     <url>/2021/07/19/google-aab/</url>
     <content><![CDATA[<h1 id="Google-Android-App-Bundles"><a href="#Google-Android-App-Bundles" class="headerlink" title="Google - Android App Bundles"></a>Google - Android App Bundles</h1><p>2018 年的 Google I/O ，Google 向 Android 引入了新 App 动态化框架（即 Android App Bundle，缩写为<strong>AAB</strong>)</p>
@@ -2806,6 +2878,30 @@ AndroidManifest.xml：二进制格式的manifest文件，这个文件是必须�
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
