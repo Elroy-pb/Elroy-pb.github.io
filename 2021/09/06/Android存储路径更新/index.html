@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/android%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A82.awebp">
 <meta property="og:image" content="http://example.com/2021/09/06/Android%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84%E6%9B%B4%E6%96%B0/%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95.awebp">
 <meta property="article:published_time" content="2021-09-06T03:32:17.000Z">
-<meta property="article:modified_time" content="2023-02-07T19:32:01.954Z">
+<meta property="article:modified_time" content="2023-10-17T20:51:40.316Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">59</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">61</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-08 03:32:01" itemprop="dateModified" datetime="2023-02-08T03:32:01+08:00">2023-02-08</time>
+                <time title="Modified: 2023-10-18 04:51:40" itemprop="dateModified" datetime="2023-10-18T04:51:40+08:00">2023-10-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,14 +249,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.4k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
+              <span>5 mins.</span>
             </span>
             <div class="post-description">Android10(Q)---分区存储</div>
 
@@ -310,7 +310,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Android = 10(Q)  新增了分区存储的概念，targetSdkVersion == 29  </span><br><span class="line">Android &gt; 10(Q)  强制开启分区存储的概念，targetSdkVersion &gt;= 30</span><br><span class="line">// 这里我们在罗列上一些开发的细节</span><br><span class="line"></span><br><span class="line">当targetSdk &lt;= 28时，应用使用传统存储方式；</span><br><span class="line">当targetSdk &lt;= 29时，可以通过在应用清单的application标签中添加android:requestLegacyExternalStorage=&quot;true&quot; ，从而关闭分区存储功能，继续使用传统访问方式。</span><br><span class="line">当targetSdk &gt;= 30时，Android会强制执行分区存储，无法关闭。可以通过Environment.isExternalStorageLegacy() 判断应用存储的运行方式，true表示以传统的兼容方式运行，false表示以分区存储运行</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="科普-targetSdkVersion"><a href="#科普-targetSdkVersion" class="headerlink" title="科普 - targetSdkVersion"></a>科普 - targetSdkVersion</h2><p>在开发中targetSdkVersion到底是啥含义？</p>
 <h2 id="Android手机的存储"><a href="#Android手机的存储" class="headerlink" title="Android手机的存储"></a>Android手机的存储</h2><ul>
-<li>安卓设备的物理存储分为两大块，内部存储和外部存储</li>
+<li>安卓设备的物理存储针对app可以分为两大块，内部存储和外部存储(而外部存储包含了私有目录和共享目录)</li>
 </ul>
 <p>内部存储：</p>
 <ul>
@@ -393,6 +393,16 @@
 <li>共享存储 (Shared Storage) : 存储其他应用可访问文件， 包含媒体文件、文档文件以及其他文件，对应设备DCIM、Pictures、Alarms、Music、Notifications、Podcasts、Ringtones、Movies、Download等目录<h4 id="私有存储"><a href="#私有存储" class="headerlink" title="私有存储"></a>私有存储</h4>应用私有目录文件访问方式与之前Android版本一致，可以通过file path获取资源。<br>这里有个细节点，访问app自身外部私有目录是不需要要任何权限的。  </li>
 </ul>
 <p><strong>需要注意的不同点是：开启了分区存储特性后，应用只能访问自身的私有空间，即使获得了存储权限，也无法访问其他应用的私有空间</strong></p>
+<h2 id="番外篇-–-FileProvider-的存在缘由和适配"><a href="#番外篇-–-FileProvider-的存在缘由和适配" class="headerlink" title="番外篇  – FileProvider 的存在缘由和适配"></a>番外篇  – FileProvider 的存在缘由和适配</h2><p>FileProvider 适配前的混沌世界。<br>FileProvider 实际上是 Android 4.4 时期便存在的设计，它被强制适配是发生在 Android 7.0。</p>
+<p>关于 FileProvider，官方文档 有过这样一段描述：</p>
+<p>“每当别的 App 透过 File Uri 来访问你 App 的私有文件时，为了达成访问，需要从底层文件系统将访问权限开放，并且直到权限被收回前，其他任意 App 都是可以访问的。”</p>
+<p>如何理解这段话含义？</p>
+<p>笔者认为，上述描述中没有提及 “权限被收回的时机”，因而隐含的关键信息是 “时机不可控 和 作用域不受限”，也即，当下虽然只是你 AppA 和 AppB 之间的文件传输，但这文件传输的达成，需要从底层文件系统更改权限，</p>
+<p>这就好比，你和朋友约好下午 3 点来你家玩，本来你只须到点开个小窗守着朋友的到来，可你却把自家 前门 后门 左门 右门 统统打开了，这让路过的小偷得以 趁虚而入、盗走他想要的东西。</p>
+<p>FileProvider 是如何解决这问题的<br>很简单，既然 通过 File Uri 访问，涉及底层文件系统访问权限的修改，那改用别的方式便是 —— 通过 Content URI 访问。</p>
+<p>这是一种类似于 Web 开发的 “虚拟目录映射” 的设计，通过 Content URI，系统会自动呈现实际路径中的内容，就和你直接通过实际路径访问到的结果是一样的，唯一的区别在于，使用 Content URI 无需开启 “底层文件系统权限”，且 FileProvider 在此基础上增加了“只需授予 运行时级别 临时权限”的设计，如此你俩在传输文件时，潜伏的 App 无法趁虚而入，且 在对方与传输相关的 Activity 离开栈顶或 Service 停止运行后，权限便及时作废。</p>
+<p>划重点 👆 👆 👆</p>
+<p>提示：运行时权限的特质是，只针对被授予的进程，而非对所有进程无差别开放</p>
 
     </div>
 
@@ -476,7 +486,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%82%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">什么是适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BC%BA%E5%88%B6%E9%80%82%E9%85%8D"><span class="nav-number">3.</span> <span class="nav-text">Google 为什么要强制适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E4%BB%A5%E5%8F%8A%E9%80%82%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">存储访问以及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%82%E9%85%8D%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要适配存储访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android10-Q-%E2%80%94%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">4.2.</span> <span class="nav-text">Android10(Q)—分区存储的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">4.3.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">4.4.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">私有存储</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%82%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">什么是适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Google-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BC%BA%E5%88%B6%E9%80%82%E9%85%8D"><span class="nav-number">3.</span> <span class="nav-text">Google 为什么要强制适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E4%BB%A5%E5%8F%8A%E9%80%82%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">存储访问以及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%82%E9%85%8D%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要适配存储访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android10-Q-%E2%80%94%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">4.2.</span> <span class="nav-text">Android10(Q)—分区存储的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE-targetSdkVersion"><span class="nav-number">4.3.</span> <span class="nav-text">科普 - targetSdkVersion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android%E6%89%8B%E6%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.</span> <span class="nav-text">Android手机的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E6%A6%82%E8%A7%88"><span class="nav-number">4.4.1.</span> <span class="nav-text">分区存储概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%AD%98%E5%82%A8"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">私有存储</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%AA%E5%A4%96%E7%AF%87-%E2%80%93-FileProvider-%E7%9A%84%E5%AD%98%E5%9C%A8%E7%BC%98%E7%94%B1%E5%92%8C%E9%80%82%E9%85%8D"><span class="nav-number">4.5.</span> <span class="nav-text">番外篇  – FileProvider 的存在缘由和适配</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -492,7 +502,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -503,7 +513,7 @@
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -547,12 +557,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">108k</span>
+    <span title="Symbols count total">119k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:38</span>
+    <span title="Reading time total">1:48</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
