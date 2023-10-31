@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">61</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">63</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,199 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/10/Android-%E5%B0%8F%E5%B8%B8%E8%AF%86%E6%99%AE%E5%8F%8A/" class="post-title-link" itemprop="url">Android-小常识普及</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-10 16:57:57" itemprop="dateCreated datePublished" datetime="2021-12-10T16:57:57+08:00">2021-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-24 17:08:43" itemprop="dateModified" datetime="2023-10-24T17:08:43+08:00">2023-10-24</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>5 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Home键退出和返回键退出的区别"><a href="#Home键退出和返回键退出的区别" class="headerlink" title="Home键退出和返回键退出的区别"></a>Home键退出和返回键退出的区别</h1><p>Home键退出，程序保留状态为后台进程；<br>而返回键退出，程序保留状态为空进程，空进程更容易被系统回收。Home键其实主要用于进程间切换，返回键则是真正的退出程序。</p>
+<p>从理论上来讲，无论是哪种情况，在没有任何后台工作线程（即便应用处于后台，工作线程仍然可以执行）的前提下，被置于后台的进程都只是保留他们的运行状态，并不会占用CPU资源，所以也不耗电。只有音乐播放软件之类的应用需要在后台运行Service，而Service是需要占用CPU时间的，此时才会耗电。所以说没有带后台服务的应用是不耗电也不占用CPU时间的，没必要关闭，这种设计本身就是Android的优势之一，可以让应用下次启动时更快。然而现实是，很多应用多多少少都会有一些后台工作线程，这可能是开发人员经验不足导致（比如线程未关闭或者循环发送的Handler消息未停止），也可能是为了需求而有意为之，导致整个Android应用的生态环境并不是一片干净。</p>
+<h1 id="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"><a href="#请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？" class="headerlink" title="请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？"></a>请问“强制进行GPU渲染”和“停用HW叠加层”有什么区别？</h1><p>这两个还是有区别的，GPU渲染就是hwa（hard ware acceleration硬件加速）的一种，其存在的意义就是为了分担CPU的负担，其原理是通过GPU对软件图形图像的处理来减轻CPU的负担，从而使应用软件能够以更快的速度被处理，以达到提速的目的，简单来说就是一般情况下软件的2D图形图像处理是交给CPU的，3D图形图像处理才是交给GPU的，而开启这个则是强制用GPU进行2D图形图像处理从而降低CPU处理器的负担，这个主要是2D界面的图形也交给GPU处理从而更流畅点。</p>
+<p>而HW叠加层，HW和叠加层应该分开理解，HW指的是硬件加速，而这个硬件指的是GPU处理器，而不是其它硬件或处理器硬件，至于为什么可以去参考一下硬解的相关资料，然后叠加层指的是使用CPU进行辅助运算，而不只是让GPU来进行全部的渲染工作，这个也是停用HW叠加层默认关闭的原因，汇总起来就是停用GPU上的CPU辅助计算，停用HW叠加层默认关闭就是说明HW叠加层默认是开启的，为什么会默认开启？这个就是因为就算开启了强制进行GPU渲染但并不是所有的图形处理交给了GPU，像游戏里面的一些画面、视频中的硬解（手机上不开启的话硬解是靠SQV的）就不是全部交给GPU的，而开启停用HW叠加层就是关闭HW叠加层，关闭HW叠加层就意味着图形处理任务就全部交给了GPU，这个主要是可以让游戏、视频之类一些原本不是GPU渲染的画面也强制使用GPU进行处理（像一些配置的视频显示不支持硬解，然后开启强制进行GPU渲染后就可以硬解了，因为强制使用GPU而不是手机上的另一个SQV硬解了，但因视频配置、屏幕刷新率之类的还是会有卡顿的情况，开启HW叠加层可以让部分高帧率的视频达到流畅的效果，但也受限于视频配置、屏幕刷新率等其它因素）。强制进行GPU渲染和停用HW叠加层不建议长时间开启，虽然开启这些可以让性能更好，但是也会损耗不少东西。</p>
+<h1 id="Android的同步屏障消息是指什么"><a href="#Android的同步屏障消息是指什么" class="headerlink" title="Android的同步屏障消息是指什么"></a>Android的同步屏障消息是指什么</h1><p>Android 中的 Handler 用于在不同的线程之间传递消息和任务。一个常见的用例是在后台线程中执行耗时操作，然后将结果传递给主线程以更新用户界面。同步屏障消息是一种特殊的消息类型，可以用于控制消息处理的顺序。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>当你向 Handler 发送同步屏障消息时，它会将该消息插入到消息队列中，并等待消息队列中的所有先前的消息都被处理完毕，然后再处理同步屏障消息。这可以用于确保某些操作在其他消息处理之前执行，从而实现同步。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>可以在主线程上使用同步屏障消息来确保在更新用户界面之前执行某些初始化操作。这样，你可以防止在初始化操作尚未完成之前更新界面，从而提高了代码的可靠性和一致性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Handler handler = new Handler();</span><br><span class="line"></span><br><span class="line">// 发送一个普通消息</span><br><span class="line">handler.post(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // 这是一个普通消息</span><br><span class="line">        // 可能会执行在其他消息之前</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 发送一个同步屏障消息</span><br><span class="line">handler.postAtFrontOfQueue(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // 这是一个同步屏障消息</span><br><span class="line">        // 会等待前面的消息都处理完才执行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="同步屏障消息"><a href="#同步屏障消息" class="headerlink" title="同步屏障消息"></a>同步屏障消息</h1><p>系统一些高优先级的操作会使用到同步屏障消息</p>
+<blockquote>
+<p>Android 是禁止App往MessageQueue插入同步屏障消息的，代码会报错</p>
+<blockquote>
+<p>Looper.getMainLooper.postSyncBarrier</p>
+</blockquote>
+</blockquote>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p>例如View在绘制的时候</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">-&gt;ViewRootImpl</span><br><span class="line"></span><br><span class="line">    @UnsupportedAppUsage</span><br><span class="line">    void scheduleTraversals() &#123;</span><br><span class="line">        if (!mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = true;</span><br><span class="line">            //插入同步屏障消息</span><br><span class="line">            mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();</span><br><span class="line">            mChoreographer.postCallback(</span><br><span class="line">                    Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);</span><br><span class="line">            if (!mUnbufferedInputDispatch) &#123;</span><br><span class="line">                scheduleConsumeBatchedInput();</span><br><span class="line">            &#125;</span><br><span class="line">            notifyRendererOfFramePending();</span><br><span class="line">            pokeDrawLockIfNeeded();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void unscheduleTraversals() &#123;</span><br><span class="line">        if (mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = false;</span><br><span class="line">            //移除同步屏障消息</span><br><span class="line">            mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);</span><br><span class="line">            mChoreographer.removeCallbacks(</span><br><span class="line">                    Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>为了保证View的绘制过程不被主线程其它任务影响，View在绘制之前会先往MessageQueue插入同步屏障消息，然后再注册Vsync信号监听，Choreographer$FrameDisplayEventReceiver就是用来接收vsync信号回调的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">private final class FrameDisplayEventReceiver extends DisplayEventReceiver</span><br><span class="line">        implements Runnable &#123;</span><br><span class="line">    ...</span><br><span class="line">    @Override</span><br><span class="line">    public void onVsync(long timestampNanos, long physicalDisplayId, int frame) &#123;</span><br><span class="line">       ...</span><br><span class="line">        //</span><br><span class="line">        mTimestampNanos = timestampNanos;</span><br><span class="line">        mFrame = frame;</span><br><span class="line">        Message msg = Message.obtain(mHandler, this);</span><br><span class="line">        //1、发送异步消息</span><br><span class="line">        msg.setAsynchronous(true);</span><br><span class="line">        mHandler.sendMessageAtTime(msg, timestampNanos / TimeUtils.NANOS_PER_MS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // 2、doFrame优先执行</span><br><span class="line">        doFrame(mTimestampNanos, mFrame);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>收到Vsync信号回调，注释1会往主线程MessageQueue post一个异步消息，保证注释2的doFrame优先执行。<br>doFrame才是View真正开始绘制的地方，会调用ViewRootImpl的doTraversal、performTraversals，<br>而performTraversals里面会调用我们熟悉的View的onMeasure、onLayout、onDraw。<br>这里还可以延伸到vsync信号原理，以及为什么要等vsync信号回调才开始View的绘制流程、掉帧的原理、屏幕的双缓冲、三缓冲，由于文章篇幅关系，不是本文的重点，就不一一分析了~</p>
+<blockquote>
+<p>虽然app无法发送同步屏障消息，但是使用异步消息是允许的</p>
+</blockquote>
+<h1 id="异步消息"><a href="#异步消息" class="headerlink" title="异步消息"></a>异步消息</h1><p>首先，SDK中限制了App不能post异步消息到MessageQueue里去的，相关字段被加了UnsupportedAppUsage注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-&gt; Message</span><br><span class="line"></span><br><span class="line">    @UnsupportedAppUsage</span><br><span class="line">    /*package*/ int flags;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * Returns true if the message is asynchronous, meaning that it is not</span><br><span class="line">     * subject to &#123;@link Looper&#125; synchronization barriers.</span><br><span class="line">     *</span><br><span class="line">     * @return True if the message is asynchronous.</span><br><span class="line">     *</span><br><span class="line">     * @see #setAsynchronous(boolean)</span><br><span class="line">     */</span><br><span class="line">    public boolean isAsynchronous() &#123;</span><br><span class="line">        return (flags &amp; FLAG_ASYNCHRONOUS) != 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>不过呢，高版本的Handler的构造方法可以通过传async=true，来使用异步消息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public Handler(@Nullable Callback callback, boolean async) &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后在Handler发送消息的时候，都会走到 enqueueMessage 方法，如下代码块所示，每个消息都带了异步属性，有优先处理权</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg,long uptimeMillis) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //如果mAsynchronous为true，就都设置为异步消息</span><br><span class="line">    if (mAsynchronous) &#123;</span><br><span class="line">        msg.setAsynchronous(true);</span><br><span class="line">    &#125;</span><br><span class="line">    return queue.enqueueMessage(msg, uptimeMillis);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>对于低版本SDK，想要使用异步消息，可以通过反射调用Handler(@Nullable Callback callback, boolean async)，参考androidx内部的一段代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-&gt;androidx.arch.core.executor.DefaultTaskExecutor</span><br><span class="line"></span><br><span class="line">    private static Handler createAsync(@NonNull Looper looper) &#123;</span><br><span class="line">        if (Build.VERSION.SDK_INT &gt;= 28) &#123;</span><br><span class="line">            return Handler.createAsync(looper);</span><br><span class="line">        &#125;</span><br><span class="line">        if (Build.VERSION.SDK_INT &gt;= 16) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                return Handler.class.getDeclaredConstructor(Looper.class, Handler.Callback.class,</span><br><span class="line">                        boolean.class)</span><br><span class="line">                        .newInstance(looper, null, true);</span><br><span class="line">            &#125; catch (IllegalAccessException ignored) &#123;</span><br><span class="line">            &#125; catch (InstantiationException ignored) &#123;</span><br><span class="line">            &#125; catch (NoSuchMethodException ignored) &#123;</span><br><span class="line">            &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">                return new Handler(looper);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return new Handler(looper);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/10/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">操作系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-10 16:53:41" itemprop="dateCreated datePublished" datetime="2021-12-10T16:53:41+08:00">2021-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-29 01:03:17" itemprop="dateModified" datetime="2023-08-29T01:03:17+08:00">2023-08-29</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>225</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>针对 Andorid 内核的管理， Google 定义了一个所谓 “AOSP 通用内核 ( AOSP common kernels，简称 ACKs)” 的概念。 ACKs 版本基于 Linux 内核 开发（术语上称之为 downstream，形象地说可以认为 Linux 内核 的发布处于上游，而 ACKs 随着 Linux 内核版本的升级而升级，就好像处在流水线的下游），ACKs 在 Linux 内核 的版本基础上包含了许多与 Android 社区相关但尚未合并到 LTS 的补丁程序，可以简单地分成以下几大类。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -956,196 +1149,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/" class="post-title-link" itemprop="url">AndroidSdk-模块化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-19 10:55:59" itemprop="dateCreated datePublished" datetime="2021-10-19T10:55:59+08:00">2021-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-21 14:49:38" itemprop="dateModified" datetime="2021-10-21T14:49:38+08:00">2021-10-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.4k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Android-模块化指南</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/" class="post-title-link" itemprop="url">Android-组件化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-19 10:55:59" itemprop="dateCreated datePublished" datetime="2021-10-19T10:55:59+08:00">2021-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-30 06:43:16" itemprop="dateModified" datetime="2022-01-30T06:43:16+08:00">2022-01-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>40</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Android-组件化指南</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,7 +1220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1228,7 +1231,7 @@
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -1272,12 +1275,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">119k</span>
+    <span title="Symbols count total">122k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:48</span>
+    <span title="Reading time total">1:51</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

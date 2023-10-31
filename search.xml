@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SDK-Server</title>
+    <url>/2023/10/30/SDK-Server/</url>
+    <content><![CDATA[<h1 id="sdkserver"><a href="#sdkserver" class="headerlink" title="sdkserver"></a>sdkserver</h1><p>聚合sdk<br>SDK接入主要是接第三方平台的登录和支付流程，以手机游戏为例，第三方平台就是国内较大的游戏中心和手机应用商店。<br>游戏商开发手机游戏的流程：<br>1、开发完游戏逻辑<br>2、接入第三方SDK渠道的登录和支付，并且和第三方联调完成后打包客户端——<br>3、客户端上传到第三方游戏平台<br>4、第三方游戏平台审核通过后上架到游戏中心或者手机应用商店供玩家下载——<br>5、玩家安装客户端后采用滚服的方式来分散玩家，同时每个服每周更新新的活动<br>6、玩家支付，会根据手机的渠道类型调用对应的第三方SDK支付工具进行支付，然后返回支付信息给游戏商的支付服确认支付信息，游戏商支付服确认支付信息完成后调用游戏服发放充值道具<br>注意：<br>1、客户端一般都是定义一个抽象的SDK接入接口，然后不同渠道的SDK接入到客户端时都实现这个接口。<br>2、目前出现较多的专门做SDK接入的公司和机构，这种统一的SDK接入渠道有：棱镜sdk，AnySDK，易接，U8SDK（第三方渠道SDK接入框架）。但是统一的SDK接入渠道并不能支持所有的SDK接入，所有不支持的SDK还是需要游戏商自己去接入。<br>3、统一的SDK接入框架相当于是将游戏客户端接入到一个代理SDK接入的工具上，这个工具会自动帮你登录和支付的接入，从而简化流程。<br>4、但是带来的问题就是游戏商的登录和支付玩家数据要走代理SDK接入的工具，这样就会让除游戏平台和游戏商之外的专门做SDK接入代理的公司掌握你的游戏玩家数据。棱镜sdk，AnySDK，易接三大公司都是这样的模式。 但是不一样的是U8SDK，U8SDK是代码完全开源的，也就是说游戏商可以下载到这个SDK接入代理工具的所有源码，在自己的游戏商本地搭建一个U8SDK服务器（U8Server渠道SDK统一用户登录认证中心和支付中心)，这样数据走的就是自己的U8SDK服务器，不会担心泄露的问题。  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">手机游戏的登录过程：  </span><br><span class="line">手机游戏的用户账户信息主要是由SDK也就是第三方游戏平台提供。SDK客户端是封装在客户端里面的。手机游戏包里面用的都是SDK客户端的登录页面，游戏本身没有登录机制  </span><br><span class="line">1、游戏客户端在SDK客户端上注册账户信息，SDK客户端发送请求把用户名和密码给SDK服务器，SDK服务器收到后和数据库中信息进行验证，验证通过后，将用户账户信息存入session中，并生成唯一标示sessionId。然后SDK服务器返回响应给客户端验证是通过unionid（渠道ID）和sessionId。  </span><br><span class="line">2、SDK客户端拿到sessionId，因为游戏客户端和SDK客户端是封装在一起的，所以也相当于游戏客户端拿到SessionId。客户端将SessionId存放在本地的cookies中。  </span><br><span class="line">以上就完成整个注册和第一次的登陆过程。  </span><br><span class="line">3、用户第二次打开客户端登录页面（登录页面尚未加载完）时，客户端发送请求给游戏服务器请求登录，此时会将cookies中的数据作为请求的一个字段发送给游戏服务器。也就是发送uid（unionId--渠道Id）和sessionId给游戏服务器。  </span><br><span class="line">以下部分就是游戏服务器登录流程要做的工作。  </span><br><span class="line">4、游戏服务器将uid和SessionId，MD5编码成签名sign字段（编码成sign字段的目的是防止在发送请求的过程中uid和sessionId被篡改），发给SDK服务器校验。  </span><br><span class="line">5、SDK服务端根据sessionId找到对应的session，然后验证uuid是否一致。返回校验结果  </span><br><span class="line">6、校验正确后，游戏服务器保存用户登录信息到LoginBean中，返回服务器列表给游戏客户端。  </span><br></pre></td></tr></table></figure>
+<p><a href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>游戏SDK解释：<br>手机游戏中sdk接入简单理解就是用他们的平台登录，比如91sdk是91助手平台，360sdk是360平台。<br>软件开发工具包广义上指辅助开发某一类软件的相关文档、范例和工具的集合。<br>软件开发工具包是一些被软件工程师用于为特定的软件包、软件框架、硬件平台、操作系统等创建应用软件的开发工具的集合，一般而言SDK即开发 Windows 平台下的应用程序所使用的 SDK。它可以简单的为某个程序设计语言提供应用程序接口 API 的一些文件，但也可能包括能与某种嵌入式系统通讯的复杂的硬件。一般的工具包括用于调试和其他用途的实用工具。SDK 还经常包括示例代码、支持性的技术注解或者其他的为基本参考资料澄清疑点的支持文档。<br>为了鼓励开发者使用其系统或者语言，许多 SDK 是免费提供的。软件工程师通常从目标系统开发者那里获得软件开发包，也可以直接从互联网下载，有时也被作为营销手段。例如，营销公司会免费提供构建SDK 以鼓励人们使用它，从而会吸引更多人由于能免费为其编程而购买其构件。<br>SDK 可能附带了使其不能在不兼容的许可证下开发软件的许可证。例如产品供应商提供一个专有的 SDK 可能与自由软件开发抵触。GPL 能使 SDK 与专有软件开发近乎不兼容。LGPL 下的 SDK 则没有这个问题。  </p>
+]]></content>
+  </entry>
+  <entry>
+    <title>逆向基础-Android</title>
+    <url>/2023/10/28/%E9%80%86%E5%90%91%E5%9F%BA%E7%A1%80-Android/</url>
+    <content><![CDATA[<h1 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h1><h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><p>核心技术</p>
+<h3 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h3><p>静态检测<br>动态检测  </p>
+<h3 id="Java代码保护"><a href="#Java代码保护" class="headerlink" title="Java代码保护:"></a>Java代码保护:</h3><p>1.JAR文件加壳<br>2.JAR文件代码抽离<br>3.JAR文件代码虚拟化。  </p>
+<h3 id="SO文件保护"><a href="#SO文件保护" class="headerlink" title="SO文件保护:"></a>SO文件保护:</h3><p>1.SO加壳。<br>2.SO Linker。<br>3.SO防调用。<br>4.SO VMP。  </p>
+<h4 id="SO处理思路"><a href="#SO处理思路" class="headerlink" title="SO处理思路"></a>SO处理思路</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.SO加壳	</span><br><span class="line">对C/C++源码编译出来的SO文件进行加壳，使SO文件无法正确反编译和反汇编。</span><br><span class="line">2.SO源码虚拟化保护	</span><br><span class="line">对SO文件进行虚拟化保护，实现数据隐藏、防篡改、防Dump，增加逆向分析的难度。</span><br><span class="line">3.SO防调用	</span><br><span class="line">对SO文件进行授权绑定，防止SO文件被非授权应用调用运行。</span><br><span class="line">4.SO Linker	</span><br><span class="line">代码段加密压缩、字符串加密压缩、导出表加密压缩、函数动态加解密。</span><br><span class="line">5.SO源码混淆	</span><br><span class="line">常量字符串加密、控制流扁平化、分裂基本块、等价指令替换、虚假控制流、控制流间接化。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="防Java层调试"><a href="#防Java层调试" class="headerlink" title="防Java层调试"></a>防Java层调试</h3><p>防止集成SDK时通过IDE（Eclipse/Android Studio等）调试SDK的Java代码，防止逆向调试Dex中的smali代码。</p>
+<h3 id="防调用"><a href="#防调用" class="headerlink" title="防调用"></a>防调用</h3><p>防止SDK被非授权的第三方应用进行非法集成调用。</p>
+<h3 id="防native层调试"><a href="#防native层调试" class="headerlink" title="防native层调试"></a>防native层调试</h3><p>通过对进程状态、端口、信号的实时监听探测保护SDK不被native层动态调试。</p>
+<h1 id="so科普篇"><a href="#so科普篇" class="headerlink" title="so科普篇"></a>so科普篇</h1><p>so文件本质上也是一种ELF文件。<br>ELF（Executable and Linkable Format）文件是一种常见的二进制文件格式，用于在类Unix系统中表示可执行程序、共享库、目标文件和其他可加载的二进制文件。它是一种灵活的文件格式，广泛用于Linux、Unix和类Unix操作系统，以及一些嵌入式系统。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 查看手机进程</span><br><span class="line">adb shell ps</span><br><span class="line">// --找到当前包名对应的pid,比如是1001</span><br><span class="line"></span><br><span class="line">// 进入手机控制台</span><br><span class="line">adb shell</span><br><span class="line">1960</span><br><span class="line">cd /proc/1001  //上面找到的pid 1001</span><br><span class="line">su // 直接查看cat maps可能提示无权限，所以需要提升权限</span><br><span class="line">cat maps  </span><br><span class="line"></span><br><span class="line">//以下是cat maps的结果</span><br><span class="line">....</span><br><span class="line">8fb8c000-8fb93000 r-xp 00000000 fd:20 22465 /data/app/com.kongge.solibencryption-ns70YbB0b5JyL9sKnYs4Q==/lib/x86/libDataEncryptionLib.so</span><br><span class="line">8fb93000-8fb95000 r-xp 00007000 fd:20 22465 /data/app/com.kongge.solibencryption-ns70YbB0b5JyL9sKnYs4Q==/lib/x86/libDataEncryptionLib.so</span><br><span class="line">...</span><br><span class="line">// 第一个8fb8c000就是基地址</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Crash</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JL</title>
     <url>/2023/10/24/JL/</url>
-    <content><![CDATA[<h1 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h1><ul>
+    <content><![CDATA[<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>感谢您花时间阅读我的简历，希望能有个面试机会，也期待能有机会和您共事。</p>
+<h1 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h1><ul>
 <li>朱蓬勃/男/1996 </li>
 <li>专/广东岭南职业技术学院-计算机系 </li>
 <li>工作年限：5年</li>
@@ -47,14 +76,13 @@
 <li>游戏中台构建。  </li>
 <li>使用AIGC工具生成游戏宣传资料，StableDiffusion自主训练生成动态游戏人物模型，怪物模型，NPC人物和场景设计。  </li>
 </ol>
-<h1 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h1><p>了解游戏SDK设计和逻辑<br>熟悉Android存储的机制，Android内存管理，进程通信<br>对主流引擎Unity3d，Cocos2d-x的引擎有了解<br>熟练动态调试apk，处理Android中的OOM、ANR异常  </p>
+<h1 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h1><p>了解游戏SDK设计和逻辑<br>熟悉Android存储的机制，Android内存管理，进程通信<br>对主流引擎Unity3d，Cocos2d-x的引擎有了解<br>熟练动态调试Apk，处理Android中的OOM、ANR异常<br>熟悉Gradle自动构建工具<br>了解海外市场Google和国内5+7游戏的上架</p>
 <h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
 <li>手机：15815337432  </li>
-<li>Email：<a href="mailto:&#x7a;&#104;&#117;&#112;&#x65;&#x6e;&#x67;&#x62;&#x6f;&#49;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#x7a;&#104;&#117;&#112;&#x65;&#x6e;&#x67;&#x62;&#x6f;&#49;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a> (海外)/ <a href="mailto:&#x31;&#x35;&#56;&#x31;&#x35;&#51;&#51;&#x37;&#52;&#x33;&#x32;&#x40;&#x31;&#x36;&#51;&#46;&#x63;&#x6f;&#109;">&#x31;&#x35;&#56;&#x31;&#x35;&#51;&#51;&#x37;&#52;&#x33;&#x32;&#x40;&#x31;&#x36;&#51;&#46;&#x63;&#x6f;&#109;</a>(国内)  </li>
+<li>Email：<a href="mailto:&#122;&#x68;&#117;&#x70;&#x65;&#110;&#x67;&#x62;&#111;&#49;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#122;&#x68;&#117;&#x70;&#x65;&#110;&#x67;&#x62;&#111;&#49;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> (海外)/ <a href="mailto:&#49;&#x35;&#x38;&#x31;&#53;&#51;&#x33;&#55;&#x34;&#51;&#50;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">&#49;&#x35;&#x38;&#x31;&#53;&#51;&#x33;&#55;&#x34;&#51;&#50;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;</a>(国内)  </li>
 <li>微信号：Elroy-Pb  </li>
 </ul>
 <hr>
-<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>感谢您花时间阅读我的简历，期待能有机会和您共事。</p>
 ]]></content>
       <tags>
         <tag>个人成长</tag>
