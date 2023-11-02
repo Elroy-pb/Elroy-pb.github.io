@@ -130,12 +130,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">12</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">63</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">65</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,219 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/02/Android-OOM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/02/Android-OOM/" class="post-title-link" itemprop="url">Android-OOM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-02 12:12:14" itemprop="dateCreated datePublished" datetime="2023-11-02T12:12:14+08:00">2023-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-03 03:11:51" itemprop="dateModified" datetime="2023-11-03T03:11:51+08:00">2023-11-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="OOM痛点"><a href="#OOM痛点" class="headerlink" title="OOM痛点"></a>OOM痛点</h1><p>OOM（Out Of Memory）成为奔溃统计平台上的疑难杂症之一，大部分业务开发人员对于线上OOM问题一般都是暂不处理，一方面是因为OOM问题没有足够的log，无法在短期内分析解决，另一方面可能是忙于业务迭代、身心疲惫，没有精力去研究OOM的解决方案。</p>
+<p>作者：蓝师傅<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7074762489736478757">https://juejin.cn/post/7074762489736478757</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h1 id="OOM问题分类"><a href="#OOM问题分类" class="headerlink" title="OOM问题分类"></a>OOM问题分类</h1><p>-OOM可以大致归为以下3类：</p>
+<ul>
+<li>线程数太多</li>
+<li>打开太多文件</li>
+<li>内存不足</li>
+</ul>
+<h2 id="线程数太多"><a href="#线程数太多" class="headerlink" title="线程数太多"></a>线程数太多</h2><p>查看系统对每个进程的线程数限制</p>
+<blockquote>
+<p>cat /proc/sys/kernel/threads-max<br>不同设备的threads-max限制是不一样的，有些厂商的低端机型threads-max比较小，容易出现此类OOM问题</p>
+</blockquote>
+<p>查看当前进程运行的线程数</p>
+<blockquote>
+<p>cat proc/{pid}/status</p>
+</blockquote>
+<p>当线程数超过/proc/sys/kernel/threads-max中规定的上限时就会触发OOM。</p>
+<p>既然系统对每个进程的线程数有限制，那么解决这个问题的关键就是尽可能降低线程数的峰值。</p>
+<h3 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h3><p>禁用 new Thread<br>不过这种方式存在两个问题：</p>
+<p>无法解决老代码的new Thread；<br>对于第三方库无法控制。  </p>
+<h3 id="无侵入性的new-Thread-优化"><a href="#无侵入性的new-Thread-优化" class="headerlink" title="无侵入性的new Thread 优化"></a>无侵入性的new Thread 优化</h3><p>创建一个Thread的子类叫ShadowThread吧，重写start方法，调用自定义的线程池CustomThreadPool来执行任务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class ShadowThread extends Thread &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public synchronized void start() &#123;</span><br><span class="line">        Log.i(&quot;ShadowThread&quot;, &quot;start,name=&quot;+ getName());</span><br><span class="line">        CustomThreadPool.THREAD_POOL_EXECUTOR.execute(new MyRunnable(getName()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class MyRunnable implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">        String name;</span><br><span class="line">        public MyRunnable(String name)&#123;</span><br><span class="line">            this.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                ShadowThread.this.run();</span><br><span class="line">                Log.d(&quot;ShadowThread&quot;,&quot;run name=&quot;+name);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                Log.w(&quot;ShadowThread&quot;,&quot;name=&quot;+name+&quot;,exception:&quot;+ e.getMessage());</span><br><span class="line">                RuntimeException exception = new RuntimeException(&quot;threadName=&quot;+name+&quot;,exception:&quot;+ e.getMessage());</span><br><span class="line">                exception.setStackTrace(e.getStackTrace());</span><br><span class="line">                throw exception;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在编译期，hook 所有new Thread字节码，全部替换成我们自定义的ShadowThread，这个难度应该不大，按部就班，<br>我们先确认new Thread和new ShadowThread对应字节码差异，可以安装一个ASM Bytecode Viewer插件，如下所示  </p>
+<p>由于将任务放到线程池去执行，假如线程奔溃了，我们不知道是哪个线程出问题，所以自定义ShadowThread中的内部类MyRunnable 的作用是：在线程出现异常的时候，将异常捕获，还原它的名字，重新抛出一个信息更全的异常。</p>
+<h1 id="分析线程词"><a href="#分析线程词" class="headerlink" title="分析线程词"></a>分析线程词</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public ThreadPoolExecutor(int corePoolSize,</span><br><span class="line">                              int maximumPoolSize,</span><br><span class="line">                              long keepAliveTime,</span><br><span class="line">                              TimeUnit unit,</span><br><span class="line">                              BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                              ThreadFactory threadFactory) &#123;</span><br><span class="line">        this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</span><br><span class="line">             threadFactory, defaultHandler);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>1.corePoolSize：核心线程数量。核心线程默认情况下即使空闲也不会释放，除非设置allowCoreThreadTimeOut为true。<br>2.maximumPoolSize：最大线程数量。任务数量超过核心线程数，就会将任务放到队列中，队列满了，就会启动非核心线程执行任务，线程数超过这个限制就会走拒绝策略；<br>3.keepAliveTime：空闲线程存活时间<br>4.unit：时间单位<br>5.workQueue：队列。任务数量超过核心线程数，就会将任务放到这个队列中，直到队列满，就开启新线程，执行队列第一个任务。<br>6.threadFactory：线程工厂。实现new Thread方法创建线程  </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/02/Android-Activity%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/02/Android-Activity%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">Android-Activity启动过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-02 04:12:13 / Modified: 17:26:41" itemprop="dateCreated datePublished" datetime="2023-11-02T04:12:13+08:00">2023-11-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="代理方式"><a href="#代理方式" class="headerlink" title="代理方式"></a>代理方式</h1><p>1.代理方式插件化实现</p>
+<p>未安装的 APK文件是可以通过 DexClassLoader 来加载、运行的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private DexClassLoader createDexClassloader(String apkPath) &#123;</span><br><span class="line">        File file = mContext.getDir(&quot;dex&quot;,Context.MODE_PRIVATE);</span><br><span class="line">        return new DexClassLoader(apkPath,file.getAbsolutePath(),null,mContext.getClassLoader());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中 ：<br>1、mContext 是一个 Context类型的对象。<br>2、apkPath 就是 apk 在手机中的绝对路径（示例中是从 assets 中复制到手机中的）。 3、file.getAbsolutePath() 就是 APK 解压出的 dex 的存放目录。</p>
+<p>这里返回的 loader 就是一个可以加载 APK 的 ClassLoader。然后通过 ClassLoader 加载这个 APK 的默认启动的 Activity，并且通过反射调用这个插件 Activity 的 onCreate,onStart,onResume 函数就可以加载这个应用。</p>
+<p>资源加载</p>
+<p>资源的加载需要 Resouces ，而创建 Resouces 需要 AssetManager，因此，先创建 AssetManager，再创建 Resouces.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">private AssetManager createAssetManager(String apkPath) &#123;</span><br><span class="line">      AssetManager am = null;</span><br><span class="line">      try &#123;</span><br><span class="line">          //反射构造 AssetManager</span><br><span class="line">           am =  AssetManager.class.newInstance();</span><br><span class="line">          Method method = AssetManager.class.getDeclaredMethod(&quot;addAssetPath&quot;,String.class);</span><br><span class="line">          //通过反射 将 apk 的目录添加到 AssetManager 的资源路径下</span><br><span class="line">          method.invoke(am,apkPath);</span><br><span class="line">          return am;</span><br><span class="line"></span><br><span class="line">      &#125; catch (InstantiationException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125; catch (NoSuchMethodException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      return am;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>2.Hook方式实现</p>
+<p>Hook目的是替换掉系统默认逻辑</p>
+<h1 id="Activity-启动过程"><a href="#Activity-启动过程" class="headerlink" title="Activity 启动过程"></a>Activity 启动过程</h1><p>插件化支持首先要解决的一点就是插件里的 Activity 并未在宿主程序的 AndroidMainfest.xml 注册。常规方法肯定无法直接启动插件的 Activity，这个时候就需要去了解 Activity 的启动流程。</p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p>Activity 调用 startActivity，实际会调用 Instrumentation 类的 execStartActivity 方法，<br>Instrumentation 是系统用来监控 Activity 运行的一个类，</p>
+<p>1.Activity 调用 startActivity，实际会调用 Instrumentation 类的 execStartActivity 方法，Instrumentation 是系统用来监控 Activity 运行的一个类，Activity 的整个生命周期都有它的影子。<br>2.通过跨进程的 Binder 调用，进入到 ActivityManagerService 中，其内部会处理 Activity 栈。之后又通过跨进程调用进入到需要调用的 Activity 所在的进程中。<br>3.ApplicationThread 是一个 Binder 对象，其运行在 Binder 线程池中，内部包含一个 H 类，该类继承于类 Handler。ApplicationThread 将启动需要调用的 Activity 的信息通过 H 对象发送给主线程。<br>4.主线程拿到需要调用的 Activity 的信息后，调用 Instrumentation 类的 newActivity 方法，其内通过 ClassLoader 创建 Activity 实例。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -395,7 +608,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-31 09:00:31" itemprop="dateModified" datetime="2023-10-31T09:00:31+08:00">2023-10-31</time>
+                <time title="Modified: 2023-10-31 09:54:38" itemprop="dateModified" datetime="2023-10-31T09:54:38+08:00">2023-10-31</time>
               </span>
 
           <br>
@@ -576,7 +789,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-18 03:11:30" itemprop="dateModified" datetime="2023-10-18T03:11:30+08:00">2023-10-18</time>
+                <time title="Modified: 2023-11-03 03:11:11" itemprop="dateModified" datetime="2023-11-03T03:11:11+08:00">2023-11-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -585,10 +798,6 @@
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/object-Object/" itemprop="url" rel="index"><span itemprop="name">[object Object]</span></a>
                 </span>
             </span>
 
@@ -934,180 +1143,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/28/Diffusion-%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%B8%80%E4%BB%BD%E6%8F%90%E7%A4%BA%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/28/Diffusion-%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%B8%80%E4%BB%BD%E6%8F%90%E7%A4%BA%E8%AF%8D/" class="post-title-link" itemprop="url">Diffusion-如何写好一份提示词</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-28 21:45:55" itemprop="dateCreated datePublished" datetime="2023-07-28T21:45:55+08:00">2023-07-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-08-15 01:23:09" itemprop="dateModified" datetime="2023-08-15T01:23:09+08:00">2023-08-15</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>184</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><p>要写好一份提示词，遵循原则为尽可能详细并且具体，从不同角度进行详细描述。下面从9个角度来介绍输入关键词。常用的关键词类别包括如下：<br>(1) 主体subject<br>(2) 媒介 medium<br>(3) 风格 style<br>(4) 画家 artist<br>(5) website<br>(6) 分辨率 resolution<br>(7) 额外细节 additional details<br>(8) 色调 color<br>(9) 光影 lighting  </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/09/Java-%E6%B3%9B%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/04/09/Java-%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">Java-泛型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-04-09 06:06:29" itemprop="dateCreated datePublished" datetime="2023-04-09T06:06:29+08:00">2023-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-11 14:41:21" itemprop="dateModified" datetime="2023-04-11T14:41:21+08:00">2023-04-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Java- 泛型</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/09/Java-%E6%B3%9B%E5%9E%8B/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1179,14 +1214,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1234,12 +1269,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">127k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:56</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
