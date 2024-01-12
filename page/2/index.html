@@ -130,12 +130,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">12</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">65</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -189,6 +189,401 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/17/Android-2023-10-23%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7%E7%9A%84%E5%8F%98%E6%9B%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/17/Android-2023-10-23%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7%E7%9A%84%E5%8F%98%E6%9B%B4/" class="post-title-link" itemprop="url">Android-2023-10-23权限申请的变更</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-17 20:54:05" itemprop="dateCreated datePublished" datetime="2023-10-17T20:54:05+08:00">2023-10-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-03 03:11:11" itemprop="dateModified" datetime="2023-11-03T03:11:11+08:00">2023-11-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Android-权限申请的变更"><a href="#Android-权限申请的变更" class="headerlink" title="Android-权限申请的变更"></a>Android-权限申请的变更</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Android 13 代号「提拉米苏（Tiramisu）」</span><br></pre></td></tr></table></figure>
+<p>Android-13 对比 Android-12的变化，</p>
+<h2 id="更严格的通知权限"><a href="#更严格的通知权限" class="headerlink" title="更严格的通知权限"></a>更严格的通知权限</h2><p>为什么要限制前台服务？</p>
+<p>App通过通知系统来告知用户，让应用得以获取用户的注意焦点来提升运行<strong>优先级</strong>，并最终得以完成任务。在我看来这是很聪明的做法，如今这样的机制也已经成为应用确保任务完成的重要手段。</p>
+<p>所以将二者结合起来可以得出的另一种事实却是，只要应用保证通知正常显示，它的前台服务就能持续保持运行。只要规律存在漏洞，就会被有心人利用，对用户的隐私会造成隐患。</p>
+<p>针对这类情况，必要的检测和停用手段是必须的。Android 13 这次引入的前台服务管理器终于补上了这一环。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">应用会在首次运行时向弹出请求窗口向用户请求许可，然后由用户决定是拒绝还是许可。但在 Android 12 或更早的系统版本中，通知权限则是一个安装时默认授予权限，具体的行为也是可以由应用开发者自己来定义的</span><br></pre></td></tr></table></figure>
+<p>不过从上面的介绍中也不难看出，前台服务主要有两大特点：<br>1.即使用户停止与应用的交互，仍能继续运行<br>2.执行过程中必须显示通知</p>
+<h3 id="如何检测和停用"><a href="#如何检测和停用" class="headerlink" title="如何检测和停用"></a>如何检测和停用</h3><p><img src="android-13.jpg" alt="Android-13 前台管理器"></p>
+<p>Android 13 这次引入的 FGS前台任务管理器</p>
+<p>防范管控的第一步，自然是先将所有前台服务的应用罗列出来。Android 13 的快速开关面板在重新布局的同时，底部也多出了一栏「前台服务管理器」，点击展开后即可看到当前正在活跃的应用，点击对应的「停止」按钮就能一键让应用停止运行，可谓是相当「快准狠」的管理方式。</p>
+<p>Android 13 为 App 的通知新增了运行时权限「POST_NOTIFICATIONS」，用户能够自由的选择通知的时间、位置，甚至是设置为「不用时移除权限」。这种限制类似于对于位置、话筒、相机、应用列表的权限设置。</p>
+<p>其次 Android 系统也会帮助用户对前台服务进行监督，具体的机制是，在以 24 小时为单位的时间长度内，如果某应用的前台服务运行超过 20 小时，系统就会发送通知告诉「XX 已经长时间后台运行，点击查看详情」。这时点击通知也会跳转到上述前台服务任务管理器当中。</p>
+<p>根据 Android 13 现阶段的设计，针对同一应用这样的警告通知不会在 30 天内重复出现。另外也不是所有应用都会出现在前台服务管理器中，系统级应用、紧急安全相关应用不会出现在这个列表中；部分应用会出现在这个列表中但没有「停止」按钮，比如激活设备所有方的应用、拨号应用等。</p>
+<h3 id="与「划卡强杀」的区别"><a href="#与「划卡强杀」的区别" class="headerlink" title="与「划卡强杀」的区别"></a>与「划卡强杀」的区别</h3><p><img src="diff.png" alt="划卡强杀"></p>
+<p>在关于前台服务管理器的相关文档中，我们也得以第一次看到现代 Android 对「多任务界面上划应用卡片」这个行为的定义，以及它和前台服务管理器的实际区别</p>
+<p>绿色守护和部分厂商的「划卡强杀」其实更接近最右侧的 Force stop，也就是强行停止。现在进入到应用管理的详情页也依旧能够看到这个按钮，被强行停止的应用会停止一切活动，一般来说不能再自行启动，只能用户手动或其余应用拉起才能恢复运行。</p>
+<p>前台服务管理器的停止按钮除了会暂停前台服务，也会将应用从 RAM 中驱离。需要注意的是，此时应用只是停止了运行，并不会从多任务窗口中移除，这一考虑或许是为了方便用户快速恢复任务，同时减少系统资源消耗。</p>
+<h2 id="严格控电-续航"><a href="#严格控电-续航" class="headerlink" title="严格控电-续航"></a>严格控电-续航</h2><p>Android 13的目标之一是通过全新的、更严格的电池控制方案，来优化熄屏后App的电源消耗，从而最大化设备体验</p>
+<h3 id="Android-13对文件权限的改进"><a href="#Android-13对文件权限的改进" class="headerlink" title="Android-13对文件权限的改进"></a>Android-13对文件权限的改进</h3><p><img src="%E5%8F%82%E8%80%83%E5%BB%BA%E8%AE%AE.png" alt="统一适配参考建议"></p>
+<p>尽管 Android 11 引入了很多人心心念念的分区存储机制来改善私有目录滥用的乱象，但部分国产应用很快又学会了将用户和设备标识文件伪装成图片，然后将 /Pictures 这类公有目录变成新的用户隐私数据交换中心的新方案。</p>
+<p>针对需要访问文件权限的做法，Android 13 这次将媒体文件权限进一步细分。已经适配 Android 11的应用（目标 API 等级 33）在 Android 13 中能够获取到的文件读写权限被分成了音频2、视频3和图片4，在实际使用过程中，应用可以根据实际情况将这三种权限灵活组合起来。</p>
+<h2 id="旧版本"><a href="#旧版本" class="headerlink" title="旧版本"></a>旧版本</h2><p>Android 操作系统版本的更新通常伴随着对应用程序权限系统的调整和改变。这些变更旨在增强用户的隐私保护和提供更细粒度的权限控制。以下是一些 Android 权限系统的变更和改进的常见示例：</p>
+<p>运行时权限控制：从 Android 6.0（Marshmallow）开始，Android 引入了运行时权限控制，允许用户在应用程序安装后，根据需要授予或拒绝应用程序特定权限的访问权，如访问相机、位置、联系人等。</p>
+<p>危险权限：Android 权限被分为普通权限和危险权限。危险权限需要用户明确同意，而普通权限在应用安装时自动授予。在较新的 Android 版本中，某些危险权限的使用受到更严格的控制。</p>
+<p>存储权限：在 Android 10 及更高版本中，存储权限发生了重大变化。应用程序需要逐个请求访问外部存储的权限，并在其清单文件中声明 MANAGE_EXTERNAL_STORAGE权限以访问全部存储。这是为了增强隐私保护和减少对外部存储的滥用。</p>
+<p>一次性权限：在 Android 11 及更高版本中，用户可以授予应用程序一次性访问位置、麦克风和相机等权限，而不是永久性地授予权限。</p>
+<p>位置权限：在较新的 Android 版本中，位置权限的访问变得更加严格，用户可以选择只允许应用程序在使用时访问位置数据，而不是一直允许。</p>
+<p>通知权限：在 Android 版本中，通知权限系统也有所改进，用户可以更好地控制和管理应用程序的通知。</p>
+<p>访问后台位置：在 Android 11 及更高版本中，访问后台位置数据的权限更加受到限制，应用程序需要满足更高的要求才能访问后台位置数据。</p>
+<p>请注意，每个 Android 版本的权限系统可能有所不同，具体的变化和改进可能会因版本而异。要了解特定 Android 版本的权限变更，请查阅相关的 Android 开发者文档或官方发布说明。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/05/Welcome-to-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/05/Welcome-to-C/" class="post-title-link" itemprop="url">Welcome-to-C++</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-05 02:58:13" itemprop="dateCreated datePublished" datetime="2023-10-05T02:58:13+08:00">2023-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-13 14:14:10" itemprop="dateModified" datetime="2023-10-13T14:14:10+08:00">2023-10-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>649</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>code ==&gt; compiler ==&gt; produces mechine code for your target platform（为目标平台生成机器代码)</p>
+<p>mechine code then contains the actual instructions that the target CPU can execute。(机器代码包含目标CPU可以执行的指令)</p>
+<p>所以使用C++是可以单独控制目标CPU每条指令。</p>
+<h2 id="How-C-Works"><a href="#How-C-Works" class="headerlink" title="How C++ Works"></a>How C++ Works</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int num = 42;</span><br><span class="line">    cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;The value of num is: &quot; &lt;&lt; num &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br></pre></td></tr></table></figure>
+<p>C++中的#符号通常被用于预处理器指令，这些指令在编译实际的C++代码之前被执行<br>#include &lt;该文件的所有内容&gt; ==<br>include will look for a file and will simply take the entire contents of the iostream file and paste it into our main.cpp. </p>
+<p>Once preprocessing is finished,our file will be complied,</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/23/Linux-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/23/Linux-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">Linux-进程管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-08-23 04:35:43" itemprop="dateCreated datePublished" datetime="2023-08-23T04:35:43+08:00">2023-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-17 01:20:03" itemprop="dateModified" datetime="2023-11-17T01:20:03+08:00">2023-11-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>919</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>进程管理概述</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/23/Linux-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/15/Binder-%E8%80%81%E7%94%9F%E5%B8%B8%E8%B0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Elroy-Pb">
+      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elroy-Pb">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/15/Binder-%E8%80%81%E7%94%9F%E5%B8%B8%E8%B0%88/" class="post-title-link" itemprop="url">Binder-老生常谈</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-08-15 20:00:52" itemprop="dateCreated datePublished" datetime="2023-08-15T20:00:52+08:00">2023-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-23 04:34:00" itemprop="dateModified" datetime="2023-08-23T04:34:00+08:00">2023-08-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>409</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Binder起源</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/15/Binder-%E8%80%81%E7%94%9F%E5%B8%B8%E8%B0%88/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -700,354 +1095,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/" class="post-title-link" itemprop="url">计算机-固态硬盘</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-11-19 06:43:10" itemprop="dateCreated datePublished" datetime="2022-11-19T06:43:10+08:00">2022-11-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-12-03 02:45:03" itemprop="dateModified" datetime="2022-12-03T02:45:03+08:00">2022-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>304</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文章含有视频</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E8%8A%AF%E7%89%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/19/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E8%8A%AF%E7%89%87/" class="post-title-link" itemprop="url">计算机-芯片</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-11-19 04:55:24 / Modified: 08:03:01" itemprop="dateCreated datePublished" datetime="2022-11-19T04:55:24+08:00">2022-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="芯片的由来"><a href="#芯片的由来" class="headerlink" title="芯片的由来"></a>芯片的由来</h1>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/14/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" class="post-title-link" itemprop="url">理财</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-14 07:05:30" itemprop="dateCreated datePublished" datetime="2022-09-14T07:05:30+08:00">2022-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-14 03:03:38" itemprop="dateModified" datetime="2023-01-14T03:03:38+08:00">2023-01-14</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>193</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>💪每個人都像一個空的瓶子，裡面裝什麼東西，都是由你自己決定,當你覺得哪些東西你不想要了，把它倒掉,但這個瓶蓋只有你自己才擰的動!</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/14/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E6%B8%B8%E6%88%8F%E5%95%86%E5%8A%A1-%E5%90%AF%E8%92%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Elroy-Pb">
-      <meta itemprop="description" content="凌晨四点钟，看海棠花未眠。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elroy-Pb">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/14/%E6%B8%B8%E6%88%8F%E5%95%86%E5%8A%A1-%E5%90%AF%E8%92%99/" class="post-title-link" itemprop="url">游戏商务-启蒙</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-14 07:05:30" itemprop="dateCreated datePublished" datetime="2022-09-14T07:05:30+08:00">2022-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-12-08 22:43:13" itemprop="dateModified" datetime="2022-12-08T22:43:13+08:00">2022-12-08</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>737</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>复盘</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/14/%E6%B8%B8%E6%88%8F%E5%95%86%E5%8A%A1-%E5%90%AF%E8%92%99/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1119,18 +1166,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -1165,7 +1212,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1174,12 +1221,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">127k</span>
+    <span title="Symbols count total">137k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:56</span>
+    <span title="Reading time total">2:04</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

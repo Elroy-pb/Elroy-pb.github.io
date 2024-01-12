@@ -29,7 +29,7 @@
 <meta property="og:description" content="OOM痛点OOM（Out Of Memory）成为奔溃统计平台上的疑难杂症之一，大部分业务开发人员对于线上OOM问题一般都是暂不处理，一方面是因为OOM问题没有足够的log，无法在短期内分析解决，另一方面可能是忙于业务迭代、身心疲惫，没有精力去研究OOM的解决方案。 作者：蓝师傅链接：https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;7074762489736478757来源：稀土掘金著作权归作者所有">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-11-02T04:12:14.000Z">
-<meta property="article:modified_time" content="2023-11-02T19:11:51.496Z">
+<meta property="article:modified_time" content="2023-11-05T11:23:50.087Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -133,12 +133,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">12</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">65</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-03 03:11:51" itemprop="dateModified" datetime="2023-11-03T03:11:51+08:00">2023-11-03</time>
+                <time title="Modified: 2023-11-05 19:23:50" itemprop="dateModified" datetime="2023-11-05T19:23:50+08:00">2023-11-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.3k</span>
+              <span>6.3k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
+              <span>6 mins.</span>
             </span>
 
         </div>
@@ -276,12 +276,56 @@
 <blockquote>
 <p>cat /proc/sys/kernel/threads-max<br>不同设备的threads-max限制是不一样的，有些厂商的低端机型threads-max比较小，容易出现此类OOM问题</p>
 </blockquote>
+<h3 id="root手机查看"><a href="#root手机查看" class="headerlink" title="root手机查看"></a>root手机查看</h3><blockquote>
+<p>模拟器 部分手机需要root，如小米等硬核  </p>
+</blockquote>
 <p>查看当前进程运行的线程数</p>
 <blockquote>
-<p>cat proc/{pid}/status</p>
+<p>cat proc/{pid}/status<br>当线程数超过/proc/sys/kernel/threads-max中规定的上限时就会触发OOM。</p>
 </blockquote>
-<p>当线程数超过/proc/sys/kernel/threads-max中规定的上限时就会触发OOM。</p>
+<h3 id="真机-ulimit限制"><a href="#真机-ulimit限制" class="headerlink" title="真机 ulimit限制"></a>真机 ulimit限制</h3><p>查看当前总进程限制的线程数</p>
+<blockquote>
+<p>ulimit -a</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1|rubens:/ $ ulimit -a</span><br><span class="line">-t: time(cpu-seconds)     unlimited</span><br><span class="line">-f: file(blocks)          unlimited</span><br><span class="line">-c: coredump(blocks)      0</span><br><span class="line">-d: data(KiB)             unlimited</span><br><span class="line">-s: stack(KiB)            8192</span><br><span class="line">-l: lockedmem(KiB)        unlimited</span><br><span class="line">-n: nofiles(descriptors)  32768</span><br><span class="line">-p: processes             26248</span><br><span class="line">-i: sigpending            26248</span><br><span class="line">-q: msgqueue(bytes)       819200</span><br><span class="line">-e: maxnice               40</span><br><span class="line">-r: maxrtprio             0</span><br><span class="line">-m: resident-set(KiB)     unlimited</span><br><span class="line">-v: address-space(KiB)    unlimited</span><br><span class="line">-x: filelocks             unlimited</span><br></pre></td></tr></table></figure>
+<p>参数解析<br>max memory size - 最大内存限制，在64位系统上通常都设置成unlimited<br>max user processes - 每用户总的最大进程数(包括线程)   总的！！！<br>virtual memory - 虚拟内存限制，在64位系统上通常都设置成unlimited   </p>
 <p>既然系统对每个进程的线程数有限制，那么解决这个问题的关键就是尽可能降低线程数的峰值。</p>
+<p>查看当前进程运行的线程数</p>
+<blockquote>
+<p>cat proc/{Pid}/status</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">rubens:/ $ cat proc/18425/status</span><br><span class="line">Name:   tudy.pingindemo</span><br><span class="line">Umask:  0077</span><br><span class="line">State:  S (sleeping)</span><br><span class="line">Tgid:   18425</span><br><span class="line">Ngid:   0</span><br><span class="line">Pid:    18425</span><br><span class="line">PPid:   825</span><br><span class="line">TracerPid:      0</span><br><span class="line">Uid:    10375   10375   10375   10375</span><br><span class="line">Gid:    10375   10375   10375   10375</span><br><span class="line">FDSize: 256</span><br><span class="line">Groups: 9997 20375 50375 99909997 </span><br><span class="line">VmPeak:  6912748 kB</span><br><span class="line">VmSize:  6844832 kB</span><br><span class="line">VmLck:         0 kB</span><br><span class="line">VmPin:         0 kB</span><br><span class="line">VmHWM:    176600 kB</span><br><span class="line">VmRSS:    173880 kB</span><br><span class="line">RssAnon:           48700 kB</span><br><span class="line">RssFile:          123828 kB</span><br><span class="line">RssShmem:           1352 kB</span><br><span class="line">VmData:  1300552 kB</span><br><span class="line">VmStk:      8192 kB</span><br><span class="line">VmExe:         4 kB</span><br><span class="line">VmLib:    179852 kB</span><br><span class="line">VmPTE:      1252 kB</span><br><span class="line">VmSwap:    25156 kB</span><br><span class="line">CoreDumping:    0</span><br><span class="line">THP_enabled:    1</span><br><span class="line">Threads:        27</span><br><span class="line">SigQ:   0/26248</span><br><span class="line">SigPnd: 0000000000000000</span><br><span class="line">ShdPnd: 0000000000000000</span><br><span class="line">SigBlk: 0000000080001204</span><br><span class="line">SigIgn: 0000000000000001</span><br><span class="line">SigCgt: 0000006e400084f8</span><br><span class="line">CapInh: 0000000000000000</span><br><span class="line">CapPrm: 0000000000000000</span><br><span class="line">CapEff: 0000000000000000</span><br><span class="line">CapBnd: 0000000000000000</span><br><span class="line">CapAmb: 0000000000000000</span><br><span class="line">NoNewPrivs:     0</span><br><span class="line">Seccomp:        2</span><br><span class="line">Seccomp_filters:        1</span><br><span class="line">Speculation_Store_Bypass:       thread vulnerable</span><br><span class="line">Cpus_allowed:   ff</span><br><span class="line">Cpus_allowed_list:      0-7</span><br><span class="line">Mems_allowed:   1</span><br><span class="line">Mems_allowed_list:      0</span><br><span class="line">voluntary_ctxt_switches:        169</span><br><span class="line">nonvoluntary_ctxt_switches:     123</span><br></pre></td></tr></table></figure>
+<p>参数解析</p>
+<blockquote>
+<p>当前Threads: 27</p>
+</blockquote>
+<h4 id="命令-扩展"><a href="#命令-扩展" class="headerlink" title="命令-扩展"></a>命令-扩展</h4><p>ps -ef看到的是进程列表<br>线程可以通过ps -eLf来查看</p>
+<p>根据包名查看当前进程</p>
+<blockquote>
+<p>adb shell ps | grep xxx </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u0_a376      22592&#123;PID&#125;   825 6628656 169584 0  0 S com.study.pingindemo</span><br></pre></td></tr></table></figure>
+
+
+<p>得到当前进程pid或名字则查看当前所有的线程</p>
+<blockquote>
+<p>adb shell ps -T | grep {PID} </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">u0_a377      26204 26204   825 6804816 189004 0                   0 S tudy.pingindemo</span><br><span class="line">u0_a377      26204 26227   825 6804816 189004 0                   0 S Signal Catcher</span><br><span class="line">u0_a377      26204 26228   825 6804816 189004 0                   0 S perfetto_hprof_</span><br><span class="line">u0_a377      26204 26229   825 6804816 189004 0                   0 S ADB-JDWP Connec</span><br><span class="line">u0_a377      26204 26230   825 6804816 189004 0                   0 S Jit thread pool</span><br><span class="line">u0_a377      26204 26231   825 6804816 189004 0                   0 S HeapTaskDaemon</span><br><span class="line">u0_a377      26204 26232   825 6804816 189004 0                   0 S ReferenceQueueD</span><br><span class="line">u0_a377      26204 26233   825 6804816 189004 0                   0 S FinalizerDaemon</span><br><span class="line">u0_a377      26204 26234   825 6804816 189004 0                   0 S FinalizerWatchd</span><br><span class="line">u0_a377      26204 26235   825 6804816 189004 0                   0 S binder:26204_1</span><br><span class="line">u0_a377      26204 26236   825 6804816 189004 0                   0 S binder:26204_2</span><br><span class="line">u0_a377      26204 26237   825 6804816 189004 0                   0 S binder:26204_3</span><br><span class="line">u0_a377      26204 26244   825 6804816 189004 0                   0 S Profile Saver</span><br><span class="line">u0_a377      26204 26247   825 6804816 189004 0                   0 S RenderThread</span><br><span class="line">u0_a377      26204 26262   825 6804816 189004 0                   0 S Binder:intercep</span><br><span class="line">u0_a377      26204 26263   825 6804816 189004 0                   0 S Timer-0</span><br><span class="line">u0_a377      26204 26264   825 6804816 189004 0                   0 S Timer-1</span><br><span class="line">u0_a377      26204 26265   825 6804816 189004 0                   0 S FramePolicy</span><br><span class="line">u0_a377      26204 26266   825 6804816 189004 0                   0 S launch</span><br><span class="line">u0_a377      26204 26271   825 6804816 189004 0                   0 S mali-event-hand</span><br><span class="line">u0_a377      26204 26272   825 6804816 189004 0                   0 S mali-mem-purge</span><br><span class="line">u0_a377      26204 26273   825 6804816 189004 0                   0 S mali-cpu-comman</span><br><span class="line">u0_a377      26204 26274   825 6804816 189004 0                   0 S ged-swd</span><br><span class="line">u0_a377      26204 26276   825 6804816 189004 0                   0 S hwuiTask0</span><br><span class="line">u0_a377      26204 26277   825 6804816 189004 0                   0 S hwuiTask1</span><br><span class="line">u0_a377      26204 26279   825 6804816 189004 0                   0 S RenderThread</span><br><span class="line">u0_a377      26204 26288   825 6804816 189004 0                   0 S binder:26204_2</span><br><span class="line">u0_a377      26204 26320   825 6804816 189004 0                   0 S queued-work-loo</span><br><span class="line">u0_a377      26204 26346   825 6804816 189004 0                   0 S binder:26204_4</span><br><span class="line">u0_a377      26204 26427   825 6804816 189004 0                   0 S binder:26204_5</span><br><span class="line">u0_a377      26204 26429   825 6804816 189004 0                   0 S 26204-ScoutStat</span><br></pre></td></tr></table></figure>
+
+<h1 id="java"><a href="#java" class="headerlink" title="java"></a>java</h1><p>在 Android 中，可以使用如下代码来获取当前线程数：</p>
+<blockquote>
+<p>int threadCount = Thread.activeCount();<br>activeCount() 方法返回当前活动线程的数量，也就是当前线程数。</p>
+</blockquote>
+<p><strong>注意</strong>：activeCount() 方法只能获取到在 Java 虚拟机中创建的线程数，无法获取到其他线程（例如 C++ 创建的线程）的数量。</p>
+<h3 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h3><p>我们并不清楚到底是哪个部分有问题导致的线程数的增长，所以我们需要一个每1s可以打印一下当前的线程数再通过页面交互来确定到底是哪里出现的问题，可以使用watch命令来完成我们的想法，如下所示：</p>
+<blockquote>
+<p>watch -n 1 -d ‘adb shell ps -T | grep u0_a589 | wc -l’</p>
+</blockquote>
+<blockquote>
+<p>watch -n 1 -d ‘adb shell ps -T | grep u0_a377 | wc -l’</p>
+</blockquote>
+<p>操作APP时可以试试的看到线程数的大小，并且通过观察看到那类的线程名字在增多.</p>
 <h3 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h3><p>禁用 new Thread<br>不过这种方式存在两个问题：</p>
 <p>无法解决老代码的new Thread；<br>对于第三方库无法控制。  </p>
 <h3 id="无侵入性的new-Thread-优化"><a href="#无侵入性的new-Thread-优化" class="headerlink" title="无侵入性的new Thread 优化"></a>无侵入性的new Thread 优化</h3><p>创建一个Thread的子类叫ShadowThread吧，重写start方法，调用自定义的线程池CustomThreadPool来执行任务</p>
@@ -293,6 +337,13 @@
 
 
 <p>1.corePoolSize：核心线程数量。核心线程默认情况下即使空闲也不会释放，除非设置allowCoreThreadTimeOut为true。<br>2.maximumPoolSize：最大线程数量。任务数量超过核心线程数，就会将任务放到队列中，队列满了，就会启动非核心线程执行任务，线程数超过这个限制就会走拒绝策略；<br>3.keepAliveTime：空闲线程存活时间<br>4.unit：时间单位<br>5.workQueue：队列。任务数量超过核心线程数，就会将任务放到这个队列中，直到队列满，就开启新线程，执行队列第一个任务。<br>6.threadFactory：线程工厂。实现new Thread方法创建线程  </p>
+<h1 id="线程泄露"><a href="#线程泄露" class="headerlink" title="线程泄露"></a>线程泄露</h1><p>1.主要监控native线程的几个生命周期方法：pthread_create、pthread_detach、pthread_join、pthread_exit</p>
+<p>2.hook 以上几个方法，用于记录线程的生命周期和堆栈，名称等信息；</p>
+<p>3.当发现一个joinable的线程在没有detach或者join的情况下，执行了pthread_exit，则记录下泄露线程信息；</p>
+<p>4.在合适的时机，上报线程泄露信息</p>
+<p>3 打开太多文件<br>Linux 系统一切皆文件，进程每打开一个文件就会产生一个文件描述符fd（记录在/proc/pid/fd下面）</p>
+<p>cd /proc/10654/fd</p>
+<p>ls</p>
 
     </div>
 
@@ -314,7 +365,10 @@
     <a href="/2023/11/02/Android-Activity%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="Android-Activity启动过程">
       <i class="fa fa-chevron-left"></i> Android-Activity启动过程
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/10/Android-Jni/" rel="next" title="Android-Jni">
+      Android-Jni <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -373,7 +427,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOM%E7%97%9B%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">OOM痛点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOM%E9%97%AE%E9%A2%98%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">OOM问题分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%95%B0%E5%A4%AA%E5%A4%9A"><span class="nav-number">2.1.</span> <span class="nav-text">线程数太多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.1.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E4%BE%B5%E5%85%A5%E6%80%A7%E7%9A%84new-Thread-%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.2.</span> <span class="nav-text">无侵入性的new Thread 优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%BA%BF%E7%A8%8B%E8%AF%8D"><span class="nav-number">3.</span> <span class="nav-text">分析线程词</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOM%E7%97%9B%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">OOM痛点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOM%E9%97%AE%E9%A2%98%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">OOM问题分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%95%B0%E5%A4%AA%E5%A4%9A"><span class="nav-number">2.1.</span> <span class="nav-text">线程数太多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#root%E6%89%8B%E6%9C%BA%E6%9F%A5%E7%9C%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">root手机查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%9F%E6%9C%BA-ulimit%E9%99%90%E5%88%B6"><span class="nav-number">2.1.2.</span> <span class="nav-text">真机 ulimit限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4-%E6%89%A9%E5%B1%95"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">命令-扩展</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java"><span class="nav-number">3.</span> <span class="nav-text">java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5"><span class="nav-number">3.0.1.</span> <span class="nav-text">排查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%8C%96"><span class="nav-number">3.0.2.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E4%BE%B5%E5%85%A5%E6%80%A7%E7%9A%84new-Thread-%E4%BC%98%E5%8C%96"><span class="nav-number">3.0.3.</span> <span class="nav-text">无侵入性的new Thread 优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%BA%BF%E7%A8%8B%E8%AF%8D"><span class="nav-number">4.</span> <span class="nav-text">分析线程词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B3%84%E9%9C%B2"><span class="nav-number">5.</span> <span class="nav-text">线程泄露</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -389,18 +443,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -435,7 +489,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -444,12 +498,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">127k</span>
+    <span title="Symbols count total">137k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:56</span>
+    <span title="Reading time total">2:04</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
