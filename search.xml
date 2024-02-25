@@ -3,7 +3,60 @@
   <entry>
     <title>JL-SZB</title>
     <url>/2024/02/25/JL-SZB/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>感谢您花时间阅读我的简历，希望能有个面试机会，也期待能有机会和您共事。</p>
+<h1 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h1><ul>
+<li>朱蓬勃/男/1996 </li>
+<li>专/广东岭南职业技术学院-计算机系 </li>
+<li>工作年限：5年</li>
+<li>技术博客：<a href="http://zhupengbo.com/2023/10/24/JL">Elroy-Pb</a> 已适配移动端）</li>
+<li>期望职位：Android高级程序员</li>
+<li>自我评价 </li>
+</ul>
+<ol>
+<li>学习能力和适应能力强，能独立钻研并解决问题</li>
+<li>为人随和，善于沟通，具备团队合作精神及责任感</li>
+<li>对游戏逆向有兴趣</li>
+</ol>
+<hr>
+<h1 id="工作经历"><a href="#工作经历" class="headerlink" title="工作经历"></a>工作经历</h1><p>主攻Android</p>
+<h2 id="广州拓动网络科技有限公司-研发一体"><a href="#广州拓动网络科技有限公司-研发一体" class="headerlink" title="广州拓动网络科技有限公司(研发一体)"></a>广州拓动网络科技有限公司(研发一体)</h2><p>时间：2018年5月 - 2019年8月<br>公司：广州拓动网络科技有限公司(研发一体)<br>部门：技术支持部门<br>岗位：Android开发工程师</p>
+<h3 id="烈火皇城-国内"><a href="#烈火皇城-国内" class="headerlink" title="烈火皇城-国内"></a>烈火皇城-国内</h3><p>简介：烈火皇城是Cocos2d-x研发的大型MMORPG传奇手游。<br>工作内容：<br>1.解决游戏与SDK(Qucik,易接等等)接入的开发问题，BUG，机型适配和不同版本的兼容。<br>2.主要负责处理游戏产品Android渠道(5+7+长尾)上线的要求。<br>3.对AppStore合作游戏主要做二次混淆方面的处理</p>
+<h3 id="自研SDK"><a href="#自研SDK" class="headerlink" title="自研SDK"></a>自研SDK</h3><p>简介：拓动<strong>渠道SDK</strong>，主要提供给CP接入。<br>项目职责：<br>1.配合产品的需求完成架构和模块设计、编码、测试工作，从0到1完成SDK的开发。<br>2.接入我方公司SDK发行公司提供技术支持，线上问题定位，<br>3.根据运营的需求维护，更新，优化SDK。  </p>
+<h5 id="技术点："><a href="#技术点：" class="headerlink" title="技术点："></a>技术点：</h5><p>1.项目使用MVP模式作架构。<br>2.集成微信支付、支付宝支付功能。<br>3.使用Git作为整个SDK项目的代码版本控制。    </p>
+<h2 id="广州千熙网络科技有限公司"><a href="#广州千熙网络科技有限公司" class="headerlink" title="广州千熙网络科技有限公司"></a>广州千熙网络科技有限公司</h2><p>时间：2019年9月 - 2020年6月<br>部门：发行技术部门<br>任职：Android开发工程师   </p>
+<h3 id="聚合sdk"><a href="#聚合sdk" class="headerlink" title="聚合sdk"></a>聚合sdk</h3><p>项目职责:<br>1.对接投放和市场的上线推广计划，投放买量的计划，接入对应SDK(巨量引擎，腾讯广点通等等)<br>2.Android游戏接入SDK,反编译和重打包，签名。<br>3.配合运营，聚合SDK接入渠道SDK。<br>4.对聚合打包（Python）工具开发和升级。<br>5.定期整合更新技术文档，运营及商务对接文档。  </p>
+<h5 id="技术点"><a href="#技术点" class="headerlink" title="技术点:"></a>技术点:</h5><p>1.把原有MVC的聚合SDK调整为MVP模式架构。<br>2.使用Python-进行多渠道自动化打包。<br>3.对Apk反编译和重打包，签名，渠道资源并入。<br>4.使用模块化管理工程，基于AndroidStudio的Gradle构建系统进行单模块的处理。  </p>
+<h2 id="广州烁日网络科技有限公司-研发"><a href="#广州烁日网络科技有限公司-研发" class="headerlink" title="广州烁日网络科技有限公司(研发)"></a>广州烁日网络科技有限公司(研发)</h2><p>时间：2020年9⽉ - 2022年5⽉<br>任职：Android游戏工程师<br>项目：彩虹物语 - Unity3d研发的大型MMORPG手游(海外+国内)。<br>项目职责:<br>1.适配Android新版本特性和兼容，主要针对海外市场需求，如Google强制要求aab格式。<br>2.负责完成SDK的对接，调试，配置参数，上线，维护等工作。<br>3.根据运营需求，配合Unity技术开发人员，构建游戏中台。<br>4.负责公司Android/IOS包体对接渠道sdk登录/支付等的游戏交互接口设计。  </p>
+<h5 id="技术点-1"><a href="#技术点-1" class="headerlink" title="技术点:"></a>技术点:</h5><p>1.把原有Android项目架构调整为成MVVM结构。<br>2.把原本.net打包系统升级为基于集成（CI/CD）Jenkins，使用Shell+Python脚本和引擎自带命令实现游戏自动构建，自动编译，多渠道打包。<br>3.对OC进行混淆，SDK层面混淆，方法名，类名，垃圾代码，上架Appstore。  </p>
+<hr>
+<hr>
+<h2 id="广州星朔网络科技有限公司"><a href="#广州星朔网络科技有限公司" class="headerlink" title="广州星朔网络科技有限公司"></a>广州星朔网络科技有限公司</h2><p>任职：SDK游戏工程师<br>时间：2022年 5⽉- 至今<br>参与项目:   </p>
+<ol>
+<li>《全民祖玛》Cocos2d-x   </li>
+</ol>
+<ul>
+<li>《全民祖玛》负责游戏研发项目的技术项目管理工作，从研发到上线运营的完整经验。  </li>
+</ul>
+<ol start="2">
+<li>AndroidSDK-发行工具组</li>
+</ol>
+<ul>
+<li>对接海外google-play功能。 </li>
+<li>对接国内的Android广告业务，包含内购和广告。</li>
+</ul>
+<p>负责内容：<br>1.对广告核心组件的设计，如联调后台实现广告逻辑的控制。<br>2.负责游戏SDK产品的打包，维护与更新打包工具。(海外为gradle-aar打包，国内为反编译打包)<br>3.负责游戏SDK发行渠道接入跟进，开发与维护工作。<br>4.对接海外Google-play的功能。<br>5.负责海外谷歌AB面切换。<br>6.处理游戏与设备兼容的版本问题。</p>
+<h1 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h1><p>了解游戏SDK设计和逻辑<br>熟悉Android存储的机制，Android内存管理，进程通信<br>对主流引擎Unity3d，Cocos2d-x的引擎有了解<br>熟练动态调试Apk，处理Android中的OOM、ANR异常<br>熟悉聚合SDK,如U8SDK,QuickSDK<br>熟悉Gradle自动构建工具</p>
+<h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
+<li>手机：15815337432  </li>
+<li>Email：<a href="mailto:&#x7a;&#x68;&#x75;&#x70;&#x65;&#110;&#x67;&#x62;&#x6f;&#49;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x7a;&#x68;&#x75;&#x70;&#x65;&#110;&#x67;&#x62;&#x6f;&#49;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;</a> (海外)/ <a href="mailto:&#x31;&#53;&#56;&#49;&#53;&#51;&#51;&#x37;&#52;&#x33;&#x32;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;">&#x31;&#53;&#56;&#49;&#53;&#51;&#51;&#x37;&#52;&#x33;&#x32;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;</a>(国内)  </li>
+<li>微信号：Elroy-Pb  </li>
+</ul>
+<hr>
+]]></content>
+      <tags>
+        <tag>个人成长</tag>
+        <tag>简历</tag>
+      </tags>
   </entry>
   <entry>
     <title>详解设备ID</title>
@@ -335,7 +388,7 @@
 <h1 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h1><p>了解游戏SDK设计和逻辑<br>熟悉Android存储的机制，Android内存管理，进程通信<br>对主流引擎Unity3d，Cocos2d-x的引擎有了解<br>熟练动态调试Apk，处理Android中的OOM、ANR异常<br>熟悉聚合SDK,如U8SDK,QuickSDK<br>熟悉Gradle自动构建工具</p>
 <h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
 <li>手机：15815337432  </li>
-<li>Email：<a href="mailto:&#x7a;&#x68;&#117;&#x70;&#x65;&#110;&#x67;&#98;&#x6f;&#x31;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;">&#x7a;&#x68;&#117;&#x70;&#x65;&#110;&#x67;&#98;&#x6f;&#x31;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;</a> (海外)/ <a href="mailto:&#x31;&#53;&#x38;&#x31;&#x35;&#x33;&#x33;&#55;&#52;&#x33;&#50;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#x6d;">&#x31;&#53;&#x38;&#x31;&#x35;&#x33;&#x33;&#55;&#52;&#x33;&#50;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#x6d;</a>(国内)  </li>
+<li>Email：<a href="mailto:&#122;&#104;&#x75;&#112;&#x65;&#110;&#103;&#98;&#111;&#x31;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;">&#122;&#104;&#x75;&#112;&#x65;&#110;&#103;&#98;&#111;&#x31;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a> (海外)/ <a href="mailto:&#x31;&#x35;&#x38;&#x31;&#x35;&#51;&#x33;&#55;&#x34;&#x33;&#x32;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#111;&#x6d;">&#x31;&#x35;&#x38;&#x31;&#x35;&#51;&#x33;&#55;&#x34;&#x33;&#x32;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#111;&#x6d;</a>(国内)  </li>
 <li>微信号：Elroy-Pb  </li>
 </ul>
 <hr>
@@ -1800,37 +1853,6 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
-    <title>Android-性能优化-IO优化</title>
-    <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-IO%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><blockquote>
-<ul>
-<li>作者：yorek<br>来源：<a href="https://blog.yorek.xyz/">个人博客</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
-</ul>
-</blockquote>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>以前对读写的操作更多这块是基于业务去做开发，最近我们的游戏遇到一个问题，升级了Unity版本后，游戏相关的场景出现了卡顿，游戏加载资源场景和相关战斗场景出现了卡顿，通过我们对游戏业务深度的剖析，最后发现了卡顿的问题部分是<strong>IO</strong>的问题。所以我打算对这块知识好好学习一下。</p>
-<h1 id="IO的基本知识"><a href="#IO的基本知识" class="headerlink" title="IO的基本知识"></a>IO的基本知识</h1><p><img src="io_1_1.jpg" alt="IO基本流程图"></p>
-<p>你可以看到整个文件 I/O 操作由应用程序、文件系统和磁盘共同完成。首先应用程序将 I/O 命令发送给文件系统，然后文件系统会在合适的时机把 I/O 操作发给磁盘。</p>
-<p>这就好比 CPU、内存、磁盘三个小伙伴一起完成接力跑，最终跑完的时间很大程度上取决于最慢的小伙伴。我们知道，CPU 和内存相比磁盘是高速设备，整个流程的瓶颈在于磁盘 I/O 的性能。所以很多时候，文件系统性能比磁盘性能更加重要，为了降低磁盘对应用程序的影响，文件系统需要通过各种各样的手段进行优化。那么接下来，我们首先来看文件系统。</p>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><p>对于 Android 来说，现在普遍使用的是 Linux 常用的 ext4 文件系统。</p>
-<p>F2FS 系统应该是未来 Android 的主流文件系统。</p>
-<p>回到文件系统的 I/O。应用程序调用 read() 方法，系统会通过中断从用户空间进入内核处理流程，然后经过 VFS（Virtual File System，虚拟文件系统）、具体文件系统、页缓存 Page Cache。下面是 Linux 一个通用的 I/O 架构模型。</p>
-<p><img src="io_1_2.png" alt="Linux-IO-架构图"></p>
-<p>虚拟文件系统（VFS）。它主要用于实现屏蔽具体的文件系统，为应用程序的操作提供一个统一的接口。这样保证就算厂商把文件系统从 ext4 切换到 F2FS，应用程序也不用做任何修改。<br>文件系统（File System）。ext4、F2FS 都是具体文件系统实现，文件元数据如何组织、目录和索引结构如何设计、怎么分配和清理数据，这些都是设计一个文件系统必须要考虑的。每个文件系统都有适合自己的应用场景，我们不能说 F2FS 就一定比 ext4 要好。F2FS 在连续读取大文件上并没有优势，而且会占用更大的空间。只是对一般应用程序来说，随机 I/O 会更加频繁，特别是在启动的场景。你可以在 /proc/filesystems 看到系统可以识别的所有文件系统的列表。<br>页缓存（Page Cache）。在启动优化中我已经讲过 Page Cache 这个概念了，在读文件的时候会，先看它是不是已经在 Page Cache 中，如果命中就不会去读取磁盘。在 Linux 2.4.10 之前还有一个单独的 Buffer Cache，后来它也合并到 Page Cache 中的 Buffer Page 了。  </p>
-<p>Page Cache 就像是我们经常使用的数据缓存，是文件系统对数据的缓存，目的是提升内存命中率。Buffer Cache 就像我们经常使用的 BufferInputStream，是磁盘对数据的缓存，目的是合并部分文件系统的 I/O 请求、降低磁盘 I/O 的次数。需要注意的是，它们既会用在读请求中，也会用到写请求中。</p>
-<p>通过 /proc/meminfo 文件可以查看缓存的内存占用情况，当手机内存不足的时候，系统会回收它们的内存，这样整体 I/O 的性能就会有所降低。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MemTotal:    2866492 kB</span><br><span class="line">MemFree:      72192 kB</span><br><span class="line">Buffers:      62708 kB      // Buffer Cache</span><br><span class="line">Cached:      652904 kB      // Page Cache</span><br></pre></td></tr></table></figure>
-
-<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h1 id="IO优化"><a href="#IO优化" class="headerlink" title="IO优化"></a>IO优化</h1><p>磁盘 I/O 是启动优化一定要抠的点。首先我们要清楚启动过程读了什么文件、多少个字节、Buffer 是多大、使用了多长时间、在什么线程等一系列信息。不仅仅是简单读写的问题。</p>
-<h2 id="IO优化的事项"><a href="#IO优化的事项" class="headerlink" title="IO优化的事项"></a>IO优化的事项</h2><p><strong>启动过程不建议出现网络 I/O</strong></p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android-性能优化-启动优化</title>
     <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><blockquote>
@@ -1903,6 +1925,37 @@ Paging（分页)
 <!-- ## 启动过慢的表现 -->
 
 <h2 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h2>]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-性能优化-IO优化</title>
+    <url>/2021/11/02/Android-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-IO%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><blockquote>
+<ul>
+<li>作者：yorek<br>来源：<a href="https://blog.yorek.xyz/">个人博客</a><br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
+</ul>
+</blockquote>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>以前对读写的操作更多这块是基于业务去做开发，最近我们的游戏遇到一个问题，升级了Unity版本后，游戏相关的场景出现了卡顿，游戏加载资源场景和相关战斗场景出现了卡顿，通过我们对游戏业务深度的剖析，最后发现了卡顿的问题部分是<strong>IO</strong>的问题。所以我打算对这块知识好好学习一下。</p>
+<h1 id="IO的基本知识"><a href="#IO的基本知识" class="headerlink" title="IO的基本知识"></a>IO的基本知识</h1><p><img src="io_1_1.jpg" alt="IO基本流程图"></p>
+<p>你可以看到整个文件 I/O 操作由应用程序、文件系统和磁盘共同完成。首先应用程序将 I/O 命令发送给文件系统，然后文件系统会在合适的时机把 I/O 操作发给磁盘。</p>
+<p>这就好比 CPU、内存、磁盘三个小伙伴一起完成接力跑，最终跑完的时间很大程度上取决于最慢的小伙伴。我们知道，CPU 和内存相比磁盘是高速设备，整个流程的瓶颈在于磁盘 I/O 的性能。所以很多时候，文件系统性能比磁盘性能更加重要，为了降低磁盘对应用程序的影响，文件系统需要通过各种各样的手段进行优化。那么接下来，我们首先来看文件系统。</p>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><p>对于 Android 来说，现在普遍使用的是 Linux 常用的 ext4 文件系统。</p>
+<p>F2FS 系统应该是未来 Android 的主流文件系统。</p>
+<p>回到文件系统的 I/O。应用程序调用 read() 方法，系统会通过中断从用户空间进入内核处理流程，然后经过 VFS（Virtual File System，虚拟文件系统）、具体文件系统、页缓存 Page Cache。下面是 Linux 一个通用的 I/O 架构模型。</p>
+<p><img src="io_1_2.png" alt="Linux-IO-架构图"></p>
+<p>虚拟文件系统（VFS）。它主要用于实现屏蔽具体的文件系统，为应用程序的操作提供一个统一的接口。这样保证就算厂商把文件系统从 ext4 切换到 F2FS，应用程序也不用做任何修改。<br>文件系统（File System）。ext4、F2FS 都是具体文件系统实现，文件元数据如何组织、目录和索引结构如何设计、怎么分配和清理数据，这些都是设计一个文件系统必须要考虑的。每个文件系统都有适合自己的应用场景，我们不能说 F2FS 就一定比 ext4 要好。F2FS 在连续读取大文件上并没有优势，而且会占用更大的空间。只是对一般应用程序来说，随机 I/O 会更加频繁，特别是在启动的场景。你可以在 /proc/filesystems 看到系统可以识别的所有文件系统的列表。<br>页缓存（Page Cache）。在启动优化中我已经讲过 Page Cache 这个概念了，在读文件的时候会，先看它是不是已经在 Page Cache 中，如果命中就不会去读取磁盘。在 Linux 2.4.10 之前还有一个单独的 Buffer Cache，后来它也合并到 Page Cache 中的 Buffer Page 了。  </p>
+<p>Page Cache 就像是我们经常使用的数据缓存，是文件系统对数据的缓存，目的是提升内存命中率。Buffer Cache 就像我们经常使用的 BufferInputStream，是磁盘对数据的缓存，目的是合并部分文件系统的 I/O 请求、降低磁盘 I/O 的次数。需要注意的是，它们既会用在读请求中，也会用到写请求中。</p>
+<p>通过 /proc/meminfo 文件可以查看缓存的内存占用情况，当手机内存不足的时候，系统会回收它们的内存，这样整体 I/O 的性能就会有所降低。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MemTotal:    2866492 kB</span><br><span class="line">MemFree:      72192 kB</span><br><span class="line">Buffers:      62708 kB      // Buffer Cache</span><br><span class="line">Cached:      652904 kB      // Page Cache</span><br></pre></td></tr></table></figure>
+
+<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h1 id="IO优化"><a href="#IO优化" class="headerlink" title="IO优化"></a>IO优化</h1><p>磁盘 I/O 是启动优化一定要抠的点。首先我们要清楚启动过程读了什么文件、多少个字节、Buffer 是多大、使用了多长时间、在什么线程等一系列信息。不仅仅是简单读写的问题。</p>
+<h2 id="IO优化的事项"><a href="#IO优化的事项" class="headerlink" title="IO优化的事项"></a>IO优化的事项</h2><p><strong>启动过程不建议出现网络 I/O</strong></p>
+]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -1987,17 +2040,6 @@ Paging（分页)
       </tags>
   </entry>
   <entry>
-    <title>Android-组件化</title>
-    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
-    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AndroidSdk-模块化</title>
     <url>/2021/10/19/AndroidSdk-%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初衷s1和s3出包的项目是<strong>Eclipse</strong>，后更新为<strong>Android-Studio</strong>，使用<strong>Android模块化</strong>对项目进行统一的划分。</p>
@@ -2071,6 +2113,17 @@ Paging（分页)
 链接：https://juejin.cn/post/6844904168600109069  
 来源：稀土掘金  
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  -->]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android-组件化</title>
+    <url>/2021/10/19/AndroidSdk-%E7%BB%84%E4%BB%B6%E5%8C%96-1/</url>
+    <content><![CDATA[<h1 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h1><h1 id="组件化和模块化"><a href="#组件化和模块化" class="headerlink" title="组件化和模块化"></a>组件化和模块化</h1><h1 id="组件化开发需要解决的问题"><a href="#组件化开发需要解决的问题" class="headerlink" title="组件化开发需要解决的问题"></a>组件化开发需要解决的问题</h1><h1 id="组件单独调试"><a href="#组件单独调试" class="headerlink" title="组件单独调试"></a>组件单独调试</h1><h1 id="组件间数据传递与方法调用"><a href="#组件间数据传递与方法调用" class="headerlink" title="组件间数据传递与方法调用"></a>组件间数据传递与方法调用</h1>]]></content>
       <categories>
         <category>Android</category>
       </categories>
