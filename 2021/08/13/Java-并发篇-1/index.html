@@ -28,11 +28,15 @@
 <meta property="og:site_name" content="Elroy-Pb">
 <meta property="og:description" content="Java并发关键字 -volatile -synchronized">
 <meta property="og:locale">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/98d954f735354ce59ac607b8642d970a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ee5c832e0cc34854a15a6f1bc3599685~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/feb7171267074761805b0b9453fa3a8c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
 <meta property="article:published_time" content="2021-08-13T07:58:18.000Z">
-<meta property="article:modified_time" content="2022-02-20T12:45:04.962Z">
+<meta property="article:modified_time" content="2024-05-02T16:52:57.155Z">
 <meta property="article:author" content="Elroy-Pb">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/98d954f735354ce59ac607b8642d970a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
 
 <link rel="canonical" href="http://example.com/2021/08/13/Java-%E5%B9%B6%E5%8F%91%E7%AF%87-1/">
 
@@ -227,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-20 20:45:04" itemprop="dateModified" datetime="2022-02-20T20:45:04+08:00">2022-02-20</time>
+                <time title="Modified: 2024-05-03 00:52:57" itemprop="dateModified" datetime="2024-05-03T00:52:57+08:00">2024-05-03</time>
               </span>
 
           <br>
@@ -236,7 +240,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>39</span>
+              <span>725</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -257,6 +261,17 @@
 
       
         <p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22950899">https://www.zhihu.com/question/22950899</a></p>
+<h1 id="并发，并行和串行"><a href="#并发，并行和串行" class="headerlink" title="并发，并行和串行"></a>并发，并行和串行</h1><p>并发是指系统在同一时间段可同时处理多个任务，而同一时刻只有一个任务处于运行状态，和并发有两个接近的概念很容易被混淆，串行和并行，串行、并发和并行是相对于进程或多线程来说的。如下图是串行、并发和并行的执行时间图。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/98d954f735354ce59ac607b8642d970a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="3者区别"></p>
+<h2 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h2><p>串行比较好理解，如上图所示串行是指线程A完成之后做线程B，以此类推，直到完成线程C。</p>
+<h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ee5c832e0cc34854a15a6f1bc3599685~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="并发和并行的区别"></p>
+<p>并发是指一个或若干个 CPU 对多个进程或线程之间进行多路复用。简单说线程A先做Task，工作一段时间，线程B再做Task；<br>线程B执工作一段时间线程C再做Task，线程C工作一段时间，线程A重新执行Task。<br>以此类推，直到工作完成，看上去像是三个线程同时一起执行，但其实完全可以交给一个线程执行</p>
+<p>对于并发来说，线程A先执行一段时间，然后线程B再执行一段时间，接着线程C再执行一段时间。每个线程都轮流得到 CPU 的执行时间，并发只需要一个 CPU 即能够实现， 线程利用率最优。</p>
+<h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>并行则是指多个进程或线程同一时刻被执行，是真正意义上同时执行，并行必须要有多个 CPU </p>
+<p>并行是A、B和C三个线程同时执行一个或多个Task，每线程负责一项Task，A、B和C三线程在同一时刻齐头并进地完成这些事情。</p>
+<p>并行比串行和并发时间开销要小，但是由于线程A、线程B和线程C是同时执行的，需要三个 CPU 才能实现，一定程度影响机器性能。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/feb7171267074761805b0b9453fa3a8c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="3者工作流"></p>
+<p>串行是一个时间段内多个任务执行时，一个任务执行完才能执行另一个。<br>并行是指一个时间段内每个线程分配给独立的核心，线程同时运行。<br>而并发指的是一个时间段多个线程在单个核心运行，同一时间只能一个线程运行，系统不停切换线程，看起来像同时运行，实际上是线程不停切换。</p>
 
     </div>
 
@@ -340,6 +355,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%EF%BC%8C%E5%B9%B6%E8%A1%8C%E5%92%8C%E4%B8%B2%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">并发，并行和串行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">串行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.3.</span> <span class="nav-text">并行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -410,12 +426,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">139k</span>
+    <span title="Symbols count total">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:06</span>
+    <span title="Reading time total">2:07</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
